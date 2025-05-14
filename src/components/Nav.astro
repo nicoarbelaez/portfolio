@@ -1,0 +1,45 @@
+---
+import { defaultLang, type LocaleKey } from "@/i18n/ui";
+import { locales } from "@/i18n/ui";
+import { getCurrentLang } from "@/i18n/utils";
+
+interface NavLinkProps {
+  href: string;
+  text: string;
+}
+
+const lang = getCurrentLang(Astro.currentLocale);
+const localesKeys = Object.keys(locales) as LocaleKey[];
+
+const stripLocalePrefix = (path: string): string => {
+  const parts = path.split("/").filter(Boolean);
+  const [first, ...rest] = parts;
+  return "/" + (localesKeys.includes(first as LocaleKey) ? rest : parts).join("/");
+};
+
+const getLocaleHref = (localeLang: LocaleKey): string => {
+  const normalizedPath = stripLocalePrefix(Astro.url.pathname);
+  return localeLang === defaultLang ? normalizedPath : `/${localeLang}${normalizedPath}`;
+};
+
+const navLinks: NavLinkProps[] = Object.entries(locales[lang]).map(([key, value]) => ({
+  href: getLocaleHref(key as LocaleKey),
+  text: value,
+}));
+---
+
+<header class="p-4">
+  <div class="container mx-auto flex justify-end">
+    <nav class="flex gap-2">
+      {
+        navLinks.map(({ href, text }) => (
+          <a
+            href={href}
+            class="px-3 py-1 rounded transition cursor-pointer bg-blue-500 hover:bg-blue-700">
+            {text}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
