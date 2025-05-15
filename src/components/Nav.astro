@@ -37,7 +37,7 @@ const links = [
 <header
   class="sticky top-2 z-50 bg-slate-950/30 backdrop-blur-xl shadow-sm rounded-full px-5 py-3 w-sm lg:w-xl m-auto">
   <nav class="flex items-center justify-between gap-x-6">
-    <div class="flex gap-x-6">
+    <div class="flex gap-x-4">
       {
         links.map(({ href, text }) => (
           <a
@@ -49,50 +49,52 @@ const links = [
       }
     </div>
 
-    <div class="relative inline-block group">
-      <button
-        id="language-dropdown-button"
-        class="flex items-center text-xs font-semibold uppercase transition-colors focus:outline-none text-slate-300/90 hover:text-white cursor-pointer gap-x-1">
-        <svg
-          class="pointer-events-none size-4"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          data-darkreader-inline-fill="">
-          <path
-            fill-rule="evenodd"
-            d="M8.516 3a.94.94 0 0 0-.941.94v1.15H2.94a.94.94 0 1 0 0 1.882h7.362a7.422 7.422 0 0 1-1.787 3.958 7.42 7.42 0 0 1-1.422-2.425.94.94 0 1 0-1.774.627 9.303 9.303 0 0 0 1.785 3.043 7.422 7.422 0 0 1-4.164 1.278.94.94 0 1 0 0 1.881 9.303 9.303 0 0 0 5.575-1.855 9.303 9.303 0 0 0 4.11 1.74l-.763 1.525a.968.968 0 0 0-.016.034l-1.385 2.77a.94.94 0 1 0 1.683.841l1.133-2.267h5.806l1.134 2.267a.94.94 0 0 0 1.683-.841l-1.385-2.769a.95.95 0 0 0-.018-.036l-3.476-6.951a.94.94 0 0 0-1.682 0l-1.82 3.639a7.423 7.423 0 0 1-3.593-1.256 9.303 9.303 0 0 0 2.27-5.203h1.894a.94.94 0 0 0 0-1.881H9.456V3.94A.94.94 0 0 0 8.516 3Zm6.426 11.794a1.068 1.068 0 0 1-.02.039l-.703 1.407h3.924l-1.962-3.924-1.24 2.478Z"
-          ></path>
-        </svg>
-        {lang}
-      </button>
+    <div class="flex gap-x-4">
+      <div class="relative inline-block group">
+        <button
+          id="language-dropdown-button"
+          class="flex items-center text-xs font-semibold uppercase transition-colors focus:outline-none text-slate-300/90 hover:text-white cursor-pointer gap-x-1">
+          <svg
+            class="pointer-events-none size-4"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            data-darkreader-inline-fill="">
+            <path
+              fill-rule="evenodd"
+              d="M8.516 3a.94.94 0 0 0-.941.94v1.15H2.94a.94.94 0 1 0 0 1.882h7.362a7.422 7.422 0 0 1-1.787 3.958 7.42 7.42 0 0 1-1.422-2.425.94.94 0 1 0-1.774.627 9.303 9.303 0 0 0 1.785 3.043 7.422 7.422 0 0 1-4.164 1.278.94.94 0 1 0 0 1.881 9.303 9.303 0 0 0 5.575-1.855 9.303 9.303 0 0 0 4.11 1.74l-.763 1.525a.968.968 0 0 0-.016.034l-1.385 2.77a.94.94 0 1 0 1.683.841l1.133-2.267h5.806l1.134 2.267a.94.94 0 0 0 1.683-.841l-1.385-2.769a.95.95 0 0 0-.018-.036l-3.476-6.951a.94.94 0 0 0-1.682 0l-1.82 3.639a7.423 7.423 0 0 1-3.593-1.256 9.303 9.303 0 0 0 2.27-5.203h1.894a.94.94 0 0 0 0-1.881H9.456V3.94A.94.94 0 0 0 8.516 3Zm6.426 11.794a1.068 1.068 0 0 1-.02.039l-.703 1.407h3.924l-1.962-3.924-1.24 2.478Z"
+            ></path>
+          </svg>
+          {lang}
+        </button>
 
-      <div
-        id="language-dropdown-menu"
-        class="absolute right-0 mt-4 z-50 hidden group-focus-within:block text-base list-none bg-slate-950/30 backdrop-blur-xl divide-y divide-gray-100 rounded-lg shadow-sm w-30 py-2 px-3">
-        <ul class="py-2 font-medium" role="none">
-          <li class="flex flex-col gap-y-2">
-            {
-              navLinks.map(({ href, text, code }) => (
-                <a
-                  href={href}
-                  class="flex items-center text-xs font-semibold uppercase transition-colors focus:outline-none text-slate-300/90 hover:text-white cursor-pointer">
-                  {text} ({code})
-                </a>
-              ))
-            }
-          </li>
-        </ul>
+        <div
+          id="language-dropdown-menu"
+          class="absolute right-0 mt-4 z-50 hidden group-focus-within:block text-base list-none bg-slate-900/90 backdrop-blur-xl divide-y divide-gray-100 rounded-lg shadow-sm w-30 py-2 px-3">
+          <ul class="py-2 font-medium" role="none">
+            <li class="flex flex-col gap-y-2">
+              {
+                navLinks.map(({ href, text, code }) => (
+                  <a
+                    href={href}
+                    class="flex items-center text-xs font-semibold uppercase transition-colors focus:outline-none text-slate-300/90 hover:text-white cursor-pointer">
+                    {text} ({code})
+                  </a>
+                ))
+              }
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
 
-    <a
-      href="/resume.pdf"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-xs font-semibold uppercase text-slate-300/90 hover:text-white transition-colors">
-      {t("nav.resume")}
-    </a>
+      <a
+        href="/resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-xs font-semibold uppercase text-slate-300/90 hover:text-white transition-colors">
+        {t("nav.resume")}
+      </a>
+    </div>
   </nav>
 </header>
