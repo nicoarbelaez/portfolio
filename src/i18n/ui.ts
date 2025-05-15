@@ -20,6 +20,7 @@ export const labels = {
     "nav.about": "Sobre mí",
     "nav.experience": "Experiencia",
     "nav.projects": "Projectos",
+    "nav.resume": "HV",
     "hero.description": "Una colección de mis proyectos y trabajos.",
   },
   en: {
@@ -28,6 +29,7 @@ export const labels = {
     "nav.about": "About",
     "nav.experience": "Experience",
     "nav.projects": "Projects",
+    "nav.resume": "CV",
     "hero.description": "A collection of my projects and works.",
   },
 };

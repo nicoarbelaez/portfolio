@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "pnpm run prepare:pdf && astro build",
+    "prepare:pdf": "tsx src/scripts/download-pdf.ts",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -15,6 +16,7 @@
     "tailwindcss": "^4.1.6"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.16"
+    "@tailwindcss/typography": "^0.5.16",
+    "tsx": "^4.19.4"
   }
 }
