@@ -1,8 +1,14 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import "@/styles/global.css";
-import { defaultLang } from "@/i18n/ui";
+import "@fontsource-variable/onest";
+import { defaultLang, type LocaleKey } from "@/i18n/ui";
 import Nav from "@/components/Nav.astro";
+
+interface Props {
+  lang: LocaleKey;
+  title: string;
+}
 
 const { lang = defaultLang, title = "Portfolio | Nicolas Arbelaez" } = Astro.props;
 ---
@@ -17,9 +23,9 @@ const { lang = defaultLang, title = "Portfolio | Nicolas Arbelaez" } = Astro.pro
     <title>{`${title} | Nicolas Arbelaez`}</title>
     <ClientRouter />
   </head>
-  <body>
+  <body class="bg-slate-900">
     <Nav />
-    <slot />
+    <slot/>
   </body>
 </html>
 
@@ -30,5 +36,6 @@ const { lang = defaultLang, title = "Portfolio | Nicolas Arbelaez" } = Astro.pro
     width: 100%;
     height: 100%;
     color-scheme: dark;
+    font-family: "Onest Variable", system-ui, sans-serif;
   }
 </style>

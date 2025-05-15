@@ -1,45 +1,70 @@
 ---
 import { defaultLang, type LocaleKey } from "@/i18n/ui";
 import { locales } from "@/i18n/ui";
-import { getCurrentLang } from "@/i18n/utils";
-
-interface NavLinkProps {
-  href: string;
-  text: string;
-}
+import { getCurrentLang, useTranslations } from "@/i18n/utils";
+import { getLocaleHref } from "@/utils/url";
+import type { NavLinkProps } from "@/types/nav";
 
 const lang = getCurrentLang(Astro.currentLocale);
 const localesKeys = Object.keys(locales) as LocaleKey[];
 
-const stripLocalePrefix = (path: string): string => {
-  const parts = path.split("/").filter(Boolean);
-  const [first, ...rest] = parts;
-  return "/" + (localesKeys.includes(first as LocaleKey) ? rest : parts).join("/");
-};
-
-const getLocaleHref = (localeLang: LocaleKey): string => {
-  const normalizedPath = stripLocalePrefix(Astro.url.pathname);
-  return localeLang === defaultLang ? normalizedPath : `/${localeLang}${normalizedPath}`;
-};
-
 const navLinks: NavLinkProps[] = Object.entries(locales[lang]).map(([key, value]) => ({
-  href: getLocaleHref(key as LocaleKey),
+  href: getLocaleHref(key as LocaleKey, defaultLang, Astro.url.pathname, localesKeys),
   text: value,
 }));
+
+const t = useTranslations(getCurrentLang(Astro.currentLocale));
+
+const links = [
+  {
+    href: "#about",
+    text: t("nav.about"),
+  },
+  {
+    href: "#experience",
+    text: t("nav.experience"),
+  },
+  {
+    href: "#projects",
+    text: t("nav.projects"),
+  },
+];
+
+const classHover = "hover:bg-slate-700/30 transition duration-300 ease-in-out px-3 py-1 rounded-lg";
 ---
 
-<header class="p-4">
-  <div class="container mx-auto flex justify-end">
-    <nav class="flex gap-2">
-      {
-        navLinks.map(({ href, text }) => (
-          <a
-            href={href}
-            class="px-3 py-1 rounded transition cursor-pointer bg-blue-500 hover:bg-blue-700">
-            {text}
-          </a>
-        ))
-      }
-    </nav>
+<div
+  class="flex justify-between bg-slate-950/50 backdrop-blur-3xl rounded-full px-6 py-4 w-xl mt-4 m-auto">
+  <nav class="flex justify-between items-center flex-row gap-x-6">
+    {
+      links.map(({ href, text }) => (
+        <a class={`text-xs font-semibold uppercase text-slate-300/90 ${classHover}`} href={href}>
+          {text}
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class={`flex items-center gap-x-1 ${classHover}`}>
+    <svg
+      class="text-slate-300
+    90"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      data-darkreader-inline-fill="">
+      <path
+        fill-rule="evenodd"
+        d="M8.516 3a.94.94 0 0 0-.941.94v1.15H2.94a.94.94 0 1 0 0 1.882h7.362a7.422 7.422 0 0 1-1.787 3.958 7.42 7.42 0 0 1-1.422-2.425.94.94 0 1 0-1.774.627 9.303 9.303 0 0 0 1.785 3.043 7.422 7.422 0 0 1-4.164 1.278.94.94 0 1 0 0 1.881 9.303 9.303 0 0 0 5.575-1.855 9.303 9.303 0 0 0 4.11 1.74l-.763 1.525a.968.968 0 0 0-.016.034l-1.385 2.77a.94.94 0 1 0 1.683.841l1.133-2.267h5.806l1.134 2.267a.94.94 0 0 0 1.683-.841l-1.385-2.769a.95.95 0 0 0-.018-.036l-3.476-6.951a.94.94 0 0 0-1.682 0l-1.82 3.639a7.423 7.423 0 0 1-3.593-1.256 9.303 9.303 0 0 0 2.27-5.203h1.894a.94.94 0 0 0 0-1.881H9.456V3.94A.94.94 0 0 0 8.516 3Zm6.426 11.794a1.068 1.068 0 0 1-.02.039l-.703 1.407h3.924l-1.962-3.924-1.24 2.478Z"
+      ></path>
+    </svg>
+    {
+      navLinks.map(({ href, text }) => (
+        <a href={href} class="text-xs font-semibold uppercase text-slate-300/90 ">
+          {text}
+        </a>
+      ))
+    }
   </div>
-</header>
+</div>
