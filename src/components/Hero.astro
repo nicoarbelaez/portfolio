@@ -1,18 +1,24 @@
 ---
+import type { Transitions } from "@/i18n/utils";
 
+interface Props {
+  t: Transitions;
+}
+
+const { t } = Astro.props;
 ---
 
 <header
   class="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[48%] lg:flex-col lg:justify-between lg:py-24">
   <div>
-    <h1 class="text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl">
+    <h1 class="text-4xl font-bold tracking-tight text-slate-200/95 sm:text-5xl">
       <a href="#">Nicolas Arbelaez</a>
     </h1>
     <h2 class="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
-      System Engineer - Backend Development
+      {t("hero.professional")}
     </h2>
     <p class="mt-4 max-w-xs leading-normal">
-      I build accessible, pixel-perfect digital experiences for the web.
+      {t("hero.description")}
     </p>
   </div>
 
@@ -20,7 +26,7 @@
     <li class="mr-5 shrink-0 text-xs">
       <a
         class="block hover:text-slate-200"
-        href="https://github.com/bchiang7"
+        href="https://github.com/nicoarbelaez"
         target="_blank"
         rel="noreferrer noopener"
         aria-label="GitHub (opens in a new tab)"
@@ -40,7 +46,7 @@
     <li class="mr-5 shrink-0 text-xs">
       <a
         class="block hover:text-slate-200"
-        href="https://www.linkedin.com/in/bchiang7/"
+        href="https://www.linkedin.com/in/arbelaeznicolas/"
         target="_blank"
         rel="noreferrer noopener"
         aria-label="LinkedIn (opens in a new tab)"

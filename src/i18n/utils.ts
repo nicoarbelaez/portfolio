@@ -1,6 +1,6 @@
 import { labels, defaultLang, type LocaleKey } from "@/i18n/ui";
 
-export type Transitions = typeof useTranslations;
+export type Transitions = ReturnType<typeof useTranslations>;
 
 export function getLangFromUrl(url: URL) {
   const [, lang] = url.pathname.split("/");

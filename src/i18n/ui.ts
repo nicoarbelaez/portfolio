@@ -21,7 +21,9 @@ export const labels = {
     "nav.experience": "Experiencia",
     "nav.projects": "Projectos",
     "nav.resume": "HV",
-    "hero.description": "Una colección de mis proyectos y trabajos.",
+    "hero.professional": "Ingeniero de sistemas - Desarrollo backend",
+    "hero.description":
+      "Con mas de 2 años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.",
   },
   en: {
     title: "Portfolio",
@@ -30,6 +32,8 @@ export const labels = {
     "nav.experience": "Experience",
     "nav.projects": "Projects",
     "nav.resume": "CV",
-    "hero.description": "A collection of my projects and works.",
+    "hero.professional": "Systems Engineer - Backend Development",
+    "hero.description":
+      "With over 2 years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.",
   },
 };
