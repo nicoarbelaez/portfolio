@@ -8,8 +8,7 @@ interface Props {
 const { t } = Astro.props;
 ---
 
-<header
-  class="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[48%] lg:flex-col lg:justify-between lg:py-24">
+<header>
   <div>
     <h1 class="text-4xl font-bold tracking-tight text-slate-200/95 sm:text-5xl">
       <a href="#">Nicolas Arbelaez</a>
@@ -17,7 +16,7 @@ const { t } = Astro.props;
     <h2 class="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
       {t("hero.professional")}
     </h2>
-    <p class="mt-4 max-w-xs leading-normal">
+    <p class="mt-4 max-w-xs leading-normal text-slate-400/95">
       {t("hero.description")}
     </p>
   </div>
