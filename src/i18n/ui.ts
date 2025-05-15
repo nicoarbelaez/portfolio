@@ -23,7 +23,7 @@ export const labels = {
     "nav.resume": "HV",
     "hero.professional": "Ingeniero de sistemas - Desarrollo backend",
     "hero.description":
-      "Con mas de 2 años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.",
+      "Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.",
   },
   en: {
     title: "Portfolio",
@@ -34,6 +34,6 @@ export const labels = {
     "nav.resume": "CV",
     "hero.professional": "Systems Engineer - Backend Development",
     "hero.description":
-      "With over 2 years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.",
+      "With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.",
   },
 };

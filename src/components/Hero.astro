@@ -1,11 +1,16 @@
 ---
 import type { Transitions } from "@/i18n/utils";
+import { getYearsSince } from "@/utils/date";
 
 interface Props {
   t: Transitions;
 }
 
 const { t } = Astro.props;
+const description = t("hero.description").replace(
+  "%years-experience%",
+  getYearsSince("2023-01-01").toString()
+);
 ---
 
 <header>
@@ -17,7 +22,7 @@ const { t } = Astro.props;
       {t("hero.professional")}
     </h2>
     <p class="mt-4 max-w-xs leading-normal text-slate-400/95">
-      {t("hero.description")}
+      {description}
     </p>
   </div>
 
