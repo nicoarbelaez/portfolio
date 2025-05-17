@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
+import path from 'path';
 
 const downloadFile = async (url: string, outputPath: string) => {
   const response = await fetch(url);
@@ -10,8 +10,8 @@ const downloadFile = async (url: string, outputPath: string) => {
 };
 
 const main = async () => {
-  const url = "https://drive.google.com/uc?export=download&id=190qAgVBiaNTZXUw_bIqXnvUJz0UoUrJB";
-  const outputPath = path.join(process.cwd(), "public", "resume.pdf");
+  const url = 'https://drive.google.com/uc?export=download&id=190qAgVBiaNTZXUw_bIqXnvUJz0UoUrJB';
+  const outputPath = path.join(process.cwd(), 'public', 'resume.pdf');
   await downloadFile(url, outputPath);
 };
 

@@ -1,16 +1,16 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import { getCurrentLang, useTranslations } from "@/i18n/utils";
-import Hero from "@/components/Hero.astro";
-import Project from "@/components/sections/Project.astro";
+import Layout from '@/layouts/Layout.astro';
+import { getCurrentLang, useTranslations } from '@/i18n/utils';
+import Hero from '@/components/Hero.astro';
+import Project from '@/components/sections/Project.astro';
 
 const lang = getCurrentLang(Astro.currentLocale);
 
 const t = useTranslations(lang);
 ---
 
-<Layout lang={lang} title={t("title")}>
-  <main class="max-w-5xl md:px-11 px-6 mx-auto py-10 lg:py-16">
+<Layout lang={lang} title={t('title')}>
+  <main class="mx-auto max-w-5xl px-6 py-10 md:px-11 lg:py-16">
     <Hero t={t} />
     <Project lang={lang} />
   </main>

@@ -1,22 +1,22 @@
 ---
-import type { Transitions } from "@/i18n/utils";
-import Github from "@/icons/Github.astro";
-import Linkedin from "@/icons/Linkedin.astro";
-import { getYearsSince } from "@/utils/date";
+import type { Transitions } from '@/i18n/utils';
+import Github from '@/icons/Github.astro';
+import Linkedin from '@/icons/Linkedin.astro';
+import { getYearsSince } from '@/utils/date';
 
 interface Props {
   t: Transitions;
 }
 
 const { t } = Astro.props;
-const description = t("hero.description").replace(
-  "%years-experience%",
-  getYearsSince("2023-01-01").toString()
+const description = t('hero.description').replace(
+  '%years-experience%',
+  getYearsSince('2023-01-01').toString()
 );
 
 const socialMedia = [
-  { icon: Github, href: "https://github.com/nicoarbelaez" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/arbelaeznicolas/" },
+  { icon: Github, href: 'https://github.com/nicoarbelaez' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/arbelaeznicolas/' }
 ];
 ---
 
@@ -27,14 +27,14 @@ const socialMedia = [
         <a href="#">Nicolas Arbelaez</a>
       </h1>
       <h2 class="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
-        {t("hero.professional")}
+        {t('hero.professional')}
       </h2>
       <p class="mt-4 max-w-xs leading-normal text-slate-400/95">
         {description}
       </p>
     </div>
 
-    <ul class="ml-1 mt-8 flex items-center" aria-label="Social media">
+    <ul class="mt-8 ml-1 flex items-center" aria-label="Social media">
       {
         socialMedia.map(({ icon: Icon, href }) => {
           const name = Icon.name;
@@ -43,12 +43,13 @@ const socialMedia = [
           return (
             <li class="mr-5 shrink-0 text-xs">
               <a
-                class="block hover:text-slate-200 text-slate-400/95"
+                class="block text-slate-400/95 hover:text-slate-200"
                 href={href}
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label={label}
-                title={name}>
+                title={name}
+              >
                 <span class="sr-only">{name}</span>
                 <Icon />
               </a>
@@ -60,7 +61,7 @@ const socialMedia = [
   </div>
 
   <img
-    class="rounded-t-4xl size-70 mask mask-b-from-80% hidden md:block"
+    class="mask hidden size-70 rounded-t-4xl mask-b-from-80% md:block"
     src="https://github.com/nicoarbelaez.png"
     alt="Github profile image"
   />

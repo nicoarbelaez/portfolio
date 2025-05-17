@@ -1,13 +1,13 @@
 ---
-import PageProject from "@/components/PageProject.astro";
-import { getProjectsByLanguage } from "@/utils/projects";
+import PageProject from '@/components/PageProject.astro';
+import { getProjectsByLanguage } from '@/utils/projects';
 
 export async function getStaticPaths() {
-  const projects = await getProjectsByLanguage("en");
+  const projects = await getProjectsByLanguage('en');
 
   return projects.map((project) => ({
     params: { id: project.slug },
-    props: { project },
+    props: { project }
   }));
 }
 

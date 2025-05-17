@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection } from 'astro:content';
 
 const projects = defineCollection({
   schema: z.object({
@@ -9,9 +9,9 @@ const projects = defineCollection({
     repo_name: z.string().optional(),
     demo_url: z.string().url().optional(),
     screenshot: z.string().optional(), // Use this website https://shots.so
-    difficulty: z.enum(["beginner", "intermediate", "advanced"]),
-    priority: z.number().max(3).default(0),
-  }),
+    difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
+    priority: z.number().max(3).default(0)
+  })
 });
 
 export const collections = { projects };
