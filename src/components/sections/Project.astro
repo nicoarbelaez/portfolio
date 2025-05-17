@@ -13,54 +13,55 @@ const { lang } = Astro.props;
 const projects = await getProjectsByLanguage(lang);
 ---
 
-<section>
-  <h2 class="mb-8 text-3xl font-semibold text-gray-800 dark:text-gray-100">My Projectsitories</h2>
-  <div class="grid grid-cols-2 gap-6">
+<section id="projects">
+  <div class="mt-30 flex flex-col gap-10">
     {
       projects.map(
         ({ slug, data: { screenshot, title, tags, difficulty, description } }, index) => {
           const img = screenshot ? screenshot : `/img/projects/${slug}.webp`;
           return (
-            <a href={getRelativeLocaleUrl(lang, `/projects/${slug}`)} class=" ">
+            <a
+              href={getRelativeLocaleUrl(lang, `/projects/${slug}`)}
+              class="grid grid-cols-3 gap-4"
+            >
               <img
                 transition:name={`img-${slug}`}
                 src={img}
                 alt={`Screenshot of ${title}`}
-                class="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                class="my-6 aspect-16/9 rounded-md border-4 border-slate-200/10 object-cover transition-transform duration-300 group-hover:scale-105 hover:border-slate-200/30"
               />
 
-              <div class="p-6">
-                <h3
-                  transition:name={`title-${slug}`}
-                  class="mb-2 text-2xl font-bold text-gray-900 transition-colors duration-200 group-hover:text-indigo-600 dark:text-gray-100"
-                >
-                  {title}
-                </h3>
-
-                {description && (
-                  <p
-                    transition:name={`description-${slug}`}
-                    class="mb-4 text-gray-600 dark:text-gray-400"
+              <div class="col-span-2 flex flex-col justify-between">
+                <div>
+                  <h3
+                    transition:name={`title-${slug}`}
+                    class="mb-2 text-2xl font-bold transition-colors duration-200"
                   >
+                    {title}
+                  </h3>
+
+                  <p transition:name={`description-${slug}`} class="mb-4">
                     {description}
                   </p>
-                )}
-
-                <div class="mb-4 flex flex-wrap gap-2">
-                  <span class="inline-block rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-800 uppercase">
-                    {difficulty}
-                  </span>
-                  {tags.map((tag) => (
-                    <span class="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-                      {tag}
-                    </span>
-                  ))}
                 </div>
 
-                <span class="inline-flex items-center text-sm font-semibold text-indigo-600 group-hover:underline">
-                  View project
-                  <ArrowRight />
-                </span>
+                <div>
+                  <div class="mb-4 flex flex-wrap gap-2">
+                    <span class="inline-block rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-800 uppercase">
+                      {difficulty}
+                    </span>
+                    {tags.map((tag) => (
+                      <span class="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <span class="items-center text-sm font-semibold">
+                    View project
+                    <ArrowRight />
+                  </span>
+                </div>
               </div>
             </a>
           );

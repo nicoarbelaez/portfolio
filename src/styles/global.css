@@ -1,6 +1,19 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
+@layer base {
+  p {
+    @apply leading-normal text-slate-400/95;
+  }
+
+  h1,
+  h2,
+  h3,
+  .icon-hero {
+    @apply text-slate-200/95;
+  }
+}
+
 @theme {
   --animate-float: float 3s ease-in-out infinite;
 
