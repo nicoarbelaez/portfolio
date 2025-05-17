@@ -1,5 +1,6 @@
 ---
 import type { Transitions } from '@/i18n/utils';
+import { LINKS } from '@/constans/link.ts';
 import Github from '@/icons/Github.astro';
 import Linkedin from '@/icons/Linkedin.astro';
 import { getYearsSince } from '@/utils/date';
@@ -15,8 +16,8 @@ const description = t('hero.description').replace(
 );
 
 const socialMedia = [
-  { icon: Github, href: 'https://github.com/nicoarbelaez' },
-  { icon: Linkedin, href: 'https://www.linkedin.com/in/arbelaeznicolas/' }
+  { icon: Github, href: LINKS.GITHUB },
+  { icon: Linkedin, href: LINKS.LINKEDIN }
 ];
 ---
 
@@ -67,7 +68,7 @@ const socialMedia = [
       alt="Github profile image"
     />
     <img
-      class="absolute inset-0 -z-10 size-full opacity-70 blur-2xl saturate-200"
+      class="pointer-events-none absolute inset-0 -z-10 size-full opacity-70 blur-2xl saturate-200"
       src="https://github.com/nicoarbelaez.png"
       alt="Github profile image (blur)"
     />

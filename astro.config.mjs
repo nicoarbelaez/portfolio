@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
+import { LINKS } from './src/constans/link';
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,7 +18,7 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   redirects: {
-    '/linkedin': 'https://www.linkedin.com/in/arbelaeznicolas',
-    '/github': 'https://github.com/nicoarbelaez'
+    '/linkedin': LINKS.LINKEDIN,
+    '/github': LINKS.GITHUB
   }
 });
