@@ -15,6 +15,7 @@ export const defaultLang: LocaleKey = 'en';
 
 export const labels = {
   es: {
+    '404.cta': 'Volver al inicio',
     title: 'Portafolio',
     'action.back': 'Regresar',
     'nav.about': 'Sobre mí',
@@ -27,6 +28,7 @@ export const labels = {
     'hero.cta': 'Ver Proyectos'
   },
   en: {
+    '404.cta': 'Back to home',
     title: 'Portfolio',
     'action.back': 'Back',
     'nav.about': 'About',

@@ -1,0 +1,47 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { getCurrentLang, useTranslations } from '@/i18n/utils';
+import ArrowRight from '@/icons/ArrowRight.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const lang = getCurrentLang(Astro.currentLocale);
+const t = useTranslations(lang);
+---
+
+<Layout lang={lang} title="404 Not Found">
+  <main class="flex h-screen items-center justify-center px-6">
+    <div class="text-center">
+      <h1 class="animate-float text-9xl font-extrabold drop-shadow-lg drop-shadow-teal-300">404</h1>
+      <a
+        href={getRelativeLocaleUrl(lang, '/')}
+        class="group mt-8 inline-flex items-center gap-2 rounded-lg border-2 border-slate-400/95 px-6 py-3 text-sm font-semibold text-slate-400/95 transition hover:border-teal-300 hover:text-teal-300"
+      >
+        {t('404.cta')}
+        <ArrowRight class="size-4 transition-transform group-hover:translate-x-1" />
+      </a>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  (() => {
+    const { pathname, search } = window.location;
+    const queryParams = new URLSearchParams(search);
+
+    const shouldBypassRedirect = queryParams.get('bypass404') === 'true';
+    const wasAlreadyRedirected = queryParams.get('from404') === 'true';
+
+    if (!shouldBypassRedirect && !wasAlreadyRedirected) {
+      const segments = pathname.split('/').filter(Boolean);
+
+      if (segments.length > 0) {
+        const parentPath = '/' + segments.slice(0, -1).join('/');
+
+        queryParams.set('from404', 'true');
+
+        const redirectUrl = `${parentPath}?${queryParams.toString()}`;
+        window.location.replace(redirectUrl);
+      }
+    }
+  })();
+</script>
