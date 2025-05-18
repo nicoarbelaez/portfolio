@@ -19,6 +19,7 @@ export default defineConfig({
   },
   redirects: {
     '/linkedin': LINKS.LINKEDIN,
-    '/github': LINKS.GITHUB
+    '/github': LINKS.GITHUB,
+    '/platzi': LINKS.PLATZI
   }
 });
