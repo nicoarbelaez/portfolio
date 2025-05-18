@@ -21,7 +21,7 @@ const { Content } = await project.render();
 <Layout title={title} lang={lang}>
   <section class="mx-auto max-w-3xl px-6 py-12">
     <a
-      href={getRelativeLocaleUrl(lang)}
+      href={`${getRelativeLocaleUrl(lang)}#${slug}`}
       class="mb-6 inline-flex transform cursor-pointer items-center rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white shadow-md transition-transform hover:-translate-y-0.5 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
     >
       ← {t('action.back')}
