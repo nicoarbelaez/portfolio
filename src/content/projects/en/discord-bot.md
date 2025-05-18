@@ -1,15 +1,7 @@
 ---
-title: "Discord Bot"
-description: "A Discord bot built to automate common tasks and bridge the community."
-categories:
-  - "Python"
-  - "Discord"
-tags:
-  - "discord"
-  - "bot"
-  - "node"
-demo_url: "https://discord.gg/tu-servidor"
-difficulty: "beginner"
+title: 'Discord Bot'
+description: 'A Discord bot built to automate common tasks and bridge the community.'
+demo_url: 'https://discord.gg/tu-servidor'
 priority: 0
 ---
 

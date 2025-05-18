@@ -3,7 +3,7 @@ import type { LocaleKey } from '@/i18n/ui';
 import { getProjectsByLanguage } from '@/utils/projects';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Transitions } from '@/i18n/utils';
-import ProjectCard from '@/components/ProjectCard.astro';
+import ProjectCard from '@/components/ui/ProjectCard.astro';
 
 interface Props {
   lang: LocaleKey;
@@ -16,26 +16,23 @@ const projects = await getProjectsByLanguage(lang);
 ---
 
 <section id="projects" class="scroll-mt-20">
-  <h2 class="mb-4 text-lg font-bold uppercase lg:sr-only">{t('nav.projects')}</h2>
+  <h2 class="mb-8 text-lg font-bold uppercase lg:sr-only">{t('nav.projects')}</h2>
   <div class="flex flex-col gap-10">
     {
-      Array.from({ length: 12 }, () => projects)
-        .flat()
-        .map(({ slug, data: { screenshot, title, tags, difficulty, description } }, index) => {
-          const img = screenshot ? screenshot : `/img/projects/${slug}.webp`;
-          const href = getRelativeLocaleUrl(lang, `/projects/${slug}`);
-          return (
-            <ProjectCard
-              href={href}
-              slug={slug + index}
-              img={img}
-              title={title}
-              tags={tags}
-              difficulty={difficulty}
-              description={description}
-            />
-          );
-        })
+      projects.map(({ slug, data: { screenshot, title, tags, description } }, index) => {
+        const img = screenshot ? screenshot : `/img/projects/${slug}.webp`;
+        const href = getRelativeLocaleUrl(lang, `/projects/${slug}`);
+        return (
+          <ProjectCard
+            href={href}
+            slug={slug}
+            img={img}
+            title={title}
+            tags={tags}
+            description={description}
+          />
+        );
+      })
     }
   </div>
 </section>

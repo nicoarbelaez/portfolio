@@ -1,8 +1,9 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { getCurrentLang, useTranslations } from '@/i18n/utils';
-import Hero from '@/components/Hero.astro';
+import Hero from '@/components/sections/Hero.astro';
 import Project from '@/components/sections/Project.astro';
+import Experience from '@/components/sections/Experience.astro';
 
 const lang = getCurrentLang(Astro.currentLocale);
 
@@ -13,5 +14,6 @@ const t = useTranslations(lang);
   <main class="mx-auto max-w-5xl px-6 lg:px-4 xl:px-0">
     <Hero t={t} />
     <Project lang={lang} t={t} />
+    <Experience />
   </main>
 </Layout>

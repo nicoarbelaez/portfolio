@@ -1,0 +1,32 @@
+---
+import Camera from '@/icons/Camera.astro';
+
+interface Props {
+  src: string;
+  alt: string;
+  transitionName: string;
+  class?: string;
+}
+
+const { src, alt, transitionName, class: className } = Astro.props;
+---
+
+<div class="relative">
+  {
+    src ? (
+      <img
+        transition:name={transitionName}
+        src={src}
+        alt={alt}
+        class={className}
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+    ) : null
+  }
+  <div class={`hidden ${className} bg-slate-700 items-center justify-center`} style="display: none">
+    <div class="flex flex-col items-center gap-2 text-slate-400">
+      <Camera />
+      <span class="text-sm font-medium">404</span>
+    </div>
+  </div>
+</div>

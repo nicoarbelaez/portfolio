@@ -1,0 +1,55 @@
+---
+import ArrowRight from '@/icons/ArrowRight.astro';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
+import Badge from './Badge.astro';
+
+interface Props {
+  href: string;
+  slug: string;
+  img: string;
+  title: string;
+  tags: string[] | undefined;
+  description: string;
+}
+
+const { slug, img, title, tags, description, href } = Astro.props;
+---
+
+<a id={`${slug}`} href={href} class="group flex flex-col gap-3 md:grid md:grid-cols-3 md:gap-4">
+  <div class="order-2 md:my-6">
+    <ImagePlaceholder
+      transitionName={`img-${slug}`}
+      src={img}
+      alt={`Screenshot of ${title}`}
+      class="aspect-16/9 max-w-56 rounded-md border-2 border-slate-200/10 object-cover group-hover:border-slate-200/30 hover:border-slate-200/30"
+    />
+  </div>
+
+  <div class="flex flex-col justify-between gap-y-2">
+    <div class="flex flex-col gap-y-1">
+      <h3
+        transition:name={`title-${slug}`}
+        class="text-sm font-medium transition-colors duration-200 group-hover:text-teal-300"
+      >
+        {title}
+        <ArrowRight class="size-4 transition group-hover:translate-x-1" />
+      </h3>
+
+      <p transition:name={`description-${slug}`} class="text-sm">
+        {description}
+      </p>
+    </div>
+
+    {
+      tags && (
+        <div class="mb-2">
+          <div class="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <Badge>{tag}</Badge>
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </div>
+</a>
