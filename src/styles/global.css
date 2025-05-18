@@ -3,7 +3,7 @@
 
 @layer base {
   p {
-    @apply leading-normal text-slate-400/95;
+    @apply leading-normal text-pretty text-slate-400/95;
   }
 
   h1,
