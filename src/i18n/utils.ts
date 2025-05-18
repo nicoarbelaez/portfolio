@@ -2,7 +2,7 @@ import { labels, defaultLang, type LocaleKey } from '@/i18n/ui';
 
 export type Transitions = ReturnType<typeof useTranslations>;
 
-export function getLangFromUrl(url: URL) {
+export function getLangFromUrl(url: URL): LocaleKey {
   const [, lang] = url.pathname.split('/');
   if (lang in labels) return lang as LocaleKey;
   return defaultLang;

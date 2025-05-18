@@ -1,12 +1,12 @@
 ---
 import { defaultLang, type LocaleKey } from '@/i18n/ui';
 import { locales } from '@/i18n/ui';
-import { getCurrentLang, useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { getLocaleHref } from '@/utils/url';
 import type { NavLinkProps } from '@/types/nav';
 import Language from '@/icons/Language.astro';
 
-const lang = getCurrentLang(Astro.currentLocale);
+const lang = getLangFromUrl(Astro.url);
 const localesKeys = Object.keys(locales) as LocaleKey[];
 
 const navLinks: NavLinkProps[] = Object.entries(locales[lang])
