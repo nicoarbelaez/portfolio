@@ -25,7 +25,9 @@ export const labels = {
     'hero.professional': 'Ingeniero de sistemas - Desarrollo backend',
     'hero.description':
       'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
-    'hero.cta': 'Ver Proyectos'
+    'hero.cta': 'Ver Proyectos',
+    'project.code': 'Código',
+    'project.demo': 'Demo'
   },
   en: {
     '404.cta': 'Back to home',
@@ -38,6 +40,8 @@ export const labels = {
     'hero.professional': 'Systems Engineer - Backend Development',
     'hero.description':
       'With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.',
-    'hero.cta': 'View Projects'
+    'hero.cta': 'View Projects',
+    'project.code': 'Code',
+    'project.demo': 'Live'
   }
 };

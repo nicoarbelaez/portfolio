@@ -19,20 +19,25 @@ const projects = await getProjectsByLanguage(lang);
   <h2 class="mb-8 text-lg font-bold uppercase lg:sr-only">{t('nav.projects')}</h2>
   <div class="flex flex-col gap-10">
     {
-      projects.map(({ slug, data: { screenshot, title, tags, description } }, index) => {
-        const img = screenshot ? screenshot : `/img/projects/${slug}.webp`;
-        const href = getRelativeLocaleUrl(lang, `/projects/${slug}`);
-        return (
-          <ProjectCard
-            href={href}
-            slug={slug}
-            img={img}
-            title={title}
-            tags={tags}
-            description={description}
-          />
-        );
-      })
+      projects.map(
+        ({ slug, data: { screenshot, title, tags, description, repo_url, demo_url } }, index) => {
+          const img = screenshot ? screenshot : `/img/projects/${slug}.webp`;
+          const href = getRelativeLocaleUrl(lang, `/projects/${slug}`);
+          return (
+            <ProjectCard
+              href={href}
+              slug={slug}
+              img={img}
+              title={title}
+              tags={tags}
+              description={description}
+              repo_url={repo_url}
+              demo_url={demo_url}
+              t={t}
+            />
+          );
+        }
+      )
     }
   </div>
 </section>
