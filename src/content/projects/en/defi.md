@@ -5,7 +5,6 @@ tags:
   - 'blockchain'
   - 'finance'
   - 'ethereum'
-demo_url: 'https://arbelaeznicolas.dev'
 repo_url: 'https://github.com/nicoarbelaez/defi'
 priority: 0
 ---
