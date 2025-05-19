@@ -27,7 +27,9 @@ export const labels = {
       'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
     'hero.cta': 'Ver Proyectos',
     'project.code': 'Código',
-    'project.demo': 'Demo'
+    'project.demo': 'Demo',
+    'footer.text':
+      'Este portafolio ha sido desarrollado con %astro% y desplegado en %vercel%. Se inspira en %inspiration1% y %inspiration2%. © %year% Todos los derechos reservados.'
   },
   en: {
     '404.cta': 'Back to home',
@@ -42,6 +44,8 @@ export const labels = {
       'With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.',
     'hero.cta': 'View Projects',
     'project.code': 'Code',
-    'project.demo': 'Live'
+    'project.demo': 'Live',
+    'footer.text':
+      'This portfolio was developed with %astro% and deployed on %vercel%. It is inspired by %inspiration1% and %inspiration2%. © %year% All rights reserved.'
   }
 };
