@@ -40,21 +40,23 @@ const projects = translatedProjects
 
 <section id="projects" class="scroll-mt-20">
   <h2 class="mb-8 text-lg font-bold uppercase lg:sr-only">{t('nav.projects')}</h2>
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-10 md:grid md:grid-cols-2">
     {
-      projects.map(({ slug, img, title, stack, description, repo_url, demo_url }) => (
-        <ProjectCard
-          href={getRelativeLocaleUrl(lang, `/projects/${slug}`)}
-          slug={slug}
-          img={img}
-          title={title}
-          stack={stack}
-          description={description}
-          repo_url={repo_url}
-          demo_url={demo_url}
-          t={t}
-        />
-      ))
+      Array.from({ length: 4 }, () => projects)
+        .flat()
+        .map(({ slug, img, title, stack, description, repo_url, demo_url }) => (
+          <ProjectCard
+            href={getRelativeLocaleUrl(lang, `/projects/${slug}`)}
+            slug={slug}
+            img={img}
+            title={title}
+            stack={stack}
+            description={description}
+            repo_url={repo_url}
+            demo_url={demo_url}
+            t={t}
+          />
+        ))
     }
   </div>
 </section>
