@@ -12,45 +12,49 @@ interface Props {
 
 const { lang, t } = Astro.props;
 
-const projects = await getProjectsByLanguage(lang);
+const translatedProjects = await getProjectsByLanguage(lang);
 
 const getRepoUrl = (repoUrl: string | undefined, slug: string) => {
   if (repoUrl === '') return undefined;
   return repoUrl || `https://github.com/nicoarbelaez/${slug}`;
 };
 
-const projectsWithValidatedImages = projects.map(({ slug, data }) => {
-  const repoUrl = getRepoUrl(data.repo_url, slug);
-  const img = data.screenshot ? data.screenshot : `/img/projects/${slug}.webp`;
+const getImagePath = (screenshot: string | undefined, slug: string): string => {
+  return screenshot ? screenshot : `/img/projects/${slug}.webp`;
+};
 
-  return {
-    ...data,
-    img,
-    slug,
-    repo_url: repoUrl
-  };
-});
+const projects = translatedProjects
+  .map(({ slug, data }) => {
+    const repoUrl = getRepoUrl(data.repo_url, slug);
+    const img = getImagePath(data.screenshot, slug);
+
+    return {
+      ...data,
+      img,
+      slug,
+      repo_url: repoUrl
+    };
+  })
+  .sort((a, b) => b.priority - a.priority);
 ---
 
 <section id="projects" class="scroll-mt-20">
   <h2 class="mb-8 text-lg font-bold uppercase lg:sr-only">{t('nav.projects')}</h2>
   <div class="flex flex-col gap-10">
     {
-      projectsWithValidatedImages.map(
-        ({ slug, img, title, stack, description, repo_url, demo_url }) => (
-          <ProjectCard
-            href={getRelativeLocaleUrl(lang, `/projects/${slug}`)}
-            slug={slug}
-            img={img}
-            title={title}
-            stack={stack}
-            description={description}
-            repo_url={repo_url}
-            demo_url={demo_url}
-            t={t}
-          />
-        )
-      )
+      projects.map(({ slug, img, title, stack, description, repo_url, demo_url }) => (
+        <ProjectCard
+          href={getRelativeLocaleUrl(lang, `/projects/${slug}`)}
+          slug={slug}
+          img={img}
+          title={title}
+          stack={stack}
+          description={description}
+          repo_url={repo_url}
+          demo_url={demo_url}
+          t={t}
+        />
+      ))
     }
   </div>
 </section>
