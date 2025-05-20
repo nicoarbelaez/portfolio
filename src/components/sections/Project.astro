@@ -13,30 +13,43 @@ interface Props {
 const { lang, t } = Astro.props;
 
 const projects = await getProjectsByLanguage(lang);
+
+const getRepoUrl = (repoUrl: string | undefined, slug: string) => {
+  if (repoUrl === '') return undefined;
+  return repoUrl || `https://github.com/nicoarbelaez/${slug}`;
+};
+
+const projectsWithValidatedImages = projects.map(({ slug, data }) => {
+  const repoUrl = getRepoUrl(data.repo_url, slug);
+  const img = data.screenshot ? data.screenshot : `/img/projects/${slug}.webp`;
+
+  return {
+    ...data,
+    img,
+    slug,
+    repo_url: repoUrl
+  };
+});
 ---
 
 <section id="projects" class="scroll-mt-20">
   <h2 class="mb-8 text-lg font-bold uppercase lg:sr-only">{t('nav.projects')}</h2>
   <div class="flex flex-col gap-10">
     {
-      projects.map(
-        ({ slug, data: { screenshot, title, stack, description, repo_url, demo_url } }, index) => {
-          const img = screenshot ? screenshot : `/img/projects/${slug}.webp`;
-          const href = getRelativeLocaleUrl(lang, `/projects/${slug}`);
-          return (
-            <ProjectCard
-              href={href}
-              slug={slug}
-              img={img}
-              title={title}
-              stack={stack}
-              description={description}
-              repo_url={repo_url}
-              demo_url={demo_url}
-              t={t}
-            />
-          );
-        }
+      projectsWithValidatedImages.map(
+        ({ slug, img, title, stack, description, repo_url, demo_url }) => (
+          <ProjectCard
+            href={getRelativeLocaleUrl(lang, `/projects/${slug}`)}
+            slug={slug}
+            img={img}
+            title={title}
+            stack={stack}
+            description={description}
+            repo_url={repo_url}
+            demo_url={demo_url}
+            t={t}
+          />
+        )
       )
     }
   </div>
