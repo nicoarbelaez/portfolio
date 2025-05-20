@@ -1,5 +1,4 @@
 {
-  "stack": ["blockchain", "finance", "ethereum"],
-  "repo_url": "https://github.com/nicoarbelaez/defi",
-  "priority": 0
+  "stack": ["Apps Script", "TypeScript", "AppSheet", "Node.js"],
+  "priority": 3
 }

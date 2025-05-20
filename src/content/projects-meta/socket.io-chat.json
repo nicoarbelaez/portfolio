@@ -1,6 +1,5 @@
 {
-  "stack": ["tiempo-real", "websockets", "nodejs"],
-  "demo_url": "https://arbelaeznicolas.dev",
-  "repo_url": "https://github.com/nicoarbelaez/socketio-chat",
-  "priority": 0
+  "stack": ["Socket.IO", "Express", "Tailwind CSS", "TypeScript"],
+  "repo_url": "https://github.com/nicoarbelaez/socket.io-chat",
+  "priority": 3
 }

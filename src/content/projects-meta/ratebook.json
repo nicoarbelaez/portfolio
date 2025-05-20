@@ -1,5 +1,4 @@
 {
-  "stack": ["finance", "management", "analytics"],
-  "repo_url": "https://github.com/nicoarbelaez/ratebook",
-  "priority": 0
+  "stack": ["Java 17", "Spring Boot", "MySQL", "JWT", "Docker"],
+  "priority": 3
 }

@@ -1,5 +1,5 @@
 {
-  "stack": ["e-commerce", "api", "nodejs"],
-  "demo_url": "https://arbelaeznicolas.dev",
-  "priority": 0
+  "stack": ["Express", "Sequelize", "JWT", "Vercel", "Supabase", "Nodemailer"],
+  "demo_url": "https://picksyapi.arbelaeznicolas.dev",
+  "priority": 3
 }

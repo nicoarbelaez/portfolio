@@ -19,7 +19,18 @@ interface Props {
   t: Transitions;
 }
 
-const { slug, img, title, stack, description, href, repo_url, demo_url, t } = Astro.props;
+const {
+  slug,
+  img,
+  title,
+  stack: technologies,
+  description,
+  href,
+  repo_url,
+  demo_url,
+  t
+} = Astro.props;
+const stack = technologies?.sort();
 ---
 
 <div id={`${slug}`} class="group flex flex-col gap-3 md:grid md:grid-cols-3 md:gap-4">
