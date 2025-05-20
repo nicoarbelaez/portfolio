@@ -6,6 +6,7 @@ import LinkButton from '@/components/ui/LinkButton.astro';
 import Repository from '@/icons/Repository.astro';
 import Link from '@/icons/Link.astro';
 import type { Transitions } from '@/i18n/utils';
+import OverlayBackground from '@/components/ui/OverlayBackground.astro';
 
 interface Props {
   href: string;
@@ -33,7 +34,8 @@ const {
 const stack = technologies?.sort();
 ---
 
-<article class="group flex scroll-mt-18 flex-col gap-3 md:flex-row" id={slug}>
+<article class="group relative flex scroll-mt-18 flex-col gap-y-3 md:flex-row md:gap-x-3" id={slug}>
+  <OverlayBackground />
   <div class="order-1 flex flex-col gap-y-4 md:justify-between">
     <div class="flex flex-col gap-y-1">
       <h3
@@ -73,7 +75,7 @@ const stack = technologies?.sort();
     </div>
   </div>
 
-  <div class="order-2 md:order-2 md:my-6">
+  <div class="order-2 md:order-2">
     <ImagePlaceholder
       transitionName={`img-${slug}`}
       src={img}
