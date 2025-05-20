@@ -1,8 +1,7 @@
 ---
 title: 'Discord Bot'
 description: 'A Discord bot built to automate common tasks and bridge the community.'
-demo_url: 'https://discord.gg/tu-servidor'
-priority: 0
+meta: 'discord-bot'
 ---
 
 This bot was born out of the need to automate moderation tasks and enhance the community experience on Discord. Designed for a private server, it offered basic tools such as auto-welcome, reminders, and role management, aiming to streamline numerous daily actions.

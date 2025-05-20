@@ -1,15 +1,25 @@
-import { z, defineCollection } from 'astro:content';
+import { z, defineCollection, reference } from 'astro:content';
 
-const projects = defineCollection({
+const projectsMeta = defineCollection({
+  type: 'data',
   schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    tags: z.array(z.string()).optional(),
-    repo_url: z.string().optional(),
+    stack: z.array(z.string()).optional(),
+    repo_url: z.union([z.string().url(), z.literal('')]).optional(),
     demo_url: z.string().url().optional(),
     screenshot: z.string().optional(), // Use this website https://shots.so
     priority: z.number().max(3).default(0)
   })
 });
 
-export const collections = { projects };
+const projects = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    meta: reference('projects-meta')
+  })
+});
+
+export const collections = {
+  'projects-meta': projectsMeta,
+  projects
+};

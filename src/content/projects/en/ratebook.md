@@ -1,13 +1,7 @@
 ---
 title: 'Ratebook: Financial Management Tool'
 description: 'Open-source solution for interest rate tracking and financial analytics'
-tags:
-  - 'finance'
-  - 'management'
-  - 'analytics'
-demo_url: 'https://arbelaeznicolas.dev'
-repo_url: 'https://github.com/nicoarbelaez/ratebook'
-priority: 0
+meta: 'ratebook'
 ---
 
 **Ratebook** simplifies financial operations with:

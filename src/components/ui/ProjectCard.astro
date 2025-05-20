@@ -12,14 +12,14 @@ interface Props {
   slug: string;
   img: string;
   title: string;
-  tags: string[] | undefined;
+  stack: string[] | undefined;
   description: string;
   repo_url?: string;
   demo_url?: string;
   t: Transitions;
 }
 
-const { slug, img, title, tags, description, href, repo_url, demo_url, t } = Astro.props;
+const { slug, img, title, stack, description, href, repo_url, demo_url, t } = Astro.props;
 ---
 
 <div id={`${slug}`} class="group flex flex-col gap-3 md:grid md:grid-cols-3 md:gap-4">
@@ -50,11 +50,11 @@ const { slug, img, title, tags, description, href, repo_url, demo_url, t } = Ast
     </div>
 
     {
-      tags && (
+      stack && (
         <div class="mb-2">
           <div class="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <Badge>{tag}</Badge>
+            {stack.map((tech) => (
+              <Badge>{tech}</Badge>
             ))}
           </div>
         </div>

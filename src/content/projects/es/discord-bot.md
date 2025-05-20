@@ -1,8 +1,7 @@
 ---
 title: 'Discord Bot'
 description: 'Un bot de Discord creado para automatizar acciones comunes y unir a la comunidad'
-demo_url: 'https://discord.gg/tu-servidor'
-priority: 0
+meta: 'discord-bot'
 ---
 
 Este bot nace de la necesidad de automatizar tareas de moderación y mejorar la experiencia de comunidad en Discord. Diseñado para un servidor propio, ofrecía herramientas básicas como bienvenida automática, recordatorios y gestión de roles, con el objetivo de facilitar numerosas acciones diarias.

@@ -1,12 +1,7 @@
 ---
 title: 'Plataforma DeFi: Intercambio Descentralizado'
 description: 'Plataforma de trading blockchain con pools de liquidez'
-tags:
-  - 'blockchain'
-  - 'finanzas'
-  - 'ethereum'
-repo_url: 'https://github.com/nicoarbelaez/defi'
-priority: 0
+meta: 'defi'
 ---
 
 **Plataforma DeFi** incluye:

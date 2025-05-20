@@ -1,13 +1,7 @@
 ---
 title: 'Ratebook: Herramienta de Gestión Financiera'
 description: 'Solución open-source para seguimiento de tasas y análisis financiero'
-tags:
-  - 'finanzas'
-  - 'gestión'
-  - 'analítica'
-demo_url: 'https://arbelaeznicolas.dev'
-repo_url: 'https://github.com/nicoarbelaez/ratebook'
-priority: 0
+meta: 'ratebook'
 ---
 
 **Ratebook** simplifica operaciones financieras con:
