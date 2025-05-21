@@ -29,7 +29,9 @@ export const labels = {
     'project.code': 'Código',
     'project.demo': 'Demo',
     'footer.text':
-      'Este portafolio ha sido desarrollado con %astro% y desplegado en %vercel%. Se inspira en %inspiration1% y %inspiration2%. © %year% Todos los derechos reservados.'
+      'Este portafolio ha sido desarrollado con %astro% y desplegado en %vercel%. Se inspira en %inspiration1% y %inspiration2%. © %year% Todos los derechos reservados.',
+    'experience.current': 'Presente',
+    'experience.title': 'Experiencia Laboral'
   },
   en: {
     '404.cta': 'Back to home',
@@ -46,6 +48,8 @@ export const labels = {
     'project.code': 'Code',
     'project.demo': 'Live',
     'footer.text':
-      'This portfolio was developed with %astro% and deployed on %vercel%. It is inspired by %inspiration1% and %inspiration2%. © %year% All rights reserved.'
+      'This portfolio was developed with %astro% and deployed on %vercel%. It is inspired by %inspiration1% and %inspiration2%. © %year% All rights reserved.',
+    'experience.current': 'Present',
+    'experience.title': 'Work Experience'
   }
 };

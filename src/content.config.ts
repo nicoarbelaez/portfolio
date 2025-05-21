@@ -19,7 +19,20 @@ const projects = defineCollection({
   })
 });
 
+const experience = defineCollection({
+  type: 'content',
+  schema: z.object({
+    company: z.string(),
+    role: z.string(),
+    description: z.string(),
+    startDate: z.string(),
+    endDate: z.string().optional(),
+    skills: z.array(z.string())
+  })
+});
+
 export const collections = {
   'projects-meta': projectsMeta,
-  projects
+  projects,
+  experience
 };

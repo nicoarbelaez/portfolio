@@ -1,0 +1,28 @@
+---
+import type { Transitions } from '@/i18n/utils';
+import { getCollection } from 'astro:content';
+import ExperienceCard from '@/components/ui/ExperienceCard.astro';
+import type { LocaleKey } from '@/i18n/ui';
+import Section from '@/components/Section.astro';
+
+interface Props {
+  lang: LocaleKey;
+  t: Transitions;
+}
+
+const { lang, t } = Astro.props;
+
+const experiences = await getCollection('experience', ({ id }) => id.startsWith(`${lang}/`));
+---
+
+<Section title={t('experience.title')}>
+  <h2 class="mb-8 text-lg font-bold uppercase lg:sr-only"></h2>
+
+  <div class="flex flex-col gap-y-12">
+    {
+      experiences
+        .sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime())
+        .map(({ data }) => <ExperienceCard {...data} t={t} />)
+    }
+  </div>
+</Section>

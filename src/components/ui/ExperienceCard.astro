@@ -1,0 +1,48 @@
+---
+import Badge from '@/components/ui/Badge.astro';
+import type { Transitions } from '@/i18n/utils';
+
+interface Props {
+  company: string;
+  role: string;
+  description: string;
+  startDate: string;
+  endDate?: string;
+  skills: string[];
+  t: Transitions;
+}
+
+const { company, role, description, startDate, endDate, skills, t } = Astro.props;
+
+const formatDate = (date: string | undefined) => {
+  if (!date) return t('experience.current');
+  return new Date(date).toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'short'
+  });
+};
+
+const dateRange = `${formatDate(startDate)} - ${formatDate(endDate)}`;
+---
+
+<article class="group flex scroll-mt-28 flex-col gap-y-4">
+  <div class="flex items-center justify-between">
+    <h3 class="text-lg font-semibold text-slate-200/95">
+      {company}
+    </h3>
+    <time class="text-sm text-slate-500 uppercase">
+      {dateRange}
+    </time>
+  </div>
+
+  <div class="flex flex-col gap-y-2">
+    <h4 class="font-medium text-slate-300/90">{role}</h4>
+    <p class="text-sm text-pretty text-slate-400/95">
+      {description}
+    </p>
+  </div>
+
+  <div class="flex flex-wrap gap-2">
+    {skills.map((skill) => <Badge>{skill}</Badge>)}
+  </div>
+</article>
