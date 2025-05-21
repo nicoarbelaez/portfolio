@@ -1,5 +1,6 @@
 {
   "stack": ["Express", "Sequelize", "JWT", "Vercel", "Supabase", "Nodemailer"],
   "demo_url": "https://picksyapi.arbelaeznicolas.dev",
+  "repo_url": "https://github.com/nicoarbelaez/my-store-picksy-api",
   "priority": 2
 }

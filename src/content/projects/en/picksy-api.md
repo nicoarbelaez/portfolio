@@ -1,7 +1,7 @@
 ---
 title: 'MyStore Picksy API: E-commerce Integration'
 description: 'Middleware for inventory management and order processing'
-meta: 'my-store-picksy-api'
+meta: 'picksy-api'
 ---
 
 **Key functionalities:**
