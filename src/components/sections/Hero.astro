@@ -5,6 +5,7 @@ import Github from '@/icons/Github.astro';
 import Linkedin from '@/icons/Linkedin.astro';
 import { getYearsSince } from '@/utils/date';
 import ArrowRight from '@/icons/ArrowRight.astro';
+import File from '@/icons/File.astro';
 
 interface Props {
   t: Transitions;
@@ -38,13 +39,23 @@ const socialMedia = [
         {description}
       </p>
 
-      <div class="mt-8">
+      <div class="mt-8 flex gap-4">
         <a
           href="#projects"
           class="group hover:slate-200/95 items-center gap-2 rounded-lg border-2 border-slate-400/95 px-6 py-3 text-sm font-semibold text-slate-400/95 transition hover:text-teal-300"
         >
           {t('hero.cta')}
-          <ArrowRight class="size-4 transition group-hover:translate-x-1" />
+          <ArrowRight class="size-4" />
+        </a>
+
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group hover:slate-200/95 items-center gap-2 rounded-lg border-2 border-slate-400/95 px-6 py-3 text-sm font-semibold text-slate-400/95 transition hover:text-teal-300"
+        >
+          <File class="size-4" />
+          {t('nav.resume')}
         </a>
       </div>
     </div>
@@ -53,7 +64,7 @@ const socialMedia = [
       {
         socialMedia.map(({ icon: Icon, href }) => {
           const name = Icon.name;
-          const label = `${name} (se abre en nueva pestaña)`;
+          const label = `${name} (opens in new tab)`;
 
           return (
             <li class="mr-5 shrink-0 text-xs">

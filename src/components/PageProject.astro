@@ -3,9 +3,13 @@ import { getCurrentLang, useTranslations } from '@/i18n/utils';
 import { type Project } from '@/utils/projects';
 import Layout from '@/layouts/Layout.astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getImagePath, getRepoUrl } from '@/utils/projects';
 import Badge from '@/components/ui/Badge.astro';
 import ArrowRight from '@/icons/ArrowRight.astro';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
+import LinkButton from './ui/LinkButton.astro';
+import Repository from '@/icons/Repository.astro';
+import Link from '@/icons/Link.astro';
 
 interface Props {
   project: Project;
@@ -16,8 +20,11 @@ const lang = getCurrentLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
 const { slug, data } = project;
-const { title, description, screenshot, stack } = data;
-const img = screenshot ? screenshot : `/img/projects/${slug}.webp`;
+const { title, description, screenshot, stack, repo_url, demo_url } = data;
+
+const img = getImagePath(screenshot, slug);
+const repoUrl = getRepoUrl(repo_url, slug);
+
 const { Content } = await project.render();
 ---
 
@@ -28,27 +35,38 @@ const { Content } = await project.render();
         <div
           class="inline-flex items-center justify-center rounded-full bg-teal-300/10 px-4 py-2 text-sm text-teal-300 transition hover:bg-teal-300/20"
         >
-          <ArrowRight class="mr-2 rotate-180" />
+          <ArrowRight class="mr-2 size-4 rotate-180" />
           {t('action.back')}
         </div>
       </span>
     </a>
 
-    <article class="lg:prose-lg prose-sm">
-      <h1 transition:name={`title-${slug}`} class="mb-4">
+    <article class="flex flex-col gap-4">
+      <h1 transition:name={`title-${slug}`} class="mb-4 text-2xl font-bold">
         {title}
       </h1>
 
-      <ImagePlaceholder
-        transitionName={`img-${slug}`}
-        src={img}
-        alt={`Screenshot of ${title}`}
-        class="aspect-16/9 rounded-md border-2 border-slate-200/10 object-cover group-hover:border-slate-200/30 hover:border-slate-200/30"
-      />
+      <div class="mx-auto w-4/5">
+        <ImagePlaceholder
+          transitionName={`img-${slug}`}
+          src={img}
+          alt={`Screenshot of ${title}`}
+          class="aspect-16/9 w-full rounded-md border-2 border-slate-200/10 object-cover shadow-lg transition-colors group-hover:border-slate-200/30 hover:border-slate-200/30"
+        />
+      </div>
 
-      <p transition:name={`description-${slug}`}>
+      <p transition:name={`description-${slug}`} class="text-pretty">
         {description}
       </p>
+
+      {
+        (repoUrl || demo_url) && (
+          <div class="flex flex-wrap gap-3">
+            {repoUrl && <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />}
+            {demo_url && <LinkButton href={demo_url} icon={Link} text={t('project.demo')} />}
+          </div>
+        )
+      }
 
       {
         stack && (
@@ -60,7 +78,9 @@ const { Content } = await project.render();
         )
       }
 
-      <Content />
+      <div class="prose prose-custom prose-slate prose-invert max-w-none">
+        <Content />
+      </div>
     </article>
   </section>
 </Layout>
