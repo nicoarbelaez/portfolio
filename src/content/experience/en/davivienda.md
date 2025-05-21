@@ -9,7 +9,7 @@ description: >-
   S.A. facilities, collaborating on projects, streamlining customer service
   processes, managing banking operations, and ensuring compliance with internal
   regulations.
-startDate: '2024-02-10'
+startDate: '2024-03-10'
 skills:
   - 'Customer service'
   - 'Process optimization'

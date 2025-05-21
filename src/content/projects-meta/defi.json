@@ -1,4 +1,4 @@
 {
-  "stack": ["Apps Script", "TypeScript", "AppSheet", "Node.js"],
+  "stack": ["Apps Script", "TypeScript", "AppSheet", "Node.js", "Excel"],
   "priority": 3
 }
