@@ -31,7 +31,9 @@ export const labels = {
     'footer.text':
       'Este portafolio ha sido desarrollado con %astro% y desplegado en %vercel%. Se inspira en %inspiration1% y %inspiration2%. © %year% Todos los derechos reservados.',
     'experience.current': 'Presente',
-    'experience.title': 'Experiencia Laboral'
+    'experience.title': 'Experiencia Laboral',
+    'schema.jobTitle': 'Ingeniero de Sistemas - Desarrollo Backend',
+    'schema.skills': ['Desarrollo Backend', 'Diseño de Sistemas', 'Desarrollo de APIs']
   },
   en: {
     '404.cta': 'Back to home',
@@ -50,6 +52,8 @@ export const labels = {
     'footer.text':
       'This portfolio was developed with %astro% and deployed on %vercel%. It is inspired by %inspiration1% and %inspiration2%. © %year% All rights reserved.',
     'experience.current': 'Present',
-    'experience.title': 'Work Experience'
+    'experience.title': 'Work Experience',
+    'schema.jobTitle': 'Systems Engineer - Backend Development',
+    'schema.skills': ['Backend Development', 'System Design', 'API Development']
   }
 };

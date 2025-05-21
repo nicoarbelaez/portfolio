@@ -10,6 +10,7 @@ import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
 import LinkButton from './ui/LinkButton.astro';
 import Repository from '@/icons/Repository.astro';
 import Link from '@/icons/Link.astro';
+import { PERSONAL_INFO } from '@/constants/constants';
 
 interface Props {
   project: Project;
@@ -20,15 +21,22 @@ const lang = getCurrentLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
 const { slug, data } = project;
-const { title, description, screenshot, stack, repo_url, demo_url } = data;
+const { title, description: desc, screenshot, stack, repo_url, demo_url } = data;
 
 const img = getImagePath(screenshot, slug);
 const repoUrl = getRepoUrl(repo_url, slug);
 
 const { Content } = await project.render();
+const description = `${PERSONAL_INFO.FULL_NAME} | ${t('title')}. ${desc}`;
 ---
 
-<Layout title={title} lang={lang}>
+<Layout
+  lang={lang}
+  title={title}
+  description={description}
+  image={img || '/og-default.jpg'}
+  type="article"
+>
   <section class="mx-auto max-w-3xl px-6 pt-20">
     <a href={`${getRelativeLocaleUrl(lang)}#${slug}`} class="mb-6 inline-flex items-center">
       <span class="relative inline-flex overflow-hidden rounded-full p-[1px]">

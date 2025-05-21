@@ -4,13 +4,19 @@ import { getCurrentLang, useTranslations } from '@/i18n/utils';
 import Hero from '@/components/sections/Hero.astro';
 import Project from '@/components/sections/Project.astro';
 import Experience from '@/components/sections/Experience.astro';
+import { getYearsSince } from '@/utils/date';
+import { PERSONAL_INFO } from '@/constants/constants';
 
 const lang = getCurrentLang(Astro.currentLocale);
 
 const t = useTranslations(lang);
+
+const description =
+  `${PERSONAL_INFO.FULL_NAME} | ${t('title')}. ` +
+  t('hero.description').replace('%years-experience%', getYearsSince('2023-01-01').toString());
 ---
 
-<Layout lang={lang} title={t('title')}>
+<Layout lang={lang} title={t('title')} description={description}>
   <main class="mx-auto max-w-5xl px-6 lg:px-4 xl:px-0">
     <Hero t={t} />
     <Project lang={lang} t={t} />

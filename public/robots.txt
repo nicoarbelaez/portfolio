@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arbelaeznicolas.dev/sitemap-index.xml
