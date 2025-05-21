@@ -4,7 +4,7 @@ description: 'Plataforma e-commerce multiempresa construida con una arquitectura
 meta: 'picksy'
 ---
 
-**Picksy** es una plataforma de e-commerce multiempresa diseñada para ofrecer soluciones escalables y personalizables en entornos comerciales complejos. Desarrollada como prototipo para **[Orderly's SAS](/projects/landing-orderlys)**, surge de la necesidad de explorar arquitecturas modernas que combinen rendimiento, flexibilidad y gestión centralizada. El proyecto, liderado por el desarrollador principal **[Jorge Velasquez](https://github.com/jevg2003)**, se construyó mediante un fork colaborativo, priorizando la experimentación con tecnologías emergentes y prácticas de desarrollo ágil.
+**Picksy** es una plataforma de e-commerce multiempresa diseñada para ofrecer soluciones escalables y personalizables en entornos comerciales complejos. Desarrollada como prototipo para **[Orderly's SAS](/es/projects/landing-orderlys)**, surge de la necesidad de explorar arquitecturas modernas que combinen rendimiento, flexibilidad y gestión centralizada. El proyecto, liderado por el desarrollador principal **[Jorge Velasquez](https://github.com/jevg2003)**, se construyó mediante un fork colaborativo, priorizando la experimentación con tecnologías emergentes y prácticas de desarrollo ágil.
 
 ## Descripción Técnica y Funcionalidades
 
@@ -13,7 +13,7 @@ Picksy opera bajo una arquitectura modular que separa claramente el frontend del
 ### Pilares Tecnológicos
 
 - **Frontend Híbrido**: Combina **Astro** para la generación estática de páginas (como catálogos o landing pages) con **Next.js** para rutas dinámicas (carritos de compra, paneles de usuario). Esta integración permite tiempos de carga inferiores a 2 segundos en contenido estático y soporte para interactividad compleja.
-- **Backend RESTful**: Desarrollado en **Node.js** y **Express**, ofrece más de 30 endpoints para gestionar autenticación JWT, CRUD de productos, procesamiento de pedidos y sincronización de inventario. Puedes verlo [aquí](/projects/picksy-api/)
+- **Backend RESTful**: Desarrollado en **Node.js** y **Express**, ofrece más de 30 endpoints para gestionar autenticación JWT, CRUD de productos, procesamiento de pedidos y sincronización de inventario. Puedes verlo [aquí](/es/projects/picksy-api/)
 - **Base de Datos Relacional**: Utiliza **PostgreSQL** con particionamiento por esquemas para aislar datos entre tiendas, garantizando seguridad y eficiencia en consultas masivas.
 
 ### Funcionalidades Clave
