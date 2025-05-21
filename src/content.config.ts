@@ -7,7 +7,7 @@ const projectsMeta = defineCollection({
     repo_url: z.union([z.string().url(), z.literal('')]).optional(),
     demo_url: z.string().url().optional(),
     screenshot: z.string().optional(), // Use this website https://shots.so
-    priority: z.number().max(3).default(0)
+    priority: z.number().max(5).default(0)
   })
 });
 
