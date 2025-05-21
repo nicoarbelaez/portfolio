@@ -1,6 +1,6 @@
 ---
 import type { LocaleKey } from '@/i18n/ui';
-import { getProjectsByLanguage } from '@/utils/projects';
+import { getProjectsByLanguage, getImagePath, getRepoUrl } from '@/utils/projects';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Transitions } from '@/i18n/utils';
 import ProjectCard from '@/components/ui/ProjectCard.astro';
@@ -14,15 +14,6 @@ interface Props {
 const { lang, t } = Astro.props;
 
 const translatedProjects = await getProjectsByLanguage(lang);
-
-const getRepoUrl = (repoUrl: string | undefined, slug: string) => {
-  if (repoUrl === '') return undefined;
-  return repoUrl || `https://github.com/nicoarbelaez/${slug}`;
-};
-
-const getImagePath = (screenshot: string | undefined, slug: string): string => {
-  return screenshot ? screenshot : `/img/projects/${slug}.webp`;
-};
 
 const projects = translatedProjects
   .map(({ slug, data }) => {
