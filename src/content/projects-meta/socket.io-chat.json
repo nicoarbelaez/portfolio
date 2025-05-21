@@ -1,5 +1,5 @@
 {
   "stack": ["Socket.IO", "Express", "Tailwind CSS", "TypeScript"],
   "repo_url": "https://github.com/nicoarbelaez/socket.io-chat",
-  "priority": 3
+  "priority": 2
 }

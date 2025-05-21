@@ -1,5 +1,5 @@
 {
   "stack": ["Express", "Sequelize", "JWT", "Vercel", "Supabase", "Nodemailer"],
   "demo_url": "https://picksyapi.arbelaeznicolas.dev",
-  "priority": 3
+  "priority": 2
 }

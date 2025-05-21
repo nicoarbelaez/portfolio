@@ -1,0 +1,5 @@
+{
+  "stack": ["Landing page", "Tailwind CSS", "Astro", "Vercel"],
+  "demo_url": "https://cronoterrario.vercel.app/",
+  "priority": 3
+}
