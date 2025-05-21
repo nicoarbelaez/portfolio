@@ -40,3 +40,6 @@ export const getProjectsByLanguage = async (lang: string) => {
   const projectsWithMeta = await attachMetaToProjects(projects);
   return projectsWithMeta;
 };
+
+export type Projects = Awaited<ReturnType<typeof getProjectsByLanguage>>;
+export type Project = Projects[number];

@@ -1,76 +1,65 @@
 ---
 import { getCurrentLang, useTranslations } from '@/i18n/utils';
+import { type Project } from '@/utils/projects';
 import Layout from '@/layouts/Layout.astro';
-import type { CollectionEntry } from 'astro:content';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import Badge from '@/components/ui/Badge.astro';
+import ArrowRight from '@/icons/ArrowRight.astro';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
 
 interface Props {
-  project: CollectionEntry<'projects'>;
+  project: Project;
 }
 
 const { project } = Astro.props as Props;
 const lang = getCurrentLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
-const { slug } = project;
-const { title, description, tags, screenshot } = project.data;
+const { slug, data } = project;
+const { title, description, screenshot, stack } = data;
 const img = screenshot ? screenshot : `/img/projects/${slug}.webp`;
 const { Content } = await project.render();
 ---
 
 <Layout title={title} lang={lang}>
-  <section class="mx-auto max-w-3xl px-6 py-12">
-    <a
-      href={`${getRelativeLocaleUrl(lang)}#${slug}`}
-      class="mb-6 inline-flex transform cursor-pointer items-center rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white shadow-md transition-transform hover:-translate-y-0.5 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
-    >
-      ← {t('action.back')}
+  <section class="mx-auto max-w-3xl px-6 pt-20">
+    <a href={`${getRelativeLocaleUrl(lang)}#${slug}`} class="mb-6 inline-flex items-center">
+      <span class="relative inline-flex overflow-hidden rounded-full p-[1px]">
+        <div
+          class="inline-flex items-center justify-center rounded-full bg-teal-300/10 px-4 py-2 text-sm text-teal-300 transition hover:bg-teal-300/20"
+        >
+          <ArrowRight class="mr-2 rotate-180" />
+          {t('action.back')}
+        </div>
+      </span>
     </a>
 
-    {
-      title && (
-        <h1
-          transition:name={`title-${slug}`}
-          class="prose prose-xl md:prose-2xl dark:prose-invert prose-headings:underline mb-4 text-4xl font-extrabold tracking-tight md:text-5xl"
-        >
-          {title}
-        </h1>
-      )
-    }
+    <article class="lg:prose-lg prose-sm">
+      <h1 transition:name={`title-${slug}`} class="mb-4">
+        {title}
+      </h1>
 
-    <img
-      transition:name={`img-${slug}`}
-      src={img}
-      alt={`Screenshot of ${title} ${img}`}
-      class="mb-6 h-auto w-full rounded-xl object-cover shadow-lg"
-    />
+      <ImagePlaceholder
+        transitionName={`img-${slug}`}
+        src={img}
+        alt={`Screenshot of ${title}`}
+        class="aspect-16/9 rounded-md border-2 border-slate-200/10 object-cover group-hover:border-slate-200/30 hover:border-slate-200/30"
+      />
 
-    {
-      description && (
-        <p
-          transition:name={`description-${slug}`}
-          class="prose prose-base md:prose-lg lg:prose-xl dark:prose-invert prose-p:text-gray-700 dark:prose-p:text-gray-300 mb-6"
-        >
-          {description}
-        </p>
-      )
-    }
+      <p transition:name={`description-${slug}`}>
+        {description}
+      </p>
 
-    {
-      tags && (
-        <ul class="mb-8 flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <li class="rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-800">
-              {tag}
-            </li>
-          ))}
-        </ul>
-      )
-    }
+      {
+        stack && (
+          <ul class="flex flex-wrap gap-2">
+            {stack.map((tech) => (
+              <Badge>{tech}</Badge>
+            ))}
+          </ul>
+        )
+      }
 
-    <article
-      class="prose prose-lg md:prose-xl dark:prose-invert prose-img:rounded-xl prose-a:text-indigo-600 prose-a:hover:text-indigo-500"
-    >
       <Content />
     </article>
   </section>

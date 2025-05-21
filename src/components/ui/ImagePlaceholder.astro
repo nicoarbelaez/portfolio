@@ -11,11 +11,10 @@ interface Props {
 const { src, alt, transitionName, class: className } = Astro.props;
 ---
 
-<div class="relative">
+<div transition:name={transitionName} class="relative">
   {
     src ? (
       <img
-        transition:name={transitionName}
         src={src}
         alt={alt}
         class={className}
