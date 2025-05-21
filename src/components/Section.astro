@@ -1,12 +1,13 @@
 ---
 interface Props {
   title: string;
+  id: string;
 }
 
-const { title } = Astro.props;
+const { title, id } = Astro.props;
 ---
 
-<section id="experience" class="mb-30 scroll-mt-18">
+<section id={id} class="mb-30 scroll-mt-18">
   <h2 class="mb-8 text-lg font-bold uppercase lg:sr-only">
     {title}
   </h2>

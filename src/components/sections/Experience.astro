@@ -15,7 +15,7 @@ const { lang, t } = Astro.props;
 const experiences = await getCollection('experience', ({ id }) => id.startsWith(`${lang}/`));
 ---
 
-<Section title={t('experience.title')}>
+<Section id="experience" title={t('experience.title')}>
   <h2 class="mb-8 text-lg font-bold uppercase lg:sr-only"></h2>
 
   <div class="flex flex-col gap-y-12">

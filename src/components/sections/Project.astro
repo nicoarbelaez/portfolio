@@ -39,7 +39,7 @@ const projects = translatedProjects
   .sort((a, b) => b.priority - a.priority);
 ---
 
-<Section title={t('nav.projects')}>
+<Section id="projects" title={t('nav.projects')}>
   <div class="flex flex-col gap-y-10 md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8">
     {
       projects.map(({ slug, img, title, stack, description, repo_url, demo_url }) => (
