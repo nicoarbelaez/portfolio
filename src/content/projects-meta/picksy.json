@@ -1,0 +1,6 @@
+{
+  "stack": ["Astro", "Next.js", "Vercel", "Tailwind CSS"],
+  "demo_url": "https://picksy-ochre.vercel.app",
+  "repo_url": "https://github.com/jevg2003/picksy",
+  "priority": 3
+}
