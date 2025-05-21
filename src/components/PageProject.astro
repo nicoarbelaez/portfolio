@@ -21,19 +21,19 @@ const lang = getCurrentLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
 const { slug, data } = project;
-const { title, description: desc, screenshot, stack, repo_url, demo_url } = data;
+const { title, description, screenshot, stack, repo_url, demo_url } = data;
 
 const img = getImagePath(screenshot, slug);
 const repoUrl = getRepoUrl(repo_url, slug);
 
 const { Content } = await project.render();
-const description = `${PERSONAL_INFO.FULL_NAME} | ${t('title')}. ${desc}`;
+const desc = `${PERSONAL_INFO.FULL_NAME} | ${t('title')}. ${description}`;
 ---
 
 <Layout
   lang={lang}
   title={title}
-  description={description}
+  description={desc}
   image={img || '/og-default.jpg'}
   type="article"
 >
