@@ -9,6 +9,14 @@ import { useTranslations } from '@/i18n/utils';
 import { PERSONAL_INFO } from '@/constants/constants';
 import { LINKS } from '@/constants/link';
 
+interface Props {
+  lang: LocaleKey;
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+}
+
 const { lang = defaultLang } = Astro.props;
 const t = useTranslations(lang);
 
@@ -55,6 +63,42 @@ const title = `${prefixTitle} ${t('hero.professional')}`;
 
     <link rel="alternate" href={`${Astro.site}en${Astro.url.pathname}`} hreflang="en" />
     <link rel="alternate" href={`${Astro.site}es${Astro.url.pathname}`} hreflang="es" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: PERSONAL_INFO.FULL_NAME,
+        url: Astro.site,
+        image: 'https://github.com/nicoarbelaez.png',
+        jobTitle: t('schema.jobTitle'),
+        description: t('hero.description'),
+        knowsAbout: t('schema.skills'),
+        knowsLanguage: [
+          {
+            '@type': 'Language',
+            name: locales[lang].es
+          },
+          {
+            '@type': 'Language',
+            name: locales[lang].en
+          }
+        ],
+        sameAs: [LINKS.GITHUB, LINKS.LINKEDIN],
+        alumniOf: {
+          '@type': 'EducationalOrganization',
+          name: 'Universidad Santiago de Cali',
+          url: 'https://www.usc.edu.co/'
+        },
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Santiago de Cali',
+          addressRegion: 'Valle del Cauca',
+          addressCountry: 'CO'
+        }
+      })}
+    />
   </head>
   <body class="bg-slate-950">
     <div class="pointer-events-none fixed inset-0 -z-10">

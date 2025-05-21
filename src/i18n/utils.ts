@@ -13,7 +13,11 @@ export function getCurrentLang(currentLocale: string | undefined): LocaleKey {
 }
 
 export function useTranslations(lang: LocaleKey) {
-  return function t(key: keyof (typeof labels)[typeof defaultLang]) {
-    return labels[lang][key] || labels[defaultLang][key];
+  return (key: string): string => {
+    const value = labels[lang][key];
+    if (Array.isArray(value)) {
+      return value.join(', ');
+    }
+    return value || key;
   };
 }

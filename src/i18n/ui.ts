@@ -13,7 +13,15 @@ export const locales = {
 
 export const defaultLang: LocaleKey = 'en';
 
-export const labels = {
+type TranslationValue = string | string[];
+
+interface Translations {
+  [key: string]: {
+    [key: string]: TranslationValue;
+  };
+}
+
+export const labels: Translations = {
   es: {
     '404.cta': 'Volver al inicio',
     title: 'Portafolio',
