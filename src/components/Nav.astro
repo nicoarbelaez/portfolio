@@ -5,6 +5,7 @@ import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { getLocaleHref } from '@/utils/url';
 import type { NavLinkProps } from '@/types/nav';
 import Language from '@/icons/Language.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const lang = getLangFromUrl(Astro.url);
 const localesKeys = Object.keys(locales) as LocaleKey[];
@@ -21,15 +22,15 @@ const t = useTranslations(lang);
 
 const links = [
   {
-    href: '/#about',
+    href: '#about',
     text: t('nav.about')
   },
   {
-    href: '/#projects',
+    href: '#projects',
     text: t('nav.projects')
   },
   {
-    href: '/#experience',
+    href: '#experience',
     text: t('nav.experience')
   }
 ];
@@ -43,7 +44,7 @@ const links = [
       {
         links.map(({ href, text }) => (
           <a
-            href={href}
+            href={`${getRelativeLocaleUrl(lang)}${href}`}
             class="text-xs font-semibold text-slate-300/90 uppercase transition-colors hover:text-white"
           >
             {text}
