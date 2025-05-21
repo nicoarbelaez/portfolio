@@ -2,6 +2,15 @@ import { getCollection, getEntry } from 'astro:content';
 
 const cleanSlug = (slug: string, lang: string): string => slug.replace(`${lang}/`, '');
 
+export const getRepoUrl = (repoUrl: string | undefined, slug: string) => {
+  if (repoUrl === '') return undefined;
+  return repoUrl || `https://github.com/nicoarbelaez/${slug}`;
+};
+
+export const getImagePath = (screenshot: string | undefined, slug: string): string => {
+  return screenshot ? screenshot : `/img/projects/${slug}.webp`;
+};
+
 export const fetchProjectsByLanguage = async (lang: string) => {
   const projects = await getCollection('projects', ({ id }) => id.startsWith(`${lang}/`));
 
@@ -21,7 +30,7 @@ export const attachMetaToProjects = async (
       const metaEntry = await getEntry(metaCollection, metaId);
 
       if (!metaEntry) {
-        throw new Error(`Metadatos no encontrados para el proyecto "${project.id}"`);
+        throw new Error(`Metadata not found for project "${project.id}"`);
       }
 
       return {
