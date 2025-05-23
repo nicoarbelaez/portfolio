@@ -126,6 +126,13 @@ const title = `${prefixTitle} ${t('hero.professional')}`;
     height: 100%;
     color-scheme: dark;
     font-family: 'Onest Variable', system-ui, sans-serif;
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 </style>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    const htmlElement = document.documentElement;
+    htmlElement.style.scrollBehavior = 'smooth';
+  });
+</script>
