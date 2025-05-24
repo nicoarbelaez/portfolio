@@ -34,6 +34,7 @@ export const labels: Translations = {
     'hero.description':
       'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
     'hero.cta': 'Ver Proyectos',
+    'hero.scroll': 'Desliza hacia arriba',
     'project.code': 'Código',
     'project.demo': 'Demo',
     'footer.text':
@@ -55,6 +56,7 @@ export const labels: Translations = {
     'hero.description':
       'With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.',
     'hero.cta': 'View Projects',
+    'hero.scroll': 'Swipe up',
     'project.code': 'Code',
     'project.demo': 'Live',
     'footer.text':
