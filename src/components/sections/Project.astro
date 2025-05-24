@@ -5,6 +5,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Transitions } from '@/i18n/utils';
 import ProjectCard from '@/components/ui/ProjectCard.astro';
 import Section from '@/components/Section.astro';
+import { getRepository } from '@/api/github/repository';
 
 interface Props {
   lang: LocaleKey;
@@ -15,25 +16,27 @@ const { lang, t } = Astro.props;
 
 const translatedProjects = await getProjectsByLanguage(lang);
 
-const projects = translatedProjects
-  .map(({ slug, data }) => {
+const projects = await Promise.all(
+  translatedProjects.map(async ({ slug, data }) => {
     const repoUrl = getRepoUrl(data.repo_url, slug);
     const img = getImagePath(data.screenshot, slug);
+    const dataRepo = repoUrl ? await getRepository('nicoarbelaez', repoUrl?.split('/')[4]) : null;
 
     return {
       ...data,
       img,
       slug,
-      repo_url: repoUrl
+      repo_url: repoUrl,
+      github: dataRepo
     };
   })
-  .sort((a, b) => b.priority - a.priority);
+).then((results) => results.sort((a, b) => b.priority - a.priority));
 ---
 
 <Section id="projects" title={t('nav.projects')}>
   <div class="flex flex-col gap-y-10 md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8">
     {
-      projects.map(({ slug, img, title, stack, description, repo_url, demo_url }) => (
+      projects.map(({ slug, img, title, stack, description, repo_url, demo_url, github }) => (
         <ProjectCard
           href={getRelativeLocaleUrl(lang, `/projects/${slug}`)}
           slug={slug}
@@ -43,6 +46,7 @@ const projects = translatedProjects
           description={description}
           repo_url={repo_url}
           demo_url={demo_url}
+          isFork={github?.fork}
           t={t}
         />
       ))
