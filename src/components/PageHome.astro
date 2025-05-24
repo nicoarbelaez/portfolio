@@ -11,9 +11,7 @@ const lang = getCurrentLang(Astro.currentLocale);
 
 const t = useTranslations(lang);
 
-const description =
-  `${PERSONAL_INFO.FULL_NAME} | ${t('title')}. ` +
-  t('hero.description').replace('%years-experience%', getYearsSince('2023-01-01').toString());
+const description = t('hero.description');
 ---
 
 <Layout lang={lang} title={t('title')} description={description}>

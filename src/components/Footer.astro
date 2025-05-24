@@ -28,9 +28,7 @@ const links = [
   }
 ];
 
-let footerText = t('footer.text').replace('%year%', new Date().getFullYear().toString());
-
-const parts = footerText.split(/(%\w+%)/);
+const parts = t('footer.text').split(/(%\w+%)/);
 ---
 
 <div>

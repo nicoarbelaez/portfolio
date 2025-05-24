@@ -22,7 +22,7 @@ const t = useTranslations(lang);
 
 const {
   title: originalTitle = t('title'),
-  description = t('hero.description'),
+  description = t('schema.description'),
   image = '/og-default.webp',
   type = 'website'
 } = Astro.props;
@@ -73,7 +73,7 @@ const title = `${prefixTitle} ${t('hero.professional')}`;
         url: Astro.site,
         image: 'https://github.com/nicoarbelaez.png',
         jobTitle: t('schema.jobTitle'),
-        description: t('hero.description'),
+        description: t('schema.description'),
         knowsAbout: t('schema.skills'),
         knowsLanguage: [
           {

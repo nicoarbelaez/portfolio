@@ -1,4 +1,5 @@
 import { labels, defaultLang, type LocaleKey } from '@/i18n/ui';
+import { replacePlaceholders } from '@/utils/placeholders';
 
 export type Transitions = ReturnType<typeof useTranslations>;
 
@@ -15,9 +16,13 @@ export function getCurrentLang(currentLocale: string | undefined): LocaleKey {
 export function useTranslations(lang: LocaleKey) {
   return (key: string): string => {
     const value = labels[lang][key];
+
     if (Array.isArray(value)) {
       return value.join(', ');
     }
-    return value || key;
+
+    if (!value) return key;
+
+    return replacePlaceholders(value);
   };
 }

@@ -3,7 +3,6 @@ import type { Transitions } from '@/i18n/utils';
 import { LINKS } from '@/constants/link';
 import Github from '@/icons/Github.astro';
 import Linkedin from '@/icons/Linkedin.astro';
-import { getYearsSince } from '@/utils/date';
 import ArrowRight from '@/icons/ArrowRight.astro';
 import File from '@/icons/File.astro';
 import { PERSONAL_INFO } from '@/constants/constants';
@@ -13,10 +12,7 @@ interface Props {
 }
 
 const { t } = Astro.props;
-const description = t('hero.description').replace(
-  '%years-experience%',
-  getYearsSince('2023-01-01').toString()
-);
+const description = t('hero.description');
 
 const socialMedia = [
   { icon: Github, href: LINKS.GITHUB },

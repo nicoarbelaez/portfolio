@@ -42,6 +42,8 @@ export const labels: Translations = {
     'experience.current': 'Presente',
     'experience.title': 'Experiencia Laboral',
     'schema.jobTitle': 'Ingeniero de Sistemas - Desarrollo Backend',
+    'schema.description':
+      'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
     'schema.skills': ['Desarrollo Backend', 'Diseño de Sistemas', 'Desarrollo de APIs']
   },
   en: {
@@ -64,6 +66,8 @@ export const labels: Translations = {
     'experience.current': 'Present',
     'experience.title': 'Work Experience',
     'schema.jobTitle': 'Systems Engineer - Backend Development',
+    'schema.description':
+      'With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.',
     'schema.skills': ['Backend Development', 'System Design', 'API Development']
   }
 };
