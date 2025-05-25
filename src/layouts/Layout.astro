@@ -53,6 +53,7 @@ const title = `${prefixTitle} ${t('hero.professional')}`;
     <meta property="og:image" content={new URL(image, Astro.url)} />
     <meta property="og:site_name" content=`${prefixTitle}` />
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_ES'} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
