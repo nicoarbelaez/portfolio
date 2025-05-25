@@ -8,7 +8,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout lang={lang} title="404 Not Found">
+<Layout lang={lang} title="404 Not Found" description="Page not found">
   <main class="flex h-screen items-center justify-center px-6">
     <div class="text-center">
       <h1 class="animate-float text-9xl font-extrabold drop-shadow-lg drop-shadow-teal-300">404</h1>

@@ -1,5 +1,7 @@
 ---
 import Camera from '@/icons/Camera.astro';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
 interface Props {
   src: string;
@@ -9,23 +11,29 @@ interface Props {
 }
 
 const { src, alt, transitionName, class: className } = Astro.props;
+
+const publicDir = path.resolve('./public');
+const filePath = path.join(publicDir, src);
+let fileExists = false;
+try {
+  await fs.access(filePath);
+  fileExists = true;
+} catch {
+  fileExists = false;
+}
 ---
 
 <div transition:name={transitionName} class="relative">
   {
-    src ? (
-      <img
-        src={src}
-        alt={alt}
-        class={className}
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-      />
-    ) : null
+    fileExists ? (
+      <img src={src} alt={alt} class={className} />
+    ) : (
+      <div class={`flex items-center justify-center bg-slate-700 ${className}`}>
+        <div class="flex flex-col items-center gap-2 text-slate-400">
+          <Camera />
+          <span class="text-sm font-medium">404</span>
+        </div>
+      </div>
+    )
   }
-  <div class={`hidden ${className} bg-slate-700 items-center justify-center`} style="display: none">
-    <div class="flex flex-col items-center gap-2 text-slate-400">
-      <Camera />
-      <span class="text-sm font-medium">404</span>
-    </div>
-  </div>
 </div>
