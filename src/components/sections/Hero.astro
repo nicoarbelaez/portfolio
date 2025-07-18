@@ -98,7 +98,7 @@ const socialMedia = [
 
   <div
     id="scroll-indicator"
-    class="animate-duration-150 absolute right-0 bottom-0 left-0 hidden scale-100 animate-bounce flex-col items-center gap-2 pb-4 text-slate-400/40 md:hidden"
+    class="animate-duration-1000 animate-vertical-bounce animate-iteration-count-infinite absolute right-0 bottom-0 left-0 hidden scale-100 flex-col items-center gap-2 pb-4 text-slate-400/40 md:hidden"
   >
     <span class="text-md">{t('hero.scroll')}</span>
     <ArrowRight class="size-6 rotate-90" />
@@ -111,11 +111,11 @@ const socialMedia = [
     if (!scrollIndicator) return;
 
     scrollIndicator.classList.remove('hidden');
-    scrollIndicator.classList.add('flex', 'animate-zoom-in');
+    scrollIndicator.classList.add('flex');
 
     const handleScroll = () => {
       if (window.scrollY >= 350) {
-        scrollIndicator.classList.remove('animate-zoom-in');
+        scrollIndicator.classList.remove('animate-iteration-count-infinite');
         scrollIndicator.classList.add('animate-zoom-out');
 
         window.removeEventListener('scroll', handleScroll);
