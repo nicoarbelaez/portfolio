@@ -11,6 +11,7 @@ import LinkButton from './ui/LinkButton.astro';
 import Repository from '@/icons/Repository.astro';
 import Link from '@/icons/Link.astro';
 import { PERSONAL_INFO } from '@/constants/constants';
+import ContentTabs from '@/components/sections/ContentTabs';
 
 interface Props {
   project: Project;
@@ -26,7 +27,13 @@ const { title, description, screenshot, stack, repo_url, demo_url } = data;
 const img = getImagePath(screenshot, slug);
 const repoUrl = getRepoUrl(repo_url, slug);
 
-const { Content } = await project.render();
+const rawHtml = project.rendered?.html;
+
+const markerText = 'separator';
+const markerHtml = `<h2 id="${markerText}">${markerText}</h2>`;
+const [htmlGeneral, htmlTechnical] = (rawHtml || '').split(markerHtml);
+
+// const { Content } = await project.render();
 const desc = `${PERSONAL_INFO.FULL_NAME} | ${t('title')}. ${description}`;
 ---
 
@@ -86,9 +93,12 @@ const desc = `${PERSONAL_INFO.FULL_NAME} | ${t('title')}. ${description}`;
         )
       }
 
-      <div class="prose prose-custom prose-slate prose-invert max-w-none my-4">
-        <Content />
-      </div>
+      <ContentTabs
+        className="mt-8"
+        htmlGeneral={htmlGeneral}
+        htmlTechnical={htmlTechnical}
+        client:load
+      />
     </article>
   </section>
 </Layout>
