@@ -6,6 +6,8 @@ import { LINKS } from './src/constants/link';
 
 import sitemap from '@astrojs/sitemap';
 
+import preact from '@astrojs/preact';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://arbelaeznicolas.dev',
@@ -28,15 +30,13 @@ export default defineConfig({
     '/platzi': LINKS.PLATZI
   },
 
-  integrations: [
-    sitemap({
-      i18n: {
-        defaultLocale: 'en',
-        locales: {
-          en: 'en',
-          es: 'es'
-        }
+  integrations: [sitemap({
+    i18n: {
+      defaultLocale: 'en',
+      locales: {
+        en: 'en',
+        es: 'es'
       }
-    })
-  ]
+    }
+  }), preact()]
 });
