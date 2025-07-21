@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' github.com https://avatars.githubusercontent.com; connect-src 'self' https://api.github.com; font-src 'self' data:; object-src 'none'; base-uri 'none';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' github.com https://avatars.githubusercontent.com https://trainerelitez-defi-api.vercel.app; connect-src 'self' https://api.github.com https://trainerelitez-defi-api.vercel.app; font-src 'self' data:; object-src 'none'; base-uri 'none';"
         },
         {
           "key": "X-Frame-Options",
