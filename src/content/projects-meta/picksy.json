@@ -2,5 +2,5 @@
   "stack": ["Astro", "Next.js", "Vercel", "Tailwind CSS"],
   "demo_url": "https://picksy-ochre.vercel.app",
   "repo_url": "https://github.com/nicoarbelaez/picksy-multiecommerce",
-  "priority": 5
+  "priority": 3
 }
