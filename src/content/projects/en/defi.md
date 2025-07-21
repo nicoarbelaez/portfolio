@@ -1,92 +1,99 @@
 ---
-title: 'DEFI Platform for Nutrition and Training'
-description: 'Comprehensive solution to automate training and nutrition programs with a mobile app and data management in Google Sheets.'
+title: 'Training and Nutrition Application and Automation'
+description: 'Comprehensive solution to automate training and nutrition programs using Google Sheets and mobile app developed in AppSheet for more efficient management of routines and diets'
 meta: 'defi'
 ---
 
-The **DEFI** platform offers a comprehensive automation and management solution for my client in the sports field, a personal trainer and nutritionist. Designed with a focus on efficiency and user experience, DEFI streamlines the creation of training programs and meal plans by incorporating a robust nutrient calculation system and a full-featured mobile app.
+TrainerElitez is a comprehensive solution designed to optimize the management of training programs and nutrition plans in the sports field. It emerged from the need to automate manual processes in creating personalized plans, focusing on operational efficiency and user experience.
 
-## Project Description
+### Main Objectives
 
-DEFI was born from the need to optimize tedious, manual processes in crafting personalized plans. The main objectives of the project were:
+- **Program Automation**: Agile generation of training routines and nutrition plans based on specific goals
+- **Nutrient Calculator**: Intelligent food exchange according to macronutrient requirements
+- **Centralized Management**: Unified platform for progress tracking and user control
 
-- **Program Automation**: Enables my client to create workout routines and nutritional menus much faster, based on each user’s goals and parameters.
-- **Nutrient Calculator**: A tool capable of swapping foods according to macronutrient requirements, ensuring flexibility and accuracy in the diet.
-- **Mobile App in AppSheet**: An accessible platform from mobile devices, with role management, achievement tracking, and enhanced interaction between trainer and client.
+### Key Functionalities
 
-## Key Features
+#### Google Sheets
 
-1. **Nutritional Automation & Shopping List**
+- **Monthly Tracking**: Specialized sheets to assign exercises and personalized methodologies to each client
+- **Progress Analysis**: Automatic detection of regression, stagnation or progress week by week per exercise and day
+- **Performance Consolidation**: Centralized sheet grouping results to identify specific improvement areas
+- **Muscle Visualization**: Graphical representation of muscle group status using color codes according to numerical values (0-5)
 
-   - **Automatic Nutrient Calculation**: The system pulls macronutrient data for all foods from Google Sheets and automatically calculates the required proportions for each day of the week.
-   - **Weekly Meal Plan Generation**: Allows my client to create full daily menus for one or multiple weeks much faster, ensuring nutritional requirements are met.
-   - **Consolidated Shopping List**: Aggregates total quantities of each food used in the selected period and generates an optimized shopping list for the client.
-   - **Dynamic Flexibility**: If any element of the plan is modified (e.g., swapping a food item or adjusting calories), all routines and the shopping list update instantly.
+![Muscle group visualization according to performance](/img/projects/trainerelitez/preview-check-in.avif)
 
-2. **Food Exchange Calculator**
+#### Mobile Application (AppSheet)
 
-   - Food database with macronutrient values stored in Google Sheets.
-   - Dynamic calculation of equivalencies for portion exchanges.
+- **Personalized Diets**: Detailed visualization of nutrition plans with food images, quantities (grams/household measures) and macronutrient breakdown
+- **Interactive Shopping Lists**: Complete listing of required foods with purchase verification system
+- **Exchange Calculator**: Food substitution maintaining caloric equivalence
+- **Custom Dish Creation**: Tool to design dishes with real-time macronutrient calculation and save/reuse options
+- **Achievement Tracking**: Visualization of goals achieved during training process
+- **Administrative Panel**:
+  - Centralized management of users, foods, achievements and recipes
+  - Automated diet creation (by user, day and meal) with food or full day replication function
+  - Reuse of pre-existing recipes in new assignments
 
-3. **Mobile App (AppSheet)**
+![Diet and shopping list interface](/img/projects/trainerelitez/app-diet.avif)
 
-   - **Role Management**: Differentiated access for administrators, trainers, and clients.
-   - **Achievement System**: Unlocking goals with email notifications sent via **Brevo** (brevo.com).
-   - **Video Repository**: Upload and view audiovisual material to guide the user.
-   - **User Profile**: Statistics on videos watched and goal progress.
-   - **Calculator Integration**: Direct access to the exchange calculator from within the app.
+### Benefits and Results
 
-4. **Database in Google Sheets**
+- **Operational Efficiency**: Reduced time in diet and routine creation
+- **Scalability**: Capability to manage larger client volume
+- **Improved User Experience**: Immediate mobile access to nutrition and training plans
+- **Unified Visibility**: Centralized control of all users without file dispersion
 
-   - Centralized information in spreadsheets with bidirectional connection.
-   - Real-time data synchronization between the app and the sheets.
+### Client Testimonial
 
-5. **API with Google Apps Script**
+> The application has marked a before and after in the service I offer to my clients, mainly because it has allowed them to generate greater adherence to the nutrition plan.
 
-   - Development of an intermediary layer to synchronize multiple Google Sheets.
-   - Custom endpoints for reading and writing data from the mobile application.
+<video controls playsinline preload="metadata" style="max-width:40%;" src="/video/projects/trainerelitez/testimonial.mp4"></video>
 
-## Architecture and Data Flow
+## separator
 
-| Component              | Technology         | Description                                                  |
-| ---------------------- | ------------------ | ------------------------------------------------------------ |
-| Mobile Frontend        | AppSheet           | User interface, role management, and content display.        |
-| Database               | Google Sheets      | Storage of food catalogs, users, and workout records.        |
-| Connection API         | Google Apps Script | Automation of queries and updates across multiple sheets.    |
-| Nutritional Calculator | JavaScript         | Logic for macronutrient exchange calculations.               |
-| Notifications          | **Brevo**          | Sending automated emails upon goal or milestone achievement. |
+### Architecture and Data Flow
 
-## Benefits and Outcomes
+| Component              | Technology         | Functionality                                        |
+| ---------------------- | ------------------ | ---------------------------------------------------- |
+| Mobile Frontend        | AppSheet           | User interface and content visualization             |
+| Database               | Google Sheets      | Storage of food catalogs, users and records          |
+| Connection API         | Google Apps Script | Automation of queries and updates between sheets     |
+| Nutritional Calculator | JavaScript         | Logic for food exchange based on macronutrients      |
+| Notifications          | Brevo              | Automatic email sending upon reaching goals          |
+| Dynamic Muscle Image   | Express + Vercel   | Generation of visual representation of muscle status |
 
-- **Operational Efficiency**: Significant reduction in time required to create programs.
-- **Scalability**: Modular structure that allows adding new features without rewriting the core.
-- **Improved User Experience**: Friendly, personalized interface that boosts client adherence.
-- **Visibility and Control**: Real-time reports and detailed performance tracking.
+### Implemented Technologies
 
-## Challenges and Solutions
+#### Muscle Visualization API
 
-1. **Synchronizing Multiple Google Sheets**
+Endpoint `/api/v1/muscles` generates images representing muscle performance through numerical parameters (0-5):
 
-   - **Challenge**: My client managed data in separate sheets for foods, routines, and progress logs, which hindered consistency.
-   - **Solution**: API in Google Apps Script as an intermediary layer, with validation and optimistic locking.
-   - **Outcome**: Real-time synchronization without discrepancies.
+- 1-2: Red color (low performance)
+- 3: Yellow color (medium performance)
+- 4-5: Green color (high performance)
 
-2. **Automating Dynamic Nutritional Calculations**
+**Implementation example:**
 
-   - **Challenge**: Swapping foods based on macronutrients with complex calculations.
-   - **Solution**: JavaScript logic that extracts values from Google Sheets and updates the interface in real time.
-   - **Outcome**: Instant exchanges without manual calculations.
+```bash
+/api/v1/muscles?triceps=5&biceps=5&lumbar=2&...&format=png
+```
 
-3. **Role Management and Personalized Notifications**
+![Muscle visualization demonstration](https://trainerelitez-defi-api.vercel.app/api/v1/muscles?triceps=5&biceps=5&lumbar=2&trapecio=4&dorsal=3&pectoral=5&hombros=5&abdomen=4&antebrazo=5&cuadriceps=4&aductores=2&femoral=3&gluteo=4&pantorrillas=5&format=png)
 
-   - **Challenge**: Differentiating permissions and sending notifications without spamming.
-   - **Solution**: AppSheet with custom roles and triggers that send emails via **Brevo** only upon goal achievements.
-   - **Outcome**: Effective, segmented communication.
+### Technical Challenges and Solutions
 
-4. **Secure and Scalable Mobile Integration**
+#### 1. Synchronization of Multiple Google Sheets
 
-   - **Challenge**: Maintaining performance with concurrent users.
-   - **Solution**: Query optimization, pagination, and indexing in Google Apps Script; security rules in AppSheet.
-   - **Outcome**: Stable performance even with many users.
+- **Challenge**: Inconsistencies in data distributed across separate sheets for foods, routines and progress records
+- **Solution**: Implementation of intermediate API with Google Apps Script using validation and optimistic locking
+- **Result**: Real-time synchronization without discrepancies between components
 
-With DEFI, my client has a private, efficient platform that combines automation, data analysis, and mobile experience, fully tailored to their personal training and nutrition needs. Its serious, detailed approach ensures high-quality, reliable results, building the client’s trust at every stage of the process.
+#### 2. Logic Limitations in AppSheet
+
+- **Challenge**: Restrictions on validations and advanced features within AppSheet
+- **Solution**: Development of custom endpoints with Google Apps Script for:
+  - PDF generation
+  - Shopping list management
+  - Structured food replication between plans
+- **Result**: Extended functionality while maintaining native integration with Google Sheets
