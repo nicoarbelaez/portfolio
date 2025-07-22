@@ -36,7 +36,7 @@ const projects = await Promise.all(
 <Section id="projects" title={t('nav.projects')}>
   <div class="flex flex-col gap-y-10 md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8">
     {
-      projects.map(({ slug, img, title, stack, description, repo_url, demo_url, github }) => (
+      projects.map(({ slug, img, title, stack, description, repo_url, demo_url, github, show_repo }) => (
         <ProjectCard
           href={getRelativeLocaleUrl(lang, `/projects/${slug}`)}
           slug={slug}
@@ -44,9 +44,10 @@ const projects = await Promise.all(
           title={title}
           stack={stack}
           description={description}
-          repo_url={repo_url}
-          demo_url={demo_url}
+          repoUrl={repo_url}
+          demoUrl={demo_url}
           isFork={github?.fork}
+          showRepo={show_repo}
           t={t}
         />
       ))

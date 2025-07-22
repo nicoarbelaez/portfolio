@@ -16,9 +16,10 @@ interface Props {
   title: string;
   stack: string[] | undefined;
   description: string;
-  repo_url?: string;
-  demo_url?: string;
+  repoUrl?: string;
+  demoUrl?: string;
   isFork?: boolean;
+  showRepo?: boolean;
   t: Transitions;
 }
 
@@ -29,9 +30,10 @@ const {
   stack: technologies,
   description,
   href,
-  repo_url,
-  demo_url,
+  repoUrl,
+  demoUrl,
   isFork,
+  showRepo,
   t
 } = Astro.props;
 const stack = technologies?.sort();
@@ -71,14 +73,14 @@ const stack = technologies?.sort();
         )
       }
 
-      {
-        (repo_url || demo_url) && (
-          <div class="z-50 hidden w-fit flex-wrap space-x-2 md:flex">
-            {repo_url && <LinkButton href={repo_url} icon={Repository} text={t('project.code')} />}
-            {demo_url && <LinkButton href={demo_url} icon={Link} text={t('project.demo')} />}
-          </div>
-        )
-      }
+      <div class="flex flex-wrap gap-3">
+        {
+          repoUrl && showRepo && (
+            <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
+          )
+        }
+        {demoUrl && <LinkButton href={demoUrl} icon={Link} text={t('project.demo')} />}
+      </div>
     </div>
   </div>
 
@@ -101,10 +103,10 @@ const stack = technologies?.sort();
   </div>
 
   {
-    (repo_url || demo_url) && (
+    (repoUrl || demoUrl) && (
       <div class="z-50 order-3 block flex-wrap space-x-2 md:hidden">
-        {repo_url && <LinkButton href={repo_url} icon={Repository} text={t('project.code')} />}
-        {demo_url && <LinkButton href={demo_url} icon={Link} text={t('project.demo')} />}
+        {repoUrl && <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />}
+        {demoUrl && <LinkButton href={demoUrl} icon={Link} text={t('project.demo')} />}
       </div>
     )
   }
