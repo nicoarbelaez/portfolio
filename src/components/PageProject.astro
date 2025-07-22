@@ -22,7 +22,7 @@ const lang = getCurrentLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
 const { slug, data } = project;
-const { title, description, screenshot, stack, repo_url, demo_url } = data;
+const { title, description, screenshot, stack, repo_url, demo_url, show_repo } = data;
 
 const img = getImagePath(screenshot, slug);
 const repoUrl = getRepoUrl(repo_url, slug);
@@ -74,14 +74,14 @@ const desc = `${PERSONAL_INFO.FULL_NAME} | ${t('title')}. ${description}`;
         {description}
       </p>
 
-      {
-        (repoUrl || demo_url) && (
-          <div class="flex flex-wrap gap-3">
-            {repoUrl && <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />}
-            {demo_url && <LinkButton href={demo_url} icon={Link} text={t('project.demo')} />}
-          </div>
-        )
-      }
+      <div class="flex flex-wrap gap-3">
+        {
+          repoUrl && show_repo && (
+            <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
+          )
+        }
+        {demo_url && <LinkButton href={demo_url} icon={Link} text={t('project.demo')} />}
+      </div>
 
       {
         stack && (
