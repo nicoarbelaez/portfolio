@@ -1,4 +1,6 @@
 {
   "stack": ["Astro", "Tailwind CSS", "Google Sheet", "CloudFlare", "Vercel", "Zoho"],
+  "demo_url": "https://skyvenroofing.com/",
+  "show_repo": false,
   "priority": 4
 }
