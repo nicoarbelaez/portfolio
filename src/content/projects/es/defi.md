@@ -49,7 +49,7 @@ TrainerElitez es una solución integral diseñada para optimizar la gestión de 
 
 > La aplicación ha marcado un antes y un después en el servicio que ofrezco a mis asesorados, principalmente porque les ha permitido generar mayor adherencia al plan de alimentación.
 
-<video controls playsinline preload="metadata" style="max-width:40%;" src="/video/projects/trainerelitez/testimonial.mp4"></video>
+<video controls playsinline preload="metadata" class="vertical-video" src="/video/projects/trainerelitez/testimonial.mp4"></video>
 
 ## separator
 

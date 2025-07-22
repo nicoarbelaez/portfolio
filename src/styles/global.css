@@ -2,6 +2,10 @@
 @plugin "@tailwindcss/typography";
 @plugin "@midudev/tailwind-animations";
 
+.vertical-video {
+  @apply max-w-4/5 md:max-w-1/2;
+}
+
 @layer base {
   p {
     @apply leading-normal text-pretty text-slate-400/95;

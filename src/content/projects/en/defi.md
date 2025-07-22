@@ -48,7 +48,7 @@ TrainerElitez is a comprehensive solution designed to optimize the management of
 
 > The application has marked a before and after in the service I offer to my clients, mainly because it has allowed them to generate greater adherence to the nutrition plan.
 
-<video controls playsinline preload="metadata" style="max-width:40%;" src="/video/projects/trainerelitez/testimonial.mp4"></video>
+<video controls playsinline preload="metadata" class="vertical-video" src="/video/projects/trainerelitez/testimonial.mp4"></video>
 
 ## separator
 
