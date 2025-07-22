@@ -72,8 +72,7 @@ const stack = technologies?.sort();
           </div>
         )
       }
-
-      <div class="flex flex-wrap gap-3">
+      <div class="hidden flex-wrap gap-3 md:flex">
         {
           repoUrl && showRepo && (
             <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
@@ -102,12 +101,12 @@ const stack = technologies?.sort();
     </a>
   </div>
 
-  {
-    (repoUrl || demoUrl) && (
-      <div class="z-50 order-3 block flex-wrap space-x-2 md:hidden">
-        {repoUrl && <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />}
-        {demoUrl && <LinkButton href={demoUrl} icon={Link} text={t('project.demo')} />}
-      </div>
-    )
-  }
+  <div class="z-50 order-3 block flex-wrap space-x-2 md:hidden">
+    {
+      repoUrl && showRepo && (
+        <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
+      )
+    }
+    {demoUrl && <LinkButton href={demoUrl} icon={Link} text={t('project.demo')} />}
+  </div>
 </article>
