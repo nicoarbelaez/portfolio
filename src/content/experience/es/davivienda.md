@@ -8,6 +8,6 @@ description: >-
   práctica, en la cual aplico estos conocimientos en las instalaciones de Banco Davivienda S.A.,
   colaborando en proyectos, agilizando procesos de atención al cliente, gestionando operaciones
   bancarias y asegurando el cumplimiento de normativas internas.
-startDate: '2024-03-10'
+startDate: '2025-03-10'
 skills: ['Atención al cliente', 'Optimización de procesos']
 ---
