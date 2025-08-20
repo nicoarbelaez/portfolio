@@ -22,7 +22,7 @@ const experiences = await getCollection('experience', ({ id }) => id.startsWith(
     {
       experiences
         .sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime())
-        .map(({ data }) => <ExperienceCard {...data} t={t} />)
+        .map(({ data }) => <ExperienceCard {...data} t={t} lang={lang}/>)
     }
   </div>
 </Section>
