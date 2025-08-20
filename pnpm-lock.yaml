@@ -17,6 +17,9 @@ importers:
       '@fontsource-variable/onest':
         specifier: ^5.2.8
         version: 5.2.8
+      '@formkit/tempo':
+        specifier: ^0.1.2
+        version: 0.1.2
       '@js-temporal/polyfill':
         specifier: ^0.5.1
         version: 0.5.1
@@ -348,6 +351,9 @@ packages:
 
   '@fontsource-variable/onest@5.2.8':
     resolution: {integrity: sha512-DCZaaYZGx4evSzVp/FcWSezXpsFXr+yq/AsnaxZ7KJtGIbNd8s80ET8Hnugdhr3WQ1muEvN3WR4v4Rpa6vDU6g==}
+
+  '@formkit/tempo@0.1.2':
+    resolution: {integrity: sha512-jNPPbjL8oj7hK3eHX++CwbR6X4GKQt+x00/q4yeXkwynXHGKL27dylYhpEgwrmediPP4y7s0XtN1if/M/JYujg==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -2688,6 +2694,8 @@ snapshots:
     optional: true
 
   '@fontsource-variable/onest@5.2.8': {}
+
+  '@formkit/tempo@0.1.2': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
