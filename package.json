@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm run prepare:pdf && astro build",
+    "scrap": "tsx src/scripts/courses-fetch.ts",
     "prepare:pdf": "tsx src/scripts/download-pdf.ts",
     "preview": "astro preview",
     "astro": "astro",
@@ -12,16 +13,18 @@
   },
   "dependencies": {
     "@astrojs/preact": "^4.1.0",
-    "@astrojs/sitemap": "^3.4.1",
+    "@astrojs/sitemap": "^3.5.0",
     "@fontsource-variable/onest": "^5.2.8",
     "@js-temporal/polyfill": "^0.5.1",
     "@midudev/tailwind-animations": "^0.2.0",
     "@tailwindcss/vite": "^4.1.6",
-    "astro": "^5.12.0",
+    "astro": "^5.13.2",
     "preact": "^10.26.9",
+    "puppeteer-core": "^24.15.0",
     "tailwindcss": "^4.1.6"
   },
   "devDependencies": {
+    "@sparticuz/chromium": "^138.0.2",
     "@tailwindcss/typography": "^0.5.16",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
