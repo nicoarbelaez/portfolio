@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string;
+  noGradient?: boolean;
+}
+
+const { class: className, noGradient = false } = Astro.props;
+---
+
+<hr
+  class:list={[
+    className,
+    'mx-auto h-px w-4/5 border-0 bg-gradient-to-r from-transparent via-slate-500/30 to-transparent',
+    { 'mx-auto h-px w-full border-0 bg-slate-500/30': noGradient }
+  ]}
+/>

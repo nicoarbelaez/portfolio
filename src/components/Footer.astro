@@ -1,6 +1,7 @@
 ---
 import { getCurrentLang, useTranslations } from '@/i18n/utils';
 import FooterLink from '@/components/ui/FooterLink.astro';
+import GradientDivider from '@/components/ui/GradientDivider.astro';
 
 const lang = getCurrentLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -32,9 +33,7 @@ const parts = t('footer.text').split(/(%\w+%)/);
 ---
 
 <div>
-  <hr
-    class="mx-auto h-px w-4/5 border-0 bg-gradient-to-r from-transparent via-slate-500/30 to-transparent"
-  />
+  <GradientDivider />
   <footer class="flex min-h-[100px] items-center justify-center px-4 py-14">
     <p class="mx-auto max-w-2xl text-center text-sm text-slate-500">
       {
