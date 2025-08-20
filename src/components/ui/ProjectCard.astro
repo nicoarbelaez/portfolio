@@ -9,8 +9,12 @@ import type { Transitions } from '@/i18n/utils';
 import OverlayBackground from '@/components/ui/OverlayBackground.astro';
 import LinkHighlight from '@/components/ui/LinkHighlight.astro';
 import GradientDivider from '@/components/ui/GradientDivider.astro';
+import type { GitHubRepo } from '@/types/github';
+import { format } from '@formkit/tempo';
+import type { LocaleKey } from '@/i18n/ui';
 
 interface Props {
+  lang: LocaleKey;
   href: string;
   slug: string;
   img: string;
@@ -19,13 +23,14 @@ interface Props {
   description: string;
   repoUrl?: string;
   demoUrl?: string;
-  isFork?: boolean;
+  githubData?: GitHubRepo | null;
   showRepo?: boolean;
   showDivider?: boolean;
   t: Transitions;
 }
 
 const {
+  lang,
   slug,
   img,
   title,
@@ -34,12 +39,19 @@ const {
   href,
   repoUrl,
   demoUrl,
-  isFork,
+  githubData,
   showRepo,
   showDivider = true,
   t
 } = Astro.props;
 const stack = technologies?.sort();
+const isFork = githubData?.fork ?? false;
+
+const fechaCreacion = githubData ? new Date(githubData.created_at) : null;
+let dateCreateRepo;
+if (fechaCreacion) {
+  dateCreateRepo = format(fechaCreacion, 'MMM YYYY', lang).toUpperCase();
+}
 ---
 
 <article
@@ -52,7 +64,7 @@ const stack = technologies?.sort();
       <div class="flex flex-col gap-y-1">
         <h3
           transition:name={`title-${slug}`}
-          class="text-sm font-medium transition-colors duration-200 group-hover:text-teal-300"
+          class="font-medium transition-colors duration-200 group-hover:text-teal-300"
         >
           <a href={href}>
             <LinkHighlight />
@@ -75,9 +87,14 @@ const stack = technologies?.sort();
           alt={`Screenshot of ${title}`}
           class="aspect-[16/9] h-32 rounded-md border-2 border-slate-200/10 object-cover group-hover:border-slate-200/30 hover:border-slate-200/30 md:h-auto md:w-46 md:max-w-56"
         />
+        <span
+          class="animate-slide-in-right absolute -right-4 -bottom-2 me-2 w-fit rounded-sm bg-slate-950/90 px-2.5 py-0.5 text-xs font-medium text-slate-500 ring-1 ring-slate-500 ring-inset"
+        >
+          {dateCreateRepo}
+        </span>
         {
           isFork && (
-            <span class="animate-fade-in absolute -right-4 -bottom-2 me-2 w-fit rounded-sm bg-slate-950/90 px-2.5 py-0.5 text-xs font-medium text-green-400 ring-1 ring-green-400 ring-inset">
+            <span class="animate-slide-in-right absolute -right-4 bottom-3.5 me-2 w-fit rounded-sm bg-slate-950/90 px-2.5 py-0.5 text-xs font-medium text-green-400 ring-1 ring-green-400 ring-inset">
               Fork
             </span>
           )
