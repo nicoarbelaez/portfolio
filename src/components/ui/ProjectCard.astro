@@ -8,6 +8,7 @@ import Link from '@/icons/Link.astro';
 import type { Transitions } from '@/i18n/utils';
 import OverlayBackground from '@/components/ui/OverlayBackground.astro';
 import LinkHighlight from '@/components/ui/LinkHighlight.astro';
+import GradientDivider from '@/components/ui/GradientDivider.astro';
 
 interface Props {
   href: string;
@@ -20,6 +21,7 @@ interface Props {
   demoUrl?: string;
   isFork?: boolean;
   showRepo?: boolean;
+  showDivider?: boolean;
   t: Transitions;
 }
 
@@ -34,79 +36,74 @@ const {
   demoUrl,
   isFork,
   showRepo,
+  showDivider = true,
   t
 } = Astro.props;
 const stack = technologies?.sort();
 ---
 
 <article
-  class="group relative flex scroll-mt-18 flex-col gap-y-3 md:flex-row md:justify-between md:gap-x-3"
+  class="group relative flex scroll-mt-18 flex-col gap-y-4 md:justify-between md:gap-x-3"
   id={slug}
 >
   <OverlayBackground />
-  <div class="order-1 flex flex-col gap-y-4 md:justify-between">
-    <div class="flex flex-col gap-y-1">
-      <h3
-        transition:name={`title-${slug}`}
-        class="text-sm font-medium transition-colors duration-200 group-hover:text-teal-300"
-      >
-        <a href={href}>
-          <LinkHighlight />
-          {title}
-          <ArrowRight class="size-4 transition group-hover:translate-x-1" />
-        </a>
-      </h3>
+  <div class="flex flex-col gap-4 md:flex-row">
+    <div class="order-1 flex flex-col md:justify-between">
+      <div class="flex flex-col gap-y-1">
+        <h3
+          transition:name={`title-${slug}`}
+          class="text-sm font-medium transition-colors duration-200 group-hover:text-teal-300"
+        >
+          <a href={href}>
+            <LinkHighlight />
+            {title}
+            <ArrowRight class="size-4 transition group-hover:translate-x-1" />
+          </a>
+        </h3>
 
-      <p transition:name={`description-${slug}`} class="-z-10 text-sm">
-        {description}
-      </p>
-    </div>
-
-    <div class="flex flex-col gap-y-4">
-      {
-        stack && (
-          <div class="-z-10 flex flex-wrap gap-2">
-            {stack.map((tech) => (
-              <Badge>{tech}</Badge>
-            ))}
-          </div>
-        )
-      }
-      <div class="hidden flex-wrap gap-3 md:flex">
-        {
-          repoUrl && showRepo && (
-            <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
-          )
-        }
-        {demoUrl && <LinkButton href={demoUrl} icon={Link} text={t('project.demo')} />}
+        <p transition:name={`description-${slug}`} class="-z-10 text-sm">
+          {description}
+        </p>
       </div>
     </div>
+
+    <div class="order-2 w-fit md:-z-10">
+      <a href={href} class="relative w-fit">
+        <ImagePlaceholder
+          transitionName={`img-${slug}`}
+          src={img}
+          alt={`Screenshot of ${title}`}
+          class="aspect-[16/9] h-32 rounded-md border-2 border-slate-200/10 object-cover group-hover:border-slate-200/30 hover:border-slate-200/30 md:h-auto md:w-46 md:max-w-56"
+        />
+        {
+          isFork && (
+            <span class="animate-fade-in absolute -right-4 -bottom-2 me-2 w-fit rounded-sm bg-slate-950/90 px-2.5 py-0.5 text-xs font-medium text-green-400 ring-1 ring-green-400 ring-inset">
+              Fork
+            </span>
+          )
+        }
+      </a>
+    </div>
   </div>
 
-  <div class="order-2 w-fit md:-z-10">
-    <a href={href} class="relative w-fit">
-      <ImagePlaceholder
-        transitionName={`img-${slug}`}
-        src={img}
-        alt={`Screenshot of ${title}`}
-        class="aspect-[16/9] h-32 rounded-md border-2 border-slate-200/10 object-cover group-hover:border-slate-200/30 hover:border-slate-200/30 md:h-auto md:w-46 md:max-w-56"
-      />
-      {
-        isFork && (
-          <span class="animate-fade-in absolute -right-4 -bottom-2 me-2 w-fit rounded-sm bg-slate-950/90 px-2.5 py-0.5 text-xs font-medium text-green-400 ring-1 ring-green-400 ring-inset">
-            Fork
-          </span>
-        )
-      }
-    </a>
-  </div>
-
-  <div class="z-50 order-3 block flex-wrap space-x-2 md:hidden">
+  <div class="flex flex-col gap-y-4">
     {
-      repoUrl && showRepo && (
-        <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
+      stack && (
+        <div class="-z-10 flex flex-wrap gap-2">
+          {stack.map((tech) => (
+            <Badge>{tech}</Badge>
+          ))}
+        </div>
       )
     }
-    {demoUrl && <LinkButton href={demoUrl} icon={Link} text={t('project.demo')} />}
+    <div class="flex flex-wrap gap-3">
+      {
+        repoUrl && showRepo && (
+          <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
+        )
+      }
+      {demoUrl && <LinkButton href={demoUrl} icon={Link} text={t('project.demo')} />}
+    </div>
   </div>
+  {showDivider && <GradientDivider class="mt-2 block md:hidden" noGradient={true} />}
 </article>
