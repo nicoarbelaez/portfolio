@@ -8,7 +8,19 @@ const projectsMeta = defineCollection({
     demo_url: z.string().url().optional(),
     screenshot: z.string().optional(), // Use this website https://shots.so
     priority: z.number().max(5).default(0),
-    show_repo: z.boolean().default(true)
+    show_repo: z.boolean().default(true),
+    date: z
+      .string()
+      .optional()
+      .refine(
+        (s) => s === undefined || /^\d{4}-\d{2}-\d{2}$/.test(s),
+        'La fecha debe estar en formato YYYY-MM-DD'
+      )
+      .transform((s) => {
+        if (!s) return undefined;
+        const [year, month, day] = s.split('-').map(Number);
+        return new Date(year, month - 1, day);
+      })
   })
 });
 
