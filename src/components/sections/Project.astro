@@ -20,7 +20,9 @@ const projects = await Promise.all(
   translatedProjects.map(async ({ slug, data }) => {
     const repoUrl = getRepoUrl(data.repo_url, slug);
     const img = getImagePath(data.screenshot, slug);
-    const dataRepo = repoUrl ? await getRepository('nicoarbelaez', repoUrl?.split('/')[4]) : null;
+    const dataRepo = repoUrl
+      ? await getRepository('nicoarbelaez', repoUrl.split('/')[4]).catch(() => null)
+      : null;
     return {
       ...data,
       img,
@@ -37,7 +39,7 @@ const projects = await Promise.all(
     {
       projects.map(
         (
-          { slug, img, title, stack, description, repo_url, demo_url, github, show_repo },
+          { slug, img, title, stack, description, repo_url, demo_url, github, show_repo, date },
           index
         ) => {
           return (
@@ -53,6 +55,7 @@ const projects = await Promise.all(
               demoUrl={demo_url}
               githubData={github}
               showRepo={show_repo}
+              date={date}
               showDivider={index !== projects.length - 1}
               t={t}
             />

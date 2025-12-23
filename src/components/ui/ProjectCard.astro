@@ -24,6 +24,7 @@ interface Props {
   repoUrl?: string;
   demoUrl?: string;
   githubData?: GitHubRepo | null;
+  date?: Date;
   showRepo?: boolean;
   showDivider?: boolean;
   t: Transitions;
@@ -40,6 +41,7 @@ const {
   repoUrl,
   demoUrl,
   githubData,
+  date,
   showRepo,
   showDivider = true,
   t
@@ -47,11 +49,8 @@ const {
 const stack = technologies?.sort();
 const isFork = githubData?.fork ?? false;
 
-const fechaCreacion = githubData ? new Date(githubData.created_at) : null;
-let dateCreateRepo;
-if (fechaCreacion) {
-  dateCreateRepo = format(fechaCreacion, 'MMM YYYY', lang).toUpperCase();
-}
+const dateCreated = date ? date : githubData ? new Date(githubData.created_at): new Date();
+let dateCreateRepo = format(dateCreated, 'MMM YYYY', lang);
 ---
 
 <article
