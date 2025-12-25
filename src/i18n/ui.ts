@@ -1,4 +1,4 @@
-export type LocaleKey = keyof typeof locales;
+type TranslationValue = string | readonly string[];
 
 export const locales = {
   en: {
@@ -11,46 +11,48 @@ export const locales = {
   }
 };
 
+export type LocaleKey = keyof typeof locales;
+
 export const defaultLang: LocaleKey = 'en';
 
-type TranslationValue = string | string[];
+const baseEs = {
+  '404.cta': 'Volver al inicio',
+  title: 'Portafolio',
+  'action.share': 'Compartir',
+  'action.back': 'Regresar',
+  'nav.about': 'Sobre mí',
+  'nav.experience': 'Experiencia',
+  'nav.projects': 'Projectos',
+  'nav.resume': 'HV',
+  'hero.professional': 'Ingeniero de sistemas - Desarrollo backend',
+  'hero.description':
+    'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
+  'hero.cta': 'Ver Proyectos',
+  'hero.scroll': 'Desliza hacia arriba',
+  'project.code': 'Código',
+  'project.demo': 'Demo',
+  'footer.text':
+    'Este portafolio ha sido desarrollado con %astro% y desplegado en %vercel%. Se inspira en %inspiration1% y %inspiration2%. © %year% Todos los derechos reservados.',
+  'experience.current': 'Presente',
+  'experience.title': 'Experiencia Laboral',
+  'schema.jobTitle': 'Ingeniero de Sistemas - Desarrollo Backend',
+  'schema.description':
+    'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
+  'schema.skills': ['Desarrollo Backend', 'Diseño de Sistemas', 'Desarrollo de APIs'],
+  'tabs.general': 'General',
+  'tabs.technical': 'Técnico'
+} as const;
 
-interface Translations {
-  [key: string]: {
-    [key: string]: TranslationValue;
-  };
-}
+export type LabelKey = keyof typeof baseEs;
 
-export const labels: Translations = {
-  es: {
-    '404.cta': 'Volver al inicio',
-    title: 'Portafolio',
-    'action.back': 'Regresar',
-    'nav.about': 'Sobre mí',
-    'nav.experience': 'Experiencia',
-    'nav.projects': 'Projectos',
-    'nav.resume': 'HV',
-    'hero.professional': 'Ingeniero de sistemas - Desarrollo backend',
-    'hero.description':
-      'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
-    'hero.cta': 'Ver Proyectos',
-    'hero.scroll': 'Desliza hacia arriba',
-    'project.code': 'Código',
-    'project.demo': 'Demo',
-    'footer.text':
-      'Este portafolio ha sido desarrollado con %astro% y desplegado en %vercel%. Se inspira en %inspiration1% y %inspiration2%. © %year% Todos los derechos reservados.',
-    'experience.current': 'Presente',
-    'experience.title': 'Experiencia Laboral',
-    'schema.jobTitle': 'Ingeniero de Sistemas - Desarrollo Backend',
-    'schema.description':
-      'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
-    'schema.skills': ['Desarrollo Backend', 'Diseño de Sistemas', 'Desarrollo de APIs'],
-    'tabs.general': 'General',
-    'tabs.technical': 'Técnico'
-  },
+type LocaleLabels = Record<LabelKey, TranslationValue>;
+
+export const labels = {
+  es: baseEs,
   en: {
     '404.cta': 'Back to home',
     title: 'Portfolio',
+    'action.share': 'Share',
     'action.back': 'Back',
     'nav.about': 'About',
     'nav.experience': 'Experience',
@@ -74,4 +76,4 @@ export const labels: Translations = {
     'tabs.general': 'General',
     'tabs.technical': 'Technical'
   }
-};
+} as const satisfies Record<LocaleKey, LocaleLabels>;
