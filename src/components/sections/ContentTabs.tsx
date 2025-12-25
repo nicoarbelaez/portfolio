@@ -58,7 +58,7 @@ export default function ContentTabs({ className = '', htmlGeneral, htmlTechnical
           <Tab key={id} tabId={id} label={labels[id]} disabled={id === strTechnical && !hasTech} />
         ))}
       </ul>
-      <div class="prose prose-custom prose-slate prose-invert prose-video:w-full prose-video:rounded-md prose-video:bg-black prose-video:object-contain prose-video:mx-auto prose-pre:whitespace-pre-wrap prose-code:whitespace-pre-wrap mb-6 flex max-w-none">
+      <div class="prose prose-custom prose-slate prose-invert prose-video:w-full prose-video:rounded-md prose-video:bg-black prose-video:object-contain prose-video:mx-auto prose-pre:whitespace-pre-wrap prose-code:whitespace-pre-wrap prose-img:mx-auto prose-img:rounded-md prose-img:border-2 prose-img:border-slate-200/10 prose-img:object-cover prose-img:shadow-lg prose-img:transition-colors prose-img:max-w-11/12 mb-6 flex max-w-none">
         {tab === strGeneral && <div dangerouslySetInnerHTML={{ __html: htmlGeneral }} />}
         {tab === strTechnical && hasTech && (
           <div dangerouslySetInnerHTML={{ __html: htmlTechnical }} />
