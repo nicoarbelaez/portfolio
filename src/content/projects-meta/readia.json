@@ -1,0 +1,16 @@
+{
+  "stack": [
+    "Next.js",
+    "Supabase",
+    "Postgres",
+    "AWS Lambda",
+    "Gemini",
+    "Vercel AI SDK",
+    "Tailwind CSS",
+    "shadcn/ui",
+    "React Flow"
+  ],
+  "date": "2025-12-24",
+  "demo_url": "https://readia.vercel.app/",
+  "priority": 4
+}
