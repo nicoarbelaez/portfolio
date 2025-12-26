@@ -1,20 +1,30 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 
-interface Props extends HTMLAttributes<'a'> {
+interface Props extends Omit<HTMLAttributes<'a'>, 'type'> {
   icon: typeof import('@/icons/Repository.astro').default;
+  isIcon?: boolean;
   text: string;
+  type?: 'button' | 'submit' | 'reset' | null | undefined;
 }
 
-const { icon: Icon, text, ...props } = Astro.props;
+const { icon: Icon, text, isIcon = false, class: className, ...props } = Astro.props;
+
+const Tag = props.href ? 'a' : 'button';
 ---
 
-<a
+<Tag
   {...props}
-  target="_blank"
-  rel="noopener noreferrer"
-  class="z-50 inline-flex items-center gap-2 rounded-lg border border-slate-200/10 px-3 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:border-slate-200/30 hover:bg-slate-200/5 hover:text-teal-300"
+  target={props.href ? '_blank' : undefined}
+  rel={props.href ? 'noopener noreferrer' : undefined}
+  title={text}
+  class:list={[
+    className,
+    'z-50 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200/10 text-xs font-medium text-slate-300 transition-colors select-none hover:border-slate-200/30 hover:bg-slate-200/5 hover:text-teal-300',
+    { 'px-4 py-2': !isIcon, 'p-2': isIcon }
+  ]}
 >
-  <Icon class="size-4" />
-  {text}
-</a>
+  <Icon class="size-4 shrink-0" />
+  {!isIcon && <span>{text}</span>}
+  <slot>
+</Tag>

@@ -7,11 +7,12 @@ import { getImagePath, getRepoUrl } from '@/utils/projects';
 import Badge from '@/components/ui/Badge.astro';
 import ArrowRight from '@/icons/ArrowRight.astro';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
-import LinkButton from './ui/LinkButton.astro';
 import Repository from '@/icons/Repository.astro';
 import Link from '@/icons/Link.astro';
 import { PERSONAL_INFO } from '@/constants/constants';
 import ContentTabs from '@/components/sections/ContentTabs';
+import ShareButton from '@/components/ui/commun/ShareButton.astro';
+import LinkButton from '@/components/ui/LinkButton.astro';
 
 interface Props {
   project: Project;
@@ -74,13 +75,16 @@ const desc = `${description}. ${PERSONAL_INFO.FULL_NAME} | ${t('title')}`;
         {description}
       </p>
 
-      <div class="flex flex-wrap gap-3">
-        {
-          repoUrl && show_repo && (
-            <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
-          )
-        }
-        {demo_url && <LinkButton href={demo_url} icon={Link} text={t('project.demo')} />}
+      <div class="flex flex-wrap justify-between">
+        <div class="flex flex-wrap gap-3">
+          {
+            repoUrl && show_repo && (
+              <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
+            )
+          }
+          {demo_url && <LinkButton href={demo_url} icon={Link} text={t('project.demo')} />}
+        </div>
+        <ShareButton />
       </div>
 
       {

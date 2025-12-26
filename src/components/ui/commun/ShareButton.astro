@@ -1,0 +1,62 @@
+---
+import Share from '@/icons/Share.astro';
+import LinkButton from '@/components/ui/LinkButton.astro';
+import { getCurrentLang, useTranslations } from '@/i18n/utils';
+
+const lang = getCurrentLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const originalText = t('action.share');
+const copiedText = t('action.copied');
+---
+
+<LinkButton
+  icon={Share}
+  text={originalText}
+  class="share-btn"
+  data-original-text={originalText}
+  data-copied-text={copiedText}
+  isIcon
+>
+  <span class="hidden md:inline-block text-node">{originalText}</span>
+</LinkButton>
+
+<script>
+  import { isMobile } from '@/utils/device';
+
+  const shareButtons = document.querySelectorAll<HTMLElement>('.share-btn');
+
+  shareButtons.forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      const url = window.location.href;
+      const title = document.title;
+      const description =
+        document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content || title;
+      const shareData = { title, text: description, url };
+
+      const textNode = btn.querySelector('.text-node');
+
+      if (isMobile() && navigator.share && navigator.canShare(shareData)) {
+        try {
+          await navigator.share(shareData);
+        } catch (err) {
+          console.debug('Share cancelado o fallido', err);
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(url);
+
+          if (textNode) {
+            textNode.textContent = btn.dataset.copiedText || '';
+
+            setTimeout(() => {
+              textNode.textContent = btn.dataset.originalText || '';
+            }, 1500);
+          }
+        } catch (err) {
+          console.error('Error al copiar al portapapeles:', err);
+        }
+      }
+    });
+  });
+</script>
