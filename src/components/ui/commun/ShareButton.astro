@@ -32,7 +32,7 @@ const copiedText = t('action.copied');
       const title = document.title;
       const description =
         document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content || title;
-      const shareData = { title, text: description, url };
+      const shareData = { url };
 
       const textNode = btn.querySelector('.text-node');
 
@@ -43,7 +43,7 @@ const copiedText = t('action.copied');
           console.debug('Share cancelado o fallido', err);
         }
       } else {
-        try {
+        try {  
           await navigator.clipboard.writeText(url);
 
           if (textNode) {
