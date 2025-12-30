@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm run prepare:pdf && astro build",
-    "scrap": "tsx src/scripts/courses-fetch.ts",
-    "prepare:pdf": "tsx src/scripts/download-pdf.ts",
+    "prepare:pdf": "bash ./scripts/prepare-pdf.sh",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,astro}\""
@@ -29,7 +28,6 @@
     "@tailwindcss/typography": "^0.5.16",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.6.11",
-    "tsx": "^4.19.4"
+    "prettier-plugin-tailwindcss": "^0.6.11"
   }
 }
