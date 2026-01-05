@@ -7,6 +7,7 @@ import Platzi from '@/icons/Platzi.astro';
 import ArrowRight from '@/icons/ArrowRight.astro';
 import File from '@/icons/File.astro';
 import { PERSONAL_INFO } from '@/constants/constants';
+import Avatar from '@/components/ui/Avatar.astro';
 
 interface Props {
   t: Transitions;
@@ -85,18 +86,7 @@ const socialMedia = [
     </ul>
   </div>
 
-  <div class="animate-float size-50 md:size-60 lg:size-70">
-    <img
-      class="rounded-xl border-x-4 border-t-4 border-slate-950/20 mask-b-from-85%"
-      src="https://github.com/nicoarbelaez.png"
-      alt="Github profile image"
-    />
-    <img
-      class="pointer-events-none absolute inset-0 -z-10 size-full opacity-70 blur-2xl saturate-200"
-      src="https://github.com/nicoarbelaez.png"
-      alt="Github profile image (blur)"
-    />
-  </div>
+  <Avatar />
 
   <div
     id="scroll-indicator"
