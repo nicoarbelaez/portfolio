@@ -1,21 +1,24 @@
 ---
-
 interface Props {
   class?: string;
+  isBlur?: boolean;
 }
 
-const { class: className, ...props } = Astro.props;
+const { class: className, isBlur = false, ...props } = Astro.props;
 ---
 
-<div class:list={[className, 'animate-float size-50 md:size-60 lg:size-70']} {...props}>
-  <img
-    class="rounded-xl border-slate-950/20 mask-b-from-85% drop-shadow-xl drop-shadow-black"
-    src="https://github.com/nicoarbelaez.png"
-    alt="Github profile image"
-  />
-  <img
-    class="pointer-events-none absolute inset-0 -z-10 size-full opacity-70 blur-2xl saturate-200"
-    src="https://github.com/nicoarbelaez.png"
-    alt="Github profile image (blur)"
-  />
+<div
+  class:list={[className, 'border-slate-950/20 mask-b-from-85% drop-shadow-xl drop-shadow-black']}
+  {...props}
+>
+  <img class="" src="https://github.com/nicoarbelaez.png" alt="Github profile image" />
+  {
+    isBlur && (
+      <img
+        class="pointer-events-none absolute inset-0 -z-10 size-full opacity-70 blur-2xl saturate-200"
+        src="https://github.com/nicoarbelaez.png"
+        alt="Github profile image (blur)"
+      />
+    )
+  }
 </div>
