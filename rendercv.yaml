@@ -65,7 +65,7 @@ cv:
       - company: 'Banco Davivienda'
         position: 'Aprendiz – Programa Nativos Semillero'
         location: 'Colombia'
-        start_date: '2023-12'
+        start_date: '2025-03'
         end_date: 'present'
         highlights:
           - 'Sustituyó procesos manuales por sistemas de automatización en **Google Apps Script**, reduciendo significativamente los tiempos de transacciones en caja.'
