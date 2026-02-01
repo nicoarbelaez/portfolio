@@ -23,7 +23,7 @@ cv:
     proyectos:
       - name: 'Trainer Elitez (DEFI)'
         start_date: 2024
-        end_date: 2025
+        end_date: 2026
         highlights:
           - 'Stack: **Google Apps Script**, **Google AppSheet**, **TypeScript**.'
           - 'Automatizó procesos en el sector fitness mediante scripts usando TypeScript y Google Apps Script, eliminando el 100% de los errores de cálculo manuales. Para un cliente entrenador/nutricionista facilitando la gestion y control de sus asesorados.'
