@@ -27,5 +27,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# Python build environment
+.venv_build/
+
 rendercv_output/
-/public/resume.pdf

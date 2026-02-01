@@ -1,0 +1,64 @@
+name: Generate Resume PDF
+
+on:
+  push:
+    paths:
+      - 'rendercv.yaml'
+    branches:
+      - main
+
+jobs:
+  generate-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate PDF
+        run: |
+          mkdir -p public
+          python -m rendercv render "rendercv.yaml" \
+            --dont-generate-markdown \
+            --dont-generate-html \
+            --dont-generate-png \
+            --pdf-path "./public/resume.pdf"
+
+      - name: Clean up temporary files
+        run: |
+          # Eliminar el directorio de salida temporal
+          rm -rf rendercv_output
+
+      - name: Check if PDF changed
+        id: check_changes
+        run: |
+          git add public/resume.pdf
+          if git diff --staged --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push PDF
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/resume.pdf
+          git commit -m "chore: update resume PDF [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
