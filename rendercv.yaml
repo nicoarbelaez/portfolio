@@ -10,52 +10,50 @@ cv:
     - network: 'GitHub'
       username: 'nicoarbelaez'
   custom_connections:
-    - placeholder: platzi.com/p/arbelaeznicolas636 
+    - placeholder: platzi.com/p/arbelaeznicolas636
       url: https://platzi.com/p/arbelaeznicolas636/
       fontawesome_icon: link
   sections:
     perfil:
       - |
-        Desarrollador Full Stack con enfoque en **Backend** y arquitectura de software. Implementa soluciones escalables utilizando **Java (Spring Boot)** y **JavaScript (Next.js)**, con un enfoque técnico en la integración de **Inteligencia Artificial** y automatización de flujos de trabajo. Posee capacidad demostrada para transformar requerimientos operativos en sistemas funcionales, optimizando la eficiencia mediante el desarrollo de herramientas personalizadas. Con experiencia en el diseño de APIs REST, esquemas de seguridad OAuth/JWT y despliegues en entornos cloud.
-    propuesta_valor:
-      - |
-        Mi objetivo es potenciar la eficiencia operativa mediante la implementación de automatizaciones inteligentes y soluciones de Inteligencia Artificial. Me especializo en el desarrollo backend, garantizando la integridad de los datos y la escalabilidad de los sistemas, manteniendo una visión integral del producto a través de Next.js. Aporto soluciones técnicas que priorizan la seguridad, la mantenibilidad y la optimización de procesos críticos para el negocio.
+        Soy un desarrollador Full Stack enfocado en Backend con una mentalidad AI-first, liderando de forma integral el desarrollo de software para maximizar el impacto en el negocio. He impulsado la presencia digital de empresas en EE. UU. mediante el diseño de plataformas estratégicas, además de optimizar la eficiencia de diversos emprendimientos a través de la automatización de procesos con aplicaciones móviles personalizadas. Me enfoco en resolver retos técnicos complejos e integrar inteligencia artificial en sistemas y flujos operativos, garantizando resultados escalables que priorizan siempre la excelencia y la innovación.
     proyectos:
       - name: 'Trainer Elitez (DEFI)'
         start_date: 2024
         end_date: 2026
         highlights:
           - 'Stack: **Google Apps Script**, **Google AppSheet**, **TypeScript**.'
-          - 'Automatizó procesos en el sector fitness mediante scripts usando TypeScript y Google Apps Script, eliminando el 100% de los errores de cálculo manuales. Para un cliente entrenador/nutricionista facilitando la gestion y control de sus asesorados.'
-          - 'Diseñó herramientas de gestión transaccional integradas directamente en el flujo de trabajo del cliente.'
+          - 'Automatizó procesos en el sector fitness mediante, eliminando el 100% de los errores de cálculo manuales. Para un cliente entrenador/nutricionista facilitando la gestion y control de sus asesorados.'
       - name: 'High Quality Roofing Co'
         location: '[hqroofingco.com](http://hqroofingco.com/)'
         date: 2025
         highlights:
           - 'Stack: **WordPress**, **PHP**, **Google Apps Script**, JavaScript, CSS3.'
-          - 'Ejecutó la recuperación técnica y saneamiento de seguridad de la plataforma, eliminando malware y restaurando la arquitectura de estilos.'
-          - 'Desarrolló un **Plugin PHP a medida** para actuar como puente de datos (webhook) entre WordPress y Google Apps Script, resolviendo fallos de comunicación externa.'
-          - 'Optimizó la salud del dominio y el rendimiento SEO mediante la depuración de archivos residuales y monitoreo con Google Search Console.'
+          - 'Ejecuto el saneamiento de seguridad de la plataforma mediante la eliminación de malware y la restauración de su diseño original. Desarrollé un plugin a medida, resolviendo fallos de integración, y optimicé el rendimiento SEO y la salud del dominio a través de una depuración técnica profunda y monitoreo avanzado.'
       - name: 'ReadIA'
         location: '[readia.vercel.app](https://readia.vercel.app)'
         date: 2025
         highlights:
           - 'Stack: **Next.js**, **Supabase** (OAuth), Tailwind CSS, Google Gemini API, AWS Lambda, Vercel.'
-          - 'Desarrolló una plataforma de IA para el diagnóstico técnico de capacidades TI mediante análisis predictivo con modelos de lenguaje (LLM).'
-          - 'Orquestó flujos de trabajo automatizados con AWS Lambda y una infraestructura serverless para garantizar alta disponibilidad.'
+          - 'Desarrollé una plataforma de IA para el diagnóstico de capacidades TI mediante análisis predictivo con modelos de lenguaje (LLM), orquestando flujos automatizados con AWS Lambda e infraestructura serverless para garantizar alta disponibilidad.'
       - name: 'Skyven Roofing'
         location: '[skyvenroofing.com](https://skyvenroofing.com)'
         date: 2025
         highlights:
           - 'Stack: **Astro**, Tailwind CSS, Zoho CRM API, Cloudflare.'
-          - 'Desarrolló una arquitectura de captación de leads con integración directa a CRM mediante APIs de terceros.'
-          - 'Redujo los tiempos de carga y fortaleció la seguridad perimetral mediante configuraciones avanzadas de CDN y SSL en Cloudflare.'
+          - 'Diseñé una arquitectura de captación de leads integrada con CRM mediante APIs de terceros, optimizando los tiempos de carga y la seguridad perimetral a través de configuraciones en el DNS.'
     certificados:
       - bullet: '[Curso de Automatizaciones con n8n](https://platzi.com/p/arbelaeznicolas636/curso/12245-n8n-lowcode/diploma/detalle/) | Platzi (Ago 2025)'
-      - bullet: '[Curso de Backend con Node.js: Base de Datos con PostgreSQL](https://platzi.com/p/arbelaeznicolas636/curso/2507-backend-nodejs-postgres/diploma/detalle/) | Platzi (Mar 2025)'  
+      - bullet: '[Curso de Backend con Node.js: Base de Datos con PostgreSQL](https://platzi.com/p/arbelaeznicolas636/curso/2507-backend-nodejs-postgres/diploma/detalle/) | Platzi (Mar 2025)'
       - bullet: '[Curso de Backend con Node.js: Autenticación con Passport.js y JWT](https://platzi.com/p/arbelaeznicolas636/curso/2489-passport/diploma/detalle/) | Platzi (Abr 2025)'
       - bullet: '[Curso de Backend con Node.js: API REST con Express.js](https://platzi.com/p/arbelaeznicolas636/curso/2485-backend-nodejs/diploma/detalle/) | Platzi (Mar 2025)'
       - bullet: '[Curso de Java Spring Security: Autenticación y Seguridad Web](https://platzi.com/p/arbelaeznicolas636/curso/7694-java-spring-security/diploma/detalle/) | Platzi (Nov 2024)'
+    educacion:
+      - institution: 'Universidad Santiago de Cali'
+        area: 'Ingeniería en Sistemas'
+        degree: 'Pregrado (8° Semestre)'
+        start_date: 2022
+        end_date: 'present'
     habilidades_tecnicas:
       - bullet: '**Backend:** Java (Spring Boot), Node.js, PHP (Custom Plugins), Python, JavaScript, TypeScript.'
       - bullet: '**Frontend:** Next.js (React), Astro, Tailwind CSS, JavaScript, TypeScript.'
@@ -68,50 +66,43 @@ cv:
         start_date: '2025-03'
         end_date: 'present'
         highlights:
-          - 'Sustituyó procesos manuales por sistemas de automatización en **Google Apps Script**, reduciendo significativamente los tiempos de transacciones en caja.'
-          - 'Desarrolló una plataforma de gestión en AppSheet para el seguimiento técnico de clientes y referidos en tiempo real.'
-    educacion:
-      - institution: 'Universidad Santiago de Cali'
-        area: 'Ingeniería en Sistemas'
-        degree: 'Pregrado (8° Semestre)'
-        start_date: 2022
-        end_date: 'present'
+          - 'Automaticé procesos manuales mediante Google Apps Script, reduciendo drásticamente los tiempos de transacciones en caja, y desarrollé plataformas de medición de rendimiento que centralizaron la información de captación bancaria.'
     idiomas:
       - label: 'Español'
         details: 'Nativo'
       - label: 'Inglés'
-        details: 'A2 (Competencia técnica)'
+        details: 'A2'
 design:
   theme: 'sb2nov'
   page:
-    size: "us-letter"
-    top_margin: "2cm"
-    bottom_margin: "2cm"
-    left_margin: "2cm"
-    right_margin: "2cm"
+    size: 'us-letter'
+    top_margin: '2cm'
+    bottom_margin: '2cm'
+    left_margin: '2cm'
+    right_margin: '2cm'
     show_footer: false
   colors:
-    name: "rgb(0, 0, 0)"
-    connections: "rgb(0, 0, 0)"
-    section_titles: "rgb(0, 0, 0)"
-    links: "rgb(0, 79, 144)"
+    name: 'rgb(0, 0, 0)'
+    connections: 'rgb(0, 0, 0)'
+    section_titles: 'rgb(0, 0, 0)'
+    links: 'rgb(0, 79, 144)'
   links:
     underline: true
     show_external_link_icon: true
   header:
-    photo_width: "3.5cm"
-    alignment: "center"
+    photo_width: '3.5cm'
+    alignment: 'center'
     connections:
-      phone_number_format: national 
+      phone_number_format: national
       show_icons: true
   section_titles:
-    type: "with_full_line"
-    line_thickness: "0.5pt"
+    type: 'with_full_line'
+    line_thickness: '0.5pt'
   entries:
-    date_and_location_width: "4.15cm"
+    date_and_location_width: '4.15cm'
     short_second_row: false
 locale:
-  language: "spanish"
+  language: 'spanish'
   month: 'mes'
   months: 'meses'
   year: 'año'
