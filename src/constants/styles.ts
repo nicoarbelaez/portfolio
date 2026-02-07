@@ -1,0 +1,2 @@
+export const PROSE_PANEL_CLASSES =
+  'prose prose-custom prose-slate prose-invert prose-video:mx-auto prose-video:w-full prose-video:rounded-md prose-video:bg-black prose-video:object-contain prose-pre:whitespace-pre-wrap prose-code:whitespace-pre-wrap prose-img:mx-auto prose-img:max-w-11/12 prose-img:rounded-md prose-img:border-2 prose-img:border-slate-200/10 prose-img:object-cover prose-img:shadow-lg prose-img:transition-colors flex max-w-none flex-col';
