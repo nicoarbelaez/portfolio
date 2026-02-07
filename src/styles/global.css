@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
-@plugin "@midudev/tailwind-animations";
+@import 'tailwind-animations';
 
 .vertical-video {
   @apply max-w-4/5 md:max-w-1/2;

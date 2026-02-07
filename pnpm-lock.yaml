@@ -23,9 +23,6 @@ importers:
       '@js-temporal/polyfill':
         specifier: ^0.5.1
         version: 0.5.1
-      '@midudev/tailwind-animations':
-        specifier: ^0.2.0
-        version: 0.2.0(tailwindcss@4.1.6)
       '@tailwindcss/vite':
         specifier: ^4.1.6
         version: 4.1.6(vite@6.4.1(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.4))
@@ -41,6 +38,9 @@ importers:
       puppeteer-core:
         specifier: ^24.15.0
         version: 24.15.0
+      tailwind-animations:
+        specifier: ^1.0.1
+        version: 1.0.1(tailwindcss@4.1.6)
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
@@ -539,11 +539,6 @@ packages:
   '@js-temporal/polyfill@0.5.1':
     resolution: {integrity: sha512-hloP58zRVCRSpgDxmqCWJNlizAlUgJFqG2ypq79DCvyv9tHjRYMDOcPFjzfl/A1/YxDvRCZz8wvZvmapQnKwFQ==}
     engines: {node: '>=12'}
-
-  '@midudev/tailwind-animations@0.2.0':
-    resolution: {integrity: sha512-4mktb060dA7SZz0LjMfhBT30HWPmQENwF4AJC7/etESWohe4pukST0ohC2yAePS5GNinhY3MXmZZ8//2ywafOQ==}
-    peerDependencies:
-      tailwindcss: ^3.0.0 || ^4.0.0
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
@@ -2082,6 +2077,11 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
+  tailwind-animations@1.0.1:
+    resolution: {integrity: sha512-5ouCdgfGS4kcyuzRSb/1O3o9f5Akssi7ue46PHfKjvPLMWjtnzmqM8i6ElES3tKVTyhjSaTPfLti7aB7WSxhZg==}
+    peerDependencies:
+      tailwindcss: ^4.0.0
+
   tailwind-merge@3.4.0:
     resolution: {integrity: sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g==}
 
@@ -2872,10 +2872,6 @@ snapshots:
   '@js-temporal/polyfill@0.5.1':
     dependencies:
       jsbi: 4.3.2
-
-  '@midudev/tailwind-animations@0.2.0(tailwindcss@4.1.6)':
-    dependencies:
-      tailwindcss: 4.1.6
 
   '@oslojs/encoding@1.1.0': {}
 
@@ -4697,6 +4693,10 @@ snapshots:
       csso: 5.0.5
       picocolors: 1.1.1
       sax: 1.4.1
+
+  tailwind-animations@1.0.1(tailwindcss@4.1.6):
+    dependencies:
+      tailwindcss: 4.1.6
 
   tailwind-merge@3.4.0: {}
 
