@@ -1,6 +1,6 @@
 import { useContext } from 'preact/hooks';
-import type { TabListProps } from './types';
-import { TabsContext } from './Tabs';
+import type { TabListProps } from '@tabs/types';
+import { TabsContext } from '@tabs/Tabs';
 import { cn } from '@/lib/utils';
 
 /**
@@ -56,7 +56,14 @@ export function TabList({ children, className = '' }: TabListProps) {
   };
 
   return (
-    <div role="tablist" className={cn(className, 'mb-4')} onKeyDown={handleKeyDown}>
+    <div
+      role="tablist"
+      className={cn(
+        className,
+        'mb-4 inline-flex rounded-lg border border-slate-200/10 p-1.5 shadow-sm backdrop-blur-xl'
+      )}
+      onKeyDown={handleKeyDown}
+    >
       {children}
     </div>
   );

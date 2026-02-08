@@ -1,6 +1,7 @@
 import { useContext } from 'preact/hooks';
 import type { TabsTriggerProps } from '@tabs/types';
 import { TabsContext } from '@tabs/Tabs';
+import { cn } from '@/lib/utils';
 
 /**
  * Individual tab button component
@@ -28,18 +29,12 @@ export function TabsTrigger({
   };
 
   // Base styles
-  const baseStyles = 'inline-block border-b-2 p-4 transition-colors duration-200';
+  const baseStyles = '';
 
   // Conditional styles
   const activeStyles = isActive
-    ? 'border-teal-300 text-teal-300'
-    : 'border-transparent hover:border-gray-300 hover:text-gray-300';
-
-  const disabledStyles = disabled
-    ? 'cursor-not-allowed text-gray-400 opacity-50'
-    : 'cursor-pointer';
-
-  const combinedClassName = `${baseStyles} ${activeStyles} ${disabledStyles} ${className}`.trim();
+    ? 'border-slate-200/30 bg-slate-200/5 text-teal-300'
+    : 'border-transparent hover:text-slate-200 cursor-pointer';
 
   return (
     <button
@@ -51,7 +46,12 @@ export function TabsTrigger({
       tabIndex={isActive ? 0 : -1}
       disabled={disabled}
       onClick={handleClick}
-      className={combinedClassName}
+      className={cn(
+        baseStyles,
+        className,
+        'relative inline-flex flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap text-slate-300/90 transition-all duration-200 disabled:pointer-events-none disabled:opacity-50',
+        activeStyles,
+      )}
     >
       {children}
     </button>
