@@ -10,9 +10,10 @@ import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
 import Repository from '@/icons/Repository.astro';
 import Link from '@/icons/Link.astro';
 import { PERSONAL_INFO } from '@/constants/constants';
-import ContentTabs from '@/components/sections/ContentTabs';
 import ShareButton from '@/components/ui/commun/ShareButton.astro';
 import LinkButton from '@/components/ui/LinkButton.astro';
+import { ProjectContentTab } from '@/components/ProjectContentTab';
+import { cn } from '@/lib/utils';
 
 interface Props {
   project: Project;
@@ -30,6 +31,7 @@ const repoUrl = getRepoUrl(repo_url, slug);
 
 const rawHtml = project.rendered?.html;
 
+// Esto sirve para separar el contenido general del técnico
 const markerText = 'separator';
 const markerHtml = `<h2 id="${markerText}">${markerText}</h2>`;
 const [htmlGeneral, htmlTechnical] = (rawHtml || '').split(markerHtml);
@@ -97,12 +99,24 @@ const desc = `${description}. ${PERSONAL_INFO.FULL_NAME} | ${t('title')}`;
         )
       }
 
-      <ContentTabs
-        className="mt-8"
-        htmlGeneral={htmlGeneral}
-        htmlTechnical={htmlTechnical}
+      <ProjectContentTab
+        className="mt-6"
+        panelClassName={cn(
+          'prose prose-custom prose-slate prose-invert prose-video:mx-auto prose-video:w-full prose-video:rounded-md prose-video:bg-black prose-video:object-contain prose-pre:whitespace-pre-wrap prose-code:whitespace-pre-wrap prose-img:mx-auto prose-img:max-w-11/12 prose-img:rounded-md prose-img:border-2 prose-img:border-slate-200/10 prose-img:object-cover prose-img:shadow-lg prose-img:transition-colors flex max-w-none flex-col'
+        )}
+        generalData={{
+          title: 'General',
+          disabled: typeof htmlGeneral !== 'string' || htmlGeneral.trim().length === 0
+        }}
+        technicalData={{
+          title: 'Technical',
+          disabled: typeof htmlTechnical !== 'string' || htmlTechnical.trim().length === 0
+        }}
         client:load
-      />
+      >
+        <div slot="general" set:html={htmlGeneral} />
+        <div slot="technical" set:html={htmlTechnical} />
+      </ProjectContentTab>
     </article>
   </section>
 </Layout>
