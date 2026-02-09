@@ -1,5 +1,7 @@
 import { z, defineCollection, reference } from 'astro:content';
 
+export const TagEnum = z.enum(['production', 'projects', 'staff']);
+
 const projectsMeta = defineCollection({
   type: 'data',
   schema: z.object({
@@ -9,6 +11,7 @@ const projectsMeta = defineCollection({
     screenshot: z.string().optional(), // Use this website https://shots.so
     priority: z.number().max(5).default(0),
     show_repo: z.boolean().default(true),
+    tags: z.array(TagEnum).optional(),
     date: z
       .string()
       .optional()
