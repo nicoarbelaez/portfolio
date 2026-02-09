@@ -40,8 +40,11 @@ const projectTags: ProjectTag[] = getUniqueTags(
 );
 const hasUntaggedProjects = projects.some((p) => !p.tags || p.tags.length === 0);
 
-// Add 'other' tag if there are untagged projects
-let usedTags: ProjectTag[] = hasUntaggedProjects ? [...projectTags, 'other'] : projectTags;
+// Add 'all' and 'other' (if needed) to used tags
+let usedTags: ProjectTag[] = ['all', ...projectTags];
+if (hasUntaggedProjects) {
+  usedTags.push('other');
+}
 
 // Sort tags according to defined order
 usedTags.sort((a, b) => {
@@ -51,7 +54,10 @@ usedTags.sort((a, b) => {
 });
 
 // Group projects by tag
-const projectsByTag: Record<string, typeof projects> = {};
+const projectsByTag: Record<string, typeof projects> = {
+  all: projects
+};
+
 for (const tag of projectTags) {
   projectsByTag[tag] = projects.filter((p) => p.tags?.includes(tag as any));
 }
@@ -62,7 +68,7 @@ if (hasUntaggedProjects) {
 }
 
 // Default tab: first available tag
-const defaultTab: ProjectTag = usedTags[0] || 'other';
+const defaultTab: ProjectTag = usedTags[0] || 'all';
 
 // Prepare translated labels for tags (functions can't be serialized to client)
 const tagLabels = TAG_ORDER.reduce(

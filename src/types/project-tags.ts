@@ -11,12 +11,12 @@ export type CoreProjectTag = (typeof PROJECT_TAGS)[number];
 /**
  * Full project tag type including 'other'
  */
-export type ProjectTag = CoreProjectTag | 'other';
+export type ProjectTag = CoreProjectTag | 'other' | 'all';
 
 /**
  * Display order for tags in tabs
  */
-export const TAG_ORDER: ProjectTag[] = [...PROJECT_TAGS, 'other'];
+export const TAG_ORDER: ProjectTag[] = ['all', ...PROJECT_TAGS, 'other'];
 
 /**
  * Helper to extract unique tags from an array of tag arrays
