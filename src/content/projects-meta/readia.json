@@ -10,7 +10,7 @@
     "shadcn/ui",
     "React Flow"
   ],
-  "date": "2025-12-24",
   "demo_url": "https://readia.vercel.app/",
-  "priority": 4
+  "priority": 4,
+  "tags": ["production", "projects"]
 }

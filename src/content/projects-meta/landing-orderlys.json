@@ -1,5 +1,6 @@
 {
   "stack": ["Landing page", "Tailwind CSS", "Astro"],
   "demo_url": "https://jevg2003.github.io/orderlys1.0/",
-  "priority": 2
+  "priority": 2,
+  "tags": ["practices"]
 }

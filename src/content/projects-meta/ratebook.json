@@ -1,4 +1,5 @@
 {
   "stack": ["Java 17", "Spring Boot", "MySQL", "JWT", "Docker"],
-  "priority": 2
+  "priority": 2,
+  "tags": ["practices"]
 }
