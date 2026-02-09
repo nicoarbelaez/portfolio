@@ -1,11 +1,12 @@
 ---
 import type { LocaleKey } from '@/i18n/ui';
 import { getProjectsByLanguage, getImagePath, getRepoUrl } from '@/utils/projects';
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Transitions } from '@/i18n/utils';
-import ProjectCard from '@/components/ui/ProjectCard.astro';
 import Section from '@/components/Section.astro';
 import { getRepository } from '@/api/github/repository';
+import { getUniqueTags, type ProjectTag, TAG_ORDER } from '@/types/project-tags';
+import { ProjectTabs } from '@/components/ProjectTabs';
+import { getTabTranslationKey } from '@/i18n/ui';
 
 interface Props {
   lang: LocaleKey;
@@ -32,36 +33,61 @@ const projects = await Promise.all(
     };
   })
 ).then((results) => results.sort((a, b) => b.priority - a.priority));
+
+// Get unique tags across all projects (excluding 'other')
+const projectTags: ProjectTag[] = getUniqueTags(
+  translatedProjects.map((p) => p.data.tags as ProjectTag[] | undefined)
+);
+const hasUntaggedProjects = projects.some((p) => !p.tags || p.tags.length === 0);
+
+// Add 'other' tag if there are untagged projects
+let usedTags: ProjectTag[] = hasUntaggedProjects ? [...projectTags, 'other'] : projectTags;
+
+// Sort tags according to defined order
+usedTags.sort((a, b) => {
+  const indexA = TAG_ORDER.indexOf(a);
+  const indexB = TAG_ORDER.indexOf(b);
+  return indexA - indexB;
+});
+
+// Group projects by tag
+const projectsByTag: Record<string, typeof projects> = {};
+for (const tag of projectTags) {
+  projectsByTag[tag] = projects.filter((p) => p.tags?.includes(tag as any));
+}
+
+// Add untagged projects to 'other'
+if (hasUntaggedProjects) {
+  projectsByTag['other'] = projects.filter((p) => !p.tags || p.tags.length === 0);
+}
+
+// Default tab: first available tag
+const defaultTab: ProjectTag = usedTags[0] || 'other';
+
+// Prepare translated labels for tags (functions can't be serialized to client)
+const tagLabels = TAG_ORDER.reduce(
+  (acc, tag) => {
+    acc[tag] = t(getTabTranslationKey(tag));
+    return acc;
+  },
+  {} as Record<ProjectTag, string>
+);
+
+// Prepare translations for ProjectCard
+const translations = {
+  projectCode: t('project.code'),
+  projectDemo: t('project.demo')
+};
 ---
 
 <Section id="projects" title={t('nav.projects')}>
-  <div class="flex flex-col gap-y-6 md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8">
-    {
-      projects.map(
-        (
-          { slug, img, title, stack, description, repo_url, demo_url, github, show_repo, date },
-          index
-        ) => {
-          return (
-            <ProjectCard
-              lang={lang}
-              href={getRelativeLocaleUrl(lang, `/projects/${slug}`)}
-              slug={slug}
-              img={img}
-              title={title}
-              stack={stack}
-              description={description}
-              repoUrl={repo_url}
-              demoUrl={demo_url}
-              githubData={github}
-              showRepo={show_repo}
-              date={date}
-              showDivider={index !== projects.length - 1}
-              t={t}
-            />
-          );
-        }
-      )
-    }
-  </div>
+  <ProjectTabs
+    projectsByTag={projectsByTag}
+    usedTags={usedTags}
+    defaultTab={defaultTab}
+    lang={lang}
+    tagLabels={tagLabels}
+    translations={translations}
+    client:load
+  />
 </Section>

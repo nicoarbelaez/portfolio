@@ -1,6 +1,7 @@
 import { z, defineCollection, reference } from 'astro:content';
+import { PROJECT_TAGS } from './types/project-tags';
 
-export const TagEnum = z.enum(['production', 'projects', 'staff']);
+export const TagEnum = z.enum(PROJECT_TAGS);
 
 const projectsMeta = defineCollection({
   type: 'data',

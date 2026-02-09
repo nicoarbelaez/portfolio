@@ -1,11 +1,22 @@
-import type { TagEnum } from '@/content.config';
-import { z } from 'astro:content';
+/**
+ * Canonical list of project tags in desired order
+ */
+export const PROJECT_TAGS = ['production', 'projects', 'practices'] as const;
 
 /**
- * Project tags enum - must be kept in sync with content.config.ts
- * 'other' is a special tag for projects without any tags
+ * Type representing a valid project tag from the list
  */
-export type ProjectTag = z.infer<typeof TagEnum> | 'other';
+export type CoreProjectTag = (typeof PROJECT_TAGS)[number];
+
+/**
+ * Full project tag type including 'other'
+ */
+export type ProjectTag = CoreProjectTag | 'other';
+
+/**
+ * Display order for tags in tabs
+ */
+export const TAG_ORDER: ProjectTag[] = [...PROJECT_TAGS, 'other'];
 
 /**
  * Helper to extract unique tags from an array of tag arrays

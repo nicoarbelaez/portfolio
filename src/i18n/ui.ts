@@ -46,7 +46,7 @@ const baseEs = {
   'tabs.technical': 'Técnico',
   'tabs.production': 'Producción',
   'tabs.projects': 'Proyectos',
-  'tabs.staff': 'Personal',
+  'tabs.practices': 'Prácticas',
   'tabs.other': 'Otros'
 } as const;
 
@@ -85,7 +85,7 @@ export const labels = {
     'tabs.technical': 'Technical',
     'tabs.production': 'Production',
     'tabs.projects': 'Projects',
-    'tabs.staff': 'Staff',
+    'tabs.practices': 'Practices',
     'tabs.other': 'Others'
   }
 } as const satisfies Record<LocaleKey, LocaleLabels>;

@@ -4,6 +4,8 @@ import { getCurrentLang, useTranslations } from '@/i18n/utils';
 import Hero from '@/components/sections/Hero.astro';
 import Project from '@/components/sections/Project.astro';
 import Experience from '@/components/sections/Experience.astro';
+import { ProjectContentTab } from '@/components/ProjectContentTab';
+import TabsExample from '@tabs/TabsExample';
 
 const lang = getCurrentLang(Astro.currentLocale);
 
@@ -15,6 +17,7 @@ const description = t('hero.description');
 <Layout lang={lang} title={t('title')} description={description}>
   <main class="mx-auto max-w-5xl px-6 lg:px-4 xl:px-0">
     <Hero t={t} />
+    <!-- <TabsExample client:load /> -->
     <Project lang={lang} t={t} />
     <Experience lang={lang} t={t} />
   </main>
