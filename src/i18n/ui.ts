@@ -1,3 +1,5 @@
+import type { ProjectTag } from "@/types/project-tags";
+
 type TranslationValue = string | readonly string[];
 
 export const locales = {
@@ -41,7 +43,11 @@ const baseEs = {
     'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
   'schema.skills': ['Desarrollo Backend', 'Diseño de Sistemas', 'Desarrollo de APIs'],
   'tabs.general': 'General',
-  'tabs.technical': 'Técnico'
+  'tabs.technical': 'Técnico',
+  'tabs.production': 'Producción',
+  'tabs.projects': 'Proyectos',
+  'tabs.staff': 'Personal',
+  'tabs.other': 'Otros'
 } as const;
 
 export type LabelKey = keyof typeof baseEs;
@@ -76,6 +82,18 @@ export const labels = {
       'With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.',
     'schema.skills': ['Backend Development', 'System Design', 'API Development'],
     'tabs.general': 'General',
-    'tabs.technical': 'Technical'
+    'tabs.technical': 'Technical',
+    'tabs.production': 'Production',
+    'tabs.projects': 'Projects',
+    'tabs.staff': 'Staff',
+    'tabs.other': 'Others'
   }
 } as const satisfies Record<LocaleKey, LocaleLabels>;
+
+/**
+ * Helper function to get translation key for a project tag
+ * Ensures type safety between ProjectTag and LabelKey
+ */
+export function getTabTranslationKey(tag: ProjectTag): LabelKey {
+  return `tabs.${tag}` as LabelKey;
+}
