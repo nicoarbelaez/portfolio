@@ -7,7 +7,7 @@ import { getImagePath, getRepoUrl } from '@/utils/projects';
 import { Badge } from '@/components/ui/Badge';
 import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder';
 import { PERSONAL_INFO } from '@/constants/constants';
-import ShareButton from '@/components/ui/commun/ShareButton.astro';
+import { ShareButton } from '@/components/ui/ShareButton';
 import { ProjectContentTab } from '@/components/ProjectContentTab';
 import { cn } from '@/lib/utils';
 import { LinkButton } from '@/components/ui/LinkButton';
@@ -85,7 +85,7 @@ const desc = `${description}. ${PERSONAL_INFO.FULL_NAME} | ${t('title')}`;
           }
           {demo_url && <LinkButton href={demo_url} icon={IconLink} text={t('project.demo')} />}
         </div>
-        <ShareButton />
+        <ShareButton text={t('action.share')} copiedText={t('action.copied')} client:load />
       </div>
 
       {
