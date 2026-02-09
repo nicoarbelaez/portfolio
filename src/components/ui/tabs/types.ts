@@ -6,7 +6,15 @@ import type { ComponentChildren } from 'preact';
 export interface TabsContextType {
   activeTab: string;
   setActiveTab: (value: string) => void;
+  defaultValue: string;
   sectionId: string;
+  itemsTabs?: TabItem[];
+  registerTab: (tab: TabItem) => void;
+}
+
+export interface TabItem {
+  value: string;
+  disabled: boolean;
 }
 
 /**
@@ -15,9 +23,9 @@ export interface TabsContextType {
 /**
  * Props for the main Tabs wrapper component
  */
-export interface TabsProps<T extends string = string> {
+export interface TabsProps {
   sectionId: string;
-  defaultValue: T;
+  defaultValue: string;
   children: ComponentChildren;
   className?: string;
 }

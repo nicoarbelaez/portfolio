@@ -1,4 +1,4 @@
-import { useContext } from 'preact/hooks';
+import { useContext, useEffect } from 'preact/hooks';
 import type { TabsTriggerProps } from '@tabs/types';
 import { TabsContext } from '@tabs/Tabs';
 import { cn } from '@/lib/utils';
@@ -18,7 +18,12 @@ export function TabsTrigger({
     throw new Error('TabsTrigger must be used within a Tabs component');
   }
 
-  const { activeTab, setActiveTab, sectionId } = context;
+  const { activeTab, setActiveTab, sectionId, registerTab } = context;
+
+  useEffect(() => {
+    registerTab({ value, disabled });
+  }, [value, disabled, registerTab]);
+
   const isActive = activeTab === value;
 
   const handleClick = (e: Event) => {

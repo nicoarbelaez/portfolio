@@ -1,16 +1,21 @@
 import { createContext } from 'preact';
-import { useState, useEffect, useMemo } from 'preact/hooks';
-import type { TabsContextType, TabsProps } from './types';
+import { useState, useEffect, useMemo, useCallback } from 'preact/hooks';
+import type { TabItem, TabsContextType, TabsProps } from '@tabs/types';
 
 export const TabsContext = createContext<TabsContextType | null>(null);
 
-export function Tabs({
-  sectionId,
-  defaultValue,
-  children,
-  className = ''
-}: TabsProps) {
+export function Tabs({ sectionId, defaultValue, children, className = '' }: TabsProps) {
   const [activeTab, setActiveTabState] = useState<string>(defaultValue);
+  const [tabsList, setTabsList] = useState<TabItem[]>([]);
+
+  const registerTab = useCallback((tab: TabItem) => {
+    setTabsList((prev) => {
+      if (prev.some((t) => t.value === tab.value)) {
+        return prev;
+      }
+      return [...prev, tab];
+    });
+  }, []);
 
   // Read tab from URL on mount
   useEffect(() => {
@@ -27,7 +32,8 @@ export function Tabs({
       const prefix = `${sectionId}-`;
       if (tabParam.startsWith(prefix)) {
         const value = tabParam.slice(prefix.length);
-        if (value) {
+        const isTabDisabled = tabsList.some((tab) => tab.value === value && tab.disabled);
+        if (isTabDisabled) {
           setActiveTabState(value);
         }
       }
@@ -55,9 +61,11 @@ export function Tabs({
     () => ({
       activeTab,
       setActiveTab,
-      sectionId
+      sectionId,
+      defaultValue,
+      registerTab
     }),
-    [activeTab, sectionId]
+    [activeTab, sectionId, defaultValue, registerTab]
   );
 
   return (
