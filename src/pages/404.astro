@@ -1,8 +1,8 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-import ArrowRight from '@/icons/ArrowRight.astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { IconArrowRight } from '@icons/IconArrowRight';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -17,7 +17,7 @@ const t = useTranslations(lang);
         class="group mt-8 inline-flex items-center gap-2 rounded-lg border-2 border-slate-400/95 px-6 py-3 text-sm font-semibold text-slate-400/95 transition hover:border-teal-300 hover:text-teal-300"
       >
         {t('404.cta')}
-        <ArrowRight class="size-4 transition-transform group-hover:translate-x-1" />
+        <IconArrowRight className="size-4" />
       </a>
     </div>
   </main>

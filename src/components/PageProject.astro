@@ -4,17 +4,16 @@ import { type Project } from '@/utils/projects';
 import Layout from '@/layouts/Layout.astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { getImagePath, getRepoUrl } from '@/utils/projects';
-import Badge from '@/components/ui/Badge.astro';
-import ArrowRight from '@/icons/ArrowRight.astro';
-import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
-import Repository from '@/icons/Repository.astro';
-import Link from '@/icons/Link.astro';
+import { Badge } from '@/components/ui/Badge';
+import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder';
 import { PERSONAL_INFO } from '@/constants/constants';
 import ShareButton from '@/components/ui/commun/ShareButton.astro';
-import LinkButton from '@/components/ui/LinkButton.astro';
 import { ProjectContentTab } from '@/components/ProjectContentTab';
 import { cn } from '@/lib/utils';
-
+import { LinkButton } from '@/components/ui/LinkButton';
+import { IconBook2 } from '@tabler/icons-preact';
+import { IconLink } from '@tabler/icons-preact';
+import { IconArrowNarrowLeft } from '@tabler/icons-preact';
 interface Props {
   project: Project;
 }
@@ -53,7 +52,7 @@ const desc = `${description}. ${PERSONAL_INFO.FULL_NAME} | ${t('title')}`;
         <div
           class="inline-flex items-center justify-center rounded-full bg-teal-300/10 px-4 py-2 text-sm text-teal-300 transition hover:bg-teal-300/20"
         >
-          <ArrowRight class="mr-2 size-4 rotate-180" />
+          <IconArrowNarrowLeft class="mr-2 size-4" />
           {t('action.back')}
         </div>
       </span>
@@ -81,10 +80,10 @@ const desc = `${description}. ${PERSONAL_INFO.FULL_NAME} | ${t('title')}`;
         <div class="flex flex-wrap gap-3">
           {
             repoUrl && show_repo && (
-              <LinkButton href={repoUrl} icon={Repository} text={t('project.code')} />
+              <LinkButton href={repoUrl} icon={IconBook2} text={t('project.code')} />
             )
           }
-          {demo_url && <LinkButton href={demo_url} icon={Link} text={t('project.demo')} />}
+          {demo_url && <LinkButton href={demo_url} icon={IconLink} text={t('project.demo')} />}
         </div>
         <ShareButton />
       </div>

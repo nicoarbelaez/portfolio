@@ -1,15 +1,15 @@
-import { ArrowRight } from '@/icons/ArrowRight';
 import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder';
 import { Badge } from '@/components/ui/Badge';
 import { LinkButton } from '@/components/ui/LinkButton';
-import { Repository } from '@/icons/Repository';
-import { Link } from '@/icons/Link';
 import { OverlayBackground } from '@/components/ui/OverlayBackground';
 import { LinkHighlight } from '@/components/ui/LinkHighlight';
 import { GradientDivider } from '@/components/ui/GradientDivider';
 import type { GitHubRepo } from '@/types/github';
 import { format } from '@formkit/tempo';
 import type { LocaleKey } from '@/i18n/ui';
+import { IconBook2 } from '@tabler/icons-preact';
+import { IconLink } from '@tabler/icons-preact';
+import { IconArrowRight } from '@icons/IconArrowRight';
 
 interface ProjectCardProps {
   lang: LocaleKey;
@@ -66,7 +66,7 @@ export function ProjectCard({
               <a href={href}>
                 <LinkHighlight />
                 {title}
-                <ArrowRight class="size-4 transition group-hover:translate-x-1" />
+                <IconArrowRight className="size-4" />
               </a>
             </h3>
 
@@ -104,9 +104,9 @@ export function ProjectCard({
         )}
         <div class="flex flex-wrap gap-3">
           {repoUrl && showRepo && (
-            <LinkButton href={repoUrl} icon={Repository} text={translations.projectCode} />
+            <LinkButton href={repoUrl} icon={IconBook2} text={translations.projectCode} />
           )}
-          {demoUrl && <LinkButton href={demoUrl} icon={Link} text={translations.projectDemo} />}
+          {demoUrl && <LinkButton href={demoUrl} icon={IconLink} text={translations.projectDemo} />}
         </div>
       </div>
       {showDivider && <GradientDivider class="mt-2 block md:hidden" noGradient={true} />}

@@ -1,13 +1,13 @@
 ---
 import type { Transitions } from '@/i18n/utils';
 import { LINKS } from '@/constants/link';
-import Github from '@/icons/Github.astro';
-import Linkedin from '@/icons/Linkedin.astro';
-import Platzi from '@/icons/Platzi.astro';
-import ArrowRight from '@/icons/ArrowRight.astro';
-import File from '@/icons/File.astro';
+import Github from '@icons/Github.astro';
+import Linkedin from '@icons/Linkedin.astro';
+import Platzi from '@icons/Platzi.astro';
 import { PERSONAL_INFO } from '@/constants/constants';
 import Avatar from '@/components/ui/Avatar.astro';
+import { IconArrowRight } from '@icons/IconArrowRight';
+import { IconFile } from '@tabler/icons-preact';
 
 interface Props {
   t: Transitions;
@@ -30,7 +30,7 @@ const socialMedia = [
   <div>
     <div>
       <div class="flex flex-col gap-4">
-        <Avatar class="size-30 md:size-24 rounded-full" />
+        <Avatar class="size-30 rounded-full md:size-24" />
         <h1 class="text-4xl font-bold sm:text-5xl">
           {PERSONAL_INFO.FULL_NAME}
         </h1>
@@ -48,7 +48,7 @@ const socialMedia = [
           class="group hover:slate-200/95 items-center gap-2 rounded-lg border-2 border-slate-400/95 px-6 py-3 text-sm font-semibold text-slate-400/95 transition hover:text-teal-300"
         >
           {t('hero.cta')}
-          <ArrowRight class="size-4" />
+          <IconArrowRight className="size-4" />
         </a>
 
         <a
@@ -57,7 +57,7 @@ const socialMedia = [
           rel="noopener noreferrer"
           class="group hover:slate-200/95 items-center gap-2 rounded-lg border-2 border-slate-400/95 px-6 py-3 text-sm font-semibold text-slate-400/95 transition hover:text-teal-300"
         >
-          <File class="size-4" />
+          <IconFile class="size-4 inline-block shrink-0 -translate-y-px group-focus-visible:translate-x-2 motion-reduce:transition-none" />
           {t('nav.resume')}
         </a>
       </div>
@@ -96,7 +96,7 @@ const socialMedia = [
     class="animate-duration-1000 animate-vertical-bounce animate-iteration-count-infinite absolute right-0 bottom-0 left-0 hidden scale-100 flex-col items-center gap-2 pb-4 text-slate-400/40 md:hidden"
   >
     <span class="text-md">{t('hero.scroll')}</span>
-    <ArrowRight class="size-6 rotate-90" />
+    <IconArrowRight className="size-6 rotate-90" />
   </div>
 </header>
 <script is:inline>

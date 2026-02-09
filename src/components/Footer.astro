@@ -1,7 +1,7 @@
 ---
 import { getCurrentLang, useTranslations } from '@/i18n/utils';
 import FooterLink from '@/components/ui/FooterLink.astro';
-import GradientDivider from '@/components/ui/GradientDivider.astro';
+import { GradientDivider } from '@/components/ui/GradientDivider';
 
 const lang = getCurrentLang(Astro.currentLocale);
 const t = useTranslations(lang);

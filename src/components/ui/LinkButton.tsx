@@ -1,7 +1,8 @@
 import type { ComponentChildren, JSX } from 'preact';
+import type { Icon } from '@tabler/icons-preact';
 
 interface LinkButtonProps {
-  icon: (props: JSX.SVGAttributes<SVGSVGElement>) => JSX.Element;
+  icon: Icon;
   isIcon?: boolean;
   text: string;
   href?: string;

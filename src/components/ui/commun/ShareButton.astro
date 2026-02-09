@@ -1,7 +1,7 @@
 ---
-import Share from '@/icons/Share.astro';
-import LinkButton from '@/components/ui/LinkButton.astro';
+import { LinkButton } from '@/components/ui/LinkButton';
 import { getCurrentLang, useTranslations } from '@/i18n/utils';
+import { IconShare } from '@tabler/icons-preact';
 
 const lang = getCurrentLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -11,14 +11,14 @@ const copiedText = t('action.copied');
 ---
 
 <LinkButton
-  icon={Share}
+  icon={IconShare}
   text={originalText}
   class="share-btn"
   data-original-text={originalText}
   data-copied-text={copiedText}
   isIcon
 >
-  <span class="hidden md:inline-block text-node">{originalText}</span>
+  <span class="text-node hidden md:inline-block">{originalText}</span>
 </LinkButton>
 
 <script>
@@ -43,7 +43,7 @@ const copiedText = t('action.copied');
           console.debug('Share cancelado o fallido', err);
         }
       } else {
-        try {  
+        try {
           await navigator.clipboard.writeText(url);
 
           if (textNode) {
