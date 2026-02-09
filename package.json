@@ -15,6 +15,7 @@
     "@fontsource-variable/onest": "^5.2.8",
     "@formkit/tempo": "^0.1.2",
     "@js-temporal/polyfill": "^0.5.1",
+    "@tabler/icons-preact": "^3.36.1",
     "@tailwindcss/vite": "^4.1.6",
     "astro": "^5.17.1",
     "clsx": "^2.1.1",

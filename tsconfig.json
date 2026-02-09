@@ -1,18 +1,14 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [
-    ".astro/types.d.ts",
-    "**/*"
-  ],
-  "exclude": [
-    "dist"
-  ],
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
   "compilerOptions": {
     "baseUrl": ".",
     "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["src/*"],
-      "@tabs/*": ["src/components/ui/tabs/*"]
+      "@tabs/*": ["src/components/ui/tabs/*"],
+      "@icons/*": ["src/icons/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "preact"

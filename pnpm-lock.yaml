@@ -23,6 +23,9 @@ importers:
       '@js-temporal/polyfill':
         specifier: ^0.5.1
         version: 0.5.1
+      '@tabler/icons-preact':
+        specifier: ^3.36.1
+        version: 3.36.1(preact@10.26.9)
       '@tailwindcss/vite':
         specifier: ^4.1.6
         version: 4.1.6(vite@6.4.1(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.4))
@@ -716,6 +719,14 @@ packages:
   '@sparticuz/chromium@138.0.2':
     resolution: {integrity: sha512-vs5qUiK6kFCzLCxZ2buWONcB6jdF3VWdYp6kH1tt56tZ78p51dMAxfWsfk9P62z/jAeqbVg4V6Rb3Ic4aAeOKQ==}
     engines: {node: '>=20.11.0'}
+
+  '@tabler/icons-preact@3.36.1':
+    resolution: {integrity: sha512-mA69ydpz7lWgbi8ig0hrbauB4Jprk6sLl0zIZbb2X4FhsjMTi70NAGp1+DvO0H8XjHmpPEukggLdCRD5+tDEzA==}
+    peerDependencies:
+      preact: ^10.5.13
+
+  '@tabler/icons@3.36.1':
+    resolution: {integrity: sha512-f4Jg3Fof/Vru5ioix/UO4GX+sdDsF9wQo47FbtvG+utIYYVQ/QVAC0QYgcBbAjQGfbdOh2CCf0BgiFOF9Ixtjw==}
 
   '@tailwindcss/node@4.1.6':
     resolution: {integrity: sha512-ed6zQbgmKsjsVvodAS1q1Ld2BolEuxJOSyyNc+vhkjdmfNUDCmQnlXBfQkHrlzNmslxHsQU/bFmzcEbv4xXsLg==}
@@ -3044,6 +3055,13 @@ snapshots:
     transitivePeerDependencies:
       - bare-buffer
       - debug
+
+  '@tabler/icons-preact@3.36.1(preact@10.26.9)':
+    dependencies:
+      '@tabler/icons': 3.36.1
+      preact: 10.26.9
+
+  '@tabler/icons@3.36.1': {}
 
   '@tailwindcss/node@4.1.6':
     dependencies:
