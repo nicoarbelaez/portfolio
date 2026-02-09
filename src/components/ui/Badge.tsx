@@ -1,0 +1,17 @@
+import type { ComponentChildren } from 'preact';
+
+interface BadgeProps {
+  children: ComponentChildren;
+}
+
+export function Badge({ children }: BadgeProps) {
+  return (
+    <div class="flex items-center">
+      <span class="relative inline-flex overflow-hidden rounded-full p-[1px]">
+        <div class="inline-flex w-full items-center justify-center rounded-full bg-teal-300/10 px-3 py-1 text-xs whitespace-nowrap text-teal-300">
+          {children}
+        </div>
+      </span>
+    </div>
+  );
+}
