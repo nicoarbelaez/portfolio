@@ -59,8 +59,8 @@ export function TabList({ children, className = '' }: TabListProps) {
     <div
       role="tablist"
       className={cn(
-        className,
-        'mb-4 inline-flex rounded-lg border border-slate-200/10 p-1.5 shadow-sm backdrop-blur-xl'
+        'mb-4 inline-flex rounded-lg border border-slate-200/10 p-1.5 shadow-sm backdrop-blur-xl',
+        className
       )}
       onKeyDown={handleKeyDown}
     >
