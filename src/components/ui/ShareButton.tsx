@@ -13,17 +13,9 @@ export function ShareButton({ text, copiedText }: ShareButtonProps) {
 
   const handleShare = async () => {
     const url = window.location.href;
-    // We can get title/desc from document, but standard practice for react/preact might be
-    // to just rely on current page state or pass them as props if needed.
-    // The original script used document querySelector, which we can replicate.
-
-    // Note: checking for window/document is safe in useEffect/handlers as they run on client.
-
     const title = document.title;
-    const description =
-      document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content || title;
 
-    const shareData = { url, title, text: description };
+    const shareData = { url, title };
 
     if (isMobile() && navigator.share && navigator.canShare(shareData)) {
       try {
@@ -47,7 +39,7 @@ export function ShareButton({ text, copiedText }: ShareButtonProps) {
   return (
     <LinkButton
       icon={IconShare}
-      text={text} // Title attribute stays as original "Share" usually, or could be dynamic
+      text={text}
       onClick={handleShare}
       isIcon
       class="share-btn"
