@@ -1,5 +1,7 @@
 import { Tabs, TabList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import type { ComponentChildren } from 'preact';
+import { useState } from 'preact/hooks';
+import { ImageModal } from '@/components/ui/ImageModal';
 
 interface SectionData {
   title: string;
@@ -23,24 +25,47 @@ export function ProjectContentTab({
   general,
   technical
 }: Props) {
+  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+
+  const handleContentClick = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'IMG') {
+      const img = target as HTMLImageElement;
+      setSelectedImage({ src: img.src, alt: img.alt });
+    }
+  };
+
   return (
-    <Tabs className={className} sectionId="content" defaultValue="general">
-      <TabList>
-        <TabsTrigger value="general" disabled={generalData.disabled}>
-          {generalData.title}
-        </TabsTrigger>
-        <TabsTrigger value="technical" disabled={technicalData.disabled}>
-          {technicalData.title}
-        </TabsTrigger>
-      </TabList>
+    <>
+      <Tabs className={className} sectionId="content" defaultValue="general">
+        <TabList>
+          <TabsTrigger value="general" disabled={generalData.disabled}>
+            {generalData.title}
+          </TabsTrigger>
+          <TabsTrigger value="technical" disabled={technicalData.disabled}>
+            {technicalData.title}
+          </TabsTrigger>
+        </TabList>
 
-      <TabsContent value="general" className={panelClassName}>
-        {general}
-      </TabsContent>
+        <div onClick={handleContentClick}>
+          <TabsContent value="general" className={panelClassName}>
+            {general}
+          </TabsContent>
 
-      <TabsContent value="technical" className={panelClassName}>
-        {technical}
-      </TabsContent>
-    </Tabs>
+          <TabsContent value="technical" className={panelClassName}>
+            {technical}
+          </TabsContent>
+        </div>
+      </Tabs>
+
+      {selectedImage && (
+        <ImageModal
+          isOpen={true}
+          onClose={() => setSelectedImage(null)}
+          src={selectedImage.src}
+          alt={selectedImage.alt}
+        />
+      )}
+    </>
   );
 }
