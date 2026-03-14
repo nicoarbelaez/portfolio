@@ -16,53 +16,60 @@ cv:
   sections:
     perfil:
       - |
-        Desarrollador Full Stack con enfoque en Backend y arquitectura escalable. He optimizado operaciones mediante herramientas low-code, desarrollo a medida y automatización de procesos de negocio. Con gran ambición por retarme y en constante aprendizaje como autodidacta.
+        Desarrollador Full Stack con enfoque en Backend y arquitectura escalable. He optimizado operaciones mediante herramientas low-code, desarrollo a medida priorizando AI-First y automatización de procesos de negocio. Con gran ambición por retarme y en constante aprendizaje como autodidacta.
     experiencia_laboral:
-      - company: 'Danys Tortas'
+      - company: 'Danys Tortas (Proyecto - Freelancer)'
         position: 'Consultor de Automatización y CRM'
         location: 'Colombia'
         start_date: '2026-01'
         end_date: '2026-03'
         highlights:
-          - 'Implementé automatización para atención al cliente y ventas, asegurando disponibilidad 24/7.'
-          - 'Diseñé el embudo de ventas en Kommo CRM para automatizar el seguimiento de prospectos.'
-          - 'Tecnologías: **Kommo CRM**, **Automatización de Mensajería**.'
+          - 'Implementación de chatbot y automatización de atención al cliente con disponibilidad 24/7.'
+          - 'Diseño de embudo de ventas en Kommo CRM para automatizar el seguimiento de prospectos.'
+          - 'Tecnologías: Kommo CRM, automatización de mensajería.'
+
+      - company: 'Trainer Elitez (Proyecto - Freelancer)'
+        position: 'Desarrollador de Software y Automatización'
+        location: 'Colombia'
+        start_date: '2024'
+        end_date: '2026'
+        highlights:
+          - 'Automatización de cálculos nutricionales y de entrenamiento para negocio fitness, eliminando errores manuales.'
+          - 'Desarrollo de aplicación móvil para gestión centralizada de clientes y administración.'
+          - 'Tecnologías: Google Apps Script, Google AppSheet, TypeScript.'
+
       - company: 'Banco Davivienda'
         position: 'Aprendiz – Programa Nativos Semillero'
         location: 'Colombia'
         start_date: '2025-03'
         end_date: '2026-03'
         highlights:
-          - 'Automaticé procesos de caja con Google Apps Script, reduciendo tiempos de operación manual.'
-          - 'Creé tableros de visualización para indicadores de captación bancaria.'
-          - 'Tecnologías: **Google Apps Script**, **JavaScript**, **Google Sheets API**.'
-      - company: 'High Quality Roofing Co [hqroofingco.com](http://hqroofingco.com/) (contrato por proyecto)'
+          - 'Automatización de procesos operativos mediante Google Apps Script, reduciendo tareas manuales.'
+          - 'Desarrollo de tableros de visualización para indicadores de captación bancaria.'
+          - 'Tecnologías: Google Apps Script, JavaScript, Google Sheets API.'
+
+      - company: 'High Quality Roofing Co (Proyecto - Freelancer)'
         position: 'Desarrollador Web y Soporte en Seguridad'
-        location: 'EE. UU. (Remoto)'
+        location: 'Estados Unidos (Remoto)'
         start_date: '2025-06'
         end_date: '2025-07'
         highlights:
-          - 'Recuperé la plataforma tras incidentes de malware y restauré la integridad del sistema.'
-          - 'Mejoré el SEO y la funcionalidad del sitio mediante depuración técnica y plugins personalizados en PHP.'
-          - 'Tecnologías: **WordPress**, **PHP**, **JavaScript**, **CSS3**, **SEO Técnico**.'
-      - company: 'Skyven Roofing [skyvenroofing.com](https://skyvenroofing.com) (contrato por proyecto)'
+          - '[hqroofingco.com](https://hqroofingco.com)'
+          - 'Recuperación del sitio web tras infección de malware y restauración de la integridad del sistema.'
+          - 'Optimización técnica de SEO y mejoras funcionales mediante desarrollo de plugins personalizados.'
+          - 'Tecnologías: WordPress, PHP, JavaScript, CSS3.'
+
+      - company: 'Skyven Roofing (Proyecto - Freelancer)'
         position: 'Desarrollador Full Stack'
-        location: 'EE. UU. (Remoto)'
+        location: 'Estados Unidos (Remoto)'
         start_date: '2025-05'
         end_date: '2025-06'
         highlights:
-          - 'Conecté el frontend con Zoho CRM vía API para automatizar la entrada de datos de clientes.'
-          - 'Configuré el despliegue y la seguridad en Cloudflare, optimizando la velocidad de carga.'
-          - 'Tecnologías: **Astro**, **Tailwind CSS**, **Zoho CRM API**, **Cloudflare**.'
-      - company: 'Trainer Elitez (DEFI) (contrato por proyecto)'
-        position: 'Desarrollador de Software y Automatización'
-        location: 'Colombia'
-        start_date: '2024'
-        end_date: '2026'
-        highlights:
-          - 'Automaticé los cálculos de nutrición y entrenamiento del negocio fitness, eliminando errores manuales.'
-          - 'Creé una aplicación móvil para la gestión centralizada de asesorados y administración.'
-          - 'Tecnologías: **Google Apps Script**, **Google AppSheet**, **TypeScript**.'
+          - '[skyvenroofing.com](https://skyvenroofing.com)'
+          - 'Integración del frontend con Zoho CRM mediante API para automatizar el registro de clientes.'
+          - 'Configuración de despliegue, seguridad y optimización de rendimiento mediante Cloudflare.'
+          - 'Tecnologías: Astro, Tailwind CSS, Zoho CRM API, Cloudflare.'
+
     proyectos:
       - name: 'ReadIA'
         location: '[readia.vercel.app](https://readia.vercel.app)'
@@ -77,11 +84,11 @@ cv:
       - bullet: '**IA & Automatización:** n8n, Google Apps Script, Integración de LLMs (Gemini/OpenAI).'
       - bullet: '**Infraestructura:** PostgreSQL, Supabase, AWS Lambda, Vercel, Docker, Git, Cloudflare.'
     certificados:
-      - bullet: '[Curso de Automatizaciones con n8n](https://platzi.com/p/arbelaeznicolas636/curso/12245-n8n-lowcode/diploma/detalle/) | Platzi (Ago 2025)'
-      - bullet: '[Curso de Backend con Node.js: Base de Datos con PostgreSQL](https://platzi.com/p/arbelaeznicolas636/curso/2507-backend-nodejs-postgres/diploma/detalle/) | Platzi (Mar 2025)'
-      - bullet: '[Curso de Backend con Node.js: Autenticación con Passport.js y JWT](https://platzi.com/p/arbelaeznicolas636/curso/2489-passport/diploma/detalle/) | Platzi (Abr 2025)'
-      - bullet: '[Curso de Backend con Node.js: API REST con Express.js](https://platzi.com/p/arbelaeznicolas636/curso/2485-backend-nodejs/diploma/detalle/) | Platzi (Mar 2025)'
-      - bullet: '[Curso de Java Spring Security: Autenticación y Seguridad Web](https://platzi.com/p/arbelaeznicolas636/curso/7694-java-spring-security/diploma/detalle/) | Platzi (Nov 2024)'
+      - bullet: 'Platzi (Ago 2025) | [Curso de Automatizaciones con n8n](https://platzi.com/p/arbelaeznicolas636/curso/12245-n8n-lowcode/diploma/detalle/)'
+      - bullet: 'Platzi (Mar 2025) | [Curso de Backend con Node.js: Base de Datos con PostgreSQL](https://platzi.com/p/arbelaeznicolas636/curso/2507-backend-nodejs-postgres/diploma/detalle/)'
+      - bullet: 'Platzi (Abr 2025) | [Curso de Backend con Node.js: Autenticación con Passport.js y JWT](https://platzi.com/p/arbelaeznicolas636/curso/2489-passport/diploma/detalle/)'
+      - bullet: 'Platzi (Mar 2025) | [Curso de Backend con Node.js: API REST con Express.js](https://platzi.com/p/arbelaeznicolas636/curso/2485-backend-nodejs/diploma/detalle/)'
+      - bullet: 'Platzi (Nov 2024) | [Curso de Java Spring Security: Autenticación y Seguridad Web](https://platzi.com/p/arbelaeznicolas636/curso/7694-java-spring-security/diploma/detalle/)'
     educacion:
       - institution: 'Universidad Santiago de Cali'
         area: 'Ingeniería en Sistemas'
@@ -93,6 +100,7 @@ cv:
         details: 'Nativo'
       - label: 'Inglés'
         details: 'A2 (Competencia técnica)'
+
 design:
   theme: 'sb2nov'
   page:
