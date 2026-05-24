@@ -16,7 +16,7 @@ export const fetchProjectsByLanguage = async (lang: string) => {
 
   return projects.map((project) => ({
     ...project,
-    slug: cleanSlug(project.slug, lang)
+    slug: cleanSlug(project.id, lang)
   }));
 };
 

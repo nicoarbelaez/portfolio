@@ -1,15 +1,22 @@
 import { z, defineCollection, reference } from 'astro:content';
+import { glob } from 'astro/loaders';
 import { PROJECT_TAGS } from './types/project-tags';
 
 export const TagEnum = z.enum(PROJECT_TAGS);
 
+const stripExt = ({ entry }: { entry: string }) => entry.replace(/\.[^./\\]+$/, '');
+
 const projectsMeta = defineCollection({
-  type: 'data',
+  loader: glob({
+    pattern: '**/*.json',
+    base: './src/content/projects-meta',
+    generateId: stripExt
+  }),
   schema: z.object({
     stack: z.array(z.string()).optional(),
     repo_url: z.union([z.string().url(), z.literal('')]).optional(),
     demo_url: z.string().url().optional(),
-    screenshot: z.string().optional(), // Use this website https://shots.so
+    screenshot: z.string().optional(),
     priority: z.number().max(5).default(0),
     show_repo: z.boolean().default(true),
     tags: z.array(TagEnum).optional(),
@@ -29,6 +36,11 @@ const projectsMeta = defineCollection({
 });
 
 const projects = defineCollection({
+  loader: glob({
+    pattern: '**/*.md',
+    base: './src/content/projects',
+    generateId: stripExt
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -37,7 +49,11 @@ const projects = defineCollection({
 });
 
 const experience = defineCollection({
-  type: 'content',
+  loader: glob({
+    pattern: '**/*.md',
+    base: './src/content/experience',
+    generateId: stripExt
+  }),
   schema: z.object({
     company: z.string(),
     role: z.string(),
