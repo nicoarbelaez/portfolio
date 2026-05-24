@@ -11,6 +11,6 @@
       "@icons/*": ["src/icons/*"]
     },
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "react"
   }
 }

@@ -1,5 +1,4 @@
-import { createContext } from 'preact';
-import { useState, useEffect, useMemo, useCallback } from 'preact/hooks';
+import { createContext, useState, useEffect, useMemo, useCallback } from 'react';
 import type { TabItem, TabsContextType, TabsProps } from '@tabs/types';
 
 export const TabsContext = createContext<TabsContextType | null>(null);
@@ -17,7 +16,6 @@ export function Tabs({ sectionId, defaultValue, children, className = '' }: Tabs
     });
   }, []);
 
-  // Read tab from URL on mount
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -25,10 +23,6 @@ export function Tabs({ sectionId, defaultValue, children, className = '' }: Tabs
     const tabParam = params.get('tab');
 
     if (tabParam) {
-      // Parse format: "sectionId-value"
-      // We look for the first hyphen to split sectionId and value,
-      // but value might contain hyphens too.
-      // So we check if it starts with sectionId + "-"
       const prefix = `${sectionId}-`;
       if (tabParam.startsWith(prefix)) {
         const value = tabParam.slice(prefix.length);
@@ -38,9 +32,8 @@ export function Tabs({ sectionId, defaultValue, children, className = '' }: Tabs
         }
       }
     }
-  }, [sectionId]);
+  }, [sectionId, tabsList]);
 
-  // Update URL when active tab changes
   const setActiveTab = (value: string) => {
     setActiveTabState(value);
 
@@ -49,14 +42,12 @@ export function Tabs({ sectionId, defaultValue, children, className = '' }: Tabs
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
 
-    // Set or update the tab parameter
     params.set('tab', `${sectionId}-${value}`);
 
     url.search = params.toString();
     window.history.pushState({}, '', url.toString());
   };
 
-  // Memoize context value to prevent unnecessary re-renders
   const contextValue = useMemo<TabsContextType>(
     () => ({
       activeTab,

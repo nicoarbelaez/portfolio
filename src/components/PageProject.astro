@@ -11,9 +11,7 @@ import { ShareButton } from '@/components/ui/ShareButton';
 import { ProjectContentTab } from '@/components/ProjectContentTab';
 import { cn } from '@/lib/utils';
 import { LinkButton } from '@/components/ui/LinkButton';
-import { IconBook2 } from '@tabler/icons-preact';
-import { IconLink } from '@tabler/icons-preact';
-import { IconArrowNarrowLeft } from '@tabler/icons-preact';
+import { IconBook2, IconLink, IconArrowNarrowLeft } from '@tabler/icons-react';
 interface Props {
   project: Project;
 }
@@ -52,7 +50,7 @@ const desc = `${description}. ${PERSONAL_INFO.FULL_NAME} | ${t('title')}`;
         <div
           class="inline-flex items-center justify-center rounded-full bg-teal-300/10 px-4 py-2 text-sm text-teal-300 transition hover:bg-teal-300/20"
         >
-          <IconArrowNarrowLeft class="mr-2 size-4" />
+          <IconArrowNarrowLeft className="mr-2 size-4" />
           {t('action.back')}
         </div>
       </span>
@@ -68,7 +66,7 @@ const desc = `${description}. ${PERSONAL_INFO.FULL_NAME} | ${t('title')}`;
           transitionName={`img-${slug}`}
           src={img}
           alt={`Screenshot of ${title}`}
-          class="aspect-16/9 w-full rounded-md border-2 border-slate-200/10 object-cover shadow-lg transition-colors group-hover:border-slate-200/30 hover:border-slate-200/30"
+          className="aspect-16/9 w-full rounded-md border-2 border-slate-200/10 object-cover shadow-lg transition-colors group-hover:border-slate-200/30 hover:border-slate-200/30"
         />
       </div>
 

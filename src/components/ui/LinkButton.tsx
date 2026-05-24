@@ -1,20 +1,23 @@
-import type { ComponentChildren, JSX } from 'preact';
-import type { Icon } from '@tabler/icons-preact';
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import type { Icon } from '@tabler/icons-react';
 
-interface LinkButtonProps extends JSX.HTMLAttributes<HTMLAnchorElement | HTMLButtonElement> {
+type LinkButtonProps = (
+  | AnchorHTMLAttributes<HTMLAnchorElement>
+  | ButtonHTMLAttributes<HTMLButtonElement>
+) & {
   icon: Icon;
   isIcon?: boolean;
   text: string;
   href?: string;
-  class?: string;
-  children?: ComponentChildren;
-}
+  className?: string;
+  children?: ReactNode;
+};
 
 export function LinkButton({
-  icon: Icon,
+  icon: IconComponent,
   text,
   isIcon = false,
-  class: className,
+  className,
   href,
   children,
   ...props
@@ -30,10 +33,10 @@ export function LinkButton({
         target="_blank"
         rel="noopener noreferrer"
         title={text}
-        class={commonClass}
-        {...(props as JSX.HTMLAttributes<HTMLAnchorElement>)}
+        className={commonClass}
+        {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
-        <Icon class="size-4 shrink-0" />
+        <IconComponent className="size-4 shrink-0" />
         {!isIcon && <span>{text}</span>}
         {children}
       </a>
@@ -41,8 +44,12 @@ export function LinkButton({
   }
 
   return (
-    <button title={text} class={commonClass} {...(props as JSX.HTMLAttributes<HTMLButtonElement>)}>
-      <Icon class="size-4 shrink-0" />
+    <button
+      title={text}
+      className={commonClass}
+      {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
+      <IconComponent className="size-4 shrink-0" />
       {!isIcon && <span>{text}</span>}
       {children}
     </button>

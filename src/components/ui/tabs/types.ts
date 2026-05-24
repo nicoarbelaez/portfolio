@@ -1,4 +1,4 @@
-import type { ComponentChildren } from 'preact';
+import type { ReactNode } from 'react';
 
 /**
  * Context type for sharing tab state between Tabs components
@@ -17,50 +17,32 @@ export interface TabItem {
   disabled: boolean;
 }
 
-/**
- * Props for the main Tabs wrapper component
- */
-/**
- * Props for the main Tabs wrapper component
- */
 export interface TabsProps {
   sectionId: string;
   defaultValue: string;
-  children: ComponentChildren;
+  children: ReactNode;
   className?: string;
 }
 
-/**
- * Props for individual Tab button component
- */
 export interface TabsTriggerProps {
   value: string;
-  children: ComponentChildren;
+  children: ReactNode;
   disabled?: boolean;
   className?: string;
 }
 
-/**
- * Props for TabList container component
- */
 export interface TabListProps {
-  children: ComponentChildren;
+  children: ReactNode;
   className?: string;
 }
 
-/**
- * Props for individual TabPanel content component
- */
 export interface TabsContentProps {
   value: string;
-  children: ComponentChildren;
+  children: ReactNode;
   className?: string;
 }
 
-/**
- * Props for TabPanels container component
- */
 export interface TabPanelsProps {
-  children: ComponentChildren;
+  children: ReactNode;
   className?: string;
 }

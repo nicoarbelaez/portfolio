@@ -1,10 +1,7 @@
-import { useContext } from 'preact/hooks';
+import { useContext } from 'react';
 import type { TabsContentProps } from './types';
 import { TabsContext } from './Tabs';
 
-/**
- * Individual tab content panel component
- */
 export function TabsContent({ value, children, className = '' }: TabsContentProps) {
   const context = useContext(TabsContext);
 

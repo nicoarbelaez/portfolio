@@ -1,11 +1,8 @@
-import { useContext } from 'preact/hooks';
+import { useContext, type KeyboardEvent } from 'react';
 import type { TabListProps } from '@tabs/types';
 import { TabsContext } from '@tabs/Tabs';
 import { cn } from '@/lib/utils';
 
-/**
- * Container component for Tab buttons with keyboard navigation support
- */
 export function TabList({ children, className = '' }: TabListProps) {
   const context = useContext(TabsContext);
 
@@ -13,7 +10,7 @@ export function TabList({ children, className = '' }: TabListProps) {
     throw new Error('TabList must be used within a Tabs component');
   }
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (!target.matches('[role="tab"]')) return;
 

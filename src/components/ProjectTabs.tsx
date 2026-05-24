@@ -1,7 +1,7 @@
+import type { ReactNode } from 'react';
 import { Tabs, TabList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import type { ProjectTag } from '@/types/project-tags';
 import type { LocaleKey } from '@/i18n/ui';
-import type { ComponentChildren } from 'preact';
 import { ProjectCard } from '@/components/ui/ProjectCard';
 import type { GitHubRepo } from '@/types/github';
 import { getRelativeLocaleUrl } from '@/utils/astro-polyfills';
@@ -29,12 +29,12 @@ interface Props {
   usedTags: ProjectTag[];
   defaultTab: ProjectTag;
   lang: LocaleKey;
-  tagLabels: Record<ProjectTag, string>; // Pre-translated labels
+  tagLabels: Record<ProjectTag, string>;
   translations: {
     projectCode: string;
     projectDemo: string;
   };
-  children?: ComponentChildren;
+  children?: ReactNode;
 }
 
 export function ProjectTabs({
@@ -43,11 +43,11 @@ export function ProjectTabs({
   defaultTab,
   lang,
   tagLabels,
-  translations,
+  translations
 }: Props) {
   return (
     <Tabs sectionId="projects" defaultValue={defaultTab}>
-      <TabList className='mb-8'>
+      <TabList className="mb-8">
         {usedTags.map((tag) => (
           <TabsTrigger key={tag} value={tag}>
             {tagLabels[tag]}
@@ -57,7 +57,7 @@ export function ProjectTabs({
 
       {usedTags.map((tag) => (
         <TabsContent key={tag} value={tag}>
-          <div class="flex flex-col gap-y-6 md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8">
+          <div className="flex flex-col gap-y-6 md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8">
             {projectsByTag[tag]?.map((project, index) => {
               const {
                 slug,

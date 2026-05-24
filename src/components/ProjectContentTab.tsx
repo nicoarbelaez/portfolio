@@ -1,6 +1,5 @@
+import { useState, type MouseEvent, type ReactNode } from 'react';
 import { Tabs, TabList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import type { ComponentChildren } from 'preact';
-import { useState } from 'preact/hooks';
 import { ImageModal } from '@/components/ui/ImageModal';
 
 interface SectionData {
@@ -13,8 +12,8 @@ interface Props {
   panelClassName?: string;
   generalData: SectionData;
   technicalData: SectionData;
-  general?: ComponentChildren;
-  technical?: ComponentChildren;
+  general?: ReactNode;
+  technical?: ReactNode;
 }
 
 export function ProjectContentTab({
@@ -27,7 +26,7 @@ export function ProjectContentTab({
 }: Props) {
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
 
-  const handleContentClick = (e: MouseEvent) => {
+  const handleContentClick = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target.tagName === 'IMG') {
       const img = target as HTMLImageElement;

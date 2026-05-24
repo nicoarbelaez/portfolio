@@ -1,5 +1,5 @@
-import { useEffect } from 'preact/hooks';
-import { IconX } from '@tabler/icons-preact';
+import { useEffect } from 'react';
+import { IconX } from '@tabler/icons-react';
 
 interface ImageModalProps {
   isOpen: boolean;
@@ -16,7 +16,7 @@ export function ImageModal({ isOpen, onClose, src, alt }: ImageModalProps) {
 
     if (isOpen) {
       document.addEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
     }
 
     return () => {
@@ -29,21 +29,21 @@ export function ImageModal({ isOpen, onClose, src, alt }: ImageModalProps) {
 
   return (
     <div
-      class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm transition-opacity duration-300"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm transition-opacity duration-300"
       onClick={onClose}
     >
       <div
-        class="relative max-h-full max-w-full overflow-hidden rounded-lg shadow-2xl"
+        className="relative max-h-full max-w-full overflow-hidden rounded-lg shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          class="absolute top-4 right-4 z-10 rounded-full bg-black/50 p-2 text-white transition hover:bg-black/70"
+          className="absolute top-4 right-4 z-10 rounded-full bg-black/50 p-2 text-white transition hover:bg-black/70"
           title="Close"
         >
-          <IconX class="size-6" />
+          <IconX className="size-6" />
         </button>
-        <img src={src} alt={alt} class="max-h-[90vh] max-w-[90vw] object-contain" />
+        <img src={src} alt={alt} className="max-h-[90vh] max-w-[90vw] object-contain" />
       </div>
     </div>
   );

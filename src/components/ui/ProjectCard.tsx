@@ -7,8 +7,7 @@ import { GradientDivider } from '@/components/ui/GradientDivider';
 import type { GitHubRepo } from '@/types/github';
 import { format } from '@formkit/tempo';
 import type { LocaleKey } from '@/i18n/ui';
-import { IconBook2 } from '@tabler/icons-preact';
-import { IconLink } from '@tabler/icons-preact';
+import { IconBook2, IconLink } from '@tabler/icons-react';
 import { IconArrowRight } from '@icons/IconArrowRight';
 
 interface ProjectCardProps {
@@ -51,18 +50,18 @@ export function ProjectCard({
   const isFork = githubData?.fork ?? false;
 
   const dateCreated = date ? date : githubData ? new Date(githubData.created_at) : new Date();
-  let dateCreateRepo = format(dateCreated, 'MMM YYYY', lang);
+  const dateCreateRepo = format(dateCreated, 'MMM YYYY', lang);
 
   return (
     <article
-      class="group relative flex scroll-mt-18 flex-col gap-y-4 md:justify-between md:gap-x-3"
+      className="group relative flex scroll-mt-18 flex-col gap-y-4 md:justify-between md:gap-x-3"
       id={slug}
     >
       <OverlayBackground />
-      <div class="flex flex-col gap-4 md:flex-row">
-        <div class="order-1 flex flex-col md:justify-between">
-          <div class="flex flex-col gap-y-1">
-            <h3 class="font-medium transition-colors duration-200 group-hover:text-teal-300">
+      <div className="flex flex-col gap-4 md:flex-row">
+        <div className="order-1 flex flex-col md:justify-between">
+          <div className="flex flex-col gap-y-1">
+            <h3 className="font-medium transition-colors duration-200 group-hover:text-teal-300">
               <a href={href}>
                 <LinkHighlight />
                 {title}
@@ -70,23 +69,23 @@ export function ProjectCard({
               </a>
             </h3>
 
-            <p class="-z-10 text-sm">{description}</p>
+            <p className="-z-10 text-sm">{description}</p>
           </div>
         </div>
 
-        <div class="order-2 w-fit md:-z-10">
-          <a href={href} class="relative w-fit">
+        <div className="order-2 w-fit md:-z-10">
+          <a href={href} className="relative w-fit">
             <ImagePlaceholder
               transitionName={`img-${slug}`}
               src={img || ''}
               alt={`Screenshot of ${title}`}
-              class="aspect-[16/9] h-32 rounded-md border-2 border-slate-200/10 object-cover group-hover:border-slate-200/30 hover:border-slate-200/30 md:h-auto md:w-46 md:max-w-56"
+              className="aspect-[16/9] h-32 rounded-md border-2 border-slate-200/10 object-cover group-hover:border-slate-200/30 hover:border-slate-200/30 md:h-auto md:w-46 md:max-w-56"
             />
-            <span class="animate-slide-in-right absolute -right-4 -bottom-2 me-2 w-fit rounded-sm bg-slate-950/90 px-2.5 py-0.5 text-xs font-medium text-slate-500 ring-1 ring-slate-500 ring-inset">
+            <span className="animate-slide-in-right absolute -right-4 -bottom-2 me-2 w-fit rounded-sm bg-slate-950/90 px-2.5 py-0.5 text-xs font-medium text-slate-500 ring-1 ring-slate-500 ring-inset">
               {dateCreateRepo.toUpperCase()}
             </span>
             {isFork && (
-              <span class="animate-slide-in-right absolute -right-4 bottom-3.5 me-2 w-fit rounded-sm bg-slate-950/90 px-2.5 py-0.5 text-xs font-medium text-green-400 ring-1 ring-green-400 ring-inset">
+              <span className="animate-slide-in-right absolute -right-4 bottom-3.5 me-2 w-fit rounded-sm bg-slate-950/90 px-2.5 py-0.5 text-xs font-medium text-green-400 ring-1 ring-green-400 ring-inset">
                 Fork
               </span>
             )}
@@ -94,22 +93,22 @@ export function ProjectCard({
         </div>
       </div>
 
-      <div class="flex flex-col gap-y-4">
+      <div className="flex flex-col gap-y-4">
         {stack && (
-          <div class="-z-10 flex flex-wrap gap-2">
+          <div className="-z-10 flex flex-wrap gap-2">
             {stack.map((tech) => (
               <Badge key={tech}>{tech}</Badge>
             ))}
           </div>
         )}
-        <div class="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3">
           {repoUrl && showRepo && (
             <LinkButton href={repoUrl} icon={IconBook2} text={translations.projectCode} />
           )}
           {demoUrl && <LinkButton href={demoUrl} icon={IconLink} text={translations.projectDemo} />}
         </div>
       </div>
-      {showDivider && <GradientDivider class="mt-2 block md:hidden" noGradient={true} />}
+      {showDivider && <GradientDivider className="mt-2 block md:hidden" noGradient={true} />}
     </article>
   );
 }

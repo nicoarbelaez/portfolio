@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'preact/hooks';
-import type { TabId } from '@/components/sections/ContentTabs';
+import { useState, useEffect, type MouseEvent } from 'react';
+
+type TabId = string;
 
 type Props = {
   tabId: TabId;
@@ -23,14 +24,14 @@ export default function Tab({ tabId, label, disabled = false }: Props) {
   if (disabled) {
     return (
       <li>
-        <span class="inline-block cursor-not-allowed border-b-2 p-4 text-gray-400 line-through">
+        <span className="inline-block cursor-not-allowed border-b-2 p-4 text-gray-400 line-through">
           {label}
         </span>
       </li>
     );
   }
 
-  const handleClick = (e: Event) => {
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     window.location.hash = tabId;
   };
@@ -40,7 +41,7 @@ export default function Tab({ tabId, label, disabled = false }: Props) {
       <a
         href={`#${tabId}`}
         onClick={handleClick}
-        class={`inline-block border-b-2 p-4 ${
+        className={`inline-block border-b-2 p-4 ${
           active
             ? 'border-teal-300 text-teal-300'
             : 'border-transparent hover:border-gray-300 hover:text-gray-300'

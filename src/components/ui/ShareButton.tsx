@@ -1,6 +1,6 @@
-import { useState } from 'preact/hooks';
+import { useState } from 'react';
 import { LinkButton } from '@/components/ui/LinkButton';
-import { IconShare } from '@tabler/icons-preact';
+import { IconShare } from '@tabler/icons-react';
 import { isMobile } from '@/utils/device';
 
 interface ShareButtonProps {
@@ -37,14 +37,8 @@ export function ShareButton({ text, copiedText }: ShareButtonProps) {
   };
 
   return (
-    <LinkButton
-      icon={IconShare}
-      text={text}
-      onClick={handleShare}
-      isIcon
-      class="share-btn"
-    >
-      <span class="text-node hidden md:inline-block">{buttonText}</span>
+    <LinkButton icon={IconShare} text={text} onClick={handleShare} isIcon className="share-btn">
+      <span className="text-node hidden md:inline-block">{buttonText}</span>
     </LinkButton>
   );
 }
