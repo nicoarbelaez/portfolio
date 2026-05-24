@@ -6,7 +6,7 @@ import { LINKS } from './src/constants/link';
 
 import sitemap from '@astrojs/sitemap';
 
-import preact from '@astrojs/preact';
+import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,8 +15,7 @@ export default defineConfig({
     defaultLocale: 'en',
     locales: ['es', 'en'],
     routing: {
-      prefixDefaultLocale: false,
-      redirectToDefaultLocale: true
+      prefixDefaultLocale: false
     }
   },
 
@@ -38,5 +37,5 @@ export default defineConfig({
         es: 'es'
       }
     }
-  }), preact()]
+  }), react()]
 });
