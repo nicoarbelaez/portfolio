@@ -53,6 +53,12 @@
       "skillPath": "skills/remotion/SKILL.md",
       "computedHash": "d9457a606202a23c28b4c17b2611c65ecc09311ce46a5d93ffe8493d2e8ea4f3"
     },
+    "rendercv": {
+      "source": "rendercv/rendercv-skill",
+      "sourceType": "github",
+      "skillPath": "skills/rendercv/SKILL.md",
+      "computedHash": "f28fea983003eb01539b68b9b2030b58fc6f00d3c2473e8ade22518fff95b2b3"
+    },
     "resume-tailor": {
       "source": "claude-office-skills/skills",
       "sourceType": "github",
