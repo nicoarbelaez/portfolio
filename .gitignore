@@ -32,6 +32,7 @@ pnpm-debug.log*
 
 rendercv_output/
 .tmp/
-public/resume*.pdf
-public/resume-meta.json
+public/**/resume*.pdf
+public/**/version.json
+resume/**/resume*.pdf
 .vercel/
