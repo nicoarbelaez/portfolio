@@ -7,7 +7,7 @@
     "dev:resume": "python -m rendercv render ./resume/cv.yaml --watch --dont-generate-markdown --dont-generate-html --dont-generate-png --output-folder ./.tmp/rendercv --pdf-path ./resume.pdf",
     "dev:resume-hash": "chokidar \"resume/cv.yaml\" -c \"node ./resume/scripts/hash-resume.mjs\"",
     "build": "pnpm generate:resume && astro build",
-    "generate:resume": "python -m rendercv render ./resume/cv.yaml --dont-generate-markdown --dont-generate-html --dont-generate-png --output-folder ./.tmp/rendercv --pdf-path ./resume.pdf && node ./resume/scripts/hash-resume.mjs",
+    "generate:resume": "rendercv render ./resume/cv.yaml --dont-generate-markdown --dont-generate-html --dont-generate-png --output-folder ./.tmp/rendercv --pdf-path ./resume.pdf && node ./resume/scripts/hash-resume.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,astro}\"",
