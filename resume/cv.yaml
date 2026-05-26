@@ -23,20 +23,12 @@ cv:
         position: 'Desarrollador Full Stack – Agente IA'
         location: 'Colombia'
         start_date: '2026-01'
-        end_date: 'present'
+        end_date: '2026-06'
         highlights:
-          - 'Desarrollé un agente conversacional en producción que gestiona
-            ventas, inventario y pagos 24/7, eliminando el flujo manual de
-            atención al cliente.'
-          - 'Arquitecté el sistema en NestJS + TypeScript con
-            orquestación de herramientas, memoria de conversación y REST API
-            + Webhooks integrados con Kommo CRM para recepción de mensajes
-            en tiempo real.'
-          - 'Implementé selección dinámica de modelos LLM vía OpenRouter
-            según costo/latencia por intent, reduciendo costos operativos de
-            inferencia.'
-          - 'Tecnologías: NestJS, TypeScript, OpenRouter, Kommo CRM API, REST
-            API, Webhooks.'
+          - 'Desarrollé un agente conversacional en producción que gestiona ventas, inventario y pagos 24/7, eliminando el flujo manual de atención al cliente.'
+          - 'Arquitecté el sistema en NestJS + TypeScript con orquestación de herramientas, memoria de conversación y REST API + Webhooks integrados con Kommo CRM para recepción de mensajes en tiempo real.'
+          - 'Implementé selección dinámica de modelos LLM vía OpenRouter según costo/latencia por intent, reduciendo costos operativos de inferencia y mejorando los tiempos de respuesta del sistema.'
+          - 'El sistema escaló la operación para gestionar más de 300 nuevos chats/usuarios diarios de forma concurrente y automatizada.'
 
       - company: 'Invictus Joyas'
         summary: 'Proyecto - Freelancer |
