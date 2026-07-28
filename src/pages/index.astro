@@ -1,5 +1,13 @@
 ---
-import PageHome from '@/components/PageHome.astro';
+import Layout from '@/layouts/Layout.astro';
+import { getCurrentLang, useTranslations } from '@/i18n/utils';
+
+const lang = getCurrentLang(Astro.currentLocale);
+const t = useTranslations(lang);
 ---
 
-<PageHome />
+<Layout lang={lang} title={t('title')} description={t('schema.description')}>
+  <main>
+    <h1>Hello World</h1>
+  </main>
+</Layout>

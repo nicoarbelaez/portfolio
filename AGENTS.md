@@ -1,125 +1,274 @@
 # AGENTS.md
 
-Guía para agentes que trabajan con este repositorio.
+Guía obligatoria para agentes que trabajan en este repositorio (Astro 6, React 19, i18n, resume/PDF, API GitHub, deploy en Vercel).
 
-Para contexto general del proyecto (Astro 6, React 19, i18n, content collections, deploy en Vercel) consulta [`CLAUDE.md`](./CLAUDE.md). Este documento se enfoca en el **workflow de adaptación de hoja de vida** — el caso de uso principal por el que un agente es invocado aquí.
+**Todas las reglas de desarrollo de este documento son mandatorias.** Cualquier modificación o nueva implementación debe cumplirlas. Si una instrucción puntual del usuario entra en conflicto con estas normas, advertir antes de proceder.
 
-## Propósito del agente
+---
 
-Dado un **link a una oferta de trabajo** o el **texto de una vacante**, el agente debe:
+# Reglas de desarrollo (obligatorias)
 
-1. Extraer los requisitos clave (skills, tecnologías, responsabilidades, nivel de seniority, industria).
-2. Adaptar [`rendercv.yaml`](./rendercv.yaml) destacando la experiencia, proyectos y certificaciones más relevantes del usuario.
-3. Validar el YAML antes de guardar.
-4. Notificar que el push a `main` con cambios en `rendercv.yaml` dispara automáticamente la regeneración del PDF (`public/resume.pdf`) vía GitHub Actions.
+## Objetivo
 
-**Reglas inviolables**:
+Todo cambio debe dejar el código en un estado **mejor** que antes de la modificación, con calidad de producción y prácticas reconocidas por la industria.
 
-- Nunca fabricar experiencia, fechas, métricas o tecnologías que no aparezcan en el `rendercv.yaml` actual o en las fuentes de verdad listadas abajo.
-- Mantener el idioma del CV en **español** (es el público objetivo del usuario; ver `locale.language: spanish`).
-- Preservar la estructura YAML existente (claves, orden de `sections`, formato de fechas `YYYY-MM`).
+## Tamaño de archivos
 
-## Enfoque narrativo del CV
+- Ningún archivo debe superar las **250 líneas de código**.
+- Si un archivo excede este límite, debe evaluarse **inmediatamente** su refactorización.
+- La división del código debe realizarse **por responsabilidad**, nunca de forma arbitraria.
 
-El CV debe responder, en este orden, tres preguntas: **qué soy capaz de hacer**, **qué he logrado** y **cómo lo logré**. No es un inventario técnico.
+## Arquitectura
 
-**Aplicación por sección**:
+- Aplicar principios **SOLID**, **Clean Architecture** y **Atomic Design** cuando corresponda (UI/componentes).
+- Diseñar módulos desacoplados, reutilizables y extensibles.
+- Favorecer la **composición** sobre la herencia.
+- Evitar el acoplamiento entre módulos.
+- Cada módulo debe tener una **única responsabilidad**.
 
-- `perfil`: capacidades de alto nivel + dominio (backend, automatización, AI-First). Evitar listas de tecnologías aquí.
-- `experiencia_laboral` y `proyectos`: cada highlight describe un **logro concreto** (qué cambió, cuánto, para quién) y **cómo** se hizo (enfoque/método). Las tecnologías se mencionan al final del bullet o en la línea `Tecnologías:` — **por encima, sin profundizar** en versiones, configuraciones internas o detalles de implementación.
-- `habilidades_tecnicas`: enumeración agrupada (Backend / Frontend / IA / Infra). Sin niveles, sin años por tecnología.
-- `certificados`: **listar todos los presentes** en el YAML; reordenar por relevancia a la oferta, no eliminar.
-- `educacion` e `idiomas`: incluir siempre, intactos salvo cambio real.
+Stack de referencia en este repo:
 
-**Regla**: si un bullet sólo describe tecnologías usadas sin logro asociado, reescribirlo o mover la tecnología a la línea `Tecnologías:`. Capacidad y resultado pesan más que stack.
+- UI / islas: Astro + React (Atomic Design en `components` cuando existan).
+- Datos remotos: clientes tipados bajo `src/api/` (ej. GitHub).
+- Config / secretos: `astro:env` (`env.schema` + `astro:env/server|client`), no tipado manual en `src/env.d.ts`.
+- Contenido local: content collections solo donde aplique (hoy: `experience`).
 
-## Skills que el agente debe usar
+## Reutilización
 
-Ambos skills viven dentro del repo y se cargan automáticamente cuando estén disponibles en el entorno del agente. Si no están registrados como skills activos, **leer los `SKILL.md` directamente** para obtener su contenido.
+Antes de implementar una nueva solución:
 
-- [`.agents/skills/resume-tailor/SKILL.md`](./.agents/skills/resume-tailor/SKILL.md) — análisis de la oferta, matching de keywords ATS, reescritura con verbos de poder y la fórmula de cuantificación (`[Verbo] + [Qué] + [Resultado cuantificado] + [Contexto]`).
-- [`.agents/skills/cv-builder/SKILL.md`](./.agents/skills/cv-builder/SKILL.md) — esquema YAML que consume `rendercv`, temas disponibles (`classic`, `sb2nov`, `moderncv`, `engineeringresumes`) y CLI para generación local.
+1. Verificar si ya existe dentro del proyecto.
+2. Verificar si la tecnología utilizada ya ofrece dicha funcionalidad (Astro, React, Vite, Vercel, etc.).
+3. Verificar si existe una librería ampliamente adoptada y mantenida que resuelva el problema.
+4. Solo desarrollar una implementación propia cuando exista una **justificación técnica clara**.
 
-Flujo recomendado: `resume-tailor` decide **qué** modificar; `cv-builder` valida **cómo** expresarlo en el YAML.
+Nunca reinventar la rueda.
 
-## Fuentes de verdad para experiencia y proyectos
+## Refactorización
 
-Antes de modificar `rendercv.yaml`, el agente puede enriquecer la información leyendo las content collections del portafolio — son la versión extendida de cada experiencia y proyecto:
+Toda refactorización debe:
 
-- `src/content/experience/{es,en}/*.md` — experiencias laborales con descripción completa, fechas y skills (front-matter Zod-tipado en `src/content.config.ts`).
-- `src/content/projects/{es,en}/*.md` — proyectos con dos secciones (general / técnico, separadas por `## separator`).
-- `src/content/projects-meta/*.json` — metadata compartida por idioma: `stack`, `repo_url`, `demo_url`, `priority`, `tags` (`production | projects | practices`), `date`.
+- Mejorar la mantenibilidad.
+- Reducir duplicación de código.
+- Incrementar la reutilización.
+- **No** modificar el comportamiento funcional (salvo que el cambio lo pida explícitamente).
+- Mantener compatibilidad con futuras extensiones.
 
-Si una oferta menciona una tecnología específica, primero buscar evidencia real en estos archivos antes de incluirla.
+## Calidad del código
 
-## Estructura de `rendercv.yaml`
+No se permiten soluciones temporales ("quick fixes").
 
-Secciones actuales (en orden) y qué adaptar en cada caso:
+Cada cambio debe:
 
-| Sección                 | Adaptación según la oferta                                                                                                              |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `perfil`                | Reescribir el resumen (1–3 líneas) priorizando keywords de la oferta y el seniority esperado.                                           |
-| `experiencia_laboral`   | Reordenar (más relevante primero) y reescribir `highlights` con la fórmula cuantificada. Mantener todas las experiencias — no eliminar. |
-| `proyectos`             | Añadir/reordenar proyectos del portafolio relevantes para el rol (sacarlos de `src/content/projects-meta/`).                            |
-| `habilidades_tecnicas`  | Reordenar bullets para que el primero matchee el stack principal de la oferta.                                                          |
-| `certificados`          | Reordenar los relevantes al rol al inicio; no inventar.                                                                                 |
-| `educacion` / `idiomas` | Normalmente intactos.                                                                                                                   |
+- Analizar el impacto sobre todo el sistema.
+- Considerar casos de uso actuales y futuros.
+- Resolver la **causa raíz** del problema.
+- Evitar deuda técnica.
 
-Reglas de formato:
+## Organización del proyecto
 
-- Highlights: bullets con backticks `` ` `` o `**negrita**` para tecnologías clave que el ATS deba detectar.
-- Fechas: `YYYY-MM` o `YYYY`. `end_date: 'present'` para roles actuales (mostrado como "actualidad" por el locale).
-- Links inline en highlights: formato Markdown `[texto](url)`.
+Utilizar la estructura recomendada por Astro (`src/pages`, `src/layouts`, `src/components`, `src/styles`, `public`, etc.).
 
-## Cómo se construye y despliega el PDF
+Cuando un dominio crezca, organizar por módulos:
 
-Workflow en [`.github/workflows/generate-resume.yml`](./.github/workflows/generate-resume.yml):
-
-- **Trigger**: `push` a `main` que toque `rendercv.yaml`.
-- **Pipeline**: instala Python 3.12 + `requirements.txt` (`rendercv[full]`), corre `python -m rendercv render rendercv.yaml --pdf-path ./public/resume.pdf` con generación de markdown/html/png desactivada.
-- **Commit-back**: `stefanzweifel/git-auto-commit-action@v5` empuja `public/resume.pdf` como `chore: update resume PDF [skip ci]`.
-- **Sin tests ni linters** — el único gate de calidad es que `rendercv render` no falle.
-
-**Implicación para el agente**: cualquier cambio en `rendercv.yaml` mergeado a `main` se publicará automáticamente. Validar el render local antes de commitear evita PDFs rotos en producción.
-
-## Comandos
-
-```bash
-# Render local (requiere Python + pip install -r requirements.txt)
-python -m rendercv render rendercv.yaml --pdf-path ./public/resume.pdf
-
-# Validación rápida del YAML sin generar artefactos
-python -m rendercv render rendercv.yaml \
-  --dont-generate-markdown --dont-generate-html --dont-generate-png \
-  --pdf-path ./public/resume.pdf
-
-# Limpiar salida temporal
-rm -rf rendercv_output
+```
+module/
+  components/
+  hooks/
+  services/
+  repositories/
+  utils/
+  types/
+  constants/
+  schemas/
 ```
 
-Si Python no está disponible localmente, el agente puede commitear y dejar que el workflow valide en CI — pero debe avisar al usuario.
+Los elementos comunes reutilizables por más de un dominio deben vivir en módulos compartidos (ej. `src/api/`, `src/utils/`, `src/types/`, `src/constants/`, `src/i18n/`).
 
-## Flujo de trabajo del agente (paso a paso)
+## Tipado
 
-1. **Recibir input**: link a la oferta o texto plano. Si es link, fetch el contenido (`WebFetch`).
-2. **Cargar skills**: leer `resume-tailor` y `cv-builder`.
-3. **Analizar la oferta** (skill `resume-tailor`): extraer requisitos, keywords, seniority, industria.
-4. **Cargar estado actual**: leer `rendercv.yaml` + (opcional) collections de `src/content/`.
-5. **Matchear**: tabla requisito → evidencia real del usuario. Marcar gaps; nunca inventarlos.
-6. **Proponer cambios** al usuario antes de editar (tabla compacta: sección, cambio, razón).
-7. **Editar `rendercv.yaml`** con `Edit` preservando el YAML válido.
-8. **Validar**: correr `rendercv render` si Python está disponible; si no, hacer un parse YAML mental verificando indentación y comillas.
-9. **Reportar**: resumen de cambios + recordatorio del trigger del workflow.
+- Todo el código debe estar completamente tipado.
+- No utilizar `any`, salvo justificación **documentada** en el mismo cambio (comentario o nota en PR).
+- Preferir tipos específicos, interfaces y genéricos.
+- Validar entradas con esquemas tipados (Zod u equivalente) en frontend y backend/endpoints.
 
-## Pull Request / Commit
+## Constantes
 
-- Tipo Conventional Commits: `feat:` o `chore:` con scope `cv` cuando aplique (ej. `chore(cv): adaptar CV para vacante de Backend Engineer en X`).
-- Un solo commit por adaptación (`rendercv.yaml` aislado).
-- No incluir `public/resume.pdf` — lo regenera el bot en CI.
-- Si se modifican también las content collections del portafolio, separar en commits distintos (regla del repo: no mezclar archivos sin relación).
+No se permiten valores mágicos.
 
-## Notas para el agente
+Todo número, string, expresión regular, ruta, clave, nombre de evento o configuración debe centralizarse en constantes o archivos de configuración (`src/constants/`, schema de `astro.config`, etc.).
 
-- El usuario es **Nicolas Arbelaez Tapias** — Full Stack con foco en Backend, AI-First y automatización. Cali, Colombia. Verificar siempre que las skills resaltadas matcheen este perfil real.
-- Inglés del usuario: **A2 (competencia técnica)**. No adaptar el CV a inglés salvo petición explícita; si se hace, mantener el archivo `.yaml` en español y crear un segundo archivo (`rendercv.en.yaml`) en vez de sobrescribir.
-- Si la oferta es claramente fuera de perfil (ej. rol senior con 10+ años, médico, marketing puro), avisar al usuario antes de forzar la adaptación.
+## Validación
+
+Toda entrada de datos debe validarse.
+
+- Usar esquemas tipados (Zod u equivalente) en APIs, forms y boundaries.
+- Nunca confiar en datos provenientes del cliente.
+- Content collections: schemas Zod en `src/content.config.ts`.
+- Env: `envField` en `astro.config` con `validateSecrets` cuando aplique.
+
+## Base de datos
+
+Cuando el proyecto incorpore persistencia:
+
+- Toda interacción con la base de datos debe realizarse mediante **Prisma ORM**.
+- No realizar consultas SQL directas salvo necesidad técnica **documentada**.
+
+Hoy el portafolio no usa DB propia; al introducirla, esta regla aplica de inmediato.
+
+## Auditoría y observabilidad
+
+Toda operación crítica debe poder auditarse.
+
+Registrar como mínimo (logs estructurados, útiles para diagnóstico):
+
+- errores
+- operaciones importantes
+- autenticación / autorización (si existen)
+- cambios de estado
+- operaciones sobre base de datos (cuando corresponda)
+
+En este repo: errores de APIs externas (GitHub, resume) deben propagarse con contexto (`status`, recurso, mensaje), no tragarse en silencio.
+
+## Testing
+
+Las implementaciones deben diseñarse para ser testeables.
+
+- Evitar dependencias ocultas y alto acoplamiento.
+- Preferir funciones puras, inyección de dependencias y boundaries claros (`api` / `services` / UI).
+
+## Dependencias
+
+Antes de agregar una dependencia nueva, evaluar:
+
+- mantenimiento
+- popularidad / comunidad
+- licenciamiento
+- seguridad
+- rendimiento
+- compatibilidad con el proyecto
+
+Preferir librerías ampliamente utilizadas por la industria. Justificar en el PR/commit si se añade algo nuevo.
+
+## Rendimiento
+
+Toda implementación debe considerar:
+
+- rendimiento
+- escalabilidad
+- mantenibilidad
+- legibilidad
+- extensibilidad
+
+No sacrificar la arquitectura por una optimización prematura. En Astro: fetch en paralelo cuando no hay dependencias, secretos solo en servidor, evitar JS de cliente innecesario.
+
+## Documentación
+
+- Las decisiones arquitectónicas importantes deben quedar documentadas (este archivo, comentarios de módulo o PR).
+- APIs, componentes reutilizables y módulos públicos deben tener documentación suficiente para mantenerlos (JSDoc breve en exports públicos).
+
+## Checklist previo a dar por cerrado un cambio
+
+1. ¿Algún archivo supera 250 líneas? → refactorizar.
+2. ¿Se reutilizó lo existente / el framework / una lib madura antes de inventar?
+3. ¿Tipado completo, sin `any` injustificado?
+4. ¿Sin valores mágicos?
+5. ¿Entradas validadas en boundaries?
+6. ¿Errores críticos con contexto útil?
+7. ¿El código quedó más claro y extensible que antes?
+
+---
+
+# Workflow de adaptación de CV
+
+Caso de uso principal cuando el agente recibe una oferta de trabajo o texto de vacante. El CV vive en [`resume/cv.yaml`](./resume/cv.yaml) y se genera vía RenderCV (`pnpm generate:resume` / scripts en `package.json`).
+
+## Propósito
+
+1. Extraer requisitos clave (skills, tecnologías, responsabilidades, seniority, industria).
+2. Adaptar `resume/cv.yaml` destacando experiencia, proyectos y certificaciones relevantes.
+3. Validar el YAML / render antes de guardar.
+4. Recordar: cambios mergeados que regeneran el PDF deben validarse localmente cuando sea posible.
+
+**Reglas inviolables del CV**:
+
+- Nunca fabricar experiencia, fechas, métricas o tecnologías que no aparezcan en el YAML actual o en las fuentes de verdad.
+- Mantener el idioma del CV en **español** (`locale.language: spanish`).
+- Preservar la estructura YAML existente (claves, orden de `sections`, fechas `YYYY-MM`).
+
+## Enfoque narrativo
+
+El CV responde, en orden: **qué soy capaz de hacer**, **qué he logrado**, **cómo lo logré**. No es un inventario técnico.
+
+- `perfil`: capacidades de alto nivel + dominio. Evitar listas de tecnologías.
+- `experiencia_laboral` / `proyectos`: logro concreto + cómo; tecnologías al final o en `Tecnologías:`.
+- `habilidades_tecnicas`: agrupadas, sin niveles ni años por tech.
+- `certificados`: listar todos; reordenar por relevancia, no eliminar.
+- `educacion` / `idiomas`: intactos salvo cambio real.
+
+Si un bullet solo lista tecnologías sin logro, reescribirlo o mover la tech a `Tecnologías:`.
+
+## Skills
+
+Si no están registrados como skills activos, **leer los `SKILL.md` directamente**:
+
+- [`.agents/skills/resume-tailor/SKILL.md`](./.agents/skills/resume-tailor/SKILL.md)
+- [`.agents/skills/cv-builder/SKILL.md`](./.agents/skills/cv-builder/SKILL.md) / [`.claude/skills/cv-builder/SKILL.md`](./.claude/skills/cv-builder/SKILL.md)
+
+Flujo: `resume-tailor` decide **qué**; `cv-builder` valida **cómo** en YAML.
+
+## Fuentes de verdad
+
+- `resume/cv.yaml` — CV canónico.
+- `src/content/experience/{es,en}/*.md` — experiencia extendida (Zod en `src/content.config.ts`).
+
+Si una oferta menciona una tecnología, buscar evidencia real ahí antes de incluirla.
+
+## Adaptación por sección
+
+| Sección                 | Adaptación                                                 |
+| ----------------------- | ---------------------------------------------------------- |
+| `perfil`                | Resumen 1–3 líneas con keywords y seniority.               |
+| `experiencia_laboral`   | Reordenar + highlights cuantificados; no eliminar roles.   |
+| `proyectos`             | Reordenar/reescribir highlights ya presentes; no inventar. |
+| `habilidades_tecnicas`  | Primer bullet = stack principal de la oferta.              |
+| `certificados`          | Relevantes primero; no inventar.                           |
+| `educacion` / `idiomas` | Normalmente intactos.                                      |
+
+Formato: backticks o `**negrita**` para keywords ATS; fechas `YYYY-MM` o `YYYY`; `end_date: 'present'` para roles actuales; links `[texto](url)`.
+
+## Comandos CV
+
+```bash
+pnpm generate:resume
+# o
+python -m rendercv render ./resume/cv.yaml \
+  --dont-generate-markdown --dont-generate-html --dont-generate-png \
+  --output-folder ./.tmp/rendercv --pdf-path ./resume.pdf
+```
+
+Si Python no está disponible, avisar al usuario.
+
+## Flujo paso a paso (CV)
+
+1. Recibir oferta (link → fetch, o texto).
+2. Cargar skills `resume-tailor` + `cv-builder`.
+3. Analizar oferta.
+4. Leer `resume/cv.yaml` (+ experience opcional).
+5. Matchear requisito → evidencia; marcar gaps sin inventar.
+6. Proponer cambios (tabla: sección, cambio, razón).
+7. Editar YAML válido.
+8. Validar render si es posible.
+9. Reportar resumen.
+
+## Commits (CV)
+
+- Conventional Commits con scope `cv` cuando aplique.
+- Un commit por adaptación de CV; no mezclar con UI/API no relacionada.
+- No commitear PDFs generados si el pipeline los regenera (`public/resume`, `resume/*.pdf` según `.gitignore`).
+
+## Perfil del usuario
+
+- **Nicolas Arbelaez Tapias** — Full Stack con foco Backend, AI-First y automatización. Cali, Colombia.
+- Inglés **A2 (técnico)**. No pasar el CV a inglés salvo petición explícita; si se pide, crear archivo aparte (no sobrescribir el español).
+- Si la oferta está claramente fuera de perfil, avisar antes de forzar la adaptación.

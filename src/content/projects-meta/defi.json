@@ -1,5 +1,0 @@
-{
-  "stack": ["Apps Script", "AppSheet", "Google Sheet", "TypeScript", "Vercel"],
-  "priority": 5,
-  "tags": ["production"]
-}

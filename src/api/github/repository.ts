@@ -1,22 +1,31 @@
-import { apiHandler } from '@/api/handler';
-import type { GitHubRepo } from '@/types/github';
+import { githubFetch } from '@/api/github/client';
+import type { GithubRepoMeta, GithubRepository } from '@/types/github';
 
-const GITHUB_API_URL = 'https://api.github.com/repos';
+/** First ATX H1 (`# Title`), ignoring YAML front matter if present. */
+export function extractMarkdownTitle(markdown: string): string | null {
+  const withoutFrontmatter = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
+  const match = withoutFrontmatter.match(/^#\s+(.+)$/m);
+  return match?.[1]?.trim() || null;
+}
 
-export async function getRepository(owner: string, repo: string): Promise<GitHubRepo> {
-  const endpoint = `${GITHUB_API_URL}/${owner}/${repo}`;
+/**
+ * Fetches repo metadata + root README in parallel.
+ * Returns name, title, description, website, topics, and README body.
+ */
+export async function getRepository(owner: string, repo: string): Promise<GithubRepository> {
+  const [meta, readme] = await Promise.all([
+    githubFetch<GithubRepoMeta>(`/repos/${owner}/${repo}`),
+    githubFetch<string>(`/repos/${owner}/${repo}/readme`, { raw: true }).catch(() => null)
+  ]);
 
-  try {
-    return await apiHandler<GitHubRepo>(endpoint, {
-      headers: {
-        Accept: 'application/vnd.github.v3+json',
-        Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}`
-      }
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(`Error fetching GitHub repository: ${error.message}`);
-    }
-    throw error;
-  }
+  return {
+    name: meta.name,
+    title: (readme && extractMarkdownTitle(readme)) || meta.name,
+    description: meta.description,
+    website: meta.homepage || null,
+    topics: meta.topics ?? [],
+    htmlUrl: meta.html_url,
+    defaultBranch: meta.default_branch,
+    readme
+  };
 }

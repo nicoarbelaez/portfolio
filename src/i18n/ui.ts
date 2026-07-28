@@ -1,5 +1,3 @@
-import type { ProjectTag } from "@/types/project-tags";
-
 type TranslationValue = string | readonly string[];
 
 export const locales = {
@@ -25,15 +23,12 @@ const baseEs = {
   'action.copied': '¡Copiado!',
   'nav.about': 'Sobre mí',
   'nav.experience': 'Experiencia',
-  'nav.projects': 'Projectos',
   'nav.resume': 'HV',
   'hero.professional': 'Ingeniero de sistemas - Desarrollo backend',
   'hero.description':
     'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
-  'hero.cta': 'Ver Proyectos',
+  'hero.cta': 'Ver experiencia',
   'hero.scroll': 'Desliza hacia arriba',
-  'project.code': 'Código',
-  'project.demo': 'Demo',
   'footer.text':
     'Este portafolio ha sido desarrollado con %astro% y desplegado en %vercel%. Se inspira en %inspiration1% y %inspiration2%. © %year% Todos los derechos reservados.',
   'experience.current': 'Presente',
@@ -41,14 +36,7 @@ const baseEs = {
   'schema.jobTitle': 'Ingeniero de Sistemas - Desarrollo Backend',
   'schema.description':
     'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
-  'schema.skills': ['Desarrollo Backend', 'Diseño de Sistemas', 'Desarrollo de APIs'],
-  'tabs.general': 'General',
-  'tabs.technical': 'Técnico',
-  'tabs.production': 'Producción',
-  'tabs.projects': 'Proyectos',
-  'tabs.practices': 'Prácticas',
-  'tabs.all': 'Todos',
-  'tabs.other': 'Otros'
+  'schema.skills': ['Desarrollo Backend', 'Diseño de Sistemas', 'Desarrollo de APIs']
 } as const;
 
 export type LabelKey = keyof typeof baseEs;
@@ -65,15 +53,12 @@ export const labels = {
     'action.copied': 'Copied!',
     'nav.about': 'About',
     'nav.experience': 'Experience',
-    'nav.projects': 'Projects',
     'nav.resume': 'CV',
     'hero.professional': 'Systems Engineer - Backend Development',
     'hero.description':
       'With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.',
-    'hero.cta': 'View Projects',
+    'hero.cta': 'View experience',
     'hero.scroll': 'Swipe up',
-    'project.code': 'Code',
-    'project.demo': 'Live',
     'footer.text':
       'This portfolio was developed with %astro% and deployed on %vercel%. It is inspired by %inspiration1% and %inspiration2%. © %year% All rights reserved.',
     'experience.current': 'Present',
@@ -81,21 +66,6 @@ export const labels = {
     'schema.jobTitle': 'Systems Engineer - Backend Development',
     'schema.description':
       'With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.',
-    'schema.skills': ['Backend Development', 'System Design', 'API Development'],
-    'tabs.general': 'General',
-    'tabs.technical': 'Technical',
-    'tabs.production': 'Production',
-    'tabs.projects': 'Projects',
-    'tabs.practices': 'Practices',
-    'tabs.all': 'All',
-    'tabs.other': 'Others'
+    'schema.skills': ['Backend Development', 'System Design', 'API Development']
   }
 } as const satisfies Record<LocaleKey, LocaleLabels>;
-
-/**
- * Helper function to get translation key for a project tag
- * Ensures type safety between ProjectTag and LabelKey
- */
-export function getTabTranslationKey(tag: ProjectTag): LabelKey {
-  return `tabs.${tag}` as LabelKey;
-}
