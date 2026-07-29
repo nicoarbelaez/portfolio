@@ -1,14 +1,9 @@
-/** Hero motion / visual tokens — keep out of components. */
+/** Hero-only motion / media tokens. */
 export const HERO_ANIMATION = {
-  TYPE_SPEED_MS: 55,
-  HIGHLIGHT_COLOR: '#bef264',
-  UNDERLINE_COLOR: '#84cc16',
-  HIGHLIGHT_DURATION_MS: 600,
-  HIGHLIGHT_ITERATIONS: 2,
-  HIGHLIGHT_STROKE_WIDTH: 1.5,
-  HIGHLIGHT_PADDING_PX: 4
+  TYPE_SPEED_MS: 55
 } as const;
 
+/** Intrinsic img size — matches largest Tailwind avatar (`md:size-32` = 128px). */
 export const HERO_AVATAR = {
-  SIZE_PX: 208
+  SIZE_PX: 128
 } as const;

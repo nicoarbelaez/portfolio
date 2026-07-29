@@ -1,18 +1,13 @@
-import type { AnnotationAction } from '@/components/ui/highlighter';
 import type { LocaleKey } from '@/i18n/ui';
+import type { TextDecoratorMark, TextDecoratorSegment } from '@/types/text-decorator';
 
-export type ProfessionalMark = AnnotationAction;
-
-export type ProfessionalSegment = {
-  text: string;
-  mark?: ProfessionalMark;
-};
+export type ProfessionalSegment = TextDecoratorSegment;
 
 type ProfessionalPart = 'role' | 'ai' | 'automation' | 'enterprise';
 
 type ProfessionalCopy = Record<ProfessionalPart, string>;
 
-type ProfessionalMarks = Partial<Record<ProfessionalPart, ProfessionalMark>>;
+type ProfessionalMarks = Partial<Record<ProfessionalPart, TextDecoratorMark>>;
 
 type ProfessionalByViewport = {
   desktop: readonly ProfessionalSegment[];
@@ -39,16 +34,16 @@ const PROFESSIONAL_COPY = {
 
 /**
  * Desktop: underline AI specialty, highlight enterprise.
- * Mobile: underline role + enterprise, highlight automation (less cramped beside avatar).
+ * Mobile: underline enterprise, highlight automation (less cramped beside avatar).
  */
 const PROFESSIONAL_MARKS = {
   es: {
     desktop: { ai: 'underline', enterprise: 'highlight' },
-    mobile: { role: 'underline', automation: 'highlight', enterprise: 'underline' }
+    mobile: { automation: 'highlight', enterprise: 'underline' }
   },
   en: {
     desktop: { ai: 'underline', enterprise: 'highlight' },
-    mobile: { role: 'underline', automation: 'highlight', enterprise: 'underline' }
+    mobile: { automation: 'highlight', enterprise: 'underline' }
   }
 } as const satisfies Record<LocaleKey, { desktop: ProfessionalMarks; mobile: ProfessionalMarks }>;
 

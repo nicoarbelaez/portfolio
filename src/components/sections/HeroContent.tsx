@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Highlighter } from '@/components/ui/highlighter';
+import { DecoratedText } from '@/components/ui/decorated-text';
 import { TypingAnimation } from '@/components/ui/typing-animation';
 import { HERO_ANIMATION, HERO_AVATAR } from '@/constants/hero';
 import { PERSONAL_INFO } from '@/constants/constants';
@@ -16,51 +16,8 @@ interface HeroContentProps {
   avatarAlt: string;
 }
 
-function markColor(mark: NonNullable<ProfessionalSegment['mark']>): string {
-  return mark === 'underline' ? HERO_ANIMATION.UNDERLINE_COLOR : HERO_ANIMATION.HIGHLIGHT_COLOR;
-}
-
-function ProfessionalLine({
-  segments,
-  className,
-  reduceMotion
-}: {
-  segments: readonly ProfessionalSegment[];
-  className?: string;
-  reduceMotion: boolean;
-}) {
-  return (
-    <p
-      className={cn(
-        'font-heading text-sm font-bold tracking-tight text-balance sm:text-base md:text-lg',
-        className
-      )}
-    >
-      {segments.map((segment, index) => {
-        if (!segment.mark || reduceMotion) {
-          return <span key={index}>{segment.text}</span>;
-        }
-
-        return (
-          <span key={index} className="mx-1 inline-block first:ml-0 last:mr-0">
-            <Highlighter
-              action={segment.mark}
-              color={markColor(segment.mark)}
-              animationDuration={HERO_ANIMATION.HIGHLIGHT_DURATION_MS}
-              iterations={HERO_ANIMATION.HIGHLIGHT_ITERATIONS}
-              strokeWidth={HERO_ANIMATION.HIGHLIGHT_STROKE_WIDTH}
-              padding={HERO_ANIMATION.HIGHLIGHT_PADDING_PX}
-              multiline={false}
-              isView
-            >
-              {segment.text}
-            </Highlighter>
-          </span>
-        );
-      })}
-    </p>
-  );
-}
+const professionalClassName =
+  'font-heading text-sm font-bold tracking-tight text-balance sm:text-base md:text-lg';
 
 export function HeroContent({
   greeting,
@@ -85,7 +42,7 @@ export function HeroContent({
         <div
           className={cn(
             'ring-muted relative shrink-0 overflow-hidden rounded-full border shadow-lg ring-4',
-            'size-24 sm:size-28 md:order-2 md:size-44 lg:size-52'
+            'size-24 md:order-2 md:size-32'
           )}
         >
           <img
@@ -124,9 +81,9 @@ export function HeroContent({
             </TypingAnimation>
           )}
 
-          <ProfessionalLine
+          <DecoratedText
             segments={professionalMobile}
-            className="md:hidden"
+            className={cn(professionalClassName, 'md:hidden')}
             reduceMotion={reduceMotion}
           />
 
@@ -138,9 +95,9 @@ export function HeroContent({
 
       <p className="text-muted-foreground text-base leading-relaxed md:hidden">{description}</p>
 
-      <ProfessionalLine
+      <DecoratedText
         segments={professionalDesktop}
-        className="hidden md:block"
+        className={cn(professionalClassName, 'hidden md:block')}
         reduceMotion={reduceMotion}
       />
     </div>
