@@ -92,18 +92,19 @@ src/features/<feature>/
 
 Lo reutilizable por **más de un** feature vive fuera de `features/`:
 
-| Ruta                       | Uso                                              |
-| -------------------------- | ------------------------------------------------ |
-| `src/components/`          | UI compartida (shadcn, animate-ui, átomos)       |
-| `src/components/sections/` | Secciones de página (Hero, Experience, …)        |
-| `src/components/pages/`    | Composición de página (evita duplicar `en`/`es`) |
-| `src/hooks/`               | Hooks compartidos                                |
-| `src/lib/`                 | Utilidades de bajo nivel (`cn`, etc.)            |
-| `src/utils/`               | Helpers compartidos                              |
-| `src/types/`               | Tipos compartidos entre dominios                 |
-| `src/constants/`           | Constantes de sistema (identidad, links)         |
-| `src/api/`                 | Clientes HTTP / integraciones                    |
-| `src/i18n/`                | Módulo de internacionalización                   |
+| Ruta                                   | Uso                                                                            |
+| -------------------------------------- | ------------------------------------------------------------------------------ |
+| `src/components/`                      | UI compartida (shadcn, animate-ui, átomos)                                     |
+| `src/components/ui/decorated-text.tsx` | Texto con marcas (highlight/underline); estilos en `constants/text-decorators` |
+| `src/components/sections/`             | Secciones de página (Hero, Experience, …)                                      |
+| `src/components/pages/`                | Composición de página (evita duplicar `en`/`es`)                               |
+| `src/hooks/`                           | Hooks compartidos                                                              |
+| `src/lib/`                             | Utilidades de bajo nivel (`cn`, etc.)                                          |
+| `src/utils/`                           | Helpers compartidos                                                            |
+| `src/types/`                           | Tipos compartidos entre dominios                                               |
+| `src/constants/`                       | Constantes de sistema (identidad, links)                                       |
+| `src/api/`                             | Clientes HTTP / integraciones                                                  |
+| `src/i18n/`                            | Módulo de internacionalización                                                 |
 
 Dependencias: `features/*` → shared / i18n / api. Nunca al revés (shared no importa features).
 
