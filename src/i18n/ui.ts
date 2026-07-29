@@ -39,6 +39,7 @@ const baseEs = {
     'Con más de %years-experience% años desarrollando soluciones de IA, agentes inteligentes y automatización para crear sistemas escalables que impulsan el crecimiento.',
   'hero.cta': 'Ver experiencia',
   'hero.scroll': 'Desliza hacia arriba',
+  'social.nav': 'Redes sociales',
   'footer.text':
     'Este portafolio ha sido desarrollado con %astro% y desplegado en %vercel%. Se inspira en %inspiration1% y %inspiration2%. © %year% Todos los derechos reservados.',
   'experience.current': 'Presente',
@@ -79,6 +80,7 @@ export const labels = {
       'With over %years-experience% years building AI solutions, intelligent agents, and automation systems that drive scalable growth.',
     'hero.cta': 'View experience',
     'hero.scroll': 'Swipe up',
+    'social.nav': 'Social links',
     'footer.text':
       'This portfolio was developed with %astro% and deployed on %vercel%. It is inspired by %inspiration1% and %inspiration2%. © %year% All rights reserved.',
     'experience.current': 'Present',

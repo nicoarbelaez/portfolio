@@ -1,5 +1,6 @@
 ---
 import { HeroContent } from '@/components/sections/HeroContent';
+import { SocialDock } from '@/components/sections/SocialDock';
 import { heroProfessionalSegments } from '@/i18n/hero-professional';
 import { locales } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
@@ -21,4 +22,5 @@ const t = useTranslations(lang);
     description={t('hero.description')}
     avatarAlt={t('hero.avatarAlt')}
   />
+  <SocialDock client:visible label={t('social.nav')} />
 </section>
