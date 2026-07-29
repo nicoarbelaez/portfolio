@@ -32,9 +32,11 @@ const baseEs = {
   'nav.skip': 'Saltar al contenido',
   'footer.rights': 'Todos los derechos reservados.',
   'footer.theme': 'Cambiar tema',
-  'hero.professional': 'Ingeniero de sistemas - Desarrollo backend',
+  'hero.greeting': 'Hola, soy Nicolas',
+  'hero.avatarAlt':
+    'Retrato de Nicolas Arbelaez, ingeniero de sistemas con foco en desarrollo backend',
   'hero.description':
-    'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
+    'Con más de %years-experience% años desarrollo soluciones de inteligencia artificial, agentes autónomos, automatización de procesos y plataformas empresariales escalables que impulsan la eficiencia, las operaciones y el crecimiento.',
   'hero.cta': 'Ver experiencia',
   'hero.scroll': 'Desliza hacia arriba',
   'footer.text':
@@ -70,9 +72,11 @@ export const labels = {
     'nav.skip': 'Skip to content',
     'footer.rights': 'All rights reserved.',
     'footer.theme': 'Toggle theme',
-    'hero.professional': 'Systems Engineer - Backend Development',
+    'hero.greeting': "Hi, I'm Nicolas",
+    'hero.avatarAlt':
+      'Portrait of Nicolas Arbelaez, systems engineer focused on backend development',
     'hero.description':
-      'With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.',
+      'With over %years-experience% years building AI solutions, autonomous agents, process automation systems, and scalable enterprise platforms that drive operational efficiency and business growth.',
     'hero.cta': 'View experience',
     'hero.scroll': 'Swipe up',
     'footer.text':

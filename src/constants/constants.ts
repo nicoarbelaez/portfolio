@@ -1,7 +1,8 @@
 /** Shared identity — not feature-specific (nav/i18n/etc.). */
 export enum PERSONAL_INFO {
   FULL_NAME = 'Nicolas Arbelaez',
-  BRAND_NAME = 'Nicolas'
+  BRAND_NAME = 'Nicolas',
+  AVATAR_URL = 'https://github.com/nicoarbelaez.png'
 }
 
 export const SEO = {

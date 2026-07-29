@@ -9,6 +9,7 @@ import { LINKS } from '@/constants/link';
 import { FloatingNav } from '@/features/nav/components/FloatingNav';
 import SiteFooter from '@/components/SiteFooter.astro';
 import { THEME_STORAGE_KEY } from '@/features/theme/constants/theme';
+import { getHeroProfessionalPlain } from '@/i18n/hero-professional';
 
 interface Props {
   lang: keyof typeof locales;
@@ -42,7 +43,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageURL = new URL(image, Astro.url).href;
 const pageURL = Astro.url.href;
 const prefixTitle = `${originalTitle} | ${PERSONAL_INFO.FULL_NAME}`;
-const title = `${prefixTitle} ${t('hero.professional')}`;
+const title = `${prefixTitle} ${getHeroProfessionalPlain(lang)}`;
 const footerYear = new Date().getFullYear();
 ---
 
@@ -102,7 +103,7 @@ const footerYear = new Date().getFullYear();
         '@type': 'Person',
         name: PERSONAL_INFO.FULL_NAME,
         url: Astro.site,
-        image: 'https://github.com/nicoarbelaez.png',
+        image: PERSONAL_INFO.AVATAR_URL,
         jobTitle: t('schema.jobTitle'),
         description: t('schema.description'),
         knowsAbout: t('schema.skills'),
