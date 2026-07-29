@@ -1,7 +1,10 @@
 {
   "files.associations": {
-    "*.css": "tailwindcss"
+    "*.css": "tailwindcss",
+    "*.astro": "astro"
   },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "[astro]": {

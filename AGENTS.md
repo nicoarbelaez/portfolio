@@ -67,30 +67,54 @@ Cada cambio debe:
 
 ## Organización del proyecto
 
-Utilizar la estructura recomendada por Astro (`src/pages`, `src/layouts`, `src/components`, `src/styles`, `public`, etc.).
+Utilizar la estructura recomendada por Astro (`src/pages`, `src/layouts`, `src/styles`, `public`, etc.).
 
-Cuando un dominio crezca, organizar por módulos:
+### Features (dominios)
+
+Cada feature vive en `src/features/<nombre>/` y **debe** organizarse por responsabilidad:
 
 ```
-module/
+src/features/<feature>/
   components/
   hooks/
-  services/
-  repositories/
-  utils/
   types/
   constants/
-  schemas/
+  utils/          # opcional
+  services/       # opcional
+  schemas/        # opcional
 ```
 
-Los elementos comunes reutilizables por más de un dominio deben vivir en módulos compartidos (ej. `src/api/`, `src/utils/`, `src/types/`, `src/constants/`, `src/i18n/`).
+- Un feature **no** mezcla lógica de otro dominio (ej. nav no define i18n; i18n no define secciones de nav).
+- **Prohibido** nombrar módulos como `index.ts` / `index.tsx` salvo un barrel explícito y justificado. Hoy **no** usar barrels: importar siempre desde el archivo concreto (`…/components/FloatingNav`, `…/types/nav`, etc.).
+- Carpetas vacías se crean cuando el dominio las necesite; no inventar archivos placeholder sin uso.
+
+### Shared (cross-cutting)
+
+Lo reutilizable por **más de un** feature vive fuera de `features/`:
+
+| Ruta              | Uso                                        |
+| ----------------- | ------------------------------------------ |
+| `src/components/` | UI compartida (shadcn, animate-ui, átomos) |
+| `src/hooks/`      | Hooks compartidos                          |
+| `src/lib/`        | Utilidades de bajo nivel (`cn`, etc.)      |
+| `src/utils/`      | Helpers compartidos                        |
+| `src/types/`      | Tipos compartidos entre dominios           |
+| `src/constants/`  | Constantes de sistema (identidad, links)   |
+| `src/api/`        | Clientes HTTP / integraciones              |
+| `src/i18n/`       | Módulo de internacionalización             |
+
+Dependencias: `features/*` → shared / i18n / api. Nunca al revés (shared no importa features).
 
 ## Tipado
 
 - Todo el código debe estar completamente tipado.
-- No utilizar `any`, salvo justificación **documentada** en el mismo cambio (comentario o nota en PR).
-- Preferir tipos específicos, interfaces y genéricos.
+- **Prohibido** usar `any` en cualquier forma (`: any`, `as any`, genéricos `any`, `Record<string, any>`, etc.).
+- **Prohibido** silenciar `@typescript-eslint/no-explicit-any` con `eslint-disable`, `eslint-disable-next-line` u otras directivas. Corregir el tipo; no ocultar el error.
+- Preferir tipos específicos, interfaces, genéricos y `unknown` + narrowing en boundaries.
 - Validar entradas con esquemas tipados (Zod u equivalente) en frontend y backend/endpoints.
+- TypeScript (`noImplicitAny` + `strict`) trata el tipado implícito incorrecto como **error**.
+- ESLint trata `any` explícito como **error** y **prohíbe** desactivar `@typescript-eslint/no-explicit-any`.
+- Imports y variables no usadas: **warning** (ESLint `unused-imports`; Astro/TS check).
 
 ## Constantes
 
@@ -171,7 +195,7 @@ No sacrificar la arquitectura por una optimización prematura. En Astro: fetch e
 
 1. ¿Algún archivo supera 250 líneas? → refactorizar.
 2. ¿Se reutilizó lo existente / el framework / una lib madura antes de inventar?
-3. ¿Tipado completo, sin `any` injustificado?
+3. ¿Tipado completo, **sin `any`** y sin `eslint-disable` de `@typescript-eslint/no-explicit-any`?
 4. ¿Sin valores mágicos?
 5. ¿Entradas validadas en boundaries?
 6. ¿Errores críticos con contexto útil?
