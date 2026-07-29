@@ -2,36 +2,52 @@
 import { ClientRouter } from 'astro:transitions';
 import '@/styles/global.css';
 import '@fontsource-variable/onest';
-import { defaultLang, locales, type LocaleKey } from '@/i18n/ui';
+import { defaultLang, locales } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
-import { PERSONAL_INFO } from '@/constants/constants';
+import { PERSONAL_INFO, SEO } from '@/constants/constants';
 import { LINKS } from '@/constants/link';
+import { FloatingNav } from '@/features/nav/components/FloatingNav';
+import SiteFooter from '@/components/SiteFooter.astro';
+import { THEME_STORAGE_KEY } from '@/features/theme/constants/theme';
 
 interface Props {
-  lang: LocaleKey;
+  lang: keyof typeof locales;
   title: string;
   description: string;
+  /** Absolute path or absolute URL for Open Graph / Twitter image */
   image?: string;
   type?: 'website' | 'article';
 }
 
 const { lang = defaultLang } = Astro.props;
 const t = useTranslations(lang);
+const navLabels = {
+  'nav.about': t('nav.about'),
+  'nav.experience': t('nav.experience'),
+  'nav.projects': t('nav.projects'),
+  'nav.contact': t('nav.contact'),
+  'nav.menu': t('nav.menu'),
+  'nav.menuClose': t('nav.menuClose'),
+  'nav.language': t('nav.language')
+};
 
 const {
   title: originalTitle = t('title'),
   description = t('schema.description'),
-  image = '/og-default.webp',
+  image = SEO.DEFAULT_OG_IMAGE,
   type = 'website'
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageURL = new URL(image, Astro.url).href;
+const pageURL = Astro.url.href;
 const prefixTitle = `${originalTitle} | ${PERSONAL_INFO.FULL_NAME}`;
 const title = `${prefixTitle} ${t('hero.professional')}`;
+const footerYear = new Date().getFullYear();
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} class="h-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -40,30 +56,46 @@ const title = `${prefixTitle} ${t('hero.professional')}`;
     <title>{title}</title>
     <ClientRouter />
 
+    <script is:inline define:vars={{ themeStorageKey: THEME_STORAGE_KEY }}>
+      (function () {
+        try {
+          const stored = localStorage.getItem(themeStorageKey);
+          const theme =
+            stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const isDark = theme === 'dark' || (theme === 'system' && prefersDark);
+          document.documentElement.classList.toggle('dark', isDark);
+        } catch {
+          /* ignore */
+        }
+      })();
+    </script>
+
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={type} />
-    <meta property="og:url" content={Astro.url} />
+    <meta property="og:url" content={pageURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.url)} />
+    <meta property="og:image" content={ogImageURL} />
     <meta property="og:site_name" content={prefixTitle} />
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
     <meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_ES'} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:url" content={pageURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+    <meta property="twitter:image" content={ogImageURL} />
 
     <link rel="alternate" href={`${Astro.site}en${Astro.url.pathname}`} hreflang="en" />
     <link rel="alternate" href={`${Astro.site}es${Astro.url.pathname}`} hreflang="es" />
 
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify({
         '@context': 'https://schema.org',
@@ -99,8 +131,18 @@ const title = `${prefixTitle} ${t('hero.professional')}`;
       })}
     />
   </head>
-  <body>
-    <slot />
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#main"
+      class="bg-primary text-primary-foreground focus:ring-ring sr-only rounded-md px-3 py-2 focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[60] focus:ring-3"
+    >
+      {t('nav.skip')}
+    </a>
+    <FloatingNav client:load lang={lang} pathname={Astro.url.pathname} labels={navLabels} />
+    <div class="flex flex-1 flex-col">
+      <slot />
+    </div>
+    <SiteFooter year={footerYear} rights={t('footer.rights')} themeLabel={t('footer.theme')} />
   </body>
 </html>
 
@@ -109,7 +151,6 @@ const title = `${prefixTitle} ${t('hero.professional')}`;
   body {
     margin: 0;
     width: 100%;
-    min-height: 100%;
     font-family: 'Onest Variable', system-ui, sans-serif;
   }
 </style>

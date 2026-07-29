@@ -1,0 +1,24 @@
+---
+import { FooterFlickeringGrid } from '@/components/FooterFlickeringGrid';
+import { ThemeToggler } from '@/features/theme/components/ThemeToggler';
+import { PERSONAL_INFO } from '@/constants/constants';
+
+interface Props {
+  year: number;
+  rights: string;
+  themeLabel: string;
+}
+
+const { year, rights, themeLabel } = Astro.props;
+---
+
+<footer class="text-muted-foreground relative shrink-0 overflow-hidden px-4 py-6">
+  <FooterFlickeringGrid client:visible />
+  <div class="relative z-10 mx-auto flex max-w-3xl items-center justify-between gap-4">
+    <p class="text-sm leading-relaxed">
+      © {year}
+      {PERSONAL_INFO.FULL_NAME}. {rights}
+    </p>
+    <ThemeToggler client:load aria-label={themeLabel} className="bg-background shrink-0 border" />
+  </div>
+</footer>
