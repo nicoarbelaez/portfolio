@@ -36,7 +36,7 @@ const baseEs = {
   'hero.avatarAlt':
     'Retrato de Nicolas Arbelaez, ingeniero de sistemas con foco en desarrollo backend',
   'hero.description':
-    'Con más de %years-experience% años desarrollo soluciones de inteligencia artificial, agentes autónomos, automatización de procesos y plataformas empresariales escalables que impulsan la eficiencia, las operaciones y el crecimiento.',
+    'Con más de %years-experience% años desarrollando soluciones de IA, agentes inteligentes y automatización para crear sistemas escalables que impulsan el crecimiento.',
   'hero.cta': 'Ver experiencia',
   'hero.scroll': 'Desliza hacia arriba',
   'footer.text':
@@ -76,7 +76,7 @@ export const labels = {
     'hero.avatarAlt':
       'Portrait of Nicolas Arbelaez, systems engineer focused on backend development',
     'hero.description':
-      'With over %years-experience% years building AI solutions, autonomous agents, process automation systems, and scalable enterprise platforms that drive operational efficiency and business growth.',
+      'With over %years-experience% years building AI solutions, intelligent agents, and automation systems that drive scalable growth.',
     'hero.cta': 'View experience',
     'hero.scroll': 'Swipe up',
     'footer.text':
