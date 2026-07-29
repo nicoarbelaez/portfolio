@@ -1,0 +1,19 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import { locales } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: keyof typeof locales;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Layout lang={lang} title={t('title')} description={t('schema.description')}>
+  <main id="main" class="mx-auto w-full max-w-3xl space-y-16 px-4 pt-20 pb-16 md:pt-28">
+    <Hero lang={lang} />
+  </main>
+</Layout>
