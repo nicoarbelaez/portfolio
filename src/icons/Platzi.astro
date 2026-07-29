@@ -1,0 +1,12 @@
+---
+/**
+ * Platzi brand mark. Prefer importing `.svg` as an Astro component so the
+ * asset pipeline can process it; this wrapper keeps a stable import path.
+ * @see https://docs.astro.build/en/guides/images/#svg-components
+ */
+import PlatziSvg from './platzi.svg';
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<PlatziSvg aria-hidden="true" class:list={['h-6 w-6', className]} {...rest} />
