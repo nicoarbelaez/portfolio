@@ -20,7 +20,7 @@ export function HeroAppPreview({ categories, items, label }: HeroAppPreviewProps
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        'group relative mx-auto block w-full max-w-[11.5rem] shrink-0',
+        'group relative mx-auto block w-full max-w-[13rem] shrink-0 sm:max-w-[11.5rem]',
         'focus-visible:ring-ring rounded-2xl focus-visible:ring-2 focus-visible:outline-none'
       )}
       aria-label={label}

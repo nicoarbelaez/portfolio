@@ -33,7 +33,7 @@ export function MecateoShowcase({ lang }: MecateoShowcaseProps) {
       <section aria-labelledby={headingId} className="space-y-6">
         <MecateoHeader name={copy.name} tagline={copy.tagline} headingId={headingId} />
 
-        <div className="grid auto-rows-[20rem] grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:auto-rows-[20rem] md:grid-cols-3">
           <HeroTile
             title={copy.heroTitle}
             description={copy.heroDescription}

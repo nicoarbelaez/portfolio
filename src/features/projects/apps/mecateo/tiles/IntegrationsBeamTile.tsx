@@ -50,7 +50,7 @@ export function IntegrationsBeamTile({ title, description }: IntegrationsBeamTil
   const payRef = useRef<HTMLDivElement>(null);
 
   return (
-    <MecateoMagicTile className="col-span-1 md:col-span-2">
+    <MecateoMagicTile className="col-span-1 min-h-80 md:col-span-2 md:min-h-0">
       <div
         ref={containerRef}
         className="relative z-40 flex min-h-[12rem] flex-1 items-center justify-center overflow-hidden p-6"

@@ -39,7 +39,7 @@ export function PosListTile({ title, description, events }: PosListTileProps) {
   const list = events.map((event) => <EventRow key={`${event.title}-${event.time}`} {...event} />);
 
   return (
-    <MecateoMagicTile className="col-span-1">
+    <MecateoMagicTile className="col-span-1 min-h-80 md:min-h-0">
       <div className="relative z-40 min-h-[11rem] flex-1 overflow-hidden p-3">
         {reduceMotion ? (
           <div className="flex flex-col gap-2">{list.slice(0, 3)}</div>
