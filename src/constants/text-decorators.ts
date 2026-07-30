@@ -21,15 +21,12 @@ const FALLBACK_DECORATOR_STYLE: TextDecoratorStyle = {
 
 /**
  * Visual registry per mark — extend here to restyle or add marks site-wide.
- * Underline uses `dark:text-secondary` so the stroke stays readable on dark surfaces.
+ * Highlight uses `dark:text-secondary` so the stroke stays readable on dark surfaces.
  */
 export const TEXT_DECORATOR_STYLES = {
-  underline: {
+  highlight: {
     color: '#84cc16',
     textClassName: 'dark:text-secondary'
-  },
-  highlight: {
-    color: '#bef264'
   }
 } as const satisfies Partial<Record<TextDecoratorMark, TextDecoratorStyle>>;
 
