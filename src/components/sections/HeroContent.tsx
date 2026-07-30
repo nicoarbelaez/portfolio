@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { DecoratedText } from '@/components/ui/decorated-text';
 import { TypingAnimation } from '@/components/ui/typing-animation';
 import { HERO_ANIMATION, HERO_AVATAR } from '@/constants/hero';
-import { PERSONAL_INFO } from '@/constants/constants';
 import { RESUME_HREF } from '@/constants/resume';
 import type { ProfessionalSegment } from '@/i18n/hero-professional';
 import { cn } from '@/lib/utils';
 
 interface HeroContentProps {
+  avatarSrc: string;
   greeting: string;
   professionalDesktop: readonly ProfessionalSegment[];
   professionalMobile: readonly ProfessionalSegment[];
@@ -53,6 +53,7 @@ function HeroDescription({
 }
 
 export function HeroContent({
+  avatarSrc,
   greeting,
   professionalDesktop,
   professionalMobile,
@@ -80,7 +81,7 @@ export function HeroContent({
           )}
         >
           <img
-            src={PERSONAL_INFO.AVATAR_URL}
+            src={avatarSrc}
             alt={avatarAlt}
             width={HERO_AVATAR.SIZE_PX}
             height={HERO_AVATAR.SIZE_PX}
