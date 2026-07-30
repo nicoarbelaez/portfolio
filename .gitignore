@@ -28,6 +28,7 @@ pnpm-debug.log*
 .idea/
 
 # Python build environment
+.venv/
 .venv_build/
 
 rendercv_output/

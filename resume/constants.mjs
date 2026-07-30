@@ -7,3 +7,5 @@ export const RENDERCV_PDF_PATH = './resume.pdf';
 export const RESUME_PDF = `${RESUME_DIR}/resume.pdf`;
 export const PUBLIC_RESUME_DIR = 'public/resume';
 export const RESUME_VERSION_FILE = 'version.json';
+/** Project venv used on Vercel (uv) so RenderCV is not installed into system Python. */
+export const RESUME_VENV_DIR = '.venv';

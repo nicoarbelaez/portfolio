@@ -1,5 +1,5 @@
 {
-  "installCommand": "pnpm install && python3 -m pip install -r requirements.txt",
+  "installCommand": "pnpm install && uv venv .venv && uv pip install -r requirements.txt",
   "buildCommand": "pnpm run build",
   "build": {
     "env": {

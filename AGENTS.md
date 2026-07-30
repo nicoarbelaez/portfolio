@@ -276,7 +276,7 @@ python -m rendercv render ./resume/cv.yaml \
 
 RenderCV resuelve `--pdf-path` **relativo al directorio del YAML** (`resume/`), no al cwd del repo. Usar `./resume.pdf` → `resume/resume.pdf`. No usar `./resume/resume.pdf` (crea `resume/resume/resume.pdf` y rompe el hash en Vercel).
 
-En Vercel: `requirements.txt` + `vercel.json` `installCommand` instalan RenderCV; `pnpm build` llama a `generate:resume`.
+En Vercel: `installCommand` crea `.venv` con `uv` e instala `requirements.txt` (evita PEP 668 / pip sobre Python gestionado por uv). `generate:resume` usa `.venv/bin/python` si existe.
 
 ## Flujo paso a paso (CV)
 
