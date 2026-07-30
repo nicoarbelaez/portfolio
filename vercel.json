@@ -1,7 +1,11 @@
 {
+  "installCommand": "pnpm install && python3 -m pip install -r requirements.txt",
+  "buildCommand": "pnpm run build",
   "build": {
     "env": {
-      "PYTHONUNBUFFERED": "1"
+      "PYTHONUNBUFFERED": "1",
+      "PYTHONUTF8": "1",
+      "PYTHONIOENCODING": "utf-8"
     }
   },
   "headers": [

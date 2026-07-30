@@ -4,10 +4,10 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "concurrently \"astro dev\" \"pnpm dev:resume\" \"pnpm dev:resume-hash\"",
-    "dev:resume": "python -m rendercv render ./resume/cv.yaml --watch --dont-generate-markdown --dont-generate-html --dont-generate-png --output-folder ./.tmp/rendercv --pdf-path ./resume/resume.pdf",
+    "dev:resume": "python -m rendercv render ./resume/cv.yaml --watch --dont-generate-markdown --dont-generate-html --dont-generate-png --output-folder ./.tmp/rendercv --pdf-path ./resume.pdf",
     "dev:resume-hash": "node ./resume/scripts/hash-resume.mjs && chokidar \"resume/cv.yaml\" \"resume/resume.pdf\" -c \"node ./resume/scripts/hash-resume.mjs\"",
     "build": "pnpm generate:resume && astro build",
-    "generate:resume": "rendercv render ./resume/cv.yaml --dont-generate-markdown --dont-generate-html --dont-generate-png --output-folder ./.tmp/rendercv --pdf-path ./resume/resume.pdf && node ./resume/scripts/hash-resume.mjs",
+    "generate:resume": "node ./resume/scripts/generate-resume.mjs",
     "optimize:assets": "node ./scripts/optimize-assets.mjs && node ./scripts/apply-optimized-assets.mjs",
     "preview": "astro preview",
     "astro": "astro",

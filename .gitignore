@@ -33,6 +33,7 @@ pnpm-debug.log*
 rendercv_output/
 .tmp/
 .playwright-cli/
+resume/.tmp/
 public/**/resume*.pdf
 public/**/version.json
 resume/**/resume*.pdf

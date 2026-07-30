@@ -270,11 +270,13 @@ Formato: backticks o `**negrita**` para keywords ATS; fechas `YYYY-MM` o `YYYY`;
 pnpm generate:resume
 # o
 python -m rendercv render ./resume/cv.yaml \
-  --dont-generate-markdown --dont-generate-html --dont-generate-png \
-  --output-folder ./.tmp/rendercv --pdf-path ./resume.pdf
+ --dont-generate-markdown --dont-generate-html --dont-generate-png \
+ --output-folder ./.tmp/rendercv --pdf-path ./resume.pdf
 ```
 
-Si Python no está disponible, avisar al usuario.
+RenderCV resuelve `--pdf-path` **relativo al directorio del YAML** (`resume/`), no al cwd del repo. Usar `./resume.pdf` → `resume/resume.pdf`. No usar `./resume/resume.pdf` (crea `resume/resume/resume.pdf` y rompe el hash en Vercel).
+
+En Vercel: `requirements.txt` + `vercel.json` `installCommand` instalan RenderCV; `pnpm build` llama a `generate:resume`.
 
 ## Flujo paso a paso (CV)
 
