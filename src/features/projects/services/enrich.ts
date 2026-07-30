@@ -1,5 +1,5 @@
 import { APIError } from '@/api/handler';
-import { resolveRepoCoverPath } from '@/api/github/assets';
+import { fetchRepoCoverAsset, resolveRepoCoverPath } from '@/api/github/assets';
 import { getRepoDoc } from '@/api/github/docs';
 import { extractMarkdownTitle, getRepository } from '@/api/github/repository';
 import { PROJECT_CATALOG } from '@/features/projects/constants/catalog';
@@ -9,7 +9,8 @@ import type { ProjectCatalogEntry } from '@/features/projects/schemas/catalog';
 import type { EnrichedProject, ResolvedProjectImage } from '@/features/projects/types/project';
 import type { LocaleKey } from '@/i18n/ui';
 
-function resolveImage(entry: ProjectCatalogEntry): ResolvedProjectImage {
+/** Sync fallback used when the network fetch is skipped or the repo fetch already failed. */
+function placeholderImage(entry: ProjectCatalogEntry): ResolvedProjectImage {
   const strategy = entry.image?.strategy ?? 'placeholder';
 
   if (strategy === 'local' && entry.image?.path) {
@@ -17,19 +18,34 @@ function resolveImage(entry: ProjectCatalogEntry): ResolvedProjectImage {
   }
 
   if (strategy === 'github-asset') {
-    const discoveredPath = resolveRepoCoverPath(entry.image?.path);
-    // MVP: always placeholder UI; discoveredPath documents convention for later wiring.
-    return { strategy, src: null, discoveredPath };
+    return { strategy, src: null, discoveredPath: resolveRepoCoverPath(entry.image?.path) };
   }
 
   return { strategy: 'placeholder', src: null, discoveredPath: null };
+}
+
+async function resolveImage(entry: ProjectCatalogEntry): Promise<ResolvedProjectImage> {
+  const strategy = entry.image?.strategy ?? 'placeholder';
+
+  if (strategy !== 'github-asset') {
+    return placeholderImage(entry);
+  }
+
+  const { owner, repo } = entry.github;
+  const asset = await fetchRepoCoverAsset({ owner, repo, path: entry.image?.path });
+
+  return {
+    strategy,
+    src: asset?.downloadUrl ?? null,
+    discoveredPath: asset?.path ?? resolveRepoCoverPath(entry.image?.path)
+  };
 }
 
 async function enrichOne(entry: ProjectCatalogEntry, lang: LocaleKey): Promise<EnrichedProject> {
   const { owner, repo } = entry.github;
 
   try {
-    const [repository, overviewResult, technicalResult] = await Promise.all([
+    const [repository, overviewResult, technicalResult, image] = await Promise.all([
       getRepository(owner, repo),
       getRepoDoc(owner, repo, 'readme', lang).catch((error: unknown) => {
         if (error instanceof APIError && error.status === 404) return null;
@@ -38,7 +54,8 @@ async function enrichOne(entry: ProjectCatalogEntry, lang: LocaleKey): Promise<E
       getRepoDoc(owner, repo, 'technical', lang).catch((error: unknown) => {
         if (error instanceof APIError && error.status === 404) return null;
         throw error;
-      })
+      }),
+      resolveImage(entry)
     ]);
 
     const overview = overviewResult
@@ -63,7 +80,7 @@ async function enrichOne(entry: ProjectCatalogEntry, lang: LocaleKey): Promise<E
         htmlUrl: repository.htmlUrl,
         isPrivate: repository.private
       }),
-      image: resolveImage(entry),
+      image,
       overview,
       technical: technicalResult
         ? {
@@ -84,7 +101,7 @@ async function enrichOne(entry: ProjectCatalogEntry, lang: LocaleKey): Promise<E
       topics: [],
       private: true,
       ctas: { siteUrl: null, repoUrl: null },
-      image: resolveImage(entry),
+      image: placeholderImage(entry),
       overview: null,
       technical: null,
       degraded: true
