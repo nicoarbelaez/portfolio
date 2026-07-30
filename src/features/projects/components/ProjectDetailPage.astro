@@ -38,6 +38,8 @@ const titleVtName = projectTitleTransitionName(project.slug);
   lang={lang}
   title={`${project.title} · ${t('title')}`}
   description={project.description ?? t('schema.description')}
+  image={`/og/${lang}/${project.slug}.png`}
+  type="article"
 >
   <main id="main" class="mx-auto w-full max-w-3xl px-4 pt-24 pb-20">
     <a

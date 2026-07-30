@@ -15,7 +15,12 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<Layout lang={lang} title={t('title')} description={t('schema.description')}>
+<Layout
+  lang={lang}
+  title={t('title')}
+  description={t('schema.description')}
+  image={`/og/${lang}/home.png`}
+>
   <main
     id="main"
     class:list={[
