@@ -296,25 +296,27 @@ type TabsContentProps = WithAsChild<
   } & HTMLMotionProps<'div'>
 >;
 
-function TabsContent({ value, style, asChild = false, ...props }: TabsContentProps) {
+function TabsContent({ value, style, asChild = false, children, ...props }: TabsContentProps) {
   const { activeValue } = useTabs();
   const isActive = activeValue === value;
 
-  const Component = asChild ? Slot : motion.div;
+  const sharedProps = {
+    role: 'tabpanel' as const,
+    'data-slot': 'tabs-content' as const,
+    inert: !isActive,
+    style: { overflow: 'hidden', ...style },
+    initial: { opacity: 0 },
+    animate: { opacity: isActive ? 1 : 0 },
+    exit: { opacity: 0 },
+    transition: { type: 'spring' as const, stiffness: 200, damping: 25 },
+    ...props
+  };
 
-  return (
-    <Component
-      role="tabpanel"
-      data-slot="tabs-content"
-      inert={!isActive}
-      style={{ overflow: 'hidden', ...style }}
-      initial={{ filter: 'blur(0px)' }}
-      animate={{ filter: isActive ? 'blur(0px)' : 'blur(4px)' }}
-      exit={{ filter: 'blur(0px)' }}
-      transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-      {...props}
-    />
-  );
+  if (asChild) {
+    return <Slot {...sharedProps}>{children as React.ReactElement}</Slot>;
+  }
+
+  return <motion.div {...sharedProps}>{children}</motion.div>;
 }
 
 export {
