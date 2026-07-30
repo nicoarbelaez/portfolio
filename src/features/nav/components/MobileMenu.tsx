@@ -44,12 +44,12 @@ export function MobileMenu({ labels, open, onOpenChange }: MobileMenuProps) {
       </SheetTrigger>
 
       <SheetPortal>
-        <SheetOverlay className="bg-background/80 fixed inset-0 z-40 backdrop-blur-md" />
+        <SheetOverlay className="bg-background/80 fixed inset-0 z-40 backdrop-blur-sm md:backdrop-blur-md" />
         <SheetContent
           side="top"
           className={cn(
             'z-40 flex h-dvh w-full flex-col items-center justify-center gap-2',
-            'bg-background/95 border-none px-6 backdrop-blur-xl'
+            'bg-background/95 border-none px-6 backdrop-blur-sm md:backdrop-blur-xl'
           )}
           transition={
             reduceMotion ? { duration: 0.01 } : { type: 'spring', stiffness: 220, damping: 28 }
