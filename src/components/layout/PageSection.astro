@@ -1,0 +1,35 @@
+---
+import { NAV_SECTION_SCROLL_MARGIN_CLASS } from '@/features/nav/constants/sections';
+import { HOME_SECTION_STACK_CLASS } from '@/constants/home-layout';
+import { SectionHeader } from '@/components/ui/section-header';
+
+interface Props {
+  id: string;
+  /** Visible separator label (SectionHeader). */
+  label: string;
+  /** Optional accessible heading (sr-only if provided with label). */
+  heading?: string;
+  headingId?: string;
+}
+
+const { id, label, heading, headingId = `${id}-heading` } = Astro.props;
+---
+
+<section
+  id={id}
+  aria-labelledby={heading ? headingId : undefined}
+  aria-label={heading ? undefined : label}
+  class:list={['w-full', HOME_SECTION_STACK_CLASS, NAV_SECTION_SCROLL_MARGIN_CLASS]}
+>
+  <div>
+    <SectionHeader client:visible label={label} />
+    {
+      heading ? (
+        <h2 id={headingId} class="sr-only">
+          {heading}
+        </h2>
+      ) : null
+    }
+  </div>
+  <slot />
+</section>

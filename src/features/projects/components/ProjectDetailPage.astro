@@ -1,0 +1,141 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { buttonVariants } from '@/components/ui/button';
+import { ProjectDetailTabs } from '@/features/projects/components/ProjectDetailTabs';
+import { ProjectCtasLinks } from '@/features/projects/components/ProjectCtas';
+import {
+  projectImageTransitionName,
+  projectTitleTransitionName
+} from '@/features/projects/constants/view-transitions';
+import { enrichProjects } from '@/features/projects/services/enrich';
+import { markdownToHtml } from '@/features/projects/services/markdown/pipeline';
+import type { LocaleKey } from '@/i18n/ui';
+import { useTranslations, getLocalizedPath } from '@/i18n/utils';
+import { cn } from '@/lib/utils';
+
+interface Props {
+  lang: LocaleKey;
+  slug: string;
+}
+
+const { lang, slug } = Astro.props;
+const t = useTranslations(lang);
+const projects = await enrichProjects(lang);
+const project = projects.find((item) => item.slug === slug);
+
+if (!project) {
+  return Astro.redirect('/404');
+}
+
+const overviewHtml = project.overview ? await markdownToHtml(project.overview.content) : null;
+const technicalHtml = project.technical ? await markdownToHtml(project.technical.content) : null;
+const projectsHref = `${getLocalizedPath('/', lang)}#projects`;
+const imageVtName = projectImageTransitionName(project.slug);
+const titleVtName = projectTitleTransitionName(project.slug);
+---
+
+<Layout
+  lang={lang}
+  title={`${project.title} · ${t('title')}`}
+  description={project.description ?? t('schema.description')}
+>
+  <main id="main" class="mx-auto w-full max-w-3xl px-4 pt-24 pb-20">
+    <a
+      href={projectsHref}
+      class={cn(
+        buttonVariants({ variant: 'ghost', size: 'sm' }),
+        'text-muted-foreground -ml-2 mb-8'
+      )}
+    >
+      ← {t('projects.back')}
+    </a>
+
+    <article class="space-y-10">
+      <header class="border-border/70 space-y-5 border-b pb-8">
+        <p class="text-muted-foreground text-xs font-medium tracking-[0.18em] uppercase">
+          {
+            project.section === 'client'
+              ? t('projects.section.client')
+              : project.section === 'apps'
+                ? t('projects.section.apps')
+                : t('projects.section.side')
+          }
+        </p>
+        <h1
+          class="font-heading text-3xl font-semibold tracking-tight text-balance md:text-4xl"
+          transition:name={titleVtName}
+        >
+          {project.title}
+        </h1>
+        {
+          project.description ? (
+            <p class="text-muted-foreground max-w-2xl text-base leading-relaxed text-pretty md:text-lg">
+              {project.description}
+            </p>
+          ) : null
+        }
+
+        {
+          project.topics.length > 0 ? (
+            <ul class="flex flex-wrap gap-1.5 pt-1">
+              {project.topics.map((topic) => (
+                <li class="border-border bg-background text-muted-foreground rounded-full border px-2.5 py-0.5 text-xs">
+                  {topic}
+                </li>
+              ))}
+            </ul>
+          ) : null
+        }
+
+        <ProjectCtasLinks
+          client:load
+          ctas={project.ctas}
+          labels={{
+            site: t('projects.cta.site'),
+            repo: t('projects.cta.repo'),
+            details: t('projects.cta.details')
+          }}
+        />
+      </header>
+
+      {
+        project.image.src ? (
+          <figure
+            class="border-border overflow-hidden rounded-xl border"
+            transition:name={imageVtName}
+          >
+            <img
+              src={project.image.src}
+              alt=""
+              class="aspect-[16/9] w-full object-cover"
+              loading="eager"
+            />
+          </figure>
+        ) : (
+          <div
+            class="from-muted via-background to-secondary/15 border-border flex aspect-[16/9] w-full items-center justify-center rounded-xl border bg-gradient-to-br"
+            transition:name={imageVtName}
+          >
+            <span class="text-muted-foreground font-heading text-sm tracking-wide">
+              {project.title}
+            </span>
+          </div>
+        )
+      }
+
+      <ProjectDetailTabs
+        client:visible
+        overviewHtml={overviewHtml}
+        technicalHtml={technicalHtml}
+        overviewMissingTranslation={Boolean(project.overview && project.overview.lang !== lang)}
+        technicalMissingTranslation={Boolean(project.technical && project.technical.lang !== lang)}
+        labels={{
+          overview: t('projects.tab.overview'),
+          technical: t('projects.tab.technical'),
+          missingTranslation: t('projects.badge.missingTranslation'),
+          emptyOverview: t('projects.empty.overview')
+        }}
+      />
+    </article>
+  </main>
+</Layout>

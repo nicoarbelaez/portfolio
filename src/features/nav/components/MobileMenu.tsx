@@ -16,6 +16,7 @@ import { PERSONAL_INFO } from '@/constants/constants';
 import { NAV_SECTIONS } from '@/features/nav/constants/sections';
 import { NAV_MOTION } from '@/features/nav/constants/ui';
 import type { NavLabels } from '@/features/nav/types/nav';
+import { scrollToHash } from '@/features/nav/utils/scroll-to-hash';
 import { cn } from '@/lib/utils';
 
 interface MobileMenuProps {
@@ -64,7 +65,10 @@ export function MobileMenu({ labels, open, onOpenChange }: MobileMenuProps) {
               <motion.a
                 key={section.id}
                 href={section.href}
-                onClick={() => onOpenChange(false)}
+                onClick={(event) => {
+                  scrollToHash(section.href, event);
+                  onOpenChange(false);
+                }}
                 initial={reduceMotion ? false : { opacity: 0, y: -12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{

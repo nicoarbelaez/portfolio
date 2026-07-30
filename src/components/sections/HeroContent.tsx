@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { DecoratedText } from '@/components/ui/decorated-text';
 import { TypingAnimation } from '@/components/ui/typing-animation';
 import { HERO_ANIMATION, HERO_AVATAR } from '@/constants/hero';
 import { PERSONAL_INFO } from '@/constants/constants';
+import { RESUME_HREF } from '@/constants/resume';
 import type { ProfessionalSegment } from '@/i18n/hero-professional';
 import { cn } from '@/lib/utils';
 
@@ -14,17 +16,49 @@ interface HeroContentProps {
   professionalMobile: readonly ProfessionalSegment[];
   description: string;
   avatarAlt: string;
+  resumeLabel: string;
 }
 
 const professionalClassName =
   'font-heading text-sm font-bold tracking-tight text-balance sm:text-base md:text-lg';
+
+function HeroDescription({
+  description,
+  resumeLabel,
+  className
+}: {
+  description: string;
+  resumeLabel: string;
+  className?: string;
+}) {
+  return (
+    <p
+      className={cn(
+        'text-muted-foreground max-w-xl text-base leading-relaxed text-pretty md:text-lg lg:text-xl',
+        className
+      )}
+    >
+      {description}{' '}
+      <Button
+        variant="link"
+        size="sm"
+        className="inline h-auto min-h-0 px-0 py-0 align-baseline text-[length:inherit] leading-[inherit] font-medium"
+        nativeButton={false}
+        render={<a href={RESUME_HREF} target="_blank" rel="noopener noreferrer" />}
+      >
+        {resumeLabel}
+      </Button>
+    </p>
+  );
+}
 
 export function HeroContent({
   greeting,
   professionalDesktop,
   professionalMobile,
   description,
-  avatarAlt
+  avatarAlt,
+  resumeLabel
 }: HeroContentProps) {
   const [reduceMotion, setReduceMotion] = useState(false);
 
@@ -38,7 +72,7 @@ export function HeroContent({
 
   return (
     <div className="flex flex-col gap-4 md:gap-6">
-      <div className="flex items-center gap-4 md:items-start md:gap-10">
+      <div className="flex items-center gap-6 md:items-start md:gap-10">
         <div
           className={cn(
             'ring-muted relative shrink-0 overflow-hidden rounded-full border shadow-lg ring-4',
@@ -87,13 +121,15 @@ export function HeroContent({
             reduceMotion={reduceMotion}
           />
 
-          <p className="text-muted-foreground hidden max-w-xl text-base leading-relaxed md:block md:text-lg lg:text-xl">
-            {description}
-          </p>
+          <HeroDescription
+            description={description}
+            resumeLabel={resumeLabel}
+            className="hidden md:block"
+          />
         </div>
       </div>
 
-      <p className="text-muted-foreground text-base leading-relaxed md:hidden">{description}</p>
+      <HeroDescription description={description} resumeLabel={resumeLabel} className="md:hidden" />
 
       <DecoratedText
         segments={professionalDesktop}

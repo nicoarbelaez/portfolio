@@ -1,0 +1,15 @@
+---
+import ProjectDetailPage from '@/features/projects/components/ProjectDetailPage.astro';
+import { getCatalogSlugs } from '@/features/projects/services/enrich';
+
+export function getStaticPaths() {
+  return getCatalogSlugs().map((slug) => ({ params: { slug } }));
+}
+
+const slug = Astro.params.slug;
+if (!slug) {
+  return Astro.redirect('/es');
+}
+---
+
+<ProjectDetailPage lang="es" slug={slug} />

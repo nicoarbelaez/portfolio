@@ -66,13 +66,29 @@ export function Highlighter({
       annotation = currentAnnotation;
       currentAnnotation.show();
 
+      // Observe only this element — watching `document.body` re-animates marks
+      // on unrelated layout changes (e.g. project tabs height animation).
+      let skipNextResize = true;
+      let lastWidth = element.offsetWidth;
+      let lastHeight = element.offsetHeight;
+
       resizeObserver = new ResizeObserver(() => {
+        if (skipNextResize) {
+          skipNextResize = false;
+          return;
+        }
+
+        const nextWidth = element.offsetWidth;
+        const nextHeight = element.offsetHeight;
+        if (nextWidth === lastWidth && nextHeight === lastHeight) return;
+
+        lastWidth = nextWidth;
+        lastHeight = nextHeight;
         currentAnnotation.hide();
         currentAnnotation.show();
       });
 
       resizeObserver.observe(element);
-      resizeObserver.observe(document.body);
     }
 
     return () => {

@@ -1,16 +1,19 @@
 ---
-company: 'Davivienda Bank'
+company: 'Banco Davivienda'
 role: 'Apprentice – Semillero Nativos Program'
+location: 'Colombia'
+logoKey: 'davivienda'
+avatarStyle: 'none'
 description: >-
-  I participate in Banco Davivienda’s Semillero Nativos Program under a 12-month
-  training contract that includes a study phase—where I strengthen my knowledge
-  of commercial and financial services through theoretical training provided by
-  SENA—and a practical phase, in which I apply these skills at Banco Davivienda
-  S.A. facilities, collaborating on projects, streamlining customer service
-  processes, managing banking operations, and ensuring compliance with internal
-  regulations.
-startDate: '2025-03-10'
+  I completed Banco Davivienda’s Semillero Nativos Program under a 12-month training
+  contract with a SENA study phase and a practical phase at Banco Davivienda S.A.
+  I automated back-office processes with Google Apps Script, built dashboards for
+  banking acquisition indicators, and supported customer service and internal compliance.
+startDate: '2025-03'
+endDate: '2026-03'
 skills:
-  - 'Customer service'
+  - 'Google Apps Script'
+  - 'JavaScript'
+  - 'Google Sheets API'
   - 'Process optimization'
 ---

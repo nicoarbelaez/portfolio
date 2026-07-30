@@ -35,21 +35,17 @@ function mergeProps<T extends HTMLElement>(
   childProps: AnyProps,
   slotProps: DOMMotionProps<T>
 ): AnyProps {
-  const merged: AnyProps = { ...childProps, ...slotProps };
+  const slot = slotProps as AnyProps;
+  const merged: AnyProps = { ...childProps, ...slot };
 
-  if (childProps.className || slotProps.className) {
-    merged.className = cn(
-      typeof childProps.className === 'string' ? childProps.className : undefined,
-      slotProps.className
-    );
+  if (childProps.className || slot.className) {
+    merged.className = cn(childProps.className as string, slot.className as string);
   }
 
-  if (childProps.style || slotProps.style) {
+  if (childProps.style || slot.style) {
     merged.style = {
-      ...(typeof childProps.style === 'object' && childProps.style !== null
-        ? (childProps.style as React.CSSProperties)
-        : {}),
-      ...slotProps.style
+      ...(childProps.style as React.CSSProperties),
+      ...(slot.style as React.CSSProperties)
     };
   }
 
@@ -57,20 +53,21 @@ function mergeProps<T extends HTMLElement>(
 }
 
 function Slot<T extends HTMLElement = HTMLElement>({ children, ref, ...props }: SlotProps<T>) {
-  const childType = React.isValidElement(children) ? children.type : null;
   const isAlreadyMotion =
-    typeof childType === 'object' && childType !== null && isMotionComponent(childType);
+    typeof children.type === 'object' && children.type !== null && isMotionComponent(children.type);
 
-  const Base = React.useMemo(() => {
-    if (!childType) return motion.div;
-    return isAlreadyMotion
-      ? (childType as React.ElementType)
-      : motion.create(childType as React.ElementType);
-  }, [isAlreadyMotion, childType]);
+  const Base = React.useMemo(
+    () =>
+      isAlreadyMotion
+        ? (children.type as React.ElementType)
+        : motion.create(children.type as React.ElementType),
+    [isAlreadyMotion, children.type]
+  );
 
   if (!React.isValidElement(children)) return null;
 
   const { ref: childRef, ...childProps } = children.props as AnyProps;
+
   const mergedProps = mergeProps(childProps, props);
 
   return <Base {...mergedProps} ref={mergeRefs(childRef as React.Ref<T>, ref)} />;

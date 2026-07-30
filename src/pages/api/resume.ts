@@ -18,9 +18,10 @@ export const GET: APIRoute = async ({ request }) => {
   const versionFile = join(resumeDir, 'version.json');
 
   if (!existsSync(versionFile)) {
-    return new Response('Resume version metadata not found.', {
-      status: 404
-    });
+    return new Response(
+      'Resume version metadata not found. Run `pnpm generate:resume` or `node ./resume/scripts/hash-resume.mjs` after rendering the PDF.',
+      { status: 404 }
+    );
   }
 
   const version = JSON.parse(readFileSync(versionFile, 'utf8')) as ResumeVersion;

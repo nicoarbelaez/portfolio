@@ -26,6 +26,7 @@ export async function getRepository(owner: string, repo: string): Promise<Github
     topics: meta.topics ?? [],
     htmlUrl: meta.html_url,
     defaultBranch: meta.default_branch,
+    private: meta.private,
     readme
   };
 }

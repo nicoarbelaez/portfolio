@@ -12,7 +12,10 @@ interface Props {
 const { year, rights, themeLabel } = Astro.props;
 ---
 
-<footer class="text-muted-foreground relative shrink-0 overflow-hidden px-4 py-6">
+<footer
+  id="contact"
+  class="text-muted-foreground relative shrink-0 scroll-mt-24 overflow-hidden px-4 py-6"
+>
   <FooterFlickeringGrid client:visible />
   <div class="relative z-10 mx-auto flex max-w-3xl items-center justify-between gap-4">
     <p class="text-sm leading-relaxed">

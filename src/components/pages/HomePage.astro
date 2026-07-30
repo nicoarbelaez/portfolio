@@ -1,6 +1,9 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Hero from '@/components/sections/Hero.astro';
+import ExperienceSection from '@/features/experience/components/ExperienceSection.astro';
+import ProjectsSection from '@/features/projects/components/ProjectsSection.astro';
+import { HOME_SECTIONS_GAP_CLASS } from '@/constants/home-layout';
 import { locales } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 
@@ -13,7 +16,15 @@ const t = useTranslations(lang);
 ---
 
 <Layout lang={lang} title={t('title')} description={t('schema.description')}>
-  <main id="main" class="mx-auto w-full max-w-3xl space-y-16 px-4 pt-20 pb-16 md:pt-28">
+  <main
+    id="main"
+    class:list={[
+      'mx-auto flex w-full max-w-3xl flex-col px-4 pt-20 pb-16 md:pt-28',
+      HOME_SECTIONS_GAP_CLASS
+    ]}
+  >
     <Hero lang={lang} />
+    <ProjectsSection lang={lang} />
+    <ExperienceSection lang={lang} />
   </main>
 </Layout>

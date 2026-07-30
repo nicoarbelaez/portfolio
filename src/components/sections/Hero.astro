@@ -13,7 +13,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="hero" aria-labelledby="hero-heading" class="w-full">
+<section id="about" aria-labelledby="hero-heading" class="w-full scroll-mt-24">
   <HeroContent
     client:load
     greeting={t('hero.greeting')}
@@ -21,6 +21,7 @@ const t = useTranslations(lang);
     professionalMobile={heroProfessionalSegments[lang].mobile}
     description={t('hero.description')}
     avatarAlt={t('hero.avatarAlt')}
+    resumeLabel={t('hero.resume')}
   />
   <SocialDock client:visible label={t('social.nav')} />
 </section>

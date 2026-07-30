@@ -1,0 +1,214 @@
+/**
+ * Typeset — markdown/HTML rhythm system (inspired by shadcn/typeset).
+ * @see https://ui.shadcn.com/docs/typeset
+ *
+ * Three controls: size, leading, flow. Theme tokens for colors/fonts.
+ * Uses :where() so Tailwind utilities win without !important.
+ */
+
+@layer components {
+  .typeset {
+    --typeset-font-body: var(--font-sans);
+    --typeset-font-heading: var(--font-heading);
+    --typeset-font-mono: var(--font-mono);
+    --typeset-size: 1em;
+    --typeset-leading: 1.75;
+    --typeset-flow: 1.35em;
+
+    font-family: var(--typeset-font-body);
+    font-size: var(--typeset-size);
+    line-height: var(--typeset-leading);
+    color: var(--foreground);
+  }
+
+  .typeset-docs {
+    --typeset-size: 15px;
+    --typeset-leading: 1.75;
+    --typeset-flow: 1.5em;
+  }
+
+  .typeset-article {
+    --typeset-size: 16px;
+    --typeset-leading: 1.8;
+    --typeset-flow: 1.65em;
+  }
+
+  @media (max-width: 640px) {
+    .typeset {
+      --typeset-size: calc(var(--typeset-size) + 1px);
+    }
+  }
+
+  .dark .typeset {
+    --typeset-leading: 1.85;
+  }
+
+  :where(.typeset) :where(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--typeset-font-heading);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+    margin-block-start: calc(var(--typeset-flow) * 1.6);
+    margin-block-end: 0;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  :where(.typeset) :where(h1) {
+    font-size: 1.85em;
+  }
+  :where(.typeset) :where(h2) {
+    font-size: 1.45em;
+  }
+  :where(.typeset) :where(h3) {
+    font-size: 1.2em;
+  }
+  :where(.typeset) :where(h4, h5, h6) {
+    font-size: 1.05em;
+  }
+
+  :where(.typeset) :where(p, ul, ol, blockquote, pre, table, hr, figure) {
+    margin-block-start: var(--typeset-flow);
+    margin-block-end: 0;
+  }
+
+  :where(.typeset) :where(:first-child) {
+    margin-block-start: 0;
+  }
+
+  :where(.typeset) :where(p) {
+    text-wrap: pretty;
+  }
+
+  :where(.typeset) :where(a) {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in oklch, var(--foreground) 35%, transparent);
+    transition: text-decoration-color 150ms ease;
+  }
+
+  :where(.typeset) :where(a:hover) {
+    text-decoration-color: var(--foreground);
+  }
+
+  :where(.typeset) :where(strong) {
+    font-weight: 600;
+  }
+
+  :where(.typeset) :where(ul, ol) {
+    padding-inline-start: 1.35em;
+  }
+
+  :where(.typeset) :where(li) {
+    margin-block-start: calc(var(--typeset-flow) * 0.35);
+  }
+
+  :where(.typeset) :where(li > ul, li > ol) {
+    margin-block-start: calc(var(--typeset-flow) * 0.35);
+  }
+
+  :where(.typeset) :where(blockquote) {
+    border-inline-start: 3px solid var(--border);
+    padding-inline-start: 1em;
+    color: var(--muted-foreground);
+  }
+
+  :where(.typeset) :where(hr) {
+    border: 0;
+    border-block-start: 1px solid var(--border);
+  }
+
+  :where(.typeset) :where(code) {
+    font-family: var(--typeset-font-mono);
+    font-size: 0.9em;
+    background: var(--muted);
+    border-radius: calc(var(--radius) - 2px);
+    padding: 0.15em 0.4em;
+  }
+
+  :where(.typeset) :where(pre) {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--muted);
+    padding: 1em 1.15em;
+    font-size: 0.875em;
+  }
+
+  :where(.typeset) :where(pre code) {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+  }
+
+  :where(.typeset) :where(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.925em;
+  }
+
+  :where(.typeset) :where(th, td) {
+    border: 1px solid var(--border);
+    padding: 0.55em 0.75em;
+    text-align: start;
+  }
+
+  :where(.typeset) :where(th) {
+    background: var(--muted);
+    font-weight: 600;
+  }
+
+  /* Media figures — images & videos inside markdown */
+  :where(.typeset) :where(figure.md-media) {
+    margin-inline: 0;
+  }
+
+  :where(.typeset) :where(figure.md-media img, figure.md-media video) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: calc(var(--radius) + 2px);
+    border: 1px solid var(--border);
+    background: var(--muted);
+  }
+
+  :where(.typeset) :where(figure.md-media video) {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  :where(.typeset) :where(figure.md-media iframe) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) + 2px);
+    background: var(--muted);
+  }
+
+  :where(.typeset) :where(figure.md-media figcaption) {
+    margin-block-start: 0.55em;
+    font-size: 0.875em;
+    color: var(--muted-foreground);
+    text-align: center;
+  }
+
+  :where(.typeset) :where(img:not(figure img)) {
+    max-width: 100%;
+    height: auto;
+    border-radius: calc(var(--radius) + 2px);
+    border: 1px solid var(--border);
+  }
+
+  .typeset-scroll {
+    overflow-x: auto;
+    margin-block-start: var(--typeset-flow, 1.35em);
+  }
+
+  .not-typeset,
+  [data-not-typeset] {
+    font: inherit;
+  }
+}

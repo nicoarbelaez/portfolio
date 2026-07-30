@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import PageSection from '@/components/layout/PageSection.astro';
+import {
+  ExperienceTimeline,
+  type ExperienceTimelineItem
+} from '@/features/experience/components/ExperienceTimeline';
+import { formatExperienceRange } from '@/features/experience/utils/format-range';
+import type { LocaleKey } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: LocaleKey;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const entries = await getCollection('experience');
+const items: ExperienceTimelineItem[] = entries
+  .filter((entry) => entry.id.startsWith(`${lang}/`))
+  .toSorted((a, b) => b.data.startDate.localeCompare(a.data.startDate))
+  .map((entry) => ({
+    id: entry.id,
+    company: entry.data.company,
+    role: entry.data.role,
+    description: entry.data.description,
+    dateLabel: formatExperienceRange(
+      entry.data.startDate,
+      entry.data.endDate,
+      lang,
+      t('experience.current')
+    ),
+    dateTimeStart: entry.data.startDate,
+    dateTimeEnd: entry.data.endDate,
+    skills: entry.data.skills,
+    logoKey: entry.data.logoKey,
+    avatarStyle: entry.data.avatarStyle
+  }));
+---
+
+{
+  items.length > 0 ? (
+    <PageSection
+      id="experience"
+      label={t('nav.experience')}
+      heading={t('experience.title')}
+      headingId="experience-heading"
+    >
+      <ExperienceTimeline client:visible items={items} skillsLabel={t('experience.skills')} />
+    </PageSection>
+  ) : null
+}

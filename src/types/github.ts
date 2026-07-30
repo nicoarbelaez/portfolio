@@ -10,6 +10,7 @@ export interface GithubRepoMeta {
   language: string | null;
   stargazers_count: number;
   pushed_at: string;
+  private: boolean;
 }
 
 /** Portfolio-facing repo summary. */
@@ -24,5 +25,7 @@ export interface GithubRepository {
   topics: string[];
   htmlUrl: string;
   defaultBranch: string;
+  /** True when the GitHub repo is private — never expose repo CTA. */
+  private: boolean;
   readme: string | null;
 }

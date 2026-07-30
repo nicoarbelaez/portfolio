@@ -24,8 +24,9 @@ const { lang = defaultLang } = Astro.props;
 const t = useTranslations(lang);
 const navLabels = {
   'nav.about': t('nav.about'),
-  'nav.experience': t('nav.experience'),
   'nav.projects': t('nav.projects'),
+  'nav.apps': t('nav.apps'),
+  'nav.experience': t('nav.experience'),
   'nav.contact': t('nav.contact'),
   'nav.menu': t('nav.menu'),
   'nav.menuClose': t('nav.menuClose'),
@@ -55,9 +56,9 @@ const footerYear = new Date().getFullYear();
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <ClientRouter />
+    <ClientRouter fallback="animate" />
 
-    <script is:inline define:vars={{ themeStorageKey: THEME_STORAGE_KEY }}>
+    <script is:inline data-astro-rerun define:vars={{ themeStorageKey: THEME_STORAGE_KEY }}>
       (function () {
         try {
           const stored = localStorage.getItem(themeStorageKey);

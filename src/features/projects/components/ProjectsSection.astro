@@ -1,0 +1,65 @@
+---
+import { AppsShowcase } from '@/features/projects/components/AppsShowcase';
+import { ProjectsShowcase } from '@/features/projects/components/ProjectsShowcase';
+import { enrichProjects, groupProjectsBySection } from '@/features/projects/services/enrich';
+import type { LocaleKey } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: LocaleKey;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const projects = await enrichProjects(lang);
+const groups = groupProjectsBySection(projects);
+
+const hasProjects = groups.client.length > 0 || groups.side.length > 0;
+const hasApps = groups.apps.length > 0;
+
+const cardLabels = {
+  site: t('projects.cta.site'),
+  repo: t('projects.cta.repo'),
+  details: t('projects.cta.details'),
+  present: t('projects.timeline.present')
+};
+---
+
+{
+  /*
+  `contents` so projects + apps participate in HomePage flex gap
+  (same distance as experience / about).
+*/
+}
+<div class="contents">
+  {
+    hasProjects ? (
+      <ProjectsShowcase
+        client:visible
+        lang={lang}
+        groups={{ client: groups.client, side: groups.side }}
+        labels={{
+          client: t('projects.section.client'),
+          side: t('projects.section.side'),
+          nav: t('projects.nav'),
+          headline: t('projects.headline'),
+          subtext: t('projects.subtext'),
+          card: cardLabels
+        }}
+      />
+    ) : null
+  }
+  {
+    hasApps ? (
+      <AppsShowcase
+        client:visible
+        lang={lang}
+        projects={groups.apps}
+        labels={{
+          apps: t('projects.section.apps'),
+          card: cardLabels
+        }}
+      />
+    ) : null
+  }
+</div>
