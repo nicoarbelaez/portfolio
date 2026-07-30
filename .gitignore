@@ -39,3 +39,5 @@ public/**/resume*.pdf
 public/**/version.json
 resume/**/resume*.pdf
 .vercel/
+.vercel
+.env*

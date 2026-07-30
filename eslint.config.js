@@ -40,13 +40,22 @@ const sharedRules = {
 
 export default tseslint.config(
   {
-    ignores: ['dist/**', '.astro/**', 'node_modules/**', 'public/**', '*.config.*', '.husky/**']
+    ignores: [
+      'dist/**',
+      '.astro/**',
+      '.vercel/**',
+      '.tmp/**',
+      'node_modules/**',
+      'public/**',
+      '*.config.*',
+      '.husky/**'
+    ]
   },
   js.configs.recommended,
   ...tseslint.configs.strict,
   ...astro.configs.recommended,
   {
-    files: ['**/*.{ts,tsx,js,jsx}'],
+    files: ['**/*.{ts,tsx,js,jsx,mjs,cjs}'],
     languageOptions: {
       globals: {
         ...globals.browser,
