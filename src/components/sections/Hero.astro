@@ -1,6 +1,4 @@
 ---
-import { getImage } from 'astro:assets';
-import avatarImage from '@/assets/profile/avatar.jpg';
 import { HeroContent } from '@/components/sections/HeroContent';
 import { SocialDock } from '@/components/sections/SocialDock';
 import { heroProfessionalSegments } from '@/i18n/hero-professional';
@@ -14,19 +12,14 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const optimizedAvatar = await getImage({
-  src: avatarImage,
-  width: 256,
-  height: 256,
-  format: 'webp',
-  quality: 82
-});
+/** Pre-optimized (256x256, ~16KB) — served as-is from public/, no astro:assets/sharp needed. */
+const AVATAR_SRC = '/img/profile/avatar.jpg';
 ---
 
 <section id="about" aria-labelledby="hero-heading" class="w-full scroll-mt-24">
   <HeroContent
     client:load
-    avatarSrc={optimizedAvatar.src}
+    avatarSrc={AVATAR_SRC}
     greeting={t('hero.greeting')}
     professionalDesktop={heroProfessionalSegments[lang].desktop}
     professionalMobile={heroProfessionalSegments[lang].mobile}

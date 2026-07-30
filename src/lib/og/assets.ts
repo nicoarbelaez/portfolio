@@ -9,7 +9,7 @@ import { join } from 'node:path';
 
 /** Swap the file to change the OG brand mark — dimensions are auto-detected, no code change needed. */
 const LOGO_SOURCE_PATH = join(process.cwd(), 'src', 'assets', 'brand', 'logo.png');
-const AVATAR_SOURCE_PATH = join(process.cwd(), 'src', 'assets', 'profile', 'avatar.jpg');
+const AVATAR_SOURCE_PATH = join(process.cwd(), 'public', 'img', 'profile', 'avatar.jpg');
 
 /** Logo is rendered at this pixel height in the OG header; width follows its own aspect ratio. */
 export const OG_LOGO_DISPLAY_HEIGHT = 44;
