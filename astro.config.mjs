@@ -27,6 +27,12 @@ export default defineConfig({
     }
   },
 
+  security: {
+    // Astro owns script-src/style-src via auto-generated hashes, replacing
+    // 'unsafe-inline' from vercel.json (which still owns every other CSP directive).
+    csp: true
+  },
+
   vite: {
     plugins: [tailwindcss()]
   },
