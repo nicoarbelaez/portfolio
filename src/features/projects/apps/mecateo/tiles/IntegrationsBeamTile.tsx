@@ -33,6 +33,7 @@ function Node({
         'border-foreground/20 dark:border-border/50 border shadow-sm',
         className
       )}
+      role="img"
       aria-label={label}
     >
       {children}

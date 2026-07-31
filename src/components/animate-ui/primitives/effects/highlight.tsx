@@ -461,11 +461,12 @@ function HighlightItem<T extends React.ElementType>({
 
   const dataAttributes = {
     'data-active': isActive ? 'true' : 'false',
-    'aria-selected': isActive,
     'data-disabled': isDisabled,
     'data-value': childValue,
     'data-highlight': true
   };
+  /** Only valid on the real interactive element (merged via getNonOverridingDataAttributes below) — wrapper divs and the decorative highlight pill have no ARIA role that supports aria-selected. */
+  const interactiveAriaAttributes = { 'aria-selected': isActive };
 
   const commonHandlers = hover
     ? {
@@ -497,6 +498,7 @@ function HighlightItem<T extends React.ElementType>({
           className: cn('relative', element.props.className),
           ...getNonOverridingDataAttributes(element, {
             ...dataAttributes,
+            ...interactiveAriaAttributes,
             'data-slot': 'motion-highlight-item-container'
           }),
           ...commonHandlers,
@@ -508,6 +510,7 @@ function HighlightItem<T extends React.ElementType>({
               <motion.div
                 layoutId={`transition-background-${contextId}`}
                 data-slot="motion-highlight"
+                aria-hidden="true"
                 style={{
                   position: 'absolute',
                   zIndex: 0,
@@ -547,6 +550,7 @@ function HighlightItem<T extends React.ElementType>({
       ref: refCallback,
       ...getNonOverridingDataAttributes(element, {
         ...dataAttributes,
+        ...interactiveAriaAttributes,
         'data-slot': 'motion-highlight-item'
       }),
       ...commonHandlers
@@ -569,6 +573,7 @@ function HighlightItem<T extends React.ElementType>({
             <motion.div
               layoutId={`transition-background-${contextId}`}
               data-slot="motion-highlight"
+              aria-hidden="true"
               style={{
                 position: 'absolute',
                 zIndex: 0,
@@ -597,6 +602,7 @@ function HighlightItem<T extends React.ElementType>({
         className: element.props.className,
         ...getNonOverridingDataAttributes(element, {
           ...dataAttributes,
+          ...interactiveAriaAttributes,
           'data-slot': 'motion-highlight-item'
         })
       })}
