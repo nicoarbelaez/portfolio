@@ -1,0 +1,24 @@
+# Nicolas Arbelaez
+
+> Ingeniero de Sistemas especializado en desarrollo backend, IA aplicada y agentes inteligentes, basado en Santiago de Cali, Valle del Cauca, Colombia. Construye soluciones escalables, APIs y sistemas de automatización con foco en producción.
+
+Portfolio profesional con proyectos, experiencia laboral y stack técnico. Sitio construido con Astro y desplegado en Vercel.
+
+## Pages
+
+- [Home (English)](https://arbelaeznicolas.dev/): Overview, hero, experience timeline, and project showcase.
+- [Home (Español)](https://arbelaeznicolas.dev/es/): Misma página en español.
+
+## Skills
+
+- Backend Development, System Design, API Development
+- AI solutions, intelligent agents, automation systems
+
+## Contact
+
+- GitHub, LinkedIn, and Platzi profiles are linked from the site header/footer.
+
+## Optional
+
+- [Sitemap](https://arbelaeznicolas.dev/sitemap-index.xml)
+- [robots.txt](https://arbelaeznicolas.dev/robots.txt)
