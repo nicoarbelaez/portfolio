@@ -63,10 +63,16 @@ const baseEs = {
   'projects.empty.overview': 'Aún no hay overview disponible.',
   'projects.nav': 'Mis proyectos',
   'projects.back': 'Volver a proyectos',
-  'schema.jobTitle': 'Ingeniero de Sistemas - Desarrollo Backend',
+  'schema.jobTitle': 'Ingeniero de Sistemas - IA, Agentes Inteligentes y Backend',
   'schema.description':
-    'Con mas de %years-experience% años optimizando procesos y resolviendo retos complejos para ofrecer soluciones escalables que aceleran el crecimiento.',
-  'schema.skills': ['Desarrollo Backend', 'Diseño de Sistemas', 'Desarrollo de APIs']
+    'Con mas de %years-experience% años construyendo soluciones de IA, agentes inteligentes y sistemas backend escalables que aceleran el crecimiento.',
+  'schema.skills': [
+    'Inteligencia Artificial Aplicada',
+    'Agentes Inteligentes',
+    'Desarrollo Backend',
+    'Diseño de Sistemas',
+    'Desarrollo de APIs'
+  ]
 } as const;
 
 export type LabelKey = keyof typeof baseEs;
@@ -123,9 +129,15 @@ export const labels = {
     'projects.empty.overview': 'Overview is not available yet.',
     'projects.nav': 'My Projects',
     'projects.back': 'Back to projects',
-    'schema.jobTitle': 'Systems Engineer - Backend Development',
+    'schema.jobTitle': 'Systems Engineer - AI, Intelligent Agents & Backend',
     'schema.description':
-      'With over %years-experience% years optimizing processes and tackling complex challenges to deliver scalable solutions that accelerate growth.',
-    'schema.skills': ['Backend Development', 'System Design', 'API Development']
+      'With over %years-experience% years building AI solutions, intelligent agents, and scalable backend systems that accelerate growth.',
+    'schema.skills': [
+      'Applied Artificial Intelligence',
+      'Intelligent Agents',
+      'Backend Development',
+      'System Design',
+      'API Development'
+    ]
   }
 } as const satisfies Record<LocaleKey, LocaleLabels>;
