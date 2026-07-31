@@ -2,6 +2,8 @@
 import { ClientRouter } from 'astro:transitions';
 import '@/styles/global.css';
 import '@fontsource-variable/onest';
+import onestWoff2 from '@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url';
+import spaceGroteskWoff2 from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
 import { defaultLang, locales } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import { PERSONAL_INFO, SEO } from '@/constants/constants';
@@ -54,6 +56,15 @@ const footerYear = new Date().getFullYear();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <!-- Preload variable fonts used above the fold to cut FOUT reflow (CLS on section headings). -->
+    <link rel="preload" as="font" type="font/woff2" href={onestWoff2} crossorigin="anonymous" />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={spaceGroteskWoff2}
+      crossorigin="anonymous"
+    />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <ClientRouter fallback="animate" />
