@@ -1,5 +1,6 @@
 cv:
   name: 'Nicolas Arbelaez Tapias'
+  headline: 'AI-First Software Engineer | Full Stack | AI Engineering'
   location: 'Cali, Colombia'
   email: 'arbelaeznicolas636@gmail.com'
   phone: '+573226784229'
@@ -16,7 +17,7 @@ cv:
   sections:
     perfil:
       - |
-        Desarrollador Full Stack con foco en TypeScript, React/Next.js y Node.js/NestJS, con productos en producción e integración de APIs de terceros. Enfoque pragmático: entrega rápida sin deuda técnica y criterio build vs buy. Experiencia adicional en arquitecturas agentic con LLMs y automatización de procesos de negocio.
+        AI-First Software Engineer y desarrollador Full Stack. Orquesto agentes de código con IA (Claude Code, Cursor Agent, Codex, Gemini CLI) para diseñar, implementar, probar y llevar funcionalidades a producción: alrededor del 80-90 % de mi código se genera con agentes bajo mi dirección, con especificaciones, revisión de cada cambio, pruebas automatizadas y CI/CD. Stack principal en TypeScript, React/Next.js y Node.js/NestJS, con AWS Lambda y bases en Java/Spring Boot. Construyo agentes de IA en producción (LLMs, orquestación de herramientas, memoria) y trabajo con autonomía frente a requerimientos ambiguos.
     experiencia_laboral:
       - company: 'Danys Tortas'
         summary: 'Proyecto - Freelancer | [danystortas.com](https://danystortas.com)'
@@ -29,6 +30,7 @@ cv:
           - 'Arquitecté el sistema en NestJS + TypeScript con orquestación de herramientas, memoria de conversación y REST API + Webhooks integrados con Kommo CRM para recepción de mensajes en tiempo real.'
           - 'Implementé selección dinámica de modelos LLM vía OpenRouter según costo/latencia por intent, reduciendo costos operativos de inferencia y mejorando los tiempos de respuesta del sistema.'
           - 'El sistema escaló la operación para gestionar más de 300 nuevos chats/usuarios diarios de forma concurrente y automatizada.'
+          - 'Desarrollado con flujo AI-first: agentes de código (Claude Code, Cursor) para implementar, refactorizar y generar pruebas, con revisión propia de cada cambio antes de desplegar.'
 
       - company: 'Invictus Joyas'
         summary: 'Proyecto - Freelancer |
@@ -115,8 +117,12 @@ cv:
           Native (Expo).'
       - bullet: 'BD & Infra: PostgreSQL, Supabase, Redis, Docker, Vercel, AWS
           Lambda, Cloudflare, Git.'
+      - bullet: 'AI-First Development: Claude Code, Cursor Agent, GitHub Copilot/Codex,
+          Gemini CLI; desarrollo guiado por especificaciones y revisión de código generado por IA.'
       - bullet: 'IA & Automatización: Arquitecturas agentic, integración de LLMs
           (OpenRouter/Gemini/OpenAI), n8n, Google Apps Script.'
+      - bullet: 'Calidad & DevOps: Vitest/Jest, Playwright/Cypress, GitHub Actions (CI/CD),
+          Git flow con pull requests, TypeScript estricto, ESLint, Docker, Dokploy.'
     certificados:
       - bullet: 'Platzi (Ago 2025) | [Curso de Automatizaciones con
           n8n](https://platzi.com/p/arbelaeznicolas636/curso/12245-n8n-lowcode/diploma/detalle/)'
@@ -133,14 +139,14 @@ cv:
     educacion:
       - institution: 'Universidad Santiago de Cali'
         area: 'Ingeniería en Sistemas'
-        degree: 'Pregrado (8° Semestre)'
+        degree: 'Pregrado (9° Semestre)'
         start_date: 2022
         end_date: 'present'
     idiomas:
       - label: 'Español'
         details: 'Nativo'
       - label: 'Inglés'
-        details: 'A2 (Competencia técnica)'
+        details: 'B1 (Speechace, nov 2026) – en formación activa'
 design:
   theme: sb2nov
   page:
@@ -313,6 +319,10 @@ locale:
 settings:
   current_date: today
   bold_keywords:
+    - AI-First
+    - Claude Code
+    - Cursor
+    - CI/CD
     - TypeScript
     - React
     - Next.js
