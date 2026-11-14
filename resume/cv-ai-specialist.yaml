@@ -16,7 +16,7 @@ cv:
   sections:
     perfil:
       - |
-        Desarrollador Full Stack especializado en IA generativa aplicada: agentes con LLMs y procesamiento inteligente de documentos que convierte texto e imágenes no estructuradas en información estructurada, trazable y confiable. Experiencia en extracción con modelos de visión (OCR), validación por esquemas y niveles de confianza por campo para revisión humana, sobre backends TypeScript/NestJS. Desarrollo AI-First con agentes de código, testing automatizado y CI/CD.
+        Desarrollador de software desde 2022, enfocado en IA generativa aplicada (OpenAI y otros LLMs) y procesamiento inteligente de documentos: convierto documentos físicos e impresos y texto no estructurado en información estructurada, confiable y accionable. Experiencia en OCR con modelos de visión, extracción de entidades con validación por esquemas, niveles de confianza por campo y evaluación iterativa con revisión humana, sobre backends TypeScript/NestJS. AI-First con agentes de código.
     experiencia_laboral:
       - company: 'Danys Tortas'
         summary: 'Proyecto - Freelancer (hoy soporte y evolución) | [danystortas.com](https://danystortas.com)'
@@ -25,11 +25,11 @@ cv:
         start_date: '2026-01'
         end_date: 'present'
         highlights:
-          - 'Diseñé un pipeline de procesamiento inteligente de documentos (clasificación, extracción, resolución y validación) que digitaliza pedidos físicos e impresos con modelos de visión (OCR) y salida estructurada validada con JSON Schema y Zod.'
-          - 'Implementé nivel de confianza (0–1) por campo y detección de campos de baja confianza para revisión humana, con versionado de prompt y modelo por extracción para trazabilidad y mejora continua.'
+          - 'Diseñé un pipeline de procesamiento inteligente de documentos (clasificación, extracción de entidades, resolución y validación) que digitaliza pedidos físicos e impresos con modelos de visión (OCR) y salida estructurada validada con JSON Schema y Zod.'
+          - 'Implementé nivel de confianza (0–1) por campo para clasificar y priorizar la revisión humana de los campos de baja confianza; ajusté prompts y umbrales de forma iterativa según los errores observados, con versionado de prompt y modelo por extracción para trazabilidad y mejora continua.'
           - 'Diseñé y opero un agente de IA de ventas y soporte end-to-end por WhatsApp (Kommo CRM) que atiende a más de 300 clientes diarios: búsqueda semántica de catálogo (pgvector), RAG, pedidos, pagos, domicilios y escalamiento a humano.'
-          - 'Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo vía OpenRouter, loop de herramientas con circuit breakers) con guardrails deterministas que bloquean montos o datos de pago no provenientes de herramientas.'
-          - 'Instrumenté trazas, telemetría de costo por ejecución y presupuestos de IA por organización; calidad sostenida con más de 1.400 archivos de pruebas y CI/CD en GitHub Actions.'
+          - 'Construí un pipeline LLM de ocho etapas (clasificación de intents, ruteo de modelos por costo vía OpenRouter, loop de herramientas) con guardrails deterministas que bloquean montos o datos de pago no provenientes de herramientas.'
+          - 'Instrumenté trazas, costo por ejecución y presupuestos de IA por organización; más de 1.400 archivos de pruebas y CI/CD en GitHub Actions.'
           - 'Stack: NestJS, Next.js, TypeScript, PostgreSQL (Prisma, pgvector), Redis/BullMQ, Docker, Dokploy.'
 
       - company: 'Trainer Elitez'
@@ -39,11 +39,9 @@ cv:
         start_date: '2024'
         end_date: '2026'
         highlights:
-          - 'Automaticé el cálculo de macros nutricionales y rutinas de
-            entrenamiento personalizadas, eliminando errores manuales críticos
-            del negocio fitness.'
-          - 'Centralicé la gestión de clientes en una app móvil propia que
-            reemplazó hojas de cálculo dispersas usadas por el equipo.'
+          - 'Automaticé el cálculo de macros y rutinas de entrenamiento
+            personalizadas y centralicé la gestión de clientes en una app móvil
+            propia que reemplazó hojas de cálculo.'
           - 'Tecnologías: Google Apps Script, Google AppSheet, TypeScript.'
 
       - company: 'Banco Davivienda'
@@ -52,11 +50,21 @@ cv:
         start_date: '2025-03'
         end_date: '2026-03'
         highlights:
-          - 'Automaticé procesos de back office con Google Apps Script,
-            reduciendo tareas operativas manuales del equipo.'
-          - 'Desarrollé tableros de visualización para indicadores de captación
-            bancaria consumidos por el área de negocio.'
+          - 'Automaticé procesos de back office con Google Apps Script y
+            desarrollé tableros de indicadores de captación bancaria para el
+            área de negocio.'
           - 'Tecnologías: Google Apps Script, JavaScript, Google Sheets API.'
+
+      - company: 'Proyectos independientes y académicos'
+        position: 'Desarrollador de Software'
+        location: 'Colombia'
+        start_date: '2022'
+        end_date: '2023'
+        highlights:
+          - 'Desarrollé un bot de Discord, un plugin en Java de calendario
+            mensual de recompensas diarias para servidores de juego y una
+            aplicación en Python.'
+          - 'Tecnologías: JavaScript, Java, Python, HTML.'
 
     proyectos:
       - name: 'Smart Work Core'
@@ -71,8 +79,7 @@ cv:
             (OpenAI/OpenRouter) que responde solo sobre los datos cargados y
             cita la fuente original, con búsqueda web opcional.'
           - 'Apliqué arquitectura por capas con adaptadores por fuente, pruebas
-            con Vitest y Playwright, CI en GitHub Actions y acceso restringido
-            con Cloudflare Access.'
+            con Vitest y Playwright y CI en GitHub Actions.'
 
       - name: 'Mecateo'
         summary: 'SaaS propio | [mecateo.co](https://mecateo.co)'
@@ -80,12 +87,9 @@ cv:
         end_date: 'present'
         highlights:
           - 'Construyo con un equipo pequeño un SaaS multi-tenant para negocios
-            físicos: soportes NFC/QR con destinos editables, captación de
-            contactos y analítica de taps.'
-          - 'Diseñé un monorepo Turborepo (12 apps, 10 paquetes) con NestJS,
-            Next.js, Prisma sobre PostgreSQL y Better Auth; CI/CD con staging,
-            backup y migración previos al despliegue y más de 600 archivos de
-            pruebas.'
+            físicos (soportes NFC/QR, captación de contactos, analítica) sobre
+            un monorepo Turborepo con NestJS, Next.js, Prisma/PostgreSQL y
+            Better Auth. CI/CD con staging y más de 600 archivos de pruebas.'
 
       - name: 'ReadIA'
         summary: '[readia.arbelaeznicolas.dev](https://readia.arbelaeznicolas.dev)'
@@ -95,11 +99,14 @@ cv:
             de capacidades TI y reportes PDF automáticos (Next.js, Vercel AI
             SDK, Gemini, Supabase, AWS Lambda).'
 
-    habilidades_tecnicas:
-      - bullet: 'IA Generativa: LLMs (OpenAI/Gemini/OpenRouter), procesamiento
-          inteligente de documentos, OCR con modelos de visión, extracción
-          estructurada (JSON Schema, Zod), clasificación de intents (NLP),
-          agentes y orquestación de herramientas.'
+    habilidades_técnicas:
+      - bullet: 'IA generativa: LLMs (OpenAI/Gemini/OpenRouter), prompt
+          engineering, procesamiento inteligente de documentos, OCR con modelos
+          de visión, extracción de entidades y datos estructurados (JSON Schema,
+          Zod), NLP (clasificación de intents), niveles de confianza por campo,
+          human-in-the-loop (revisión humana de campos de baja confianza),
+          evaluación iterativa, trazabilidad, agentes y orquestación de
+          herramientas.'
       - bullet: 'Calidad & DevOps: testing automatizado, CI/CD con GitHub
           Actions, Docker, desarrollo AI-First con agentes de código.'
       - bullet: 'Backend: TypeScript, Node.js, NestJS, Python, Java (Spring Boot),
@@ -108,9 +115,7 @@ cv:
           Native (Expo).'
       - bullet: 'BD & Infra: PostgreSQL (pgvector), Supabase, Redis, Docker,
           Dokploy, Vercel, AWS Lambda, Cloudflare.'
-      - bullet: 'IA & Automatización: Arquitecturas agentic, integración de LLMs
-          (OpenRouter/Gemini/OpenAI), procesamiento inteligente de documentos
-          (OCR con modelos de visión), n8n, Google Apps Script.'
+      - bullet: 'Automatización: arquitecturas agentic, n8n, Google Apps Script.'
     certificados:
       - bullet: 'Platzi (Ago 2025) | [Curso de Automatizaciones con
           n8n](https://platzi.com/p/arbelaeznicolas636/curso/12245-n8n-lowcode/diploma/detalle/)'
@@ -124,7 +129,7 @@ cv:
       - bullet: 'Platzi (Nov 2024) | [Curso de Java Spring Security: Autenticación y
           Seguridad
           Web](https://platzi.com/p/arbelaeznicolas636/curso/7694-java-spring-security/diploma/detalle/)'
-    educacion:
+    educación:
       - institution: 'Universidad Santiago de Cali'
         area: 'Ingeniería en Sistemas'
         degree: 'Pregrado (9° Semestre)'
@@ -138,7 +143,7 @@ cv:
       - label: 'Español'
         details: 'Nativo'
       - label: 'Inglés'
-        details: 'B2 (conversacional y técnico)'
+        details: 'B1 (lectura de documentación técnica)'
 design:
   theme: sb2nov
   page:

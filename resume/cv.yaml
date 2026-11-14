@@ -149,7 +149,7 @@ cv:
       - label: 'Español'
         details: 'Nativo'
       - label: 'Inglés'
-        details: 'B2 (conversacional y técnico)'
+        details: 'B1 (lectura de documentación técnica)'
 design:
   theme: sb2nov
   page:
