@@ -27,24 +27,10 @@ cv:
         highlights:
           - 'Diseñé un pipeline de procesamiento inteligente de documentos (clasificación, extracción, resolución y validación) que digitaliza pedidos físicos e impresos con modelos de visión (OCR) y salida estructurada validada con JSON Schema y Zod.'
           - 'Implementé nivel de confianza (0–1) por campo y detección de campos de baja confianza para revisión humana, con versionado de prompt y modelo por extracción para trazabilidad y mejora continua.'
-          - 'Desarrollé un agente conversacional en producción con clasificación de intents, enrutamiento, orquestación de herramientas y escalamiento a humano, que gestiona ventas, inventario y pagos 24/7 para más de 300 chats diarios.'
-          - 'Implementé selección dinámica de modelos LLM vía OpenRouter y registro de invocaciones con presupuestos de IA por organización para controlar costo y latencia de inferencia.'
-          - 'Stack: NestJS, TypeScript, Next.js, PostgreSQL (Prisma), Redis/BullMQ, Docker, GitHub Actions, Kommo CRM.'
-
-      - company: 'Invictus Joyas'
-        summary: 'Proyecto - Freelancer |
-          [invictusjoyas.com](https://invictusjoyas.com)'
-        position: 'Desarrollador Web Full Stack'
-        location: Colombia
-        start_date: '2026-04'
-        end_date: '2026-05'
-        highlights:
-          - 'Desarrollé desde cero un e-commerce con catálogo y carrito de
-            compras, entregado en producción en un ciclo corto.'
-          - 'Definí arquitectura que permite migración futura a SSR sin
-            reescribir componentes, priorizando velocidad de entrega sobre
-            over-engineering.'
-          - 'Tecnologías: Astro, TypeScript, Tailwind CSS.'
+          - 'Diseñé y opero un agente de IA de ventas y soporte end-to-end por WhatsApp (Kommo CRM) que atiende a más de 300 clientes diarios: búsqueda semántica de catálogo (pgvector), RAG, pedidos, pagos, domicilios y escalamiento a humano.'
+          - 'Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo vía OpenRouter, loop de herramientas con circuit breakers) con guardrails deterministas que bloquean montos o datos de pago no provenientes de herramientas.'
+          - 'Instrumenté trazas, telemetría de costo por ejecución y presupuestos de IA por organización; calidad sostenida con más de 1.400 archivos de pruebas y CI/CD en GitHub Actions.'
+          - 'Stack: NestJS, Next.js, TypeScript, PostgreSQL (Prisma, pgvector), Redis/BullMQ, Docker, Dokploy.'
 
       - company: 'Trainer Elitez'
         summary: 'Proyecto - Freelancer'
@@ -73,41 +59,41 @@ cv:
           - 'Tecnologías: Google Apps Script, JavaScript, Google Sheets API.'
 
     proyectos:
+      - name: 'Smart Work Core'
+        summary: '[swc.mecateo.co](https://swc.mecateo.co)'
+        date: '2026-10'
+        highlights:
+          - 'Desarrollé una plataforma de inteligencia empresarial que
+            convierte fuentes públicas de Colombia (SECOP II, datos.gov.co,
+            Banco Mundial, XM, noticias y regulación) en señales, alertas,
+            análisis PESTEL y briefings trazables para la toma de decisiones.'
+          - 'Integré un asistente de IA generativa con Vercel AI SDK
+            (OpenAI/OpenRouter) que responde solo sobre los datos cargados y
+            cita la fuente original, con búsqueda web opcional.'
+          - 'Apliqué arquitectura por capas con adaptadores por fuente, pruebas
+            con Vitest y Playwright, CI en GitHub Actions y acceso restringido
+            con Cloudflare Access.'
+
+      - name: 'Mecateo'
+        summary: 'SaaS propio | [mecateo.co](https://mecateo.co)'
+        start_date: '2026-05'
+        end_date: 'present'
+        highlights:
+          - 'Construyo con un equipo pequeño un SaaS multi-tenant para negocios
+            físicos: soportes NFC/QR con destinos editables, captación de
+            contactos y analítica de taps.'
+          - 'Diseñé un monorepo Turborepo (12 apps, 10 paquetes) con NestJS,
+            Next.js, Prisma sobre PostgreSQL y Better Auth; CI/CD con staging,
+            backup y migración previos al despliegue y más de 600 archivos de
+            pruebas.'
+
       - name: 'ReadIA'
         summary: '[readia.arbelaeznicolas.dev](https://readia.arbelaeznicolas.dev)'
         date: 2025
         highlights:
           - 'Construí plataforma serverless con IA generativa para diagnóstico
-            de capacidades TI, con generación automática de reportes PDF.'
-          - 'Integré Supabase como capa de persistencia y AWS Lambda
-            para lógica de backend desacoplada, desplegada en Vercel.'
-          - 'Stack: Next.js, Vercel AI SDK, Google Gemini API, Supabase, AWS
-            Lambda.'
-
-      - name: 'Mecateo'
-        summary: '[mecateo.com.co](https://mecateo.com.co)'
-        date: 2026
-        highlights:
-          - 'Construyo un SaaS multi-tenant propio con experiencias NFC/QR y
-            redirecciones dinámicas, evolucionado desde un MVP de POS para
-            restaurantes.'
-          - 'Diseñé un monorepo Turborepo con REST API en NestJS, Prisma sobre
-            PostgreSQL, autenticación con Better Auth, tiempo real con
-            Socket.IO y CI/CD con GitHub Actions (staging y producción).'
-          - 'Stack: Next.js, NestJS, Prisma, PostgreSQL, Better Auth,
-            TypeScript.'
-
-      - name: 'Living Sports'
-        summary: '[github.com/nicoarbelaez/living-sports-app](https://github.com/nicoarbelaez/living-sports-app)'
-        date: 2025
-        highlights:
-          - 'Desarrollé red social fitness móvil con feed, perfiles y
-            publicaciones multimedia, como proyecto universitario entregado en
-            producción.'
-          - 'Integré Supabase para auth, base de datos y storage en tiempo
-            real; Cloudinary para optimización y entrega de imágenes.'
-          - 'Stack: Expo (React Native), Supabase, Cloudinary,
-            TypeScript.'
+            de capacidades TI y reportes PDF automáticos (Next.js, Vercel AI
+            SDK, Gemini, Supabase, AWS Lambda).'
 
     habilidades_tecnicas:
       - bullet: 'IA Generativa: LLMs (OpenAI/Gemini/OpenRouter), procesamiento
@@ -120,8 +106,8 @@ cv:
           PHP.'
       - bullet: 'Frontend: Next.js (React), Astro, Tailwind CSS, TypeScript, React
           Native (Expo).'
-      - bullet: 'BD & Infra: PostgreSQL, Supabase, Redis, Docker, Vercel, AWS
-          Lambda, Cloudflare, Git.'
+      - bullet: 'BD & Infra: PostgreSQL (pgvector), Supabase, Redis, Docker,
+          Dokploy, Vercel, AWS Lambda, Cloudflare.'
       - bullet: 'IA & Automatización: Arquitecturas agentic, integración de LLMs
           (OpenRouter/Gemini/OpenAI), procesamiento inteligente de documentos
           (OCR con modelos de visión), n8n, Google Apps Script.'

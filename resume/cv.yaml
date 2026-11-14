@@ -20,31 +20,17 @@ cv:
     experiencia_laboral:
       - company: 'Danys Tortas'
         summary: 'Proyecto - Freelancer (hoy soporte y evolución) | [danystortas.com](https://danystortas.com)'
-        position: 'Desarrollador Full Stack – Agente IA'
+        position: 'Desarrollador Full Stack – Agentes de IA'
         location: 'Colombia'
         start_date: '2026-01'
         end_date: 'present'
         highlights:
-          - 'Desarrollé un agente conversacional en producción que gestiona ventas, inventario y pagos 24/7, eliminando el flujo manual de atención al cliente.'
-          - 'Arquitecté el sistema en NestJS + TypeScript con orquestación de herramientas, memoria de conversación y REST API + Webhooks integrados con Kommo CRM para recepción de mensajes en tiempo real.'
-          - 'Implementé selección dinámica de modelos LLM vía OpenRouter según costo/latencia por intent, reduciendo costos operativos de inferencia y mejorando los tiempos de respuesta del sistema.'
-          - 'Construí un módulo de procesamiento inteligente de documentos que digitaliza pedidos físicos con modelos de visión (OCR), extracción estructurada validada con JSON Schema/Zod y nivel de confianza por campo para revisión humana.'
-          - 'El sistema escaló la operación para gestionar más de 300 nuevos chats/usuarios diarios de forma concurrente y automatizada.'
-
-      - company: 'Invictus Joyas'
-        summary: 'Proyecto - Freelancer |
-          [invictusjoyas.com](https://invictusjoyas.com)'
-        position: 'Desarrollador Web Full Stack'
-        location: Colombia
-        start_date: '2026-04'
-        end_date: '2026-05'
-        highlights:
-          - 'Desarrollé desde cero un e-commerce con catálogo y carrito de
-            compras, entregado en producción en un ciclo corto.'
-          - 'Definí arquitectura que permite migración futura a SSR sin
-            reescribir componentes, priorizando velocidad de entrega sobre
-            over-engineering.'
-          - 'Tecnologías: Astro, TypeScript, Tailwind CSS.'
+          - 'Diseñé y opero un agente de IA de ventas y soporte end-to-end por WhatsApp (Kommo CRM) que atiende a más de 300 clientes diarios: catálogo con búsqueda semántica, cotización, pedidos, pagos por sucursal, domicilios y escalamiento a humano.'
+          - 'Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo vía OpenRouter, loop de herramientas con circuit breakers y RAG), tras migrar desde LangGraph.'
+          - 'Implementé guardrails deterministas que bloquean montos o datos de pago no provenientes de herramientas, con trazas y telemetría de costo por ejecución.'
+          - 'Integré el agente con un ERP multi-sucursal (inventario, caja, despacho de domicilios, RBAC de seis roles) y un módulo de procesamiento inteligente de documentos con OCR y confianza por campo.'
+          - 'Sostuve la calidad con más de 1.400 archivos de pruebas y CI/CD en GitHub Actions con despliegue automatizado en Dokploy.'
+          - 'Stack: NestJS, Next.js, TypeScript, PostgreSQL (Prisma, pgvector), Redis/BullMQ, Docker.'
 
       - company: 'Trainer Elitez'
         summary: 'Proyecto - Freelancer'
@@ -74,17 +60,34 @@ cv:
 
     proyectos:
       - name: 'Mecateo'
-        summary: '[mecateo.com.co](https://mecateo.com.co)'
-        date: 2026
+        summary: 'SaaS propio | [mecateo.co](https://mecateo.co)'
+        start_date: '2026-05'
+        end_date: 'present'
         highlights:
-          - 'Construyo un SaaS multi-tenant propio con experiencias NFC/QR y
-            redirecciones dinámicas, evolucionado desde un MVP de POS para
-            restaurantes.'
-          - 'Diseñé un monorepo Turborepo con REST API en NestJS, Prisma sobre
-            PostgreSQL, autenticación con Better Auth, tiempo real con
-            Socket.IO y CI/CD con GitHub Actions (staging y producción).'
-          - 'Stack: Next.js, NestJS, Prisma, PostgreSQL, Better Auth,
-            TypeScript.'
+          - 'Construyo con un equipo pequeño un SaaS multi-tenant para negocios
+            físicos: soportes NFC/QR con destinos editables sin reimprimir,
+            captación de contactos y analítica de taps, evolucionado desde un
+            POS legacy.'
+          - 'Diseñé un monorepo Turborepo (12 apps, 10 paquetes) con NestJS,
+            Next.js, Prisma sobre PostgreSQL, Better Auth y Socket.IO.'
+          - 'Automaticé CI/CD con GitHub Actions: entorno de staging, backup y
+            migración previos al despliegue en Dokploy, smoke tests y más de
+            600 archivos de pruebas.'
+
+      - name: 'Smart Work Core'
+        summary: '[swc.mecateo.co](https://swc.mecateo.co)'
+        date: '2026-10'
+        highlights:
+          - 'Desarrollé una plataforma de inteligencia empresarial que
+            consolida fuentes públicas de Colombia (SECOP II, datos.gov.co,
+            Banco Mundial, XM, noticias y regulación) en señales, alertas,
+            análisis PESTEL y briefings para la toma de decisiones.'
+          - 'Integré un asistente de IA con Vercel AI SDK (OpenAI/OpenRouter)
+            que responde sobre los datos cargados citando fuentes, con búsqueda
+            web opcional.'
+          - 'Apliqué arquitectura por capas con adaptadores por fuente, pruebas
+            con Vitest y Playwright, CI en GitHub Actions y acceso restringido
+            con Cloudflare Access.'
 
       - name: 'Living Sports'
         summary: '[github.com/nicoarbelaez/living-sports-app](https://github.com/nicoarbelaez/living-sports-app)'
@@ -114,8 +117,8 @@ cv:
           PHP.'
       - bullet: 'Frontend: Next.js (React), Astro, Tailwind CSS, TypeScript, React
           Native (Expo).'
-      - bullet: 'BD & Infra: PostgreSQL, Supabase, Redis, Docker, Vercel, AWS
-          Lambda, Cloudflare, Git.'
+      - bullet: 'BD & Infra: PostgreSQL (pgvector), Supabase, Redis, Docker,
+          Dokploy, GitHub Actions, Vercel, AWS Lambda, Cloudflare.'
       - bullet: 'IA & Automatización: Arquitecturas agentic, integración de LLMs
           (OpenRouter/Gemini/OpenAI), procesamiento inteligente de documentos
           (OCR con modelos de visión), n8n, Google Apps Script.'
