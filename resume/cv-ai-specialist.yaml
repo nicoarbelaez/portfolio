@@ -1,0 +1,351 @@
+cv:
+  name: 'Nicolas Arbelaez Tapias'
+  location: 'Cali, Colombia'
+  email: 'arbelaeznicolas636@gmail.com'
+  phone: '+573226784229'
+  website: 'https://arbelaeznicolas.dev/'
+  social_networks:
+    - network: 'LinkedIn'
+      username: 'arbelaeznicolas'
+    - network: 'GitHub'
+      username: 'nicoarbelaez'
+  custom_connections:
+    - placeholder: platzi.com/p/arbelaeznicolas636
+      url: https://platzi.com/p/arbelaeznicolas636/
+      fontawesome_icon: link
+  sections:
+    perfil:
+      - |
+        Desarrollador Full Stack especializado en IA generativa aplicada: agentes con LLMs y procesamiento inteligente de documentos que convierte texto e imágenes no estructuradas en información estructurada, trazable y confiable. Experiencia en extracción con modelos de visión (OCR), validación por esquemas y niveles de confianza por campo para revisión humana, sobre backends TypeScript/NestJS. Desarrollo AI-First con agentes de código, testing automatizado y CI/CD.
+    experiencia_laboral:
+      - company: 'Danys Tortas'
+        summary: 'Proyecto - Freelancer (hoy soporte y evolución) | [danystortas.com](https://danystortas.com)'
+        position: 'Desarrollador Full Stack – IA Generativa'
+        location: 'Colombia'
+        start_date: '2026-01'
+        end_date: 'present'
+        highlights:
+          - 'Diseñé un pipeline de procesamiento inteligente de documentos (clasificación, extracción, resolución y validación) que digitaliza pedidos físicos e impresos con modelos de visión (OCR) y salida estructurada validada con JSON Schema y Zod.'
+          - 'Implementé nivel de confianza (0–1) por campo y detección de campos de baja confianza para revisión humana, con versionado de prompt y modelo por extracción para trazabilidad y mejora continua.'
+          - 'Desarrollé un agente conversacional en producción con clasificación de intents, enrutamiento, orquestación de herramientas y escalamiento a humano, que gestiona ventas, inventario y pagos 24/7 para más de 300 chats diarios.'
+          - 'Implementé selección dinámica de modelos LLM vía OpenRouter y registro de invocaciones con presupuestos de IA por organización para controlar costo y latencia de inferencia.'
+          - 'Stack: NestJS, TypeScript, Next.js, PostgreSQL (Prisma), Redis/BullMQ, Docker, GitHub Actions, Kommo CRM.'
+
+      - company: 'Invictus Joyas'
+        summary: 'Proyecto - Freelancer |
+          [invictusjoyas.com](https://invictusjoyas.com)'
+        position: 'Desarrollador Web Full Stack'
+        location: Colombia
+        start_date: '2026-04'
+        end_date: '2026-05'
+        highlights:
+          - 'Desarrollé desde cero un e-commerce con catálogo y carrito de
+            compras, entregado en producción en un ciclo corto.'
+          - 'Definí arquitectura que permite migración futura a SSR sin
+            reescribir componentes, priorizando velocidad de entrega sobre
+            over-engineering.'
+          - 'Tecnologías: Astro, TypeScript, Tailwind CSS.'
+
+      - company: 'Trainer Elitez'
+        summary: 'Proyecto - Freelancer'
+        position: 'Desarrollador de Software y Automatización'
+        location: 'Colombia'
+        start_date: '2024'
+        end_date: '2026'
+        highlights:
+          - 'Automaticé el cálculo de macros nutricionales y rutinas de
+            entrenamiento personalizadas, eliminando errores manuales críticos
+            del negocio fitness.'
+          - 'Centralicé la gestión de clientes en una app móvil propia que
+            reemplazó hojas de cálculo dispersas usadas por el equipo.'
+          - 'Tecnologías: Google Apps Script, Google AppSheet, TypeScript.'
+
+      - company: 'Banco Davivienda'
+        position: 'Aprendiz – Programa Nativos Semillero'
+        location: 'Colombia'
+        start_date: '2025-03'
+        end_date: '2026-03'
+        highlights:
+          - 'Automaticé procesos de back office con Google Apps Script,
+            reduciendo tareas operativas manuales del equipo.'
+          - 'Desarrollé tableros de visualización para indicadores de captación
+            bancaria consumidos por el área de negocio.'
+          - 'Tecnologías: Google Apps Script, JavaScript, Google Sheets API.'
+
+    proyectos:
+      - name: 'ReadIA'
+        summary: '[readia.arbelaeznicolas.dev](https://readia.arbelaeznicolas.dev)'
+        date: 2025
+        highlights:
+          - 'Construí plataforma serverless con IA generativa para diagnóstico
+            de capacidades TI, con generación automática de reportes PDF.'
+          - 'Integré Supabase como capa de persistencia y AWS Lambda
+            para lógica de backend desacoplada, desplegada en Vercel.'
+          - 'Stack: Next.js, Vercel AI SDK, Google Gemini API, Supabase, AWS
+            Lambda.'
+
+      - name: 'Mecateo'
+        summary: '[mecateo.com.co](https://mecateo.com.co)'
+        date: 2026
+        highlights:
+          - 'Construyo un SaaS multi-tenant propio con experiencias NFC/QR y
+            redirecciones dinámicas, evolucionado desde un MVP de POS para
+            restaurantes.'
+          - 'Diseñé un monorepo Turborepo con REST API en NestJS, Prisma sobre
+            PostgreSQL, autenticación con Better Auth, tiempo real con
+            Socket.IO y CI/CD con GitHub Actions (staging y producción).'
+          - 'Stack: Next.js, NestJS, Prisma, PostgreSQL, Better Auth,
+            TypeScript.'
+
+      - name: 'Living Sports'
+        summary: '[github.com/nicoarbelaez/living-sports-app](https://github.com/nicoarbelaez/living-sports-app)'
+        date: 2025
+        highlights:
+          - 'Desarrollé red social fitness móvil con feed, perfiles y
+            publicaciones multimedia, como proyecto universitario entregado en
+            producción.'
+          - 'Integré Supabase para auth, base de datos y storage en tiempo
+            real; Cloudinary para optimización y entrega de imágenes.'
+          - 'Stack: Expo (React Native), Supabase, Cloudinary,
+            TypeScript.'
+
+    habilidades_tecnicas:
+      - bullet: 'IA Generativa: LLMs (OpenAI/Gemini/OpenRouter), procesamiento
+          inteligente de documentos, OCR con modelos de visión, extracción
+          estructurada (JSON Schema, Zod), clasificación de intents (NLP),
+          agentes y orquestación de herramientas.'
+      - bullet: 'Calidad & DevOps: testing automatizado, CI/CD con GitHub
+          Actions, Docker, desarrollo AI-First con agentes de código.'
+      - bullet: 'Backend: TypeScript, Node.js, NestJS, Python, Java (Spring Boot),
+          PHP.'
+      - bullet: 'Frontend: Next.js (React), Astro, Tailwind CSS, TypeScript, React
+          Native (Expo).'
+      - bullet: 'BD & Infra: PostgreSQL, Supabase, Redis, Docker, Vercel, AWS
+          Lambda, Cloudflare, Git.'
+      - bullet: 'IA & Automatización: Arquitecturas agentic, integración de LLMs
+          (OpenRouter/Gemini/OpenAI), procesamiento inteligente de documentos
+          (OCR con modelos de visión), n8n, Google Apps Script.'
+    certificados:
+      - bullet: 'Platzi (Ago 2025) | [Curso de Automatizaciones con
+          n8n](https://platzi.com/p/arbelaeznicolas636/curso/12245-n8n-lowcode/diploma/detalle/)'
+      - bullet: 'Platzi (Abr 2025) | [Curso de Backend con Node.js: Autenticación con
+          Passport.js y
+          JWT](https://platzi.com/p/arbelaeznicolas636/curso/2489-passport/diploma/detalle/)'
+      - bullet: 'Platzi (Mar 2025) | [Curso de Backend con Node.js: Base de Datos con
+          PostgreSQL](https://platzi.com/p/arbelaeznicolas636/curso/2507-backend-nodejs-postgres/diploma/detalle/)'
+      - bullet: 'Platzi (Mar 2025) | [Curso de Backend con Node.js: API REST con
+          Express.js](https://platzi.com/p/arbelaeznicolas636/curso/2485-backend-nodejs/diploma/detalle/)'
+      - bullet: 'Platzi (Nov 2024) | [Curso de Java Spring Security: Autenticación y
+          Seguridad
+          Web](https://platzi.com/p/arbelaeznicolas636/curso/7694-java-spring-security/diploma/detalle/)'
+    educacion:
+      - institution: 'Universidad Santiago de Cali'
+        area: 'Ingeniería en Sistemas'
+        degree: 'Pregrado (8° Semestre)'
+        start_date: 2022
+        end_date: 'present'
+      - institution: 'Universidad Santiago de Cali'
+        area: 'Estrategias de Ciberseguridad y Resiliencia Tecnológica'
+        degree: 'Diplomado (130 horas)'
+        date: '2026-07'
+    idiomas:
+      - label: 'Español'
+        details: 'Nativo'
+      - label: 'Inglés'
+        details: 'A2 (Competencia técnica)'
+design:
+  theme: sb2nov
+  page:
+    size: a4
+    top_margin: 0.7in
+    bottom_margin: 0.7in
+    left_margin: 0.7in
+    right_margin: 0.7in
+    show_footer: false
+    show_top_note: true
+  colors:
+    body: rgb(0, 0, 0)
+    name: rgb(0, 0, 0)
+    headline: rgb(0, 0, 0)
+    connections: rgb(0, 0, 0)
+    section_titles: rgb(0, 0, 0)
+    links: rgb(0, 0, 0)
+    footer: rgb(128, 128, 128)
+    top_note: rgb(128, 128, 128)
+  typography:
+    line_spacing: 0.6em
+    alignment: justified-with-no-hyphenation
+    date_and_location_column_alignment: right
+    font_family:
+      body: New Computer Modern
+      name: New Computer Modern
+      headline: New Computer Modern
+      connections: New Computer Modern
+      section_titles: New Computer Modern
+    font_size:
+      body: 10pt
+      name: 30pt
+      headline: 10pt
+      connections: 10pt
+      section_titles: 1.4em
+    small_caps:
+      name: false
+      headline: false
+      connections: false
+      section_titles: false
+    bold:
+      name: true
+      headline: false
+      connections: false
+      section_titles: true
+  links:
+    underline: true
+    show_external_link_icon: true
+  header:
+    alignment: right
+    photo_width: 3.5cm
+    photo_position: left
+    photo_space_left: 0.4cm
+    photo_space_right: 0.4cm
+    space_below_name: 0.7cm
+    space_below_headline: 0.7cm
+    space_below_connections: 0.7cm
+    connections:
+      phone_number_format: international
+      hyperlink: true
+      show_icons: true
+      display_urls_instead_of_usernames: true
+      separator: •
+      space_between_connections: 0.5cm
+  section_titles:
+    type: with_partial_line
+    line_thickness: 0.5pt
+    space_above: 0.5cm
+    space_below: 0.3cm
+  sections:
+    allow_page_break: true
+    space_between_regular_entries: 1.2em
+    space_between_text_based_entries: 0.3em
+    show_time_spans_in: []
+  entries:
+    date_and_location_width: 4.15cm
+    side_space: 0.2cm
+    space_between_columns: 0.1cm
+    allow_page_break: false
+    short_second_row: false
+    degree_width: 1cm
+    summary:
+      space_above: 0cm
+      space_left: 0cm
+    highlights:
+      bullet: ◦
+      nested_bullet: ◦
+      space_left: 0.15cm
+      space_above: 0cm
+      space_between_items: 0cm
+      space_between_bullet_and_text: 0.5em
+  templates:
+    footer: '*NAME -- PAGE_NUMBER/TOTAL_PAGES*'
+    top_note: '*LAST_UPDATED CURRENT_DATE*'
+    single_date: MONTH_ABBREVIATION YEAR
+    date_range: START_DATE – END_DATE
+    time_span: HOW_MANY_YEARS YEARS HOW_MANY_MONTHS MONTHS
+    one_line_entry:
+      main_column: '**LABEL:** DETAILS'
+    education_entry:
+      main_column: |-
+        **INSTITUTION**
+        *DEGREE* *en* *AREA*
+        SUMMARY
+        HIGHLIGHTS
+      degree_column:
+      date_and_location_column: |-
+        *LOCATION*
+        *DATE*
+    normal_entry:
+      main_column: |-
+        **NAME**
+        SUMMARY
+        HIGHLIGHTS
+      date_and_location_column: |-
+        *LOCATION*
+        *DATE*
+    experience_entry:
+      main_column: |-
+        **POSITION**
+        *COMPANY*
+        SUMMARY
+        HIGHLIGHTS
+      date_and_location_column: |-
+        *LOCATION*
+        *DATE*
+    publication_entry:
+      main_column: |-
+        **TITLE**
+        SUMMARY
+        AUTHORS
+        URL (JOURNAL)
+      date_and_location_column: DATE
+locale:
+  language: spanish
+  last_updated: Última actualización
+  month: mes
+  months: meses
+  year: año
+  years: años
+  present: presente
+  phrases:
+    degree_with_area: DEGREE en AREA
+  month_abbreviations:
+    - Ene
+    - Feb
+    - Mar
+    - Abr
+    - May
+    - Jun
+    - Jul
+    - Ago
+    - Sep
+    - Oct
+    - Nov
+    - Dic
+  month_names:
+    - Enero
+    - Febrero
+    - Marzo
+    - Abril
+    - Mayo
+    - Junio
+    - Julio
+    - Agosto
+    - Septiembre
+    - Octubre
+    - Noviembre
+    - Diciembre
+settings:
+  current_date: today
+  bold_keywords:
+    - TypeScript
+    - React
+    - Next.js
+    - Node.js
+    - NestJS
+    - Kommo
+    - CRM
+    - REST
+    - API
+    - Better Auth
+    - Redis
+    - PostgreSQL
+    - Cloudinary
+    - AWS
+    - Lambda
+    - Supabase
+    - Google Gemin
+    - Vercel
+    - IA generativa
+    - OCR
+    - JSON Schema
+    - Zod
+    - GitHub Actions
+  pdf_title: NAME - CV
