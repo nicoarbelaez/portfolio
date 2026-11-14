@@ -127,7 +127,7 @@ cv:
     educacion:
       - institution: 'Universidad Santiago de Cali'
         area: 'Ingeniería en Sistemas'
-        degree: 'Pregrado (8° Semestre)'
+        degree: 'Pregrado (9° Semestre)'
         start_date: 2022
         end_date: 'present'
       - institution: 'Universidad Santiago de Cali'
@@ -138,7 +138,7 @@ cv:
       - label: 'Español'
         details: 'Nativo'
       - label: 'Inglés'
-        details: 'A2 (Competencia técnica)'
+        details: 'B2 – Speechace Speaking 6.5/9 ([Business](https://speak.speechace.co/placement/report/a69fbc9797420bef8cfdd697ac8576/), [Jobs](https://speak.speechace.co/placement/report/a69fbc9797420bef8cfdd697ac877b/), [Screening](https://speak.speechace.co/placement/report/a69fbc9797420bef8cfdd697ad8e7f/))'
 design:
   theme: sb2nov
   page:
