@@ -299,5 +299,5 @@ En Vercel: `installCommand` crea `.venv` con `uv` e instala `requirements.txt` (
 ## Perfil del usuario
 
 - **Nicolas Arbelaez Tapias** — Full Stack con foco Backend, AI-First y automatización. Cali, Colombia.
-- Inglés **A2 (técnico)**. No pasar el CV a inglés salvo petición explícita; si se pide, crear archivo aparte (no sobrescribir el español).
+- Inglés **B2** (Speechace Speaking 6.5/9, nov 2026). No pasar el CV a inglés salvo petición explícita; si se pide, crear archivo aparte (no sobrescribir el español).
 - Si la oferta está claramente fuera de perfil, avisar antes de forzar la adaptación.
