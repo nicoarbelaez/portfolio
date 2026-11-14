@@ -1,5 +1,6 @@
 cv:
   name: 'Nicolas Arbelaez Tapias'
+  headline: 'AI-First Software Engineer | Full Stack | AI Engineering'
   location: 'Cali, Colombia'
   email: 'arbelaeznicolas636@gmail.com'
   phone: '+573226784229'
@@ -16,7 +17,7 @@ cv:
   sections:
     perfil:
       - |
-        Desarrollador Full Stack con foco en TypeScript, React/Next.js y Node.js/NestJS, con productos en producción e integración de APIs de terceros. Enfoque pragmático: entrega rápida sin deuda técnica y criterio build vs buy. Experiencia en arquitecturas agentic con LLMs, procesamiento inteligente de documentos y automatización de procesos de negocio.
+        AI-First Software Engineer y desarrollador Full Stack. Orquesto agentes de código con IA (Claude Code, Cursor Agent, Codex, Gemini CLI) para diseñar, implementar, probar y llevar funcionalidades a producción: alrededor del 80-90 % de mi código se genera con agentes bajo mi dirección, con revisión de cada cambio y pruebas automatizadas. Stack principal en TypeScript, React/Next.js y Node.js/NestJS, con AWS Lambda y bases en Java/Spring Boot. Construyo agentes de IA en producción (LLMs, orquestación de herramientas, memoria) y procesamiento inteligente de documentos con OCR, y trabajo con autonomía frente a requerimientos ambiguos.
     experiencia_laboral:
       - company: 'Danys Tortas'
         summary: 'Proyecto - Freelancer (hoy soporte y evolución) | [danystortas.com](https://danystortas.com)'
@@ -25,12 +26,11 @@ cv:
         start_date: '2026-01'
         end_date: 'present'
         highlights:
-          - 'Diseñé y opero un agente de IA de ventas y soporte end-to-end por WhatsApp (Kommo CRM) que atiende a más de 300 clientes diarios: catálogo con búsqueda semántica, cotización, pedidos, pagos por sucursal, domicilios y escalamiento a humano.'
+          - 'Diseñé y opero un agente de IA de ventas y soporte por WhatsApp (Kommo CRM) que atiende a más de 300 clientes diarios: catálogo semántico, pedidos, pagos, domicilios y escalamiento a humano.'
           - 'Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo vía OpenRouter, loop de herramientas con circuit breakers y RAG), tras migrar desde LangGraph.'
-          - 'Implementé guardrails deterministas que bloquean montos o datos de pago no provenientes de herramientas, con trazas y telemetría de costo por ejecución.'
-          - 'Integré el agente con un ERP multi-sucursal (inventario, caja, despacho de domicilios, RBAC de seis roles) y un módulo de procesamiento inteligente de documentos con OCR y confianza por campo.'
-          - 'Sostuve la calidad con más de 1.400 archivos de pruebas y CI/CD en GitHub Actions con despliegue automatizado en Dokploy.'
-          - 'Stack: NestJS, Next.js, TypeScript, PostgreSQL (Prisma, pgvector), Redis/BullMQ, Docker.'
+          - 'Implementé guardrails deterministas que bloquean montos o datos de pago no provenientes de herramientas, con telemetría de costo.'
+          - 'Integré el agente con un ERP multi-sucursal (inventario, caja, despachos, RBAC de seis roles) y un módulo de procesamiento de documentos con OCR y confianza por campo.'
+          - 'Desarrollado con flujo AI-first (Claude Code, Cursor) y revisión propia de cada cambio: más de 1.400 archivos de pruebas y CI/CD en GitHub Actions con despliegue automatizado en Dokploy.'
 
       - company: 'Trainer Elitez'
         summary: 'Proyecto - Freelancer'
@@ -39,11 +39,10 @@ cv:
         start_date: '2024'
         end_date: '2026'
         highlights:
-          - 'Automaticé el cálculo de macros nutricionales y rutinas de
-            entrenamiento personalizadas, eliminando errores manuales críticos
-            del negocio fitness.'
+          - 'Automaticé el cálculo de macros y rutinas de entrenamiento
+            personalizadas, eliminando errores manuales críticos del negocio.'
           - 'Centralicé la gestión de clientes en una app móvil propia que
-            reemplazó hojas de cálculo dispersas usadas por el equipo.'
+            reemplazó hojas de cálculo dispersas.'
           - 'Tecnologías: Google Apps Script, Google AppSheet, TypeScript.'
 
       - company: 'Banco Davivienda'
@@ -56,7 +55,6 @@ cv:
             reduciendo tareas operativas manuales del equipo.'
           - 'Desarrollé tableros de visualización para indicadores de captación
             bancaria consumidos por el área de negocio.'
-          - 'Tecnologías: Google Apps Script, JavaScript, Google Sheets API.'
 
     proyectos:
       - name: 'Mecateo'
@@ -65,14 +63,12 @@ cv:
         end_date: 'present'
         highlights:
           - 'Construyo con un equipo pequeño un SaaS multi-tenant para negocios
-            físicos: soportes NFC/QR con destinos editables sin reimprimir,
-            captación de contactos y analítica de taps, evolucionado desde un
-            POS legacy.'
+            físicos: soportes NFC/QR con destinos editables, captación de
+            contactos y analítica de taps.'
           - 'Diseñé un monorepo Turborepo (12 apps, 10 paquetes) con NestJS,
             Next.js, Prisma sobre PostgreSQL, Better Auth y Socket.IO.'
-          - 'Automaticé CI/CD con GitHub Actions: entorno de staging, backup y
-            migración previos al despliegue en Dokploy, smoke tests y más de
-            600 archivos de pruebas.'
+          - 'Automaticé CI/CD con GitHub Actions: staging, backup y migración
+            previos al despliegue en Dokploy, y más de 600 archivos de pruebas.'
 
       - name: 'Smart Work Core'
         summary: '[swc.mecateo.co](https://swc.mecateo.co)'
@@ -80,48 +76,46 @@ cv:
         highlights:
           - 'Desarrollé una plataforma de inteligencia empresarial que
             consolida fuentes públicas de Colombia (SECOP II, datos.gov.co,
-            Banco Mundial, XM, noticias y regulación) en señales, alertas,
-            análisis PESTEL y briefings para la toma de decisiones.'
+            Banco Mundial, XM) en señales, alertas y briefings para la toma
+            de decisiones.'
           - 'Integré un asistente de IA con Vercel AI SDK (OpenAI/OpenRouter)
             que responde sobre los datos cargados citando fuentes, con búsqueda
             web opcional.'
-          - 'Apliqué arquitectura por capas con adaptadores por fuente, pruebas
-            con Vitest y Playwright, CI en GitHub Actions y acceso restringido
-            con Cloudflare Access.'
+          - 'Apliqué arquitectura por capas, pruebas con Vitest y Playwright, CI
+            en GitHub Actions y acceso restringido con Cloudflare Access.'
 
       - name: 'Living Sports'
         summary: '[github.com/nicoarbelaez/living-sports-app](https://github.com/nicoarbelaez/living-sports-app)'
         date: 2025
         highlights:
-          - 'Desarrollé red social fitness móvil con feed, perfiles y
-            publicaciones multimedia, como proyecto universitario entregado en
-            producción.'
+          - 'Desarrollé red social fitness móvil (Expo/React Native) con feed,
+            perfiles y publicaciones multimedia, entregada en producción.'
           - 'Integré Supabase para auth, base de datos y storage en tiempo
             real; Cloudinary para optimización y entrega de imágenes.'
-          - 'Stack: Expo (React Native), Supabase, Cloudinary,
-            TypeScript.'
 
       - name: 'ReadIA'
         summary: '[readia.arbelaeznicolas.dev](https://readia.arbelaeznicolas.dev)'
         date: 2025
         highlights:
           - 'Construí plataforma serverless con IA para diagnóstico de
-            capacidades TI usando LLMs sobre arquitectura sin servidor.'
+            capacidades TI con Google Gemini sobre arquitectura sin servidor.'
           - 'Integré Supabase como capa de persistencia y AWS Lambda
             para lógica de backend desacoplada, desplegada en Vercel.'
-          - 'Stack: Next.js, Supabase, Google Gemini API, AWS
-            Lambda, Vercel.'
 
     habilidades_tecnicas:
       - bullet: 'Backend: TypeScript, Node.js, NestJS, Python, Java (Spring Boot),
           PHP.'
       - bullet: 'Frontend: Next.js (React), Astro, Tailwind CSS, TypeScript, React
           Native (Expo).'
-      - bullet: 'BD & Infra: PostgreSQL (pgvector), Supabase, Redis, Docker,
-          Dokploy, GitHub Actions, Vercel, AWS Lambda, Cloudflare.'
+      - bullet: 'BD & Infra: PostgreSQL (pgvector), Supabase, Redis, Vercel, AWS
+          Lambda, Cloudflare.'
+      - bullet: 'AI-First Development: Claude Code, Cursor Agent, GitHub Copilot/Codex,
+          Gemini CLI; desarrollo guiado por especificaciones y revisión de código generado por IA.'
       - bullet: 'IA & Automatización: Arquitecturas agentic, integración de LLMs
           (OpenRouter/Gemini/OpenAI), procesamiento inteligente de documentos
           (OCR con modelos de visión), n8n, Google Apps Script.'
+      - bullet: 'Calidad & DevOps: Vitest/Jest, Playwright/Cypress, GitHub Actions (CI/CD),
+          Git flow con pull requests, TypeScript estricto, ESLint, Docker, Dokploy.'
     certificados:
       - bullet: 'Platzi (Ago 2025) | [Curso de Automatizaciones con
           n8n](https://platzi.com/p/arbelaeznicolas636/curso/12245-n8n-lowcode/diploma/detalle/)'
@@ -322,6 +316,10 @@ locale:
 settings:
   current_date: today
   bold_keywords:
+    - AI-First
+    - Claude Code
+    - Cursor
+    - CI/CD
     - TypeScript
     - React
     - Next.js
