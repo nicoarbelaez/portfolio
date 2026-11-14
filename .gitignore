@@ -41,3 +41,6 @@ resume/**/resume*.pdf
 .vercel/
 .vercel
 .env*
+
+# Notas privadas (pasos personales, no se versionan)
+.private/
