@@ -16,18 +16,19 @@ cv:
   sections:
     perfil:
       - |
-        Desarrollador Full Stack con foco en TypeScript, React/Next.js y Node.js/NestJS, con productos en producción e integración de APIs de terceros. Enfoque pragmático: entrega rápida sin deuda técnica y criterio build vs buy. Experiencia adicional en arquitecturas agentic con LLMs y automatización de procesos de negocio.
+        Desarrollador Full Stack con foco en TypeScript, React/Next.js y Node.js/NestJS, con productos en producción e integración de APIs de terceros. Enfoque pragmático: entrega rápida sin deuda técnica y criterio build vs buy. Experiencia en arquitecturas agentic con LLMs, procesamiento inteligente de documentos y automatización de procesos de negocio.
     experiencia_laboral:
       - company: 'Danys Tortas'
-        summary: 'Proyecto - Freelancer | [danystortas.com](https://danystortas.com)'
+        summary: 'Proyecto - Freelancer (hoy soporte y evolución) | [danystortas.com](https://danystortas.com)'
         position: 'Desarrollador Full Stack – Agente IA'
         location: 'Colombia'
         start_date: '2026-01'
-        end_date: '2026-06'
+        end_date: 'present'
         highlights:
           - 'Desarrollé un agente conversacional en producción que gestiona ventas, inventario y pagos 24/7, eliminando el flujo manual de atención al cliente.'
           - 'Arquitecté el sistema en NestJS + TypeScript con orquestación de herramientas, memoria de conversación y REST API + Webhooks integrados con Kommo CRM para recepción de mensajes en tiempo real.'
           - 'Implementé selección dinámica de modelos LLM vía OpenRouter según costo/latencia por intent, reduciendo costos operativos de inferencia y mejorando los tiempos de respuesta del sistema.'
+          - 'Construí un módulo de procesamiento inteligente de documentos que digitaliza pedidos físicos con modelos de visión (OCR), extracción estructurada validada con JSON Schema/Zod y nivel de confianza por campo para revisión humana.'
           - 'El sistema escaló la operación para gestionar más de 300 nuevos chats/usuarios diarios de forma concurrente y automatizada.'
 
       - company: 'Invictus Joyas'
@@ -76,14 +77,14 @@ cv:
         summary: '[mecateo.com.co](https://mecateo.com.co)'
         date: 2026
         highlights:
-          - 'Desarrollé SaaS POS full stack en MVP para restaurantes: módulos de
-            pedidos, stock, comandas, impresión, domicilios e IA para
-            recomendaciones y gráficos analíticos.'
-          - 'Diseñé REST API en NestJS + TypeScript con
-            autenticación vía Better Auth, caché y colas sobre Redis,
-            persistencia en PostgreSQL y frontend en Next.js.'
-          - 'Stack: Next.js, NestJS, PostgreSQL, Redis, Better
-            Auth, TypeScript.'
+          - 'Construyo un SaaS multi-tenant propio con experiencias NFC/QR y
+            redirecciones dinámicas, evolucionado desde un MVP de POS para
+            restaurantes.'
+          - 'Diseñé un monorepo Turborepo con REST API en NestJS, Prisma sobre
+            PostgreSQL, autenticación con Better Auth, tiempo real con
+            Socket.IO y CI/CD con GitHub Actions (staging y producción).'
+          - 'Stack: Next.js, NestJS, Prisma, PostgreSQL, Better Auth,
+            TypeScript.'
 
       - name: 'Living Sports'
         summary: '[github.com/nicoarbelaez/living-sports-app](https://github.com/nicoarbelaez/living-sports-app)'
@@ -116,7 +117,8 @@ cv:
       - bullet: 'BD & Infra: PostgreSQL, Supabase, Redis, Docker, Vercel, AWS
           Lambda, Cloudflare, Git.'
       - bullet: 'IA & Automatización: Arquitecturas agentic, integración de LLMs
-          (OpenRouter/Gemini/OpenAI), n8n, Google Apps Script.'
+          (OpenRouter/Gemini/OpenAI), procesamiento inteligente de documentos
+          (OCR con modelos de visión), n8n, Google Apps Script.'
     certificados:
       - bullet: 'Platzi (Ago 2025) | [Curso de Automatizaciones con
           n8n](https://platzi.com/p/arbelaeznicolas636/curso/12245-n8n-lowcode/diploma/detalle/)'
@@ -136,6 +138,10 @@ cv:
         degree: 'Pregrado (8° Semestre)'
         start_date: 2022
         end_date: 'present'
+      - institution: 'Universidad Santiago de Cali'
+        area: 'Estrategias de Ciberseguridad y Resiliencia Tecnológica'
+        degree: 'Diplomado (130 horas)'
+        date: '2026-07'
     idiomas:
       - label: 'Español'
         details: 'Nativo'
@@ -243,7 +249,7 @@ design:
     education_entry:
       main_column: |-
         **INSTITUTION**
-        *DEGREE* *in* *AREA*
+        *DEGREE* *en* *AREA*
         SUMMARY
         HIGHLIGHTS
       degree_column:
