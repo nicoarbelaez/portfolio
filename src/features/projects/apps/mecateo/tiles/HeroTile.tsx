@@ -2,16 +2,18 @@ import { buttonVariants } from '@/components/ui/button';
 import { NfcStand } from '@/features/projects/apps/mecateo/tiles/NfcStand';
 import type { MecateoCopy } from '@/features/projects/apps/mecateo/constants/copy.types';
 import { ShowcaseTile } from '@/features/projects/showcase-kit/components/ShowcaseTile';
+import type { LocaleKey } from '@/i18n/ui';
 import { cn } from '@/lib/utils';
 
 interface HeroTileProps {
+  lang: LocaleKey;
   copy: MecateoCopy['hero'];
   liveHref: string;
   detailsHref: string;
 }
 
 /** Pitch tile: NFC + agents positioning, stand illustration, always-visible CTAs. */
-export function HeroTile({ copy, liveHref, detailsHref }: HeroTileProps) {
+export function HeroTile({ lang, copy, liveHref, detailsHref }: HeroTileProps) {
   return (
     <ShowcaseTile span="two" shine className="min-h-96">
       <div className="flex flex-1 flex-col gap-5 p-5 sm:flex-row sm:items-center sm:gap-6 sm:p-6">
@@ -44,7 +46,12 @@ export function HeroTile({ copy, liveHref, detailsHref }: HeroTileProps) {
             </a>
           </div>
         </div>
-        <NfcStand labels={copy.standLabels} tapLabel={copy.tapLabel} qrBackup={copy.qrBackup} />
+        <NfcStand
+          lang={lang}
+          labels={copy.standLabels}
+          tapLabel={copy.tapLabel}
+          qrBackup={copy.qrBackup}
+        />
       </div>
     </ShowcaseTile>
   );

@@ -36,7 +36,7 @@ export function MecateoShowcase({ lang }: MecateoShowcaseProps) {
       tagline={copy.tagline}
       logo={<MecateoLogo />}
     >
-      <HeroTile copy={copy.hero} liveHref={MECATEO_NFC_URL} detailsHref={detailsHref} />
+      <HeroTile lang={lang} copy={copy.hero} liveHref={MECATEO_NFC_URL} detailsHref={detailsHref} />
       <RedirectTile copy={copy.redirect} />
       <AgentChatTile copy={copy.agent} />
       <PanelTile copy={copy.panel} />
