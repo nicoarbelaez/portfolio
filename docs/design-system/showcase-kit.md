@@ -15,7 +15,7 @@ ShowcaseTile (Magic Card spotlight, tinted by accent)
 
 - The stage is decorative. Frames (`AppFrame`, `PhoneFrame`) are `aria-hidden`; the footer text is the accessible summary. Write it so it stands alone.
 - The hero tile skips the footer and uses `shine` plus CTAs (see `HeroTile`).
-- Illustrative figures inside replicas must be obviously sample data (badge such as "Sample data") and never read as results.
+- Illustrative figures inside replicas must never read as results: keep them plausible but generic, with no badges or labels in the tile. Say it in the footer copy or the case study text when it matters.
 
 ## Grid and spans
 
@@ -49,18 +49,20 @@ Current assignments: Mecateo is the reference (defaults). Danys Tortas uses `roo
 
 All imports are from the concrete file, no barrels: `@/features/projects/showcase-kit/components/<Name>`.
 
-| Component         | Props                                                                                 | Notes                                                                                          |
-| ----------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `ShowcaseSection` | `headingId`, `name`, `tagline`, `logo`, `accent?`, `density?`, `surface?`, `children` | Mounts `ThemeProvider` once, `section[aria-labelledby]`, header, grid. The page owns the `h2`. |
-| `ShowcaseHeader`  | `logo`, `name`, `tagline`, `headingId`                                                | Used by the section; the name is an `h3`.                                                      |
-| `ShowcaseTile`    | `children`, `accent?`, `span?`, `shine?`, `className?`                                | Shell. `accent` defaults to the section accent. `shine` is for the hero only.                  |
-| `TileStage`       | `children`, `stageRef?`, `className?`                                                 | Content area. Pass the ref from a ticker hook to autoplay in view.                             |
-| `TileFooter`      | `icon`, `title`, `description`                                                        | Lucide icon component, `h4` title.                                                             |
-| `TileNode`        | `nodeRef`, `label`, `caption?`, `size?: 'md' \| 'lg'`, `emphasized?`                  | Circular endpoint for `AnimatedBeam`. `label` is the accessible name.                          |
-| `AppFrame`        | `title`, `children`, `className?`                                                     | Browser chrome for web product UI.                                                             |
-| `PhoneFrame`      | `children`, `className?`                                                              | Device frame for chat/app UI; let the tile clip its bottom edge.                               |
-| `ChatBubble`      | `from: 'customer' \| 'agent'`, `children`                                             | Rise + fade on mount.                                                                          |
-| `ToolChip`        | `children`                                                                            | Monospace chip for tool calls and events.                                                      |
+| Component         | Props                                                                                 | Notes                                                                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `ShowcaseSection` | `headingId`, `name`, `tagline`, `logo`, `accent?`, `density?`, `surface?`, `children` | Mounts `ThemeProvider` once, `section[aria-labelledby]`, header, grid. The page owns the `h2`.                                     |
+| `ShowcaseHeader`  | `logo`, `name`, `tagline`, `headingId`                                                | Used by the section; the name is an `h3`.                                                                                          |
+| `ShowcaseTile`    | `children`, `accent?`, `span?`, `shine?`, `className?`                                | Shell. `accent` defaults to the section accent. `shine` is for the hero only.                                                      |
+| `TileStage`       | `children`, `stageRef?`, `className?`                                                 | Content area. Pass the ref from a ticker hook to autoplay in view.                                                                 |
+| `TileFooter`      | `icon`, `title`, `description`                                                        | Lucide icon component, `h4` title.                                                                                                 |
+| `TileNode`        | `nodeRef`, `label`, `caption?`, `size?: 'md' \| 'lg'`, `emphasized?`                  | Circular endpoint for `AnimatedBeam`. `label` is the accessible name.                                                              |
+| `AppFrame`        | `title`, `children`, `className?`                                                     | Browser chrome for web product UI.                                                                                                 |
+| `PhoneFrame`      | `children`, `className?`                                                              | Device frame for chat/app UI; let the tile clip its bottom edge.                                                                   |
+| `PhoneHeader`     | `icon`, `title`                                                                       | Single-line chat header (`whitespace-nowrap`, ellipsis on overflow). No second line, no toggles.                                   |
+| `ChatViewport`    | `children`, `overlay?`, `className?`                                                  | Fixed-height message area (shadcn `message-scroller`): scrolls inside, sticks to the bottom, `overlay` floats top-right (toggles). |
+| `ChatBubble`      | `from: 'customer' \| 'agent'`, `children`                                             | Rise + fade on mount.                                                                                                              |
+| `ToolChip`        | `children`                                                                            | Monospace chip for tool calls and events.                                                                                          |
 
 Hooks (`showcase-kit/hooks/useTileTicker.ts`): each returns `{ ref, value, reduced }`; attach `ref` to the `TileStage`.
 
@@ -94,7 +96,11 @@ src/features/projects/clients/<slug>/
 
 ### Shared client helpers
 
-Client showcases share a few helpers in `src/features/projects/clients/shared/` (not part of the kit, they know about `ProjectView`): `ClientMetaTile` (period, description, topics, credited team, CTAs as the first tile), `ClientMark` (token-based logo plate), `SampleBadge` ("Sample data" label), `BeamDiagramTile` (nodes in columns plus `AnimatedBeam` edges; `kind: 'pill'` nodes for long lists), `useRevealOnView` (one-shot in-view reveal for bars, rings and line draws), `useStreamSequence` (question, tool chips, streamed answer) and `format`/`chart` utils. Reference implementations: `clients/danystortas`, `clients/defi`, `clients/swc`.
+Client showcases share a few helpers in `src/features/projects/clients/shared/` (not part of the kit, they know about `ProjectView`): `ClientMetaTile` (period, description, topics, credited team, CTAs as the first tile), `ClientMark` (token-based logo plate), `BeamDiagramTile` (nodes in columns plus `AnimatedBeam` edges; `kind: 'pill'` nodes for long lists), `useRevealOnView` (one-shot in-view reveal for bars, rings and line draws), `useStreamSequence` (question, tool chips, streamed answer) and `format`/`chart` utils. Reference implementations: `clients/danystortas`, `clients/defi`, `clients/swc`.
+
+## Tiles must not change height
+
+Content that grows while a tile animates (chat messages, tool chips, alert rows) lives in a scroller that does not contribute to layout: `ChatViewport` for chats (`message-scroller` with auto-scroll, stops following when the user scrolls up) and `ScrollArea` from `src/components/ui/scroll-area.tsx` (ReUI/shadcn) for lists, both absolutely positioned inside a `relative min-h-0 flex-1` wrapper. Never let streamed or revealed content size the row.
 
 ## Motion rules for tiles
 

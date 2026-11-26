@@ -71,5 +71,5 @@ documented in `docs/design-system/`.
 ## Rules worth remembering
 
 - Do not enable Astro `security.csp`: the motion components apply inline styles at runtime.
-- No file over 250 lines, no `any`, no barrels; sample numbers in UI replicas must be labeled as sample data.
+- No file over 250 lines, no `any`, no barrels; UI replicas must not present illustrative numbers as results (only approved real metrics, no "sample data" badges).
 - Approved real metrics and confidentiality decisions are recorded in `odd/tasks/projects-case-studies.md` (S9).
