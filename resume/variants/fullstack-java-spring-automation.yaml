@@ -1,0 +1,83 @@
+meta:
+  role: Desarrollador Full Stack Java · Spring Boot, integraciones y automatización
+  date: 2026-11-26
+  context: "Variante part time para rol Java/Spring Boot con integraciones CRM y automatización (n8n). No se afirma experiencia con Angular ni administración Linux avanzada."
+cv:
+  headline: "Full Stack Developer | Java Spring Boot · Integraciones CRM · Automatización (n8n)"
+  sections:
+    perfil:
+      - |
+        Desarrollador Full Stack desde 2022 con base en Java (Spring Boot, certificado en Spring Security) y TypeScript/Node.js. Integro plataformas y automatizo procesos: opero un agente conectado a Kommo CRM que atiende a más de 300 clientes diarios, construí automatizaciones con n8n y Google Apps Script y desplegué aplicaciones con Docker y Dokploy (PaaS autoalojado). Trabajo con autonomía, pruebas automatizadas y CI/CD en GitHub Actions; aprendo rápido tecnologías nuevas.
+    experiencia_laboral:
+      - company: Danys Tortas
+        summary: Proyecto - Freelancer (hoy soporte y evolución) | [danystortas.com](https://danystortas.com)
+        position: Desarrollador Full Stack – Integraciones y Agentes de IA
+        location: Colombia
+        start_date: 2026-01
+        end_date: present
+        highlights:
+          - Integré un agente de ventas y soporte por WhatsApp con Kommo CRM, atendiendo a más de 300 clientes diarios con pedidos, pagos, domicilios y escalamiento a humano.
+          - Integré el agente con un ERP multi-sucursal (inventario, caja, despachos, RBAC de seis roles) y un módulo de procesamiento de documentos con OCR.
+          - Desplegué con Docker y Dokploy mediante CI/CD en GitHub Actions; más de 1.400 archivos de pruebas.
+          - "Stack: NestJS, Next.js, TypeScript, PostgreSQL, Redis, Docker, Dokploy."
+      - company: Trainer Elitez
+        summary: Proyecto - Freelancer
+        position: Desarrollador de Software y Automatización
+        location: Colombia
+        start_date: "2024"
+        end_date: "2026"
+        highlights:
+          - Automaticé el cálculo de macros y rutinas de entrenamiento personalizadas, eliminando errores manuales críticos del negocio.
+          - Centralicé la gestión de clientes en una app móvil propia que reemplazó hojas de cálculo dispersas.
+          - "Tecnologías: Google Apps Script, Google AppSheet, TypeScript."
+      - company: Banco Davivienda
+        position: Aprendiz – Programa Nativos Semillero
+        location: Colombia
+        start_date: 2025-03
+        end_date: 2026-03
+        highlights:
+          - Automaticé procesos de back office con Google Apps Script, reduciendo tareas operativas manuales del equipo.
+          - Desarrollé tableros de visualización para indicadores de captación bancaria consumidos por el área de negocio.
+      - company: Proyectos independientes y académicos
+        position: Desarrollador de Software
+        location: Colombia
+        start_date: "2022"
+        end_date: "2023"
+        highlights:
+          - Desarrollé un bot de Discord, un plugin en Java de calendario mensual de recompensas diarias para servidores de juego y una aplicación en Python.
+          - "Tecnologías: JavaScript, Java, Python, HTML."
+    proyectos:
+      - name: Mecateo
+        summary: SaaS propio | [mecateo.co](https://mecateo.co)
+        start_date: 2026-05
+        end_date: present
+        highlights:
+          - Construyo con un equipo pequeño un SaaS multi-tenant con NestJS, Next.js, Prisma/PostgreSQL y Better Auth; CI/CD con staging, backup y migración previos al despliegue en Dokploy.
+      - name: Smart Work Core
+        summary: "[swc.mecateo.co](https://swc.mecateo.co)"
+        date: 2026-10
+        highlights:
+          - Integré fuentes públicas de Colombia (SECOP II, datos.gov.co, Banco Mundial, XM) mediante adaptadores por fuente, con pruebas Vitest/Playwright y CI en GitHub Actions.
+    habilidades_tecnicas:
+      - bullet: "Backend: Java (Spring Boot, Spring Security), TypeScript, Node.js, NestJS, Python."
+      - bullet: "Integraciones & Automatización: Kommo CRM, n8n, webhooks, Google Apps Script, integraciones con servicios de terceros."
+      - bullet: "Infra: Docker, Dokploy, Vercel, AWS Lambda, Cloudflare."
+      - bullet: "BD: PostgreSQL, Supabase, Redis."
+      - bullet: "Calidad & DevOps: GitHub Actions (CI/CD), Vitest/Jest, Playwright/Cypress, Git flow con pull requests."
+      - bullet: "Frontend: Next.js (React), Tailwind CSS."
+settings:
+  bold_keywords:
+    - Java
+    - Spring Boot
+    - Spring Security
+    - Kommo CRM
+    - n8n
+    - webhooks
+    - Docker
+    - Dokploy
+    - TypeScript
+    - Node.js
+    - NestJS
+    - PostgreSQL
+    - GitHub Actions
+    - CI/CD
