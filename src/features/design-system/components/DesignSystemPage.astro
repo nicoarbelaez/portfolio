@@ -1,0 +1,50 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Badge } from '@/components/ui/badge';
+import type { LocaleKey } from '@/i18n/ui';
+import { DESIGN_SYSTEM_COPY } from '../constants/copy';
+import BlocksSection from './BlocksSection.astro';
+import ShowcaseKitSamples from './ShowcaseKitSamples.astro';
+import TokensSection from './TokensSection.astro';
+
+interface Props {
+  lang: LocaleKey;
+}
+const { lang } = Astro.props;
+const copy = DESIGN_SYSTEM_COPY[lang];
+---
+
+<Layout lang={lang} title={copy.title} description={copy.description}>
+  <main id="main" class="mx-auto flex w-full max-w-3xl flex-col gap-16 px-4 pt-20 pb-16 md:pt-28">
+    <header class="space-y-3">
+      <Badge variant="outline" className="rounded-full">
+        {copy.badge}
+      </Badge>
+      <h1 class="font-heading text-3xl font-semibold tracking-tight text-balance md:text-4xl">
+        {copy.headline}
+      </h1>
+      <p class="text-muted-foreground text-pretty">{copy.intro}</p>
+    </header>
+
+    <TokensSection copy={copy.tokens} />
+
+    <section id="motion" class="space-y-3">
+      <h2 class="font-heading text-2xl font-semibold tracking-tight">{copy.motion.title}</h2>
+      <p class="text-muted-foreground text-sm">{copy.motion.intro}</p>
+      <ul class="list-disc space-y-1 ps-5 text-sm">
+        {copy.motion.rules.map((rule) => (
+          <li>{rule}</li>
+        ))}
+      </ul>
+    </section>
+
+    <BlocksSection copy={copy.blocks} />
+
+    <section id="showcase-kit" class="space-y-3">
+      <h2 class="font-heading text-2xl font-semibold tracking-tight">{copy.kit.title}</h2>
+      <p class="text-muted-foreground text-sm">{copy.kit.intro}</p>
+      <!-- SHOWCASE KIT SLOT: filled by ShowcaseKitSamples -->
+      <ShowcaseKitSamples />
+    </section>
+  </main>
+</Layout>

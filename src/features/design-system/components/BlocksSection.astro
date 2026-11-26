@@ -1,0 +1,49 @@
+---
+import Architecture from '@/components/doc-blocks/Architecture.astro';
+import Flow from '@/components/doc-blocks/Flow.astro';
+import FolderTree from '@/components/doc-blocks/FolderTree.astro';
+import MetricGrid from '@/components/doc-blocks/MetricGrid.astro';
+import StackGrid from '@/components/doc-blocks/StackGrid.astro';
+import { DOC_BLOCK_COMPONENTS } from '@/components/doc-blocks/mdx-components';
+import {
+  BLOCK_SNIPPETS,
+  SAMPLE_ARCHITECTURE,
+  SAMPLE_FLOW,
+  SAMPLE_METRICS,
+  SAMPLE_STACK,
+  SAMPLE_TREE
+} from '../constants/samples';
+import BlocksMdxSample from '../samples/blocks.mdx';
+import type { DesignSystemCopy } from '../types/copy';
+
+interface Props {
+  copy: DesignSystemCopy['blocks'];
+}
+const { copy } = Astro.props;
+const names = ['Architecture', 'Flow', 'FolderTree', 'StackGrid', 'MetricGrid'] as const;
+---
+
+<section id="blocks" class="space-y-8">
+  <div>
+    <h2 class="font-heading text-2xl font-semibold tracking-tight">{copy.title}</h2>
+    <p class="text-muted-foreground mt-1 text-sm">{copy.intro}</p>
+  </div>
+
+  {names.map((name) => (
+    <div class="space-y-2">
+      <h3 class="font-heading text-lg font-semibold">&lt;{name} /&gt;</h3>
+      {name === 'Architecture' && <Architecture {...SAMPLE_ARCHITECTURE} />}
+      {name === 'Flow' && <Flow {...SAMPLE_FLOW} />}
+      {name === 'FolderTree' && <FolderTree tree={SAMPLE_TREE} />}
+      {name === 'StackGrid' && <StackGrid {...SAMPLE_STACK} />}
+      {name === 'MetricGrid' && <MetricGrid {...SAMPLE_METRICS} />}
+      <p class="text-muted-foreground text-xs">{copy.usage}</p>
+      <pre class="bg-muted/50 border-border/50 overflow-x-auto rounded-xl border p-3 font-mono text-xs"><code>{BLOCK_SNIPPETS[name]}</code></pre>
+    </div>
+  ))}
+
+  <div class="space-y-2">
+    <h3 class="font-heading text-lg font-semibold">{copy.live}</h3>
+    <BlocksMdxSample components={DOC_BLOCK_COMPONENTS} />
+  </div>
+</section>

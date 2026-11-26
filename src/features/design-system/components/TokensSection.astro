@@ -1,0 +1,81 @@
+---
+import {
+  COLOR_TOKENS,
+  RADIUS_TOKENS,
+  SPACING_STEPS,
+  SPACING_UNIT_PX,
+  TYPE_ROLES,
+  TYPE_SCALE
+} from '../constants/tokens';
+import type { DesignSystemCopy } from '../types/copy';
+
+interface Props {
+  copy: DesignSystemCopy['tokens'];
+}
+const { copy } = Astro.props;
+const h3 = 'font-heading mb-3 text-sm font-semibold';
+---
+
+<section id="tokens" class="space-y-8">
+  <h2 class="font-heading text-2xl font-semibold tracking-tight">{copy.title}</h2>
+
+  <div>
+    <h3 class={h3}>{copy.colors}</h3>
+    <ul class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {COLOR_TOKENS.map((token) => (
+        <li class="border-border/50 bg-card overflow-hidden rounded-xl border">
+          <div class="h-12 border-b border-border/50" style={`background: var(--${token})`} />
+          <p class="p-2 font-mono text-xs">--{token}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div>
+    <h3 class={h3}>{copy.type}</h3>
+    <ul class="grid gap-3 sm:grid-cols-2">
+      {TYPE_ROLES.map((item) => (
+        <li class="border-border/50 bg-card rounded-xl border p-3">
+          <p class={`${item.className} text-lg`}>{item.sample}</p>
+          <p class="text-muted-foreground font-mono text-xs">
+            {item.role} · {item.family}
+          </p>
+        </li>
+      ))}
+    </ul>
+    <ul class="mt-3 space-y-1">
+      {TYPE_SCALE.map((step) => (
+        <li class="flex items-baseline gap-3">
+          <span class="text-muted-foreground w-20 shrink-0 font-mono text-xs">{step.name}</span>
+          <span class={step.className}>Aa</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div>
+    <h3 class={h3}>{copy.radius}</h3>
+    <ul class="flex flex-wrap gap-3">
+      {RADIUS_TOKENS.map((token) => (
+        <li class="text-center">
+          <div class={`border-border bg-muted size-14 border ${token}`} />
+          <p class="text-muted-foreground mt-1 font-mono text-xs">{token}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div>
+    <h3 class={h3}>{copy.spacing}</h3>
+    <ul class="space-y-1">
+      {SPACING_STEPS.map((step) => (
+        <li class="flex items-center gap-3">
+          <span class="text-muted-foreground w-20 shrink-0 font-mono text-xs">
+            {step} · {step * SPACING_UNIT_PX}px
+          </span>
+          <span class="bg-primary h-2 rounded-full" style={`width: ${step * SPACING_UNIT_PX}px`} />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

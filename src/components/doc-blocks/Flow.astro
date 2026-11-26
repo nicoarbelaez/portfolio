@@ -1,0 +1,14 @@
+---
+/**
+ * <Flow> MDX block. Validates props with Zod (build fails on invalid input) and renders
+ * the React island `FlowView` with `client:visible`: the HTML is server-rendered and
+ * readable without JS; animation starts after hydration, when the block is on screen.
+ */
+import { FlowView } from './views/FlowView';
+import { flowSchema } from './schemas/doc-block-schemas';
+import { parseDocBlockProps } from './utils/parse-doc-block-props';
+
+const props = parseDocBlockProps('Flow', flowSchema, Astro.props);
+---
+
+<FlowView client:visible {...props} />
