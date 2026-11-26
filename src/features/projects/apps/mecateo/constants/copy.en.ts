@@ -29,7 +29,6 @@ export const MECATEO_COPY_EN = {
     title: '“Mis NFC” panel',
     description: 'Every stand with its destination, its code and its tap count.',
     frameTitle: 'Mis NFC',
-    sampleBadge: 'Sample data',
     columns: { stand: 'Stand', activity: 'Activity', taps: 'Taps', code: 'Code' },
     standNames: ['Tables 1–4', 'Bar', 'Entrance']
   },
@@ -39,7 +38,6 @@ export const MECATEO_COPY_EN = {
       'They reply on WhatsApp, log orders and hand over to a person when they do not know. Mecateo AI agent engine, in production at Danys Tortas.',
     header: 'Sales agent',
     switchLabel: 'Agent on',
-    sampleBadge: 'Example',
     customer: 'I want 2 boxes of the single-origin coffee',
     reply: 'Done. I am sending the payment link. Which address should we ship to?',
     chips: ['order.created', 'stock −2', 'handoff']

@@ -29,7 +29,6 @@ export const MECATEO_COPY_ES = {
     title: 'Panel «Mis NFC»',
     description: 'Cada soporte con su destino, su código y su conteo de toques.',
     frameTitle: 'Mis NFC',
-    sampleBadge: 'Datos de ejemplo',
     columns: { stand: 'Soporte', activity: 'Actividad', taps: 'Toques', code: 'Código' },
     standNames: ['Mesas 1–4', 'Barra', 'Entrada']
   },
@@ -39,7 +38,6 @@ export const MECATEO_COPY_ES = {
       'Responden por WhatsApp, registran pedidos y pasan a una persona cuando no saben. Motor de agentes de IA de Mecateo, en producción en Danys Tortas.',
     header: 'Agente de ventas',
     switchLabel: 'Agente activado',
-    sampleBadge: 'Ejemplo',
     customer: 'Quiero 2 cajas del café de origen',
     reply: 'Listo. Te envío el link de pago. ¿A qué dirección lo mandamos?',
     chips: ['order.created', 'stock −2', 'handoff']

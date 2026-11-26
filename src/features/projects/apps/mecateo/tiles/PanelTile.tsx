@@ -21,7 +21,7 @@ import { useRevealCount } from '@/features/projects/showcase-kit/hooks/useTileTi
 
 const ROW_GRID = 'grid grid-cols-[1.3fr_1fr_0.6fr_0.7fr] items-center gap-2 px-3 py-2';
 
-/** Replica of the "Mis NFC" panel: stands, activity trend, tap counts and codes (sample data). */
+/** Replica of the "Mis NFC" panel: stands, activity trend, tap counts and codes. */
 export function PanelTile({ copy }: { copy: MecateoCopy['panel'] }) {
   const { ref, value: revealed, reduced } = useRevealCount(PANEL_SAMPLE_ROWS.length, PANEL_STEP_MS);
   const { columns } = copy;
@@ -32,9 +32,6 @@ export function PanelTile({ copy }: { copy: MecateoCopy['panel'] }) {
         <AppFrame title={copy.frameTitle} className="w-full max-w-lg">
           <div className="flex items-center justify-between px-3 py-2">
             <span className="text-xs font-semibold">{copy.frameTitle}</span>
-            <span className="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-[10px] font-medium">
-              {copy.sampleBadge}
-            </span>
           </div>
           <div
             className={`${ROW_GRID} text-muted-foreground border-border/60 border-y text-[10px] uppercase`}

@@ -27,7 +27,6 @@ export type MecateoCopy = {
     title: string;
     description: string;
     frameTitle: string;
-    sampleBadge: string;
     columns: { stand: string; activity: string; taps: string; code: string };
     /** Same order as `PANEL_SAMPLE_ROWS`. */
     standNames: readonly [string, string, string];
@@ -37,7 +36,6 @@ export type MecateoCopy = {
     description: string;
     header: string;
     switchLabel: string;
-    sampleBadge: string;
     customer: string;
     reply: string;
     chips: readonly string[];
