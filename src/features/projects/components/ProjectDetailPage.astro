@@ -1,5 +1,6 @@
 ---
 import { render } from 'astro:content';
+import { ArrowLeft } from 'lucide-react';
 import Layout from '@/layouts/Layout.astro';
 import { buttonVariants } from '@/components/ui/button';
 import { DOC_BLOCK_COMPONENTS } from '@/components/doc-blocks/mdx-components';
@@ -68,7 +69,8 @@ const jsonLd = buildProjectJsonLd({
         'text-muted-foreground -ml-2 mb-8'
       )}
     >
-      ← {t('projects.back')}
+      <ArrowLeft aria-hidden="true" className="size-4" />
+      {t('projects.back')}
     </a>
 
     <article class="space-y-10">
@@ -119,7 +121,7 @@ const jsonLd = buildProjectJsonLd({
         </figure>
       ) : (
         <div
-          class="from-muted via-background to-secondary/15 border-border flex aspect-[16/9] w-full items-center justify-center rounded-xl border bg-gradient-to-br"
+          class="from-muted via-background to-secondary/15 border-border flex aspect-video w-full items-center justify-center rounded-xl border bg-linear-to-br"
           transition:name={imageVtName}
         >
           <span class="text-muted-foreground font-heading text-sm tracking-wide">

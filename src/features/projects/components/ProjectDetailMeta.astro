@@ -88,10 +88,8 @@ const termClass = 'text-muted-foreground text-xs font-medium tracking-wide upper
     <h2 class={termClass}>{t('projects.detail.stack')}</h2>
     <dl class="space-y-2">
       {stackGroups.map((group) => (
-        <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <dt class="text-muted-foreground w-28 shrink-0 text-xs">
-            {t(`projects.stack.${group.category}`)}
-          </dt>
+        <div class="grid grid-cols-[7rem_1fr] items-baseline gap-x-3">
+          <dt class="text-muted-foreground text-xs">{t(`projects.stack.${group.category}`)}</dt>
           <dd class="flex flex-wrap gap-1.5">
             {group.items.map((item) => (
               <Badge variant="outline" className="h-6 rounded-md px-2 text-[11px] font-medium">
