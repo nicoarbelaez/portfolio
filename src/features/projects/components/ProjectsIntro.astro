@@ -1,0 +1,24 @@
+---
+import { Badge } from '@/components/ui/badge';
+
+interface Props {
+  badge: string;
+  headline: string;
+  subtext: string;
+}
+
+const { badge, headline, subtext } = Astro.props;
+---
+
+<div class="mx-auto max-w-2xl space-y-3 text-center">
+  <Badge
+    variant="default"
+    className="bg-foreground text-background hover:bg-foreground rounded-full px-3 py-1 text-xs tracking-wide"
+  >
+    {badge}
+  </Badge>
+  <h2 class="font-heading text-2xl font-semibold tracking-tight text-balance md:text-3xl">
+    {headline}
+  </h2>
+  <p class="text-muted-foreground text-sm leading-relaxed text-pretty md:text-base">{subtext}</p>
+</div>
