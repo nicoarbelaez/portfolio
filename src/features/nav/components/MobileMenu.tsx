@@ -17,15 +17,18 @@ import { NAV_SECTIONS } from '@/features/nav/constants/sections';
 import { NAV_MOTION } from '@/features/nav/constants/ui';
 import type { NavLabels } from '@/features/nav/types/nav';
 import { scrollToHash } from '@/features/nav/utils/scroll-to-hash';
+import { sectionHref } from '@/features/nav/utils/section-href';
 import { cn } from '@/lib/utils';
 
 interface MobileMenuProps {
   labels: NavLabels;
+  /** Localized home path the section anchors resolve against. */
+  homePath: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function MobileMenu({ labels, open, onOpenChange }: MobileMenuProps) {
+export function MobileMenu({ labels, homePath, open, onOpenChange }: MobileMenuProps) {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -64,7 +67,7 @@ export function MobileMenu({ labels, open, onOpenChange }: MobileMenuProps) {
             {NAV_SECTIONS.map((section, index) => (
               <motion.a
                 key={section.id}
-                href={section.href}
+                href={sectionHref(homePath, section.href)}
                 onClick={(event) => {
                   scrollToHash(section.href, event);
                   onOpenChange(false);

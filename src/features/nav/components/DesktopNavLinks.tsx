@@ -1,13 +1,16 @@
 import { NAV_SECTIONS } from '@/features/nav/constants/sections';
 import type { NavLabels } from '@/features/nav/types/nav';
 import { scrollToHash } from '@/features/nav/utils/scroll-to-hash';
+import { sectionHref } from '@/features/nav/utils/section-href';
 import { cn } from '@/lib/utils';
 
 interface DesktopNavLinksProps {
   labels: NavLabels;
+  /** Localized home path the section anchors resolve against. */
+  homePath: string;
 }
 
-export function DesktopNavLinks({ labels }: DesktopNavLinksProps) {
+export function DesktopNavLinks({ labels, homePath }: DesktopNavLinksProps) {
   return (
     <nav
       aria-label="Primary"
@@ -16,7 +19,7 @@ export function DesktopNavLinks({ labels }: DesktopNavLinksProps) {
       {NAV_SECTIONS.map((section) => (
         <a
           key={section.id}
-          href={section.href}
+          href={sectionHref(homePath, section.href)}
           onClick={(event) => scrollToHash(section.href, event)}
           className={cn(
             'inline-flex min-h-11 items-center rounded-lg px-3 py-2 text-sm font-medium',

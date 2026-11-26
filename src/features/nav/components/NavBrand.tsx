@@ -2,13 +2,15 @@ import { PERSONAL_INFO } from '@/constants/constants';
 import { cn } from '@/lib/utils';
 
 interface NavBrandProps {
+  /** Localized home path; a bare `#` would stay on the current route. */
+  homePath: string;
   className?: string;
 }
 
-export function NavBrand({ className }: NavBrandProps) {
+export function NavBrand({ homePath, className }: NavBrandProps) {
   return (
     <a
-      href="#"
+      href={homePath}
       className={cn(
         'font-heading text-foreground shrink-0 px-2 text-lg font-bold tracking-wide',
         'transition-opacity duration-200 hover:opacity-80',

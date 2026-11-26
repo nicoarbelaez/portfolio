@@ -6,6 +6,7 @@ import { NavBrand } from '@/features/nav/components/NavBrand';
 import { NAV_Z_INDEX } from '@/features/nav/constants/ui';
 import type { FloatingNavLabels } from '@/features/nav/types/nav';
 import { LanguageSelect } from '@/i18n/components/LanguageSelect';
+import { getLocalizedPath } from '@/i18n/utils';
 import type { LocaleKey } from '@/i18n/ui';
 import { cn } from '@/lib/utils';
 
@@ -17,6 +18,7 @@ interface FloatingNavProps {
 
 export function FloatingNav({ lang, pathname, labels }: FloatingNavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const homePath = getLocalizedPath('/', lang);
 
   return (
     <header
@@ -30,12 +32,17 @@ export function FloatingNav({ lang, pathname, labels }: FloatingNavProps) {
           'supports-[backdrop-filter]:bg-background/70 dark:bg-card/90'
         )}
       >
-        <NavBrand />
-        <DesktopNavLinks labels={labels} />
+        <NavBrand homePath={homePath} />
+        <DesktopNavLinks labels={labels} homePath={homePath} />
 
         <div className="ml-auto flex items-center gap-1 md:ml-0">
           <LanguageSelect lang={lang} pathname={pathname} label={labels['nav.language']} />
-          <MobileMenu labels={labels} open={menuOpen} onOpenChange={setMenuOpen} />
+          <MobileMenu
+            labels={labels}
+            homePath={homePath}
+            open={menuOpen}
+            onOpenChange={setMenuOpen}
+          />
         </div>
       </div>
     </header>
