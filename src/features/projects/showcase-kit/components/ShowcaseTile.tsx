@@ -3,16 +3,16 @@
 import type { ReactNode } from 'react';
 import { MagicCard } from '@/components/ui/magic-card';
 import { ShineBorder } from '@/components/ui/shine-border';
-import { DEFAULT_SHOWCASE_ACCENT } from '@/features/projects/showcase-kit/constants/accents';
 import {
+  SHOWCASE_DENSITY,
   TILE_BASE_CLASS,
-  TILE_HEIGHT_CLASS,
   TILE_SHINE_DURATION_S,
   TILE_SHINE_WIDTH_PX,
   TILE_SPAN_CLASS,
   TILE_SPOTLIGHT_OPACITY,
   TILE_SPOTLIGHT_SIZE
 } from '@/features/projects/showcase-kit/constants/showcase-layout';
+import { useShowcaseTuning } from '@/features/projects/showcase-kit/context/ShowcaseContext';
 import type {
   ShowcaseAccent,
   ShowcaseTileSpan
@@ -23,7 +23,7 @@ import { cn } from '@/lib/utils';
 interface ShowcaseTileProps {
   /** Tile content: a stage area followed by a `TileFooter` (or a custom layout for heroes). */
   children: ReactNode;
-  /** Design-system accent token; defaults to the primary token. */
+  /** Design-system accent token; defaults to the section accent (primary when unset). */
   accent?: ShowcaseAccent;
   /** Column span on md+. */
   span?: ShowcaseTileSpan;
@@ -39,16 +39,22 @@ interface ShowcaseTileProps {
  */
 export function ShowcaseTile({
   children,
-  accent = DEFAULT_SHOWCASE_ACCENT,
+  accent,
   span = 'one',
   shine = false,
   className
 }: ShowcaseTileProps) {
-  const colors = resolveAccent(accent);
+  const tuning = useShowcaseTuning();
+  const colors = resolveAccent(accent ?? tuning.accent);
 
   return (
     <MagicCard
-      className={cn(TILE_BASE_CLASS, TILE_HEIGHT_CLASS, TILE_SPAN_CLASS[span], className)}
+      className={cn(
+        TILE_BASE_CLASS,
+        SHOWCASE_DENSITY[tuning.density].tile,
+        TILE_SPAN_CLASS[span],
+        className
+      )}
       gradientSize={TILE_SPOTLIGHT_SIZE}
       gradientFrom={colors.solid}
       gradientTo={colors.deep}

@@ -61,7 +61,7 @@ export function RevenueTile({ copy, lang }: { copy: DanysTortasCopy['revenue']; 
   const format = createCurrencyFormatter(lang);
 
   return (
-    <ShowcaseTile span="two" className="min-h-80">
+    <ShowcaseTile span="two">
       <TileStage stageRef={ref} className="flex-col justify-center gap-4 p-5 sm:px-8">
         <div className="text-muted-foreground flex flex-wrap items-center justify-between gap-2 text-[11px]">
           <span>{copy.period}</span>

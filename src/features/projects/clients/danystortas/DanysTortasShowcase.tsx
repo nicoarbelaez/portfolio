@@ -1,12 +1,11 @@
 'use client';
 
-import { Cake } from 'lucide-react';
 import { getDanysTortasCopy } from '@/features/projects/clients/danystortas/constants/copy';
 import { AgentChatTile } from '@/features/projects/clients/danystortas/tiles/AgentChatTile';
 import { PipelineTile } from '@/features/projects/clients/danystortas/tiles/PipelineTile';
 import { RevenueTile } from '@/features/projects/clients/danystortas/tiles/RevenueTile';
 import { VolumeTile } from '@/features/projects/clients/danystortas/tiles/VolumeTile';
-import { ClientMark } from '@/features/projects/clients/shared/components/ClientMark';
+import { ProjectMark } from '@/features/projects/clients/shared/components/ClientMark';
 import { ClientMetaTile } from '@/features/projects/clients/shared/components/ClientMetaTile';
 import { ShowcaseSection } from '@/features/projects/showcase-kit/components/ShowcaseSection';
 import type { ProjectShowcaseProps } from '@/features/projects/types/showcase';
@@ -25,7 +24,9 @@ export function DanysTortasShowcase({ project, lang, labels }: ProjectShowcasePr
       headingId={HEADING_ID}
       name={project.title}
       tagline={project.tagline}
-      logo={<ClientMark icon={Cake} />}
+      logo={<ProjectMark slug="danystortas" />}
+      accent="primary"
+      density="roomy"
     >
       <ClientMetaTile project={project} lang={lang} labels={labels} />
       <AgentChatTile copy={copy.chat} lang={lang} />

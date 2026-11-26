@@ -12,7 +12,7 @@ interface ClientMetaTileProps extends ProjectShowcaseProps {
 /** Pitch tile at the start of a client showcase: period, description, topics, credits, CTAs. */
 export function ClientMetaTile({ project, lang, labels, accent }: ClientMetaTileProps) {
   return (
-    <ShowcaseTile span="two" accent={accent} shine className="min-h-72">
+    <ShowcaseTile span="two" accent={accent} shine>
       <div className="flex flex-1 flex-col justify-center p-5 sm:p-7">
         <ClientShowcaseMeta project={project} lang={lang} labels={labels} />
       </div>

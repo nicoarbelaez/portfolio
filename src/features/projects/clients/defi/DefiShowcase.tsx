@@ -1,11 +1,10 @@
 'use client';
 
-import { Dumbbell } from 'lucide-react';
 import { getDefiCopy } from '@/features/projects/clients/defi/constants/copy';
 import { ArchTile } from '@/features/projects/clients/defi/tiles/ArchTile';
 import { MuscleMapTile } from '@/features/projects/clients/defi/tiles/MuscleMapTile';
 import { SheetTile } from '@/features/projects/clients/defi/tiles/SheetTile';
-import { ClientMark } from '@/features/projects/clients/shared/components/ClientMark';
+import { ProjectMark } from '@/features/projects/clients/shared/components/ClientMark';
 import { ClientMetaTile } from '@/features/projects/clients/shared/components/ClientMetaTile';
 import { ShowcaseSection } from '@/features/projects/showcase-kit/components/ShowcaseSection';
 import type { ProjectShowcaseProps } from '@/features/projects/types/showcase';
@@ -24,9 +23,11 @@ export function DefiShowcase({ project, lang, labels }: ProjectShowcaseProps) {
       headingId={HEADING_ID}
       name={project.title}
       tagline={project.tagline}
-      logo={<ClientMark icon={Dumbbell} />}
+      logo={<ProjectMark slug="defi" />}
+      accent="chart-2"
+      density="compact"
     >
-      <ClientMetaTile project={project} lang={lang} labels={labels} accent="chart-2" />
+      <ClientMetaTile project={project} lang={lang} labels={labels} />
       <MuscleMapTile copy={copy.muscle} />
       <SheetTile copy={copy.sheet} lang={lang} />
       <ArchTile copy={copy.arch} />

@@ -6,6 +6,12 @@ export type ShowcaseAccent = 'primary' | 'chart-1' | 'chart-2' | 'chart-3' | 'ch
 /** Column span of a tile inside the 3-column showcase grid. */
 export type ShowcaseTileSpan = 'one' | 'two' | 'full';
 
+/** Spacing and row height preset of a showcase (see `SHOWCASE_DENSITY`). */
+export type ShowcaseDensity = 'compact' | 'comfortable' | 'roomy';
+
+/** Stage background: `plain` shows the card, `inset` adds a subtle foreground wash. */
+export type ShowcaseSurface = 'plain' | 'inset';
+
 /** Icon component accepted by kit footers (lucide-compatible). */
 export type ShowcaseIcon = ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' }>;
 

@@ -62,7 +62,7 @@ export function IntegrationsBeamTile({ copy }: { copy: MecateoCopy['integrations
   };
 
   return (
-    <ShowcaseTile span="full" className="min-h-80">
+    <ShowcaseTile span="full">
       <TileStage className="min-h-[14rem] items-center justify-center p-4">
         <div ref={containerRef} className="relative flex h-full w-full items-center justify-center">
           <DotPattern

@@ -1,7 +1,6 @@
 'use client';
 
-import { Radar } from 'lucide-react';
-import { ClientMark } from '@/features/projects/clients/shared/components/ClientMark';
+import { ProjectMark } from '@/features/projects/clients/shared/components/ClientMark';
 import { ClientMetaTile } from '@/features/projects/clients/shared/components/ClientMetaTile';
 import { getSwcCopy } from '@/features/projects/clients/swc/constants/copy';
 import { AssistantTile } from '@/features/projects/clients/swc/tiles/AssistantTile';
@@ -25,7 +24,10 @@ export function SwcShowcase({ project, lang, labels }: ProjectShowcaseProps) {
       headingId={HEADING_ID}
       name={project.title}
       tagline={project.tagline}
-      logo={<ClientMark icon={Radar} />}
+      logo={<ProjectMark slug="swc" />}
+      accent="chart-3"
+      density="compact"
+      surface="inset"
     >
       <ClientMetaTile project={project} lang={lang} labels={labels} />
       <AssistantTile copy={copy.assistant} lang={lang} />

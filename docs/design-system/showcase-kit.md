@@ -19,7 +19,7 @@ ShowcaseTile (Magic Card spotlight, tinted by accent)
 
 ## Grid and spans
 
-The grid is 1 column on mobile and 3 on `md+` with fixed `20rem` rows (`SHOWCASE_GRID_CLASS`).
+The grid is 1 column on mobile and 3 on `md+`. Rows have a **minimum** height set by the density preset (`minmax(20rem, auto)` by default) and grow with their content, so a footer is never clipped; do not add `min-h-*` to tiles.
 
 | `span` | md+ columns | Typical use                      |
 | ------ | ----------- | -------------------------------- |
@@ -27,28 +27,40 @@ The grid is 1 column on mobile and 3 on `md+` with fixed `20rem` rows (`SHOWCASE
 | `two`  | 2           | hero, tables, wide replicas      |
 | `full` | 3           | integrations beam, wide diagrams |
 
-Compose rows that add to 3 (`two + one`, `one + two`, `full`). Mobile stacks everything; tiles get `min-h-80` (`TILE_HEIGHT_CLASS`).
+Compose rows that add to 3 (`two + one`, `one + two`, `full`). Mobile stacks everything; tiles get a density-based `min-h`.
 
 ## Accent rule
 
 Per-client accents must stay inside the design system. `ShowcaseTile` takes `accent: 'primary' | 'chart-1' … 'chart-5'` (default `primary`). Do not add brand hex or oklch values to a showcase: use an accent token, or a small tonal range of tokens. For accent-colored text or fills inside tiles use token classes (`text-primary`, `bg-primary/10`, `text-chart-2`). Concrete color maps live in `showcase-kit/constants/accents.ts`; `resolveAccent()` turns an accent into `solid`, `deep`, `glow` (CSS) and `beamStart`/`beamStop` (oklch for SVG gradients, where `var()` is unreliable).
 
+## Per-app tuning
+
+Each showcase can take its own character without leaving the design system. Set the options once on `ShowcaseSection`; tiles, stages and footers inherit them through context (`showcase-kit/context/ShowcaseContext.tsx`). Everything is optional, so existing showcases (Mecateo) are unchanged.
+
+| Option    | Values                                      | Effect                                                                                          |
+| --------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `accent`  | `primary`, `chart-1` ... `chart-5`          | Default accent of tiles (spotlight, beams, meta tile). A tile `accent` prop still overrides it. |
+| `density` | `compact`, `comfortable` (default), `roomy` | Row minimum (`17rem` / `20rem` / `23rem`), gap, stage minimum height and footer padding.        |
+| `surface` | `plain` (default), `inset`                  | `inset` adds a subtle `bg-foreground/[0.035]` wash to stages for a denser, panel-like feel.     |
+
+Current assignments: Mecateo is the reference (defaults). Danys Tortas uses `roomy` (conversational, larger phone tile). SWC uses `chart-3`, `compact`, `inset` (data panels). DeFi uses `chart-2`, `compact` (tight, sporty grid). Choose values from tokens only and check contrast in light and dark.
+
 ## Kit components
 
 All imports are from the concrete file, no barrels: `@/features/projects/showcase-kit/components/<Name>`.
 
-| Component         | Props                                                                | Notes                                                                                          |
-| ----------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `ShowcaseSection` | `headingId`, `name`, `tagline`, `logo: ReactNode`, `children`        | Mounts `ThemeProvider` once, `section[aria-labelledby]`, header, grid. The page owns the `h2`. |
-| `ShowcaseHeader`  | `logo`, `name`, `tagline`, `headingId`                               | Used by the section; the name is an `h3`.                                                      |
-| `ShowcaseTile`    | `children`, `accent?`, `span?`, `shine?`, `className?`               | Shell. Wraps children in an `article`. `shine` is for the hero only.                           |
-| `TileStage`       | `children`, `stageRef?`, `className?`                                | Content area. Pass the ref from a ticker hook to autoplay in view.                             |
-| `TileFooter`      | `icon`, `title`, `description`                                       | Lucide icon component, `h4` title.                                                             |
-| `TileNode`        | `nodeRef`, `label`, `caption?`, `size?: 'md' \| 'lg'`, `emphasized?` | Circular endpoint for `AnimatedBeam`. `label` is the accessible name.                          |
-| `AppFrame`        | `title`, `children`, `className?`                                    | Browser chrome for web product UI.                                                             |
-| `PhoneFrame`      | `children`, `className?`                                             | Device frame for chat/app UI; let the tile clip its bottom edge.                               |
-| `ChatBubble`      | `from: 'customer' \| 'agent'`, `children`                            | Rise + fade on mount.                                                                          |
-| `ToolChip`        | `children`                                                           | Monospace chip for tool calls and events.                                                      |
+| Component         | Props                                                                                 | Notes                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `ShowcaseSection` | `headingId`, `name`, `tagline`, `logo`, `accent?`, `density?`, `surface?`, `children` | Mounts `ThemeProvider` once, `section[aria-labelledby]`, header, grid. The page owns the `h2`. |
+| `ShowcaseHeader`  | `logo`, `name`, `tagline`, `headingId`                                                | Used by the section; the name is an `h3`.                                                      |
+| `ShowcaseTile`    | `children`, `accent?`, `span?`, `shine?`, `className?`                                | Shell. `accent` defaults to the section accent. `shine` is for the hero only.                  |
+| `TileStage`       | `children`, `stageRef?`, `className?`                                                 | Content area. Pass the ref from a ticker hook to autoplay in view.                             |
+| `TileFooter`      | `icon`, `title`, `description`                                                        | Lucide icon component, `h4` title.                                                             |
+| `TileNode`        | `nodeRef`, `label`, `caption?`, `size?: 'md' \| 'lg'`, `emphasized?`                  | Circular endpoint for `AnimatedBeam`. `label` is the accessible name.                          |
+| `AppFrame`        | `title`, `children`, `className?`                                                     | Browser chrome for web product UI.                                                             |
+| `PhoneFrame`      | `children`, `className?`                                                              | Device frame for chat/app UI; let the tile clip its bottom edge.                               |
+| `ChatBubble`      | `from: 'customer' \| 'agent'`, `children`                                             | Rise + fade on mount.                                                                          |
+| `ToolChip`        | `children`                                                                            | Monospace chip for tool calls and events.                                                      |
 
 Hooks (`showcase-kit/hooks/useTileTicker.ts`): each returns `{ ref, value, reduced }`; attach `ref` to the `TileStage`.
 

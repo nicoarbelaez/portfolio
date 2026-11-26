@@ -25,7 +25,7 @@ export function VolumeTile({ copy }: { copy: DanysTortasCopy['volume'] }) {
   const { ref, shown, reduced } = useRevealOnView();
 
   return (
-    <ShowcaseTile className="min-h-80" accent="chart-3">
+    <ShowcaseTile accent="chart-3">
       <TileStage stageRef={ref} className="flex-col justify-center gap-5 p-5">
         <div>
           <p className="font-heading text-4xl font-semibold tracking-tight">

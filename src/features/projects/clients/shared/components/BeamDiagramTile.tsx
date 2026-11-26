@@ -13,7 +13,7 @@ import { ShowcaseTile } from '@/features/projects/showcase-kit/components/Showca
 import { TileFooter } from '@/features/projects/showcase-kit/components/TileFooter';
 import { TileNode } from '@/features/projects/showcase-kit/components/TileNode';
 import { TileStage } from '@/features/projects/showcase-kit/components/TileStage';
-import { DEFAULT_SHOWCASE_ACCENT } from '@/features/projects/showcase-kit/constants/accents';
+import { useShowcaseTuning } from '@/features/projects/showcase-kit/context/ShowcaseContext';
 import type {
   ShowcaseAccent,
   ShowcaseIcon,
@@ -46,7 +46,7 @@ export function BeamDiagramTile({
   title,
   description,
   footerIcon = Share2,
-  accent = DEFAULT_SHOWCASE_ACCENT,
+  accent,
   span = 'one',
   className
 }: BeamDiagramTileProps) {
@@ -61,7 +61,9 @@ export function BeamDiagramTile({
     return created;
   };
   const byId = new Map(nodes.map((node) => [node.id, node]));
-  const colors = resolveAccent(accent);
+  const tuning = useShowcaseTuning();
+  const resolvedAccent = accent ?? tuning.accent;
+  const colors = resolveAccent(resolvedAccent);
 
   const renderNode = (id: string) => {
     const node = byId.get(id);
@@ -96,7 +98,7 @@ export function BeamDiagramTile({
   };
 
   return (
-    <ShowcaseTile span={span} accent={accent} className={cn('min-h-80', className)}>
+    <ShowcaseTile span={span} accent={resolvedAccent} className={className}>
       <TileStage className="min-h-[14rem] items-center justify-center p-4">
         <div ref={containerRef} className="relative flex h-full w-full items-center justify-center">
           <DotPattern

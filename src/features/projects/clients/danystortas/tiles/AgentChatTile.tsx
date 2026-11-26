@@ -23,11 +23,11 @@ export function AgentChatTile({ copy, lang }: { copy: DanysTortasCopy['chat']; l
   const visibleChips = copy.chips.slice(0, Math.max(0, revealed - MESSAGE_STEPS));
 
   return (
-    <ShowcaseTile className="min-h-96">
+    <ShowcaseTile>
       <TileStage stageRef={ref} className="justify-center px-4 pt-4">
         <PhoneFrame className="h-full w-full max-w-[15rem] rounded-b-none">
           <div className="border-border/60 flex items-center justify-between gap-2 border-b px-2.5 pb-2">
-            <span className="flex items-center gap-1.5 text-[11px] font-semibold">
+            <span className="flex min-w-0 items-center gap-1.5 text-[11px] font-semibold">
               <MessageCircle className="text-primary size-3.5" aria-hidden="true" />
               {copy.header}
             </span>
