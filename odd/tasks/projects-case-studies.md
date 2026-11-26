@@ -41,17 +41,17 @@ Research reports (facts source, read before writing content): `C:\Users\arbel\Ap
 
 ## Tasks
 
-| ID                                                                                       | Specs              | Route                             | Status             | Commit |
-| ---------------------------------------------------------------------------------------- | ------------------ | --------------------------------- | ------------------ | ------ |
-| T1 Content collections + detail/landing/OG migration + remove GitHub prose pipeline      | S1 S2 S13          | delegated (parallel)              | done (uncommitted) |        |
-| T2 Doc blocks + `/design-system` page + `docs/design-system.md`                          | S3 S4 S13          | delegated (parallel)              | done (uncommitted) |        |
-| T3 Showcase kit + Mecateo on kit + Mecateo copy repositioned                             | S6 S8 S13          | delegated (parallel)              | done (uncommitted) |        |
-| T7a Repo docs: mecateo, danystortas, defi, smurfit-westrock-colombia                     | S9 S10 S11         | delegated (parallel, other repos) | done (uncommitted) |        |
-| T7b Repo docs: readia, living-sports-app, appsalon, claude-identity                      | S9 S10 S11         | delegated (parallel, other repos) | done (uncommitted) |        |
-| T4 Client showcases Danys / DeFi / SWC on kit                                            | S7 S9 S13          | delegated (wave 2, after T3)      | in progress        |        |
-| T5a Case studies MDX: mecateo, danystortas, defi, swc (es+en)                            | S2 S3 S5 S8 S9 S10 | delegated (wave 2, after T1+T2)   | in progress        |        |
-| T5b Case studies MDX: readia, living-sports, appsalon, claude-identity, invictus (es+en) | S2 S3 S5 S9 S10    | delegated (wave 2, after T1+T2)   | in progress        |        |
-| T6 Covers + final seam check + feature README                                            | S12 S13            | inline/delegated (wave 3)         | pending            |        |
+| ID                                                                                       | Specs              | Route                             | Status      | Commit |
+| ---------------------------------------------------------------------------------------- | ------------------ | --------------------------------- | ----------- | ------ |
+| T1 Content collections + detail/landing/OG migration + remove GitHub prose pipeline      | S1 S2 S13          | delegated (parallel)              | done        |        |
+| T2 Doc blocks + `/design-system` page + `docs/design-system.md`                          | S3 S4 S13          | delegated (parallel)              | done        |        |
+| T3 Showcase kit + Mecateo on kit + Mecateo copy repositioned                             | S6 S8 S13          | delegated (parallel)              | done        |        |
+| T7a Repo docs: mecateo, danystortas, defi, smurfit-westrock-colombia                     | S9 S10 S11         | delegated (parallel, other repos) | done        |        |
+| T7b Repo docs: readia, living-sports-app, appsalon, claude-identity                      | S9 S10 S11         | delegated (parallel, other repos) | done        |        |
+| T4 Client showcases Danys / DeFi / SWC on kit                                            | S7 S9 S13          | delegated (wave 2, after T3)      | in progress |        |
+| T5a Case studies MDX: mecateo, danystortas, defi, swc (es+en)                            | S2 S3 S5 S8 S9 S10 | delegated (wave 2, after T1+T2)   | in progress |        |
+| T5b Case studies MDX: readia, living-sports, appsalon, claude-identity, invictus (es+en) | S2 S3 S5 S9 S10    | delegated (wave 2, after T1+T2)   | in progress |        |
+| T6 Covers + final seam check + feature README                                            | S12 S13            | inline/delegated (wave 3)         | pending     |        |
 
 Route evidence: user explicitly requested "con varios subagentes usando Sonnet implementa todo"; units have disjoint edit surfaces (Writer trigger a).
 
@@ -63,3 +63,5 @@ Route evidence: user explicitly requested "con varios subagentes usando Sonnet i
 - **L4** `@astrojs/mdx` 8.1.6 added and registered in `astro.config.mjs`; `src/components/doc-blocks/mdx-components.ts` stub created (owned by T2).
 - **L5** 2026-11-26: wave 1 done (T1, T2, T3, T7a, T7b); writers hit the 5h rate limit once and were resumed. Repo docs PRs (not merged, owner merges): mecateo#110 (develop), danystortas#311 (main), defi#1 (develop), jevg2003/smurfit-westrock-colombia#1 (main), readia#7 (develop), living-sports-app#45 (develop), appsalon#2 (main), claude-identity#46 (main). Removed deps: shiki, unified, remark*, rehype*; removed GH_TOKEN from env. Wave 2 running: T4, T5a, T5b.
 - **L6** Findings to hand to the user: readia `scripts/check-supabase.ts` has a hardcoded Supabase service-role key in a public repo (rotate); defi `api/src/app.js` uses `chalk` without import; danystortas `docs/ARCHITECTURE.md` still claims Agents SDK/LangGraph; mecateo `apps/README.md` still lists POS apps as active; living-sports repo description promises rewards that don't exist.
+- **L7** 2026-11-26: wave 2 done and committed (7 commits on branch). Checks: `pnpm astro check` 0 errors, `pnpm lint` clean, `pnpm build` generates all pages and fails only at the known Windows EPERM symlink step of the Vercel adapter (engram #719). Browser check (dev): landing Danys showcase, detail page, `/design-system` render; counters land on the approved figures. Fixed: revenue tile label overlap; duplicate Danys metrics (frontmatter + body); restored user-curated periods (Danys and AppSalon start 2026-02, writers had changed them from repo dates); AppSalon report requester is `funcionario`. Console: only a pre-existing ThemeToggler hydration mismatch. Review assess over develop..HEAD: medium, review_due=false (under_budget).
+- **L8** Pending: T6 covers (`src/content/projects/<slug>/cover.*`, no cards/OG covers yet), OG cover rasterization (satori cannot decode WebP), `ShowcaseKitSamples.astro` is an empty slot, `AnimatedBeam` ignores reduced motion (needs a prop in `src/components/ui/animated-beam.tsx`), light/dark visual pass, SWC showcase not seen in browser, `/es` pages not seen.
