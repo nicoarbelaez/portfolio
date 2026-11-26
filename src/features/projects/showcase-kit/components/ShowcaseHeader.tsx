@@ -1,16 +1,17 @@
-import { MecateoLogo } from '@/features/projects/apps/mecateo/MecateoLogo';
+import type { ReactNode } from 'react';
 
-interface MecateoHeaderProps {
+interface ShowcaseHeaderProps {
+  logo: ReactNode;
   name: string;
   tagline: string;
   headingId: string;
 }
 
-/** Logo left + name/tagline right (product header above the bento). */
-export function MecateoHeader({ name, tagline, headingId }: MecateoHeaderProps) {
+/** Logo slot on the left, product name (`h3`) and tagline on the right. */
+export function ShowcaseHeader({ logo, name, tagline, headingId }: ShowcaseHeaderProps) {
   return (
     <header className="flex items-center gap-3">
-      <MecateoLogo />
+      {logo}
       <div className="min-w-0">
         <h3 id={headingId} className="font-heading text-lg font-semibold tracking-tight sm:text-xl">
           {name}
