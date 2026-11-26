@@ -1,0 +1,9 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+minimumReleaseAgeExclude:
+  - '@shadcn/registry@0.2.2'
+  - '@types/react@19.3.3'
+  - eslint-plugin-astro@3.2.2
+  - lucide-react@1.81.0
+  - shadcn@4.23.1
