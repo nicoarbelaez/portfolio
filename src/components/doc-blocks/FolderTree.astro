@@ -1,0 +1,14 @@
+---
+/**
+ * <FolderTree> MDX block. Validates props with Zod (build fails on invalid input) and renders
+ * the React island `FolderTreeView` with `client:visible`: the HTML is server-rendered and
+ * readable without JS; animation starts after hydration, when the block is on screen.
+ */
+import { FolderTreeView } from './views/FolderTreeView';
+import { folderTreeSchema } from './schemas/doc-block-schemas';
+import { parseDocBlockProps } from './utils/parse-doc-block-props';
+
+const props = parseDocBlockProps('FolderTree', folderTreeSchema, Astro.props);
+---
+
+<FolderTreeView client:visible {...props} />

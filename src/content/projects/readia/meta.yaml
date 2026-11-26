@@ -1,0 +1,71 @@
+section: side
+order: 1
+periods:
+  - start: '2025-08'
+    end: '2025-11'
+  - start: '2026-02'
+    end: 'present'
+visibility: public
+links:
+  site: 'https://readia.arbelaeznicolas.dev/'
+  repo: 'https://github.com/nicoarbelaez/readia'
+team:
+  - name: 'Jorge Velásquez'
+    role: 'Landing inicial'
+    url: 'https://github.com/jevg2003'
+stack:
+  - name: 'Next.js'
+    category: frontend
+    version: '15.4'
+  - name: 'React'
+    category: frontend
+    version: '19.1'
+  - name: 'Tailwind CSS'
+    category: frontend
+    version: '4'
+  - name: 'Zustand'
+    category: frontend
+    version: '5'
+  - name: 'TanStack Query'
+    category: frontend
+    version: '5'
+  - name: 'React Flow'
+    category: frontend
+    version: '12'
+  - name: 'Recharts'
+    category: frontend
+    version: '3'
+  - name: 'React Hook Form'
+    category: frontend
+    version: '7'
+  - name: 'dagre'
+    category: frontend
+    version: '0.8'
+  - name: '@react-pdf/renderer'
+    category: frontend
+    version: '4'
+  - name: 'Zod'
+    category: backend
+    version: '4'
+  - name: 'Deno'
+    category: backend
+  - name: 'Supabase'
+    category: data
+  - name: 'PostgreSQL'
+    category: data
+  - name: 'Vercel AI SDK'
+    category: ai
+    version: '5'
+  - name: 'Google Gemini'
+    category: ai
+  - name: 'OpenRouter'
+    category: ai
+  - name: 'Vercel'
+    category: infra
+  - name: 'TypeScript'
+    category: tooling
+    version: '5.9'
+  - name: 'pnpm'
+    category: tooling
+cover: ./cover.webp
+coverDark: ./cover.dark.webp

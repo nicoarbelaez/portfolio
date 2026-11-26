@@ -1,0 +1,116 @@
+---
+title: 'Claude Identity'
+tagline: 'CLI en Go para cambiar entre cuentas de Claude Code sin volver a iniciar sesión.'
+description: 'CLI cid y plugin de Claude Code que alterna cuentas con el llavero del sistema sin perder la sesión en curso. Go 1.26, multiplataforma.'
+role: 'Autor y mantenedor'
+topics:
+  - 'Go'
+  - 'CLI'
+  - 'Claude Code'
+  - 'Keyring'
+  - 'GoReleaser'
+keywords:
+  - 'Go 1.26'
+  - 'CLI'
+  - 'Claude Code plugin'
+  - 'OS keyring'
+  - 'Windows Credential Manager'
+  - 'macOS Keychain'
+  - 'GoReleaser'
+  - 'release-please'
+  - 'GitHub Actions'
+  - 'CodeQL'
+  - 'cross-platform'
+---
+
+Proyecto personal, activo desde octubre de 2026. Es de código abierto y lo mantengo solo.
+
+## El problema
+
+Quien usa Claude Code con más de una cuenta (por ejemplo personal y de trabajo, o dos con límites de uso separados) tiene que cerrar sesión e iniciar otra, y pierde el contexto de lo que estaba haciendo. Cuando una cuenta llega a su límite, el trabajo se frena.
+
+## Qué construí
+
+`cid` es un binario en Go que guarda cada cuenta en el llavero del sistema (Windows Credential Manager, macOS Keychain o Linux Secret Service) y cambia entre ellas dentro de una sesión de Claude Code en marcha. Incluye:
+
+- Un plugin de Claude Code con el comando `/account`, que responde al instante sin gastar un turno del modelo.
+- Barras de uso por cuenta, para las ventanas de 5 horas y semanal.
+- Cambio automático entre una cuenta principal y una de reserva cuando se acerca el límite.
+- Actualización propia del binario y del plugin, con verificación de checksum.
+- Salida en inglés y español.
+
+## Cómo se usa
+
+<Flow
+  steps={[
+    {
+      actor: 'Usuario',
+      action: 'Registra sus cuentas',
+      kind: 'user',
+      detail: 'Login aislado, una vez por cuenta'
+    },
+    { actor: 'Usuario', action: 'Escribe /account en Claude Code', kind: 'user' },
+    {
+      actor: 'Hook',
+      action: 'Ejecuta cid hook',
+      kind: 'system',
+      detail: 'Sin turno del modelo ni shell'
+    },
+    {
+      actor: 'cid',
+      action: 'Intercambia las credenciales',
+      kind: 'system',
+      detail: 'Espera los lock files y verifica el login'
+    },
+    { actor: 'Claude Code', action: 'Sigue con la misma sesión', kind: 'system' }
+  ]}
+/>
+
+## Arquitectura
+
+<Architecture
+  layers={[
+    {
+      id: 'host',
+      label: 'Claude Code',
+      nodes: [
+        { id: 'plugin', label: 'Plugin', kind: 'client', detail: 'Hooks y skills' },
+        { id: 'status', label: 'Status line', kind: 'channel', detail: 'Uso por cuenta' }
+      ]
+    },
+    {
+      id: 'cli',
+      label: 'cid',
+      nodes: [
+        { id: 'cmd', label: 'CLI', kind: 'service', detail: 'Go 1.26' },
+        { id: 'swap', label: 'Swap seguro', kind: 'worker', detail: 'Locks y rollback' },
+        { id: 'auto', label: 'Auto-switch', kind: 'worker', detail: 'Política con anti-flap' }
+      ]
+    },
+    {
+      id: 'os',
+      label: 'Sistema',
+      nodes: [
+        { id: 'keyring', label: 'Llavero del SO', kind: 'infra', detail: 'Credenciales' },
+        { id: 'cfg', label: 'Config de Claude', kind: 'data', detail: 'Archivos locales' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'plugin', to: 'cmd', label: 'cid hook' },
+    { from: 'status', to: 'auto', label: 'uso' },
+    { from: 'cmd', to: 'swap' },
+    { from: 'auto', to: 'swap' },
+    { from: 'swap', to: 'keyring' },
+    { from: 'swap', to: 'cfg' }
+  ]}
+/>
+
+<MetricGrid
+  metrics={[
+    { value: '41', label: 'Archivos de prueba en Go' },
+    { value: '8,4k', label: 'Líneas de Go sin pruebas', context: 'aproximadas' },
+    { value: '6', label: 'Binarios por release', context: 'Windows, macOS y Linux, amd64 y arm64' },
+    { value: 'v0.9.0', label: 'Última versión publicada' }
+  ]}
+/>

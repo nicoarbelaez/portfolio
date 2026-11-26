@@ -1,0 +1,115 @@
+---
+title: 'Claude Identity'
+tagline: 'Go CLI to switch between Claude Code accounts without logging in again.'
+description: 'The cid CLI and a Claude Code plugin that switch accounts through the OS keyring without losing the running session. Go 1.26, cross-platform.'
+role: 'Author and maintainer'
+topics:
+  - 'Go'
+  - 'CLI'
+  - 'Claude Code'
+  - 'Keyring'
+  - 'GoReleaser'
+keywords:
+  - 'Go 1.26'
+  - 'CLI'
+  - 'Claude Code plugin'
+  - 'OS keyring'
+  - 'Windows Credential Manager'
+  - 'macOS Keychain'
+  - 'GoReleaser'
+  - 'release-please'
+  - 'GitHub Actions'
+  - 'CodeQL'
+  - 'cross-platform'
+---
+
+Personal project, active since October 2026. It is open source and I maintain it alone.
+
+## The problem
+
+Anyone using Claude Code with more than one account (say personal and work, or two with separate usage limits) has to log out and log in again, and loses the context of what they were doing. When an account hits its limit, the work stalls.
+
+## What I built
+
+`cid` is a Go binary that stores each account in the OS keyring (Windows Credential Manager, macOS Keychain or Linux Secret Service) and switches between them inside a running Claude Code session. It includes:
+
+- A Claude Code plugin with an `/account` command that answers instantly without spending a model turn.
+- Per-account usage bars for the 5-hour and weekly windows.
+- Automatic switching between a principal and a reserve account as the limit approaches.
+- Self-update for the binary and the plugin, with checksum verification.
+- English and Spanish output.
+
+## How a user interacts
+
+<Flow
+  steps={[
+    {
+      actor: 'User',
+      action: 'Registers their accounts',
+      kind: 'user',
+      detail: 'Isolated login, once per account'
+    },
+    { actor: 'User', action: 'Types /account in Claude Code', kind: 'user' },
+    { actor: 'Hook', action: 'Runs cid hook', kind: 'system', detail: 'No model turn, no shell' },
+    {
+      actor: 'cid',
+      action: 'Swaps the credentials',
+      kind: 'system',
+      detail: 'Waits for lock files and verifies the login'
+    },
+    { actor: 'Claude Code', action: 'Continues the same session', kind: 'system' }
+  ]}
+/>
+
+## Architecture
+
+<Architecture
+  layers={[
+    {
+      id: 'host',
+      label: 'Claude Code',
+      nodes: [
+        { id: 'plugin', label: 'Plugin', kind: 'client', detail: 'Hooks and skills' },
+        { id: 'status', label: 'Status line', kind: 'channel', detail: 'Usage per account' }
+      ]
+    },
+    {
+      id: 'cli',
+      label: 'cid',
+      nodes: [
+        { id: 'cmd', label: 'CLI', kind: 'service', detail: 'Go 1.26' },
+        { id: 'swap', label: 'Safe swap', kind: 'worker', detail: 'Locks and rollback' },
+        { id: 'auto', label: 'Auto-switch', kind: 'worker', detail: 'Anti-flap policy' }
+      ]
+    },
+    {
+      id: 'os',
+      label: 'System',
+      nodes: [
+        { id: 'keyring', label: 'OS keyring', kind: 'infra', detail: 'Credentials' },
+        { id: 'cfg', label: 'Claude config', kind: 'data', detail: 'Local files' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'plugin', to: 'cmd', label: 'cid hook' },
+    { from: 'status', to: 'auto', label: 'usage' },
+    { from: 'cmd', to: 'swap' },
+    { from: 'auto', to: 'swap' },
+    { from: 'swap', to: 'keyring' },
+    { from: 'swap', to: 'cfg' }
+  ]}
+/>
+
+<MetricGrid
+  metrics={[
+    { value: '41', label: 'Go test files' },
+    { value: '8.4k', label: 'Lines of Go, excluding tests', context: 'approximate' },
+    {
+      value: '6',
+      label: 'Binaries per release',
+      context: 'Windows, macOS and Linux, amd64 and arm64'
+    },
+    { value: 'v0.9.0', label: 'Latest published release' }
+  ]}
+/>

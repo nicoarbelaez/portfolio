@@ -1,0 +1,143 @@
+---
+title: 'ReadIA: technical documentation'
+description: 'ReadIA architecture: Next.js 15, three Deno Edge Functions, Supabase with RLS, a Gemini and OpenRouter fallback chain, and key decisions.'
+---
+
+## Architecture
+
+The Next.js 15 front end (App Router) handles the session and the UI. AI orchestration lives in three Supabase Edge Functions written in Deno. They authenticate with the user's JWT and write to PostgreSQL under RLS.
+
+<Architecture
+  layers={[
+    {
+      id: 'client',
+      label: 'Client',
+      nodes: [
+        { id: 'app', label: 'App Router', kind: 'client', detail: 'Next.js 15.4, React 19.1' },
+        { id: 'flow', label: 'Graph', kind: 'client', detail: 'React Flow + dagre' },
+        { id: 'report', label: 'PDF', kind: 'client', detail: '@react-pdf/renderer' }
+      ]
+    },
+    {
+      id: 'edge',
+      label: 'Edge Functions',
+      nodes: [
+        { id: 'questions', label: 'generate-questions', kind: 'worker' },
+        { id: 'diagnostic', label: 'generate-diagnostic', kind: 'worker' },
+        { id: 'roadmap', label: 'generate-roadmap', kind: 'worker' }
+      ]
+    },
+    {
+      id: 'data',
+      label: 'Data and AI',
+      nodes: [
+        { id: 'pg', label: 'PostgreSQL', kind: 'data', detail: 'Per-user RLS' },
+        { id: 'llm', label: 'Gemini', kind: 'ai', detail: '2.5 Flash Lite' },
+        { id: 'fallback', label: 'OpenRouter', kind: 'external', detail: 'Fallback' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'app', to: 'questions', label: 'JWT' },
+    { from: 'app', to: 'diagnostic', label: 'JWT' },
+    { from: 'app', to: 'roadmap', label: 'JWT' },
+    { from: 'diagnostic', to: 'pg' },
+    { from: 'roadmap', to: 'pg' },
+    { from: 'questions', to: 'llm' },
+    { from: 'llm', to: 'fallback', label: 'on failure', async: true }
+  ]}
+/>
+
+## Data flow
+
+<Flow
+  steps={[
+    {
+      actor: 'Next.js',
+      action: 'Calls the Edge Function',
+      kind: 'system',
+      detail: 'Sends the Supabase JWT'
+    },
+    {
+      actor: 'Edge Function',
+      action: 'Validates session and ownership',
+      kind: 'system',
+      detail: 'Checks the business user_owner_id'
+    },
+    {
+      actor: 'Edge Function',
+      action: 'Requests structured output',
+      kind: 'ai',
+      detail: 'Zod schema, Gemini then OpenRouter'
+    },
+    {
+      actor: 'Edge Function',
+      action: 'Persists the result',
+      kind: 'system',
+      detail: 'Diagnostic, pillars, nodes and edges'
+    },
+    {
+      actor: 'Next.js',
+      action: 'Renders',
+      kind: 'system',
+      detail: 'Radar, recharts, graph or PDF'
+    }
+  ]}
+/>
+
+## Repository layout
+
+<FolderTree
+  tree={`src/
+  app/ # routes: (main)/{home,business,diagnostic,roadmap,dashboard}, login, auth/callback
+  components/ # landing-page, forms, diagnostic, flow, sidebar, ui
+  stores/ # Zustand
+  hooks/ # TanStack Query hooks
+  report/ # PDF document
+  utils/supabase/ # clients and middleware
+supabase/
+  functions/ # 3 Deno functions
+    _shared/ # ai, auth, cors, response, supabase-client
+  migrations/ # 14 SQL migrations`}
+/>
+
+## Stack
+
+<StackGrid
+  items={[
+    { name: 'Next.js', category: 'frontend', version: '15.4' },
+    { name: 'React', category: 'frontend', version: '19.1' },
+    { name: 'Tailwind CSS', category: 'frontend', version: '4' },
+    { name: 'Zustand', category: 'frontend', version: '5' },
+    { name: 'TanStack Query', category: 'frontend', version: '5' },
+    { name: 'React Flow', category: 'frontend', version: '12' },
+    { name: 'Recharts', category: 'frontend', version: '3' },
+    { name: 'Zod', category: 'backend', version: '4' },
+    { name: 'Deno', category: 'backend' },
+    { name: 'Supabase', category: 'data' },
+    { name: 'PostgreSQL', category: 'data' },
+    { name: 'Vercel AI SDK', category: 'ai', version: '5' },
+    { name: 'Google Gemini', category: 'ai' },
+    { name: 'OpenRouter', category: 'ai' },
+    { name: 'Vercel', category: 'infra' },
+    { name: 'TypeScript', category: 'tooling', version: '5.9' },
+    { name: 'pnpm', category: 'tooling' }
+  ]}
+/>
+
+## Key decisions
+
+1. **AI in Edge Functions, not in the Next.js server.** Generation logic sits next to the database and reuses the user's JWT, with no extra backend to run.
+2. **Provider fallback chain.** `_shared/ai.ts` tries Gemini 2.5 Flash Lite twice, then OpenRouter twice, and logs the attempts. A provider outage does not block the diagnostic.
+3. **Structured output with Zod.** The diagnostic (score, pillars, recommendations, distributions, conclusions) is validated against a schema before it is saved. A malformed response fails early.
+4. **RLS as the security boundary.** Tables in the `public_web` schema have Row Level Security. The roadmap function also checks that the business belongs to the user.
+5. **Roadmap as a graph in the database.** Phases and tasks are stored as `roadmap_nodes` and `roadmap_edges`. React Flow draws them and dagre computes the layout, so a node's status updates without regenerating anything.
+6. **PDF on the client.** `@react-pdf/renderer` builds the report from data already loaded, with no separate rendering service.
+
+## Testing, CI and deployment
+
+The repository has no automated tests and no CI. Quality relies on TypeScript, ESLint and Prettier. Database types are generated with the Supabase CLI (`pnpm gen:types`). The front end is live at [readia.arbelaeznicolas.dev](https://readia.arbelaeznicolas.dev).
+
+## Repository docs
+
+The [nicoarbelaez/readia](https://github.com/nicoarbelaez/readia) repository includes `README.md`, `README.en.md` and `docs/architecture.md` with diagrams.

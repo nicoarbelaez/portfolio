@@ -6,25 +6,33 @@ import { Badge } from '@/components/ui/badge';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { buttonVariants } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { ProjectMark } from '@/features/projects/clients/shared/components/ClientMark';
+import { PROJECT_CARD_FALLBACK_ASPECT } from '@/features/projects/constants/covers';
 import { useProjectSharedTransition } from '@/features/projects/hooks/use-project-shared-transition';
 import {
   formatProjectTimeline,
   projectTimelineDateTime
 } from '@/features/projects/services/timeline';
-import type { EnrichedProject } from '@/features/projects/types/project';
+import type { ProjectView } from '@/features/projects/types/project';
 import { getLocalizedPath } from '@/i18n/utils';
 import type { LocaleKey } from '@/i18n/ui';
 import { cn } from '@/lib/utils';
+
+/** Shared by the light and dark cover images; the hover zoom is skipped under reduced motion. */
+const COVER_IMAGE_CLASS =
+  'size-full object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100';
 
 export type ProjectCardLabels = {
   site: string;
   repo: string;
   details: string;
   present: string;
+  /** Accessible name of the topic badge list. */
+  topics: string;
 };
 
 interface ProjectCardProps {
-  project: EnrichedProject;
+  project: ProjectView;
   lang: LocaleKey;
   labels: ProjectCardLabels;
   /** Visual accent on media (client section). */
@@ -33,7 +41,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, lang, labels, accent = false }: ProjectCardProps) {
   const detailsHref = getLocalizedPath(`/projects/${project.slug}`, lang);
-  const timelineLabel = formatProjectTimeline(project.entry.timeline, lang, {
+  const timelineLabel = formatProjectTimeline(project.timeline, lang, {
     present: labels.present
   });
   const { imageRef, titleRef, reduceMotion, activateSharedTransition } = useProjectSharedTransition(
@@ -69,20 +77,39 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
           href={detailsHref}
           onClick={activateSharedTransition}
           className={cn(
-            'bg-muted relative block aspect-[16/10] overflow-hidden',
+            'bg-muted relative block overflow-hidden',
             accent &&
               'before:bg-primary before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-1'
           )}
+          style={{
+            aspectRatio: project.cover
+              ? `${project.cover.width} / ${project.cover.height}`
+              : PROJECT_CARD_FALLBACK_ASPECT
+          }}
           aria-label={project.title}
         >
-          {project.image.src ? (
+          {project.cover ? (
             <div ref={imageRef} className="size-full">
               <img
-                src={project.image.src}
+                src={project.cover.src}
+                width={project.cover.width}
+                height={project.cover.height}
                 alt=""
-                className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                className={cn(COVER_IMAGE_CLASS, project.coverDark && 'dark:hidden')}
                 loading="lazy"
+                decoding="async"
               />
+              {project.coverDark ? (
+                <img
+                  src={project.coverDark.src}
+                  width={project.coverDark.width}
+                  height={project.coverDark.height}
+                  alt=""
+                  className={cn(COVER_IMAGE_CLASS, 'hidden dark:block')}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : null}
             </div>
           ) : (
             <div
@@ -129,8 +156,9 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
       </div>
 
       <CardContent className="relative z-10 flex flex-1 flex-col gap-3 px-4 pt-4 pb-5 sm:px-6 sm:pt-6">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex min-w-0 flex-col gap-1">
+        <div className="flex items-start justify-between gap-3">
+          <ProjectMark slug={project.slug} size="sm" />
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
             <h3 ref={titleRef} className="font-heading text-base font-semibold tracking-tight">
               <a href={detailsHref} onClick={activateSharedTransition} className="hover:underline">
                 {project.title}
@@ -138,7 +166,7 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
             </h3>
             <time
               className="text-muted-foreground text-xs"
-              dateTime={projectTimelineDateTime(project.entry.timeline)}
+              dateTime={projectTimelineDateTime(project.timeline)}
             >
               {timelineLabel}
             </time>
@@ -153,15 +181,13 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
           </a>
         </div>
 
-        {project.description ? (
-          <p className="text-muted-foreground flex-1 text-xs leading-relaxed text-pretty">
-            {project.description}
-          </p>
-        ) : null}
+        <p className="text-muted-foreground flex-1 text-xs leading-relaxed text-pretty">
+          {project.description}
+        </p>
 
         {project.topics.length > 0 ? (
-          <ul className="mt-auto flex flex-wrap gap-1" aria-label="Topics">
-            {project.topics.slice(0, 8).map((topic) => (
+          <ul className="mt-auto flex flex-wrap gap-1" aria-label={labels.topics}>
+            {project.topics.map((topic) => (
               <li key={topic}>
                 <Badge
                   variant="outline"

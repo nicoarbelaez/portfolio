@@ -1,0 +1,109 @@
+---
+title: 'DeFi'
+tagline: 'Google Sheets automation, an AppSheet app and a muscle-map API for training plans.'
+description: 'Apps Script automation on Google Sheets, an AppSheet app and a muscle-map API for a fitness-sector client. All of it built by me.'
+role: 'Automation and no-code developer'
+topics:
+  - 'Google Sheets'
+  - 'Apps Script'
+  - 'AppSheet'
+  - 'TypeScript'
+  - 'Express'
+  - 'Vercel'
+keywords:
+  - 'Google Apps Script'
+  - 'Google Sheets automation'
+  - 'AppSheet'
+  - 'no-code'
+  - 'TypeScript'
+  - 'clasp'
+  - 'Express.js'
+  - 'REST API'
+  - 'workflow automation'
+---
+
+## The problem
+
+A fitness entrepreneur builds personalized meal plans and training routines for clients, working in Google Sheets. The project automates that work to speed up each plan.
+
+## What I built
+
+I worked on the project from August 2024 to August 2025 and built every piece.
+
+- **Client sheet automation.** A Google Apps Script written in TypeScript that reacts to edits: dependent dropdowns (muscle group, exercise and link), per-sheet and per-month configuration, and progress and error alerts.
+- **Database in Apps Script.** A second script that keeps the catalog of exercises and intensification techniques and exposes it as JSON from a web app. The client sheet queries it and writes the result into named ranges.
+- **AppSheet app.** A no-code application that calculates food exchanges dynamically.
+- **Muscle-map API.** An Express service that receives the muscles worked and returns a colored body image as PNG or JPG.
+
+## Results
+
+- Three pieces delivered in one public repository: the sheet script, the database and the API.
+- Version 2.0.0 released in November 2024 and 83 commits through August 2025.
+- No usage figures published: the project belongs to a private client and I have no verifiable metrics.
+
+## How it is used
+
+<Flow
+  steps={[
+    {
+      actor: 'Trainer',
+      action: 'Opens the client sheet and starts the triggers from the menu',
+      kind: 'user'
+    },
+    {
+      actor: 'Trainer',
+      action: 'Picks a muscle group and an exercise from the dropdowns',
+      kind: 'user'
+    },
+    {
+      actor: 'Sheet script',
+      action: 'Fills in the exercise and its link when the edit happens',
+      kind: 'system'
+    },
+    {
+      actor: 'Database',
+      action: 'Serves the catalog to the sheet as JSON',
+      kind: 'system',
+      detail: 'Cached, with a 3.5 s wait after each change'
+    },
+    {
+      actor: 'Muscle-map API',
+      action: 'Generates the body image with the muscles worked',
+      kind: 'system'
+    }
+  ]}
+/>
+
+## Architecture
+
+<Architecture
+  layers={[
+    {
+      id: 'cliente',
+      label: 'Client',
+      nodes: [
+        { id: 'sheet', label: 'Routine sheet', kind: 'client', detail: 'Google Sheets' },
+        { id: 'appsheet', label: 'Exchanges app', kind: 'client', detail: 'AppSheet' }
+      ]
+    },
+    {
+      id: 'logica',
+      label: 'Logic',
+      nodes: [
+        { id: 'script', label: 'Sheet script', kind: 'service', detail: 'Apps Script' },
+        { id: 'db', label: 'Database', kind: 'data', detail: 'Apps Script, JSON' },
+        { id: 'muscle', label: 'Muscle-map API', kind: 'service', detail: 'Express 5' }
+      ]
+    },
+    {
+      id: 'infra',
+      label: 'Infrastructure',
+      nodes: [{ id: 'vercel', label: 'Vercel', kind: 'infra' }]
+    }
+  ]}
+  edges={[
+    { from: 'sheet', to: 'script', label: 'onEdit' },
+    { from: 'script', to: 'db', label: 'JSON' },
+    { from: 'muscle', to: 'vercel', label: 'deploy' }
+  ]}
+/>

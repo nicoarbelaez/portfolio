@@ -1,0 +1,145 @@
+---
+title: 'Danys Tortas'
+tagline: 'Agente de IA que atiende y vende por WhatsApp, y el panel que opera la pastelería.'
+description: 'Agente de IA que atiende y vende por WhatsApp con Kommo CRM, más un panel web para pedidos, inventario, domicilios y caja de una pastelería multi-sucursal.'
+role: 'Desarrollador principal: backend, IA, panel e infraestructura'
+topics:
+  - 'Agente de IA'
+  - 'WhatsApp'
+  - 'Kommo CRM'
+  - 'NestJS'
+  - 'Next.js'
+  - 'PostgreSQL'
+  - 'BullMQ'
+  - 'OpenRouter'
+keywords:
+  - 'AI sales agent'
+  - 'WhatsApp automation'
+  - 'LLM tool calling'
+  - 'conversational AI'
+  - 'Kommo CRM'
+  - 'multi-model routing'
+  - 'NestJS'
+  - 'Next.js'
+  - 'PostgreSQL'
+  - 'pgvector'
+  - 'BullMQ'
+  - 'OpenRouter'
+---
+
+## El problema
+
+Danys Tortas es una pastelería con varias sucursales que atiende a sus clientes por WhatsApp. Cuando un día llegan cientos de clientes, responder tarde se paga: un pedido que debía tomar minutos tomaba horas.
+
+## Qué construí
+
+Un sistema que cubre la conversación completa, de la pregunta al pedido.
+
+- **Agente de IA por WhatsApp.** Recibe los mensajes a través de Kommo CRM, entiende texto, audios, imágenes y PDFs, busca en el catálogo, arma el carrito, calcula el domicilio y registra el pedido. Cuando algo no corresponde a un agente (un reclamo, un dato que no tiene), pasa la conversación a una persona con un resumen.
+- **Panel web para el equipo.** Conversaciones en vivo, cola de casos para humanos, pedidos, carritos, inventario, domicilios, caja y métricas del propio agente: costo, ingresos atribuidos y conversaciones más caras.
+- **Control del gasto.** Presupuesto de IA por negocio, topes diarios y mensuales y protecciones contra bucles con otros bots.
+
+El agente corre sobre el motor de agentes de IA de Mecateo, en producción en Danys Tortas.
+
+## Resultados
+
+Las dos cifras de facturación son independientes: no se suman ni una incluye a la otra. Son facturación bruta, no ganancia neta.
+
+<MetricGrid
+  metrics={[
+    {
+      value: '$29.974.400',
+      label: 'Ganancia IA (COP)',
+      context: '~$30 M COP facturados solo con IA en un mes, vendido 100% por la IA'
+    },
+    {
+      value: '$33.498.500',
+      label: 'Ayuda IA, tortas temáticas (COP)',
+      context: '~$33,5 M COP facturados con ayuda de la IA (autocompletado) en un mes'
+    },
+    {
+      value: '+490',
+      label: 'Clientes atendidos en un día',
+      context: 'Hasta +490 clientes en un día'
+    },
+    { value: '69%', label: 'Respuestas enviadas por la IA', context: 'En promedio' },
+    { value: '+20.000', label: 'Clientes en la base' }
+  ]}
+/>
+
+## Cómo se usa
+
+<Flow
+  steps={[
+    {
+      actor: 'Cliente',
+      action: 'Escribe por WhatsApp y pregunta por una torta',
+      kind: 'user'
+    },
+    {
+      actor: 'Sistema',
+      action: 'Agrupa los mensajes seguidos y transcribe audios o imágenes',
+      kind: 'system'
+    },
+    {
+      actor: 'Agente de IA',
+      action: 'Consulta catálogo y calcula el domicilio con herramientas',
+      kind: 'ai',
+      detail: 'Los montos salen de las herramientas, no del modelo'
+    },
+    {
+      actor: 'Agente de IA',
+      action: 'Cotiza, arma el carrito y registra el pedido',
+      kind: 'ai'
+    },
+    {
+      actor: 'Equipo',
+      action: 'Toma la conversación cuando hace falta una persona',
+      kind: 'human',
+      detail: 'El agente entrega un resumen'
+    }
+  ]}
+/>
+
+## Arquitectura
+
+<Architecture
+  layers={[
+    {
+      id: 'canal',
+      label: 'Canal',
+      nodes: [
+        { id: 'whatsapp', label: 'WhatsApp', kind: 'channel' },
+        { id: 'kommo', label: 'Kommo CRM', kind: 'external' }
+      ]
+    },
+    {
+      id: 'nucleo',
+      label: 'Núcleo',
+      nodes: [
+        { id: 'api', label: 'API', kind: 'service', detail: 'NestJS + Fastify' },
+        { id: 'worker', label: 'Worker de IA', kind: 'ai', detail: 'BullMQ' },
+        { id: 'web', label: 'Panel', kind: 'client', detail: 'Next.js' }
+      ]
+    },
+    {
+      id: 'datos',
+      label: 'Datos y modelos',
+      nodes: [
+        { id: 'pg', label: 'PostgreSQL + pgvector', kind: 'data' },
+        { id: 'redis', label: 'Redis', kind: 'data' },
+        { id: 'openrouter', label: 'OpenRouter', kind: 'external' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'whatsapp', to: 'kommo' },
+    { from: 'kommo', to: 'api', label: 'webhook', async: true },
+    { from: 'api', to: 'redis', label: 'cola', async: true },
+    { from: 'redis', to: 'worker', async: true },
+    { from: 'worker', to: 'openrouter', label: 'LLM' },
+    { from: 'worker', to: 'pg' },
+    { from: 'worker', to: 'kommo', label: 'respuesta', async: true },
+    { from: 'web', to: 'api' }
+  ]}
+/>

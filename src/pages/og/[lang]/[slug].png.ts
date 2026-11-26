@@ -1,11 +1,12 @@
 import { ImageResponse } from '@vercel/og';
 import type { APIRoute, GetStaticPaths } from 'astro';
 import { PERSONAL_INFO } from '@/constants/constants';
-import { enrichProjects } from '@/features/projects/services/enrich';
+import { getActiveProjects } from '@/features/projects/services/projects';
 import { locales, type LocaleKey } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import { getAvatarDataUri, getLogoAsset } from '@/lib/og/assets';
 import { ogTemplate, type OgMedia } from '@/lib/og/template';
+import { coverCard, getProjectOgCover } from './_cover-card';
 
 const SITE_HOST = 'arbelaeznicolas.dev';
 const DESCRIPTION_MAX_LENGTH = 140;
@@ -20,6 +21,8 @@ interface OgPathProps {
   title: string;
   description: string;
   media: OgMedia | null;
+  /** Data URI of the project's full-bleed cover; replaces the text card when present. */
+  coverSrc: string | null;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -28,15 +31,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const pathsByLang = await Promise.all(
     langs.map(async (lang) => {
       const t = useTranslations(lang);
-      const projects = await enrichProjects(lang);
+      const projects = await getActiveProjects(lang);
 
       const projectPaths = projects.map((project) => ({
         params: { lang, slug: project.slug },
         props: {
           kicker: t(`projects.section.${project.section}`),
           title: project.title,
-          description: truncate(project.description ?? '', DESCRIPTION_MAX_LENGTH),
-          media: project.image.src ? { kind: 'cover' as const, src: project.image.src } : null
+          description: truncate(project.description, DESCRIPTION_MAX_LENGTH),
+          media: null,
+          coverSrc: getProjectOgCover(project.slug)
         } satisfies OgPathProps
       }));
 
@@ -46,7 +50,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
           kicker: t('schema.jobTitle'),
           title: PERSONAL_INFO.FULL_NAME,
           description: truncate(t('schema.description'), DESCRIPTION_MAX_LENGTH),
-          media: { kind: 'avatar' as const, src: getAvatarDataUri() }
+          media: { kind: 'avatar' as const, src: getAvatarDataUri() },
+          coverSrc: null
         } satisfies OgPathProps
       };
 
@@ -58,18 +63,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const GET: APIRoute = async ({ props }) => {
-  const { kicker, title, description, media } = props as OgPathProps;
+  const { kicker, title, description, media, coverSrc } = props as OgPathProps;
 
   return new ImageResponse(
-    ogTemplate({
-      kicker,
-      title,
-      description,
-      media,
-      brandName: PERSONAL_INFO.BRAND_NAME,
-      siteHost: SITE_HOST,
-      logo: getLogoAsset()
-    }),
+    coverSrc
+      ? coverCard(coverSrc)
+      : ogTemplate({
+          kicker,
+          title,
+          description,
+          media,
+          brandName: PERSONAL_INFO.BRAND_NAME,
+          siteHost: SITE_HOST,
+          logo: getLogoAsset()
+        }),
     { width: 1200, height: 630 }
   );
 };

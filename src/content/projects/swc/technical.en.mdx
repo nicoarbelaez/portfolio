@@ -1,0 +1,158 @@
+---
+title: 'Smart Work Core technical documentation'
+description: 'Hexagonal architecture, rule engine, AI assistant with tools, versioned stack and key technical decisions of Smart Work Core.'
+---
+
+## Architecture
+
+A Next.js 16 (App Router) application with no database: each company's state lives in the browser with Zustand. The code follows a hexagonal architecture. `src/core` is pure TypeScript (rules, PESTEL, briefing, onboarding) and defines ports such as `source-adapter`, `signal-analyzer`, `clock` and `logger`. `src/infrastructure` implements those ports with the data sources and the AI. `src/features/*` groups the interface by domain.
+
+<Architecture
+  layers={[
+    {
+      id: 'fuentes',
+      label: 'Sources',
+      nodes: [
+        {
+          id: 'datosgov',
+          label: 'datos.gov.co',
+          kind: 'external',
+          detail: 'TRM, SECOP II, Supersociedades'
+        },
+        { id: 'worldbank', label: 'World Bank', kind: 'external' },
+        { id: 'xm', label: 'XM', kind: 'external' },
+        { id: 'rss', label: 'RSS and decrees', kind: 'external' }
+      ]
+    },
+    {
+      id: 'infra',
+      label: 'Infrastructure',
+      nodes: [
+        { id: 'adapters', label: 'Adapters', kind: 'service', detail: 'src/infrastructure' },
+        { id: 'ai', label: 'Assistant', kind: 'ai', detail: 'Vercel AI SDK' }
+      ]
+    },
+    {
+      id: 'core',
+      label: 'Core',
+      nodes: [
+        { id: 'rules', label: 'Rules and analysis', kind: 'service', detail: 'src/core, pure TS' }
+      ]
+    },
+    {
+      id: 'ui',
+      label: 'Interface',
+      nodes: [
+        { id: 'next', label: 'Next.js 16', kind: 'client', detail: 'src/features' },
+        { id: 'state', label: 'Local state', kind: 'data', detail: 'Zustand' },
+        { id: 'access', label: 'Cloudflare Access', kind: 'infra', detail: 'JWT RS256' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'datosgov', to: 'adapters' },
+    { from: 'worldbank', to: 'adapters' },
+    { from: 'xm', to: 'adapters' },
+    { from: 'rss', to: 'adapters' },
+    { from: 'adapters', to: 'rules', label: 'ports' },
+    { from: 'rules', to: 'next', label: 'alerts' },
+    { from: 'ai', to: 'rules', label: '8 tools' },
+    { from: 'next', to: 'state' },
+    { from: 'access', to: 'next' }
+  ]}
+/>
+
+## Data flow
+
+<Flow
+  steps={[
+    {
+      actor: 'Adapters',
+      action: 'Request data from each source and normalize it',
+      kind: 'system',
+      detail: 'TRM, contracts, macro series, energy, RSS, decrees'
+    },
+    {
+      actor: 'Rule engine',
+      action: "Evaluates each rule against the company's thresholds",
+      kind: 'system',
+      detail: 'TRM, expiring contracts, competitors, energy, keywords'
+    },
+    {
+      actor: 'Core',
+      action: 'Deduplicates, assigns severity and groups by PESTEL',
+      kind: 'system'
+    },
+    {
+      actor: 'Interface',
+      action: 'Shows the alert with its rule and a link to the source',
+      kind: 'system'
+    },
+    {
+      actor: 'AI assistant',
+      action: 'Calls the read tools and streams the answer',
+      kind: 'ai',
+      detail: 'External data is treated as untrusted'
+    }
+  ]}
+/>
+
+## Repository structure
+
+<FolderTree
+  tree={`src/
+  app/ # Next.js routes: (app), (account), /api
+  core/ # pure domain, no infrastructure dependencies
+    rules/ # TRM, contract, energy and news rules
+    onboarding/ # company profile
+  infrastructure/
+    sources/ # datos.gov.co, World Bank, XM, RSS
+    ai/ # model, tools, onboarding
+  features/ # radar, pestel, briefing, assistant, sources
+  proxy.ts # Cloudflare Access JWT validation
+docs/ # deployment and Cloudflare Access
+odd/
+  tasks/ # per-feature documents`}
+/>
+
+## Stack
+
+<StackGrid
+  items={[
+    { name: 'Next.js', category: 'frontend', version: '16' },
+    { name: 'React', category: 'frontend', version: '19' },
+    { name: 'Tailwind CSS', category: 'frontend', version: '4' },
+    { name: 'Zustand', category: 'frontend', version: '5' },
+    { name: 'TanStack Query', category: 'frontend', version: '5' },
+    { name: 'Recharts', category: 'frontend', version: '3' },
+    { name: 'TypeScript', category: 'backend', version: '6' },
+    { name: 'Zod', category: 'backend', version: '4' },
+    { name: 'jose', category: 'backend', version: '6' },
+    { name: 'Vercel AI SDK', category: 'ai', version: '7' },
+    { name: 'OpenAI API', category: 'ai' },
+    { name: 'OpenRouter', category: 'ai' },
+    { name: 'Vercel', category: 'infra' },
+    { name: 'Cloudflare Access', category: 'infra' },
+    { name: 'Docker', category: 'infra' },
+    { name: 'GitHub Actions', category: 'infra' },
+    { name: 'Vitest', category: 'testing', version: '5' },
+    { name: 'Playwright', category: 'testing', version: '1.64' },
+    { name: 'pnpm', category: 'tooling', version: '11' }
+  ]}
+/>
+
+## Key decisions
+
+- **A hexagonal core enforced by a test.** An architecture test fails if `src/core` imports infrastructure. Rules can be tested without a network, and a source can change without touching them.
+- **Readable rules as pure functions.** Each rule (daily TRM move, expiring contract, new competitor contract, weekly energy change, keyword in news or regulation) is a small function with an adjustable threshold. An alert always shows which rule produced it.
+- **No database.** Each company's profile is stored in the browser. This reduces the data surface and the operating cost, at the price of state not being shared across devices.
+- **A read-only assistant, not RAG.** Eight tools (`get_trm`, `get_secop_contracts`, `get_competitor_financials`, `get_macro_series`, `get_news`, `get_regulation`, `get_energy_price`, `detect_signals`) query live data. There are no embeddings and no vector store. The system prompt treats external content as untrusted to resist instruction injection.
+- **A model with a fallback.** OpenAI `gpt-4.1-mini` by default and OpenRouter as the alternative. Without a key the app keeps working and the assistant says it is not configured.
+- **Security at the edge and in the app.** Cloudflare Access with Google sign-in protects everything except the landing page. The app also validates the JWT (RS256, `jose`) and answers 503 if the configuration is missing. Headers include CSP in report-only mode and HSTS.
+
+## Testing, CI and deployment
+
+- Vitest with 181 test files and Testing Library. Playwright covers the assistant, settings, the landing page and a smoke path.
+- GitHub Actions runs continuous integration. Linting with oxlint.
+- Deployment on Vercel on every push to `main`, and a multi-stage Dockerfile (standalone output, non-root user) for the client's production environment.
+- The repository is not linked here because it identifies the client.

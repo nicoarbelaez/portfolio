@@ -82,6 +82,22 @@ export function useTabsCarousel<T extends string>({
     };
   }, [emblaApi, tabs, onValueChange, updateIndicator]);
 
+  // Embla only re-inits on width changes. Panes grow in height after mount (lazy imports, fonts,
+  // in-view reveals), so re-measure on any pane resize or AutoHeight keeps the first, shorter height.
+  useEffect(() => {
+    if (!emblaApi || typeof ResizeObserver === 'undefined') return;
+    let frame = 0;
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => emblaApi.reInit());
+    });
+    emblaApi.slideNodes().forEach((node) => observer.observe(node));
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [emblaApi]);
+
   // External value change (e.g. deep link read after mount): jump, no slide animation.
   const index = tabs.indexOf(value);
   useEffect(() => {

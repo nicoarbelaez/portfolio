@@ -1,0 +1,123 @@
+---
+title: 'Living Sports'
+tagline: 'Fitness social network for Android with a feed, communities and competitions.'
+description: 'Android app built by a team with Expo and Supabase: feed, communities and competitions with video evidence and a podium. AI routines in progress.'
+role: 'Mobile full stack developer'
+topics:
+  - 'Expo'
+  - 'React Native'
+  - 'Supabase'
+  - 'Android'
+  - 'Edge Functions'
+keywords:
+  - 'React Native'
+  - 'Expo SDK 54'
+  - 'Expo Router'
+  - 'Supabase'
+  - 'PostgreSQL'
+  - 'Row Level Security'
+  - 'Edge Functions'
+  - 'NativeWind'
+  - 'Cloudinary'
+  - 'semantic-release'
+  - 'TypeScript'
+  - 'Android'
+---
+
+Living Sports is a fitness social network for Android. We built it as a team: Nicolás Arbeláez with SebasHDV and brayan200j-collab.
+
+## The problem
+
+People who train usually do it alone, with no way to compare progress. Tracking apps store data but give no reason to come back and no credible way to prove a result.
+
+## What we built
+
+- A **feed** with posts, a media carousel, likes and comments.
+- **Communities**: create groups, join them and see their leaderboard.
+- **Competitions** per exercise. Each participant uploads a video as evidence, and the system validates the entry and builds a ranking with a podium.
+- **Notifications**, profiles, following and personal records.
+
+Competitions are on the `develop` branch. Posts go through an Edge Function that uploads the media to Cloudinary.
+
+## How a user interacts
+
+<Flow
+  steps={[
+    { actor: 'User', action: 'Signs in with Google', kind: 'user' },
+    {
+      actor: 'User',
+      action: 'Posts to the feed',
+      kind: 'user',
+      detail: 'Photo or video, uploaded to Cloudinary'
+    },
+    { actor: 'User', action: 'Joins a community', kind: 'user' },
+    {
+      actor: 'User',
+      action: 'Enters a competition and uploads a video',
+      kind: 'user',
+      detail: 'Exercise and personal record'
+    },
+    {
+      actor: 'System',
+      action: 'Validates the evidence',
+      kind: 'system',
+      detail: 'Edge Function and approval triggers'
+    },
+    { actor: 'System', action: 'Updates the ranking and podium', kind: 'system' }
+  ]}
+/>
+
+## Architecture
+
+<Architecture
+  layers={[
+    {
+      id: 'app',
+      label: 'App',
+      nodes: [
+        {
+          id: 'mobile',
+          label: 'Android app',
+          kind: 'client',
+          detail: 'Expo 54, React Native 0.81'
+        }
+      ]
+    },
+    {
+      id: 'supabase',
+      label: 'Supabase',
+      nodes: [
+        { id: 'auth', label: 'Auth', kind: 'service', detail: 'Google OAuth' },
+        { id: 'edge', label: 'Edge Functions', kind: 'worker', detail: 'Deno' },
+        { id: 'db', label: 'PostgreSQL', kind: 'data', detail: 'RLS and auditing' }
+      ]
+    },
+    {
+      id: 'media',
+      label: 'Media',
+      nodes: [{ id: 'cdn', label: 'Cloudinary', kind: 'external', detail: 'Photos and videos' }]
+    }
+  ]}
+  edges={[
+    { from: 'mobile', to: 'auth', label: 'session' },
+    { from: 'mobile', to: 'edge', label: 'multi-step logic' },
+    { from: 'mobile', to: 'db', label: 'simple reads' },
+    { from: 'edge', to: 'db' },
+    { from: 'edge', to: 'cdn', label: 'upload' }
+  ]}
+/>
+
+<MetricGrid
+  metrics={[
+    {
+      value: '9',
+      label: 'SQL test files',
+      context: 'numbered 001 to 009, against the schema'
+    },
+    { value: 'v1.2.0', label: 'Latest published release', context: 'March 2026' }
+  ]}
+/>
+
+## Roadmap (in progress)
+
+AI-generated routines and weekly point-based rewards. Today the AI routine screen is a placeholder and rewards are not implemented.

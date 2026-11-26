@@ -1,73 +1,51 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
+import { TEAM_LABEL } from '@/features/projects/clients/shared/constants/client-config';
 import type { ProjectCardLabels } from '@/features/projects/components/ProjectCard';
 import { ProjectCtasLinks } from '@/features/projects/components/ProjectCtas';
 import {
   formatProjectTimeline,
   projectTimelineDateTime
 } from '@/features/projects/services/timeline';
-import type { EnrichedProject } from '@/features/projects/types/project';
+import type { ProjectView } from '@/features/projects/types/project';
 import { getLocalizedPath } from '@/i18n/utils';
 import type { LocaleKey } from '@/i18n/ui';
 import { cn } from '@/lib/utils';
 
-/** Max topics shown in a client showcase (same cap as `ProjectCard`). */
-const MAX_TOPICS = 8;
-
 interface ClientShowcaseMetaProps {
-  project: EnrichedProject;
+  project: ProjectView;
   lang: LocaleKey;
   labels: ProjectCardLabels;
-  headingId: string;
   className?: string;
-  /** Extra classes for the title (per-client typography). */
-  titleClassName?: string;
 }
 
 /**
- * Data-driven text block shared by client showcases: title, timeline, description,
- * topics and CTAs. Only renders data already on the project — no hard-coded copy.
+ * Data-driven text block of a client showcase tile: period, description, topics, credited
+ * collaborators and CTAs. The product name lives in the section header, so no title here.
  */
-export function ClientShowcaseMeta({
-  project,
-  lang,
-  labels,
-  headingId,
-  className,
-  titleClassName
-}: ClientShowcaseMetaProps) {
+export function ClientShowcaseMeta({ project, lang, labels, className }: ClientShowcaseMetaProps) {
   const detailsHref = getLocalizedPath(`/projects/${project.slug}`, lang);
-  const timelineLabel = formatProjectTimeline(project.entry.timeline, lang, {
+  const timelineLabel = formatProjectTimeline(project.timeline, lang, {
     present: labels.present
   });
 
   return (
-    <div className={cn('flex flex-col gap-4', className)}>
-      <div className="space-y-1">
-        <h3
-          id={headingId}
-          className={cn('font-heading text-2xl font-semibold tracking-tight', titleClassName)}
-        >
-          {project.title}
-        </h3>
-        <time
-          className="text-muted-foreground text-xs"
-          dateTime={projectTimelineDateTime(project.entry.timeline)}
-        >
-          {timelineLabel}
-        </time>
-      </div>
+    <div className={cn('flex flex-col gap-3', className)}>
+      <time
+        className="text-muted-foreground text-xs"
+        dateTime={projectTimelineDateTime(project.timeline)}
+      >
+        {timelineLabel}
+      </time>
 
-      {project.description ? (
-        <p className="text-muted-foreground text-sm leading-relaxed text-pretty">
-          {project.description}
-        </p>
-      ) : null}
+      <p className="text-foreground/90 text-sm leading-relaxed text-pretty">
+        {project.description}
+      </p>
 
       {project.topics.length > 0 ? (
-        <ul className="flex flex-wrap gap-1" aria-label="Topics">
-          {project.topics.slice(0, MAX_TOPICS).map((topic) => (
+        <ul className="flex flex-wrap gap-1" aria-label={labels.topics}>
+          {project.topics.map((topic) => (
             <li key={topic}>
               <Badge variant="outline" className="h-6 rounded-md px-2 text-[11px] font-medium">
                 {topic}
@@ -75,6 +53,30 @@ export function ClientShowcaseMeta({
             </li>
           ))}
         </ul>
+      ) : null}
+
+      {project.team.length > 0 ? (
+        <p className="text-muted-foreground text-xs">
+          {TEAM_LABEL[lang]}{' '}
+          {project.team.map((member, index) => (
+            <span key={member.name}>
+              {index > 0 ? ', ' : null}
+              {member.url ? (
+                <a
+                  href={member.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground underline-offset-2 hover:underline"
+                >
+                  {member.name}
+                </a>
+              ) : (
+                member.name
+              )}{' '}
+              ({member.role})
+            </span>
+          ))}
+        </p>
       ) : null}
 
       <ProjectCtasLinks

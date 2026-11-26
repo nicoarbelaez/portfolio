@@ -1,0 +1,129 @@
+---
+title: 'Smart Work Core'
+tagline: 'Environment intelligence hub: public data from Colombia turned into alerts with a readable rule.'
+description: 'A Next.js app that turns public data from Colombia into alerts with readable rules, plus an AI assistant with read-only tools.'
+role: 'Lead full stack developer'
+topics:
+  - 'Next.js'
+  - 'Rule engine'
+  - 'AI assistant'
+  - 'Open data'
+  - 'Hexagonal architecture'
+  - 'Cloudflare Access'
+keywords:
+  - 'Next.js'
+  - 'TypeScript'
+  - 'Vercel AI SDK'
+  - 'LLM tool calling'
+  - 'rule engine'
+  - 'hexagonal architecture'
+  - 'open data'
+  - 'SECOP II'
+  - 'PESTEL'
+  - 'Cloudflare Access'
+  - 'Playwright'
+  - 'Vitest'
+---
+
+## The problem
+
+The dollar, public contracts, competitors, news and regulation live in different sources. They rarely explain what a change means for a specific company, and checking them by hand every day does not scale.
+
+## What I built
+
+Smart Work Core started as a university commission for a client who prefers to stay anonymous. Jorge Velásquez created the initial repository. I designed and built the product, including the Next.js application.
+
+- **Alert radar.** Each signal has a severity (informative, watch or alert), the rule that produced it and a link to the original source. It can be marked new, reviewed or dismissed.
+- **Rule engine.** Pure TypeScript functions that check the daily TRM (the official COP/USD rate) move, contracts about to expire, new competitor contracts, the energy price, and keyword mentions in news and regulation. The user adjusts the thresholds.
+- **PESTEL, a decision log and a weekly briefing** that exports to Markdown and CSV.
+- **Several companies**, each with its own profile, competitors and keywords. An AI-guided onboarding drafts the initial profile.
+- **AI assistant** that answers about the data already loaded, using eight read-only tools.
+
+Data comes from datos.gov.co (TRM, SECOP II contracts, Supersociedades reports), the World Bank, XM and RSS feeds from Colombian media.
+
+## Results
+
+- A complete application with radar, PESTEL, briefing, assistant and multi-company management.
+- Access restricted by Cloudflare Access, with JWT validation inside the application itself.
+- An architecture that checks itself: a test fails if the rule core depends on infrastructure.
+
+I do not publish usage metrics: the tool has restricted access and I have no verifiable figures.
+
+## How it is used
+
+<Flow
+  steps={[
+    {
+      actor: 'User',
+      action: 'Signs in with an account authorized by Cloudflare Access',
+      kind: 'user'
+    },
+    {
+      actor: 'Onboarding assistant',
+      action: 'Drafts the company profile from what the user describes',
+      kind: 'ai'
+    },
+    {
+      actor: 'System',
+      action: 'Queries the public sources and applies the rules',
+      kind: 'system',
+      detail: 'Every alert keeps its rule and its source'
+    },
+    {
+      actor: 'User',
+      action: 'Reviews alerts, dismisses irrelevant ones and logs a decision',
+      kind: 'user'
+    },
+    {
+      actor: 'AI assistant',
+      action: 'Answers questions with read-only tools',
+      kind: 'ai'
+    },
+    {
+      actor: 'User',
+      action: 'Exports the weekly briefing',
+      kind: 'user',
+      detail: 'Markdown, CSV or print'
+    }
+  ]}
+/>
+
+## Architecture
+
+<Architecture
+  layers={[
+    {
+      id: 'fuentes',
+      label: 'Public sources',
+      nodes: [
+        { id: 'datosgov', label: 'datos.gov.co', kind: 'external', detail: 'TRM, SECOP II' },
+        { id: 'worldbank', label: 'World Bank', kind: 'external' },
+        { id: 'xm', label: 'XM', kind: 'external', detail: 'Energy price' },
+        { id: 'rss', label: 'Media RSS', kind: 'external' }
+      ]
+    },
+    {
+      id: 'app',
+      label: 'Application',
+      nodes: [
+        { id: 'core', label: 'Rule engine', kind: 'service', detail: 'src/core' },
+        { id: 'ui', label: 'Interface', kind: 'client', detail: 'Next.js' },
+        { id: 'assistant', label: 'AI assistant', kind: 'ai', detail: 'Vercel AI SDK' }
+      ]
+    },
+    {
+      id: 'acceso',
+      label: 'Access',
+      nodes: [{ id: 'access', label: 'Cloudflare Access', kind: 'infra' }]
+    }
+  ]}
+  edges={[
+    { from: 'datosgov', to: 'core' },
+    { from: 'worldbank', to: 'core' },
+    { from: 'xm', to: 'core' },
+    { from: 'rss', to: 'core' },
+    { from: 'core', to: 'ui', label: 'alerts' },
+    { from: 'assistant', to: 'core', label: 'tools' },
+    { from: 'access', to: 'ui', label: 'JWT' }
+  ]}
+/>

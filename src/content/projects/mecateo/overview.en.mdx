@@ -1,0 +1,131 @@
+---
+title: 'Mecateo'
+tagline: 'NFC stands with customer retention and an AI agent engine for support and sales.'
+description: 'NFC stands with editable destinations and a tap dashboard, plus an AI agent engine running in production at Danys Tortas. Multi-tenant platform in NestJS and Go.'
+role: 'Founder and lead developer'
+topics:
+  - 'NFC'
+  - 'AI agents'
+  - 'Customer retention'
+  - 'Multi-tenant'
+  - 'NestJS'
+  - 'Go'
+  - 'Astro'
+  - 'Next.js'
+keywords:
+  - 'NFC'
+  - 'dynamic QR'
+  - 'AI agents'
+  - 'AI gateway'
+  - 'customer retention'
+  - 'multi-tenant SaaS'
+  - 'NestJS'
+  - 'Fastify'
+  - 'Go'
+  - 'Astro'
+  - 'Next.js'
+  - 'Prisma'
+  - 'PostgreSQL'
+  - 'BullMQ'
+  - 'OpenRouter'
+  - 'Better Auth'
+---
+
+## The problem
+
+A local business gets people through the door but rarely knows what happens next. No contact is saved, no review is left, and the WhatsApp conversation goes cold while someone serves another customer. Mecateo starts there: win customers, turn them into sales, and keep them.
+
+## What I built
+
+Mecateo is a multi-tenant platform that I founded and develop. It has two products today.
+
+**NFC stands with a printed QR backup.** The stands are physical pieces printed once. The owner changes the destination whenever needed (Google reviews, WhatsApp, the daily menu, a promotion) without reprinting. Links go through a Go redirector (`go.mecateo.co`) that counts every tap. The "Mis NFC" dashboard shows activity per stand, and the web store sells the stands with Wompi checkout. Each organization can have several branches, and internal staff sign in with two-factor authentication.
+
+**AI agent engine.** This is the layer that answers and sells over chat: a NestJS and Fastify gateway that connects each organization to OpenRouter and controls usage. Every organization has its own key, a credit balance backed by a ledger, content auditing, and a global kill switch. Mecateo's AI agent engine runs in production at Danys Tortas (see its case study).
+
+## Results
+
+- One physical product and one software product in the same dashboard, with store, checkout and order fulfillment running at [mecateo.co](https://mecateo.co).
+- A redirector that answers without storing the visitor's IP or user agent.
+- An AI agent engine with per-organization cost tracking, in production.
+
+I do not publish sales or tap numbers yet. The example data on the public dashboard is illustrative and I do not use it as a result.
+
+## How it is used
+
+<Flow
+  steps={[
+    {
+      actor: 'Customer at the venue',
+      action: 'Taps the NFC stand or scans the QR',
+      kind: 'user'
+    },
+    {
+      actor: 'Redirector',
+      action: 'Resolves the code and redirects to the current destination',
+      kind: 'system',
+      detail: '302 response, no cache'
+    },
+    {
+      actor: 'Redirector',
+      action: 'Queues the tap event',
+      kind: 'system',
+      detail: 'Visitor identified by a daily hash'
+    },
+    {
+      actor: 'Business owner',
+      action: 'Changes the destination from "Mis NFC"',
+      kind: 'user',
+      detail: 'No need to reprint the stand'
+    },
+    {
+      actor: 'Dashboard',
+      action: 'Shows taps per stand and branch',
+      kind: 'system'
+    }
+  ]}
+/>
+
+## Architecture
+
+<Architecture
+  layers={[
+    {
+      id: 'entrada',
+      label: 'Entry',
+      nodes: [
+        { id: 'nfc', label: 'NFC stand / QR', kind: 'channel' },
+        { id: 'panel', label: 'Mis NFC dashboard', kind: 'client', detail: 'Next.js' }
+      ]
+    },
+    {
+      id: 'nucleo',
+      label: 'Core',
+      nodes: [
+        { id: 'redirect', label: 'Redirector', kind: 'service', detail: 'Go' },
+        { id: 'api', label: 'API', kind: 'service', detail: 'NestJS + Fastify' },
+        { id: 'worker', label: 'Worker', kind: 'worker', detail: 'BullMQ' },
+        { id: 'gateway', label: 'AI gateway', kind: 'ai', detail: 'NestJS + Fastify' }
+      ]
+    },
+    {
+      id: 'datos',
+      label: 'Data and external',
+      nodes: [
+        { id: 'pg', label: 'PostgreSQL', kind: 'data' },
+        { id: 'redis', label: 'Redis', kind: 'data' },
+        { id: 'openrouter', label: 'OpenRouter', kind: 'external' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'nfc', to: 'redirect', label: 'tap' },
+    { from: 'redirect', to: 'redis', label: 'events', async: true },
+    { from: 'redis', to: 'worker', async: true },
+    { from: 'panel', to: 'api' },
+    { from: 'api', to: 'pg' },
+    { from: 'worker', to: 'pg' },
+    { from: 'gateway', to: 'openrouter', label: 'LLM' },
+    { from: 'gateway', to: 'pg', label: 'credits' }
+  ]}
+/>

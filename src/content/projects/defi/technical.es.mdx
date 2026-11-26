@@ -1,0 +1,126 @@
+---
+title: 'Documentación técnica de DeFi'
+description: 'Scripts de Apps Script, base de datos JSON, API de mapa muscular, stack con versiones y decisiones técnicas de DeFi.'
+---
+
+## Arquitectura
+
+El repositorio tiene tres piezas independientes. `defi` es un script de Google Apps Script ligado a la hoja del cliente. `defi-db` es otro script que funciona como base de datos interna y publica JSON mediante una web app (`doGet`). `api` es un servicio Express desplegado en Vercel que dibuja el mapa muscular. La app AppSheet de intercambios de alimentos no está en el repositorio.
+
+<Architecture
+  layers={[
+    {
+      id: 'cliente',
+      label: 'Cliente',
+      nodes: [{ id: 'sheet', label: 'Hoja del cliente', kind: 'client', detail: 'Google Sheets' }]
+    },
+    {
+      id: 'scripts',
+      label: 'Apps Script',
+      nodes: [
+        { id: 'defi', label: 'defi', kind: 'service', detail: 'Triggers onOpen y onEdit' },
+        { id: 'defidb', label: 'defi-db', kind: 'data', detail: 'Web app doGet, JSON' }
+      ]
+    },
+    {
+      id: 'api',
+      label: 'API',
+      nodes: [
+        { id: 'muscle', label: 'muscle-api', kind: 'service', detail: 'Express 5 + sharp' },
+        { id: 'vercel', label: 'Vercel', kind: 'infra' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'sheet', to: 'defi', label: 'onEdit' },
+    { from: 'defi', to: 'defidb', label: 'UrlFetch' },
+    { from: 'defidb', to: 'defi', label: 'JSON' },
+    { from: 'muscle', to: 'vercel' }
+  ]}
+/>
+
+## Flujo de datos
+
+<Flow
+  steps={[
+    {
+      actor: 'Hoja',
+      action: 'El usuario edita una celda de configuración o de ejercicio',
+      kind: 'user'
+    },
+    {
+      actor: 'Script defi',
+      action: 'El handler de edición actualiza la lista dependiente',
+      kind: 'system',
+      detail: 'Grupo muscular, ejercicio y enlace'
+    },
+    {
+      actor: 'Script defi-db',
+      action: 'Detecta cambios en sus hojas y regenera el JSON',
+      kind: 'system',
+      detail: 'Espera de 3500 ms y caché en PropertiesService'
+    },
+    {
+      actor: 'Script defi',
+      action: 'Pide el JSON por UrlFetch y lo escribe en rangos con nombre',
+      kind: 'system',
+      detail: 'Revisa el código de respuesta antes de escribir'
+    },
+    {
+      actor: 'API de mapa muscular',
+      action: 'Recibe un parámetro por músculo y devuelve PNG o JPG',
+      kind: 'system'
+    }
+  ]}
+/>
+
+## Estructura del repositorio
+
+<FolderTree
+  tree={`defi/ # Apps Script de la hoja del cliente
+  src/
+    onOpen.ts # menú y disparadores
+    onEdit.ts # handlers de edición
+    config/ # configuración por defecto de la hoja
+    database/ # lectura del JSON y escritura en rangos
+defi-db/ # Apps Script que sirve JSON
+  src/
+    api/routes.ts # doGet
+    lib/ # debouncer, modelo entidad-relación, datos
+api/ # Express: mapa muscular
+  templates/body.svg # silueta base
+  vercel.json # despliegue`}
+/>
+
+## Stack
+
+<StackGrid
+  items={[
+    { name: 'Google Apps Script', category: 'backend' },
+    { name: 'TypeScript', category: 'backend', version: '5.6' },
+    { name: 'Node.js', category: 'backend' },
+    { name: 'Express', category: 'backend', version: '5.1' },
+    { name: 'sharp', category: 'backend', version: '0.34' },
+    { name: 'cheerio', category: 'backend', version: '1.1' },
+    { name: 'Google Sheets', category: 'data' },
+    { name: 'AppSheet', category: 'data' },
+    { name: 'Vercel', category: 'infra' },
+    { name: 'clasp', category: 'tooling', version: '2.4' },
+    { name: 'pnpm', category: 'tooling', version: '10' }
+  ]}
+/>
+
+## Decisiones clave
+
+- **TypeScript y clasp sobre Apps Script.** El editor web de Apps Script no ofrece tipos ni control de versiones. Con clasp el código vive en Git, se compila y se sube con `pnpm push`.
+- **Una base de datos que es una web app.** La hoja del cliente y la fuente de datos están separadas: `defi-db` guarda el catálogo en sus propias hojas y lo sirve como JSON. Cambiar un ejercicio no obliga a tocar la hoja de cada cliente.
+- **Debounce y caché.** Cada edición en `#Ejercicios` o `Enlaces` espera 3500 ms antes de regenerar el JSON y lo guarda en PropertiesService, para no recalcular con cada tecla ni en cada lectura.
+- **Modelo entidad-relación en hojas.** `defi-db` normaliza el catálogo en las hojas `codigo_ejercicios` y `ejercicios`, de modo que las listas dependientes salen de relaciones y no de rangos copiados.
+- **La imagen se genera fuera de Apps Script.** Convertir SVG a PNG o JPG requiere `sharp`, una librería nativa que Apps Script no ejecuta. Por eso es un servicio Express aparte en Vercel; cheerio colorea los músculos sobre la plantilla SVG.
+- **Endpoint con límites.** La ruta de músculos tiene límite de peticiones (`express-rate-limit`), registro con morgan y manejo de errores centralizado.
+
+## Pruebas, CI y despliegue
+
+- Los scripts se publican con `clasp` (`pnpm push` y `pnpm pull`) y la API se despliega en Vercel.
+- El repositorio no incluye pruebas automatizadas ni CI.
+- Código completo: [github.com/nicoarbelaez/defi](https://github.com/nicoarbelaez/defi).

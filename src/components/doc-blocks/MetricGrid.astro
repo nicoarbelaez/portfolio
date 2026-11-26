@@ -1,0 +1,14 @@
+---
+/**
+ * <MetricGrid> MDX block. Validates props with Zod (build fails on invalid input) and renders
+ * the React island `MetricGridView` with `client:visible`: the HTML is server-rendered and
+ * readable without JS; animation starts after hydration, when the block is on screen.
+ */
+import { MetricGridView } from './views/MetricGridView';
+import { metricGridSchema } from './schemas/doc-block-schemas';
+import { parseDocBlockProps } from './utils/parse-doc-block-props';
+
+const props = parseDocBlockProps('MetricGrid', metricGridSchema, Astro.props);
+---
+
+<MetricGridView client:visible {...props} />

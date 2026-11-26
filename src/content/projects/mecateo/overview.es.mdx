@@ -1,0 +1,131 @@
+---
+title: 'Mecateo'
+tagline: 'Soportes NFC con retención de clientes y un motor de agentes de IA para atención y venta.'
+description: 'Soportes NFC con destino editable y panel de toques, más un motor de agentes de IA en producción en Danys Tortas. Plataforma multi-tenant en NestJS y Go.'
+role: 'Fundador y desarrollador principal'
+topics:
+  - 'NFC'
+  - 'Agentes de IA'
+  - 'Retención de clientes'
+  - 'Multi-tenant'
+  - 'NestJS'
+  - 'Go'
+  - 'Astro'
+  - 'Next.js'
+keywords:
+  - 'NFC'
+  - 'QR dinámico'
+  - 'AI agents'
+  - 'AI gateway'
+  - 'customer retention'
+  - 'multi-tenant SaaS'
+  - 'NestJS'
+  - 'Fastify'
+  - 'Go'
+  - 'Astro'
+  - 'Next.js'
+  - 'Prisma'
+  - 'PostgreSQL'
+  - 'BullMQ'
+  - 'OpenRouter'
+  - 'Better Auth'
+---
+
+## El problema
+
+Un negocio local logra que alguien lo visite, pero rara vez sabe qué pasó después: no queda un contacto, no hay una reseña y la conversación por WhatsApp se enfría mientras alguien atiende a otro cliente. Mecateo parte de ahí: conseguir clientes, convertirlos en ventas y no perderlos.
+
+## Qué construí
+
+Mecateo es una plataforma multi-tenant que fundé y desarrollo. Hoy tiene dos productos.
+
+**Soportes NFC con QR de respaldo.** Son piezas físicas que se imprimen una sola vez. El dueño cambia el destino cuando quiere (reseñas de Google, WhatsApp, menú del día, una promoción) sin reimprimir nada. Los enlaces pasan por un redirector en Go (`go.mecateo.co`) que cuenta cada toque. El panel "Mis NFC" muestra la actividad por soporte, y la tienda web vende los soportes con pago por Wompi. Cada organización puede tener varias sucursales, y el personal interno entra con autenticación de dos factores.
+
+**Motor de agentes de IA.** Es la capa que atiende y vende por chat: un gateway en NestJS y Fastify que conecta cada organización con OpenRouter y controla el consumo. Cada organización tiene su propia llave, un saldo de créditos respaldado por un libro de movimientos, auditoría del contenido y un interruptor global de corte. El motor de agentes de IA de Mecateo está en producción en Danys Tortas (ver su caso de estudio).
+
+## Resultados
+
+- Un producto físico y uno de software en el mismo panel, con tienda, cobro y despacho de pedidos operando en [mecateo.co](https://mecateo.co).
+- Un redirector que responde sin guardar la IP ni el agente de usuario del visitante.
+- Un motor de agentes de IA con costo medido por organización, en producción.
+
+Todavía no publico cifras de ventas ni de toques: los datos de ejemplo del panel público son ilustrativos y no los uso como resultado.
+
+## Cómo se usa
+
+<Flow
+  steps={[
+    {
+      actor: 'Cliente del local',
+      action: 'Acerca el celular al soporte NFC o escanea el QR',
+      kind: 'user'
+    },
+    {
+      actor: 'Redirector',
+      action: 'Resuelve el código y redirige al destino vigente',
+      kind: 'system',
+      detail: 'Respuesta 302 sin caché'
+    },
+    {
+      actor: 'Redirector',
+      action: 'Encola el evento de toque',
+      kind: 'system',
+      detail: 'Visitante identificado con un hash diario'
+    },
+    {
+      actor: 'Dueño del negocio',
+      action: 'Cambia el destino desde "Mis NFC"',
+      kind: 'user',
+      detail: 'Sin reimprimir el soporte'
+    },
+    {
+      actor: 'Panel',
+      action: 'Muestra toques por soporte y sucursal',
+      kind: 'system'
+    }
+  ]}
+/>
+
+## Arquitectura
+
+<Architecture
+  layers={[
+    {
+      id: 'entrada',
+      label: 'Entrada',
+      nodes: [
+        { id: 'nfc', label: 'Soporte NFC / QR', kind: 'channel' },
+        { id: 'panel', label: 'Panel Mis NFC', kind: 'client', detail: 'Next.js' }
+      ]
+    },
+    {
+      id: 'nucleo',
+      label: 'Núcleo',
+      nodes: [
+        { id: 'redirect', label: 'Redirector', kind: 'service', detail: 'Go' },
+        { id: 'api', label: 'API', kind: 'service', detail: 'NestJS + Fastify' },
+        { id: 'worker', label: 'Worker', kind: 'worker', detail: 'BullMQ' },
+        { id: 'gateway', label: 'Gateway de IA', kind: 'ai', detail: 'NestJS + Fastify' }
+      ]
+    },
+    {
+      id: 'datos',
+      label: 'Datos y externos',
+      nodes: [
+        { id: 'pg', label: 'PostgreSQL', kind: 'data' },
+        { id: 'redis', label: 'Redis', kind: 'data' },
+        { id: 'openrouter', label: 'OpenRouter', kind: 'external' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'nfc', to: 'redirect', label: 'toque' },
+    { from: 'redirect', to: 'redis', label: 'eventos', async: true },
+    { from: 'redis', to: 'worker', async: true },
+    { from: 'panel', to: 'api' },
+    { from: 'api', to: 'pg' },
+    { from: 'worker', to: 'pg' },
+    { from: 'gateway', to: 'openrouter', label: 'LLM' },
+    { from: 'gateway', to: 'pg', label: 'créditos' }
+  ]}
+/>

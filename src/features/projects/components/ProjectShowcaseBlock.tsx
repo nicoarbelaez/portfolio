@@ -5,7 +5,7 @@ import { HOME_SECTION_STACK_CLASS } from '@/constants/home-layout';
 import { ProjectCard, type ProjectCardLabels } from '@/features/projects/components/ProjectCard';
 import { PROJECT_SHOWCASES } from '@/features/projects/components/showcase-registry';
 import { PROJECT_GRID_OVERFLOW_GUTTER_CLASS } from '@/features/projects/constants/sections';
-import type { EnrichedProject } from '@/features/projects/types/project';
+import type { ProjectView } from '@/features/projects/types/project';
 import type { LocaleKey } from '@/i18n/ui';
 import { cn } from '@/lib/utils';
 
@@ -13,17 +13,16 @@ interface ProjectShowcaseBlockProps {
   lang: LocaleKey;
   /** Section header pill; omit when a parent (tabs) already labels the block. */
   label?: string;
-  projects: EnrichedProject[];
+  projects: ProjectView[];
   cardLabels: ProjectCardLabels;
   /** Accent strip on fallback cards (client section). */
   accent?: boolean;
 }
 
-type Block =
-  { kind: 'showcase'; project: EnrichedProject } | { kind: 'grid'; projects: EnrichedProject[] };
+type Block = { kind: 'showcase'; project: ProjectView } | { kind: 'grid'; projects: ProjectView[] };
 
 /** Keeps catalog `order`: custom showcases stand alone, consecutive plain projects share a grid. */
-function toBlocks(projects: readonly EnrichedProject[]): Block[] {
+function toBlocks(projects: readonly ProjectView[]): Block[] {
   const blocks: Block[] = [];
 
   for (const project of projects) {

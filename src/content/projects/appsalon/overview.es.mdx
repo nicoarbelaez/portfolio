@@ -1,0 +1,111 @@
+---
+title: 'AppSalon'
+tagline: 'Reservas de citas con panel administrativo, importación Excel y reportes PDF.'
+description: 'Sistema de reservas para un salón de belleza con roles, reserva sin cuenta, panel con métricas y reportes PDF asíncronos. Laravel 13 e Inertia.'
+role: 'Desarrollador full stack'
+topics:
+  - 'Laravel'
+  - 'Inertia'
+  - 'React'
+  - 'MySQL'
+  - 'Pest'
+keywords:
+  - 'Laravel 13'
+  - 'PHP 8.4'
+  - 'Inertia.js'
+  - 'React 19'
+  - 'TypeScript'
+  - 'MySQL'
+  - 'Laravel Fortify'
+  - 'Pest'
+  - 'Docker'
+  - 'GitHub Actions'
+  - 'RBAC'
+  - 'PDF reports'
+---
+
+AppSalon nació como proyecto universitario (USC) y se desarrolló con foco técnico: roles, reportes PDF en cola, importación de Excel con vista previa y una suite de pruebas.
+
+## El problema
+
+Un salón de belleza necesita que sus clientes reserven sin fricción, que el personal vea su agenda y que la administración controle horarios, servicios y reportes en un solo sistema.
+
+## Qué construí
+
+- **Reserva sin cuenta.** Un invitado agenda una cita y recibe un token para consultar su estado.
+- **Tres roles**: cliente, funcionario y administrador, cada uno con su zona protegida por middleware.
+- **Agenda del funcionario** con importación y exportación en Excel, con vista previa antes de importar.
+- **Panel de administración**: catálogo de servicios con búsqueda de texto completo, usuarios y roles, horarios de atención y métricas filtrables con gráficos.
+- **Reportes PDF** generados en segundo plano, con historial y descarga.
+- **Seguridad de cuenta**: verificación de correo y autenticación de dos factores con códigos de recuperación.
+
+## Cómo se usa
+
+<Flow
+  steps={[
+    {
+      actor: 'Invitado',
+      action: 'Elige servicio, fecha y hora',
+      kind: 'user',
+      detail: 'Sin crear cuenta'
+    },
+    {
+      actor: 'Sistema',
+      action: 'Revisa los horarios ocupados',
+      kind: 'system',
+      detail: 'Comprueba que el espacio esté libre'
+    },
+    { actor: 'Sistema', action: 'Entrega un token de seguimiento', kind: 'system' },
+    {
+      actor: 'Funcionario',
+      action: 'Gestiona la agenda',
+      kind: 'human',
+      detail: 'Edita, importa y exporta'
+    },
+    { actor: 'Funcionario', action: 'Pide un reporte PDF', kind: 'human' },
+    {
+      actor: 'Sistema',
+      action: 'Genera el PDF en cola',
+      kind: 'system',
+      detail: 'Descarga desde el historial'
+    }
+  ]}
+/>
+
+## Arquitectura
+
+<Architecture
+  layers={[
+    {
+      id: 'ui',
+      label: 'Interfaz',
+      nodes: [{ id: 'spa', label: 'React 19', kind: 'client', detail: 'Inertia 3, Vite 8' }]
+    },
+    {
+      id: 'app',
+      label: 'Laravel 13',
+      nodes: [
+        { id: 'http', label: 'Controladores', kind: 'service', detail: 'Roles y Fortify' },
+        { id: 'queue', label: 'Cola', kind: 'worker', detail: 'Reportes PDF' }
+      ]
+    },
+    {
+      id: 'data',
+      label: 'Datos',
+      nodes: [{ id: 'mysql', label: 'MySQL 8', kind: 'data', detail: 'Docker' }]
+    }
+  ]}
+  edges={[
+    { from: 'spa', to: 'http', label: 'Inertia' },
+    { from: 'http', to: 'mysql' },
+    { from: 'http', to: 'queue', label: 'encola', async: true },
+    { from: 'queue', to: 'mysql', async: true }
+  ]}
+/>
+
+<MetricGrid
+  metrics={[
+    { value: '12', label: 'Archivos de pruebas de feature', context: 'Pest 4' },
+    { value: '3', label: 'Roles de usuario', context: 'cliente, funcionario y administrador' }
+  ]}
+/>

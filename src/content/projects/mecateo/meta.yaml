@@ -1,0 +1,78 @@
+section: apps
+order: 1
+periods:
+  - start: '2026'
+    end: 'present'
+visibility: private
+links:
+  site: 'https://mecateo.co'
+team:
+  - name: 'Jorge Velásquez'
+    role: 'Landing inicial y primer acortador de enlaces'
+    url: 'https://github.com/jevg2003'
+stack:
+  - name: 'Astro'
+    category: frontend
+    version: '7.2'
+  - name: 'Next.js'
+    category: frontend
+    version: '16.3'
+  - name: 'React'
+    category: frontend
+    version: '19.2'
+  - name: 'Tailwind CSS'
+    category: frontend
+    version: '4.3'
+  - name: 'TanStack Query'
+    category: frontend
+    version: '5'
+  - name: 'NestJS'
+    category: backend
+    version: '11'
+  - name: 'Fastify'
+    category: backend
+    version: '5'
+  - name: 'BullMQ'
+    category: backend
+    version: '5.77'
+  - name: 'Better Auth'
+    category: backend
+    version: '1.7'
+  - name: 'Go'
+    category: backend
+    version: '1.27'
+  - name: 'TypeScript'
+    category: backend
+    version: '6'
+  - name: 'Zod'
+    category: backend
+    version: '4'
+  - name: 'PostgreSQL'
+    category: data
+    version: '16'
+  - name: 'Prisma'
+    category: data
+    version: '7'
+  - name: 'Redis'
+    category: data
+  - name: 'OpenRouter'
+    category: ai
+  - name: 'Docker'
+    category: infra
+  - name: 'Dokploy'
+    category: infra
+  - name: 'GitHub Actions'
+    category: infra
+  - name: 'Cloudflare Access'
+    category: infra
+  - name: 'Vitest'
+    category: testing
+    version: '4.1'
+  - name: 'Turborepo'
+    category: tooling
+    version: '2.9'
+  - name: 'pnpm'
+    category: tooling
+    version: '10'
+cover: ./cover.webp
+coverDark: ./cover.dark.webp

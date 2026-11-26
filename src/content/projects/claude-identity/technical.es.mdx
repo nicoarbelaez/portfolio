@@ -1,0 +1,126 @@
+---
+title: 'Claude Identity: documentación técnica'
+description: 'Arquitectura de cid: Go 1.26, llavero del sistema, swap seguro con locks, política de auto-switch, CI en tres sistemas con -race, CodeQL, release-please y GoReleaser.'
+---
+
+## Arquitectura
+
+`cid` es un binario único en Go (`cmd/cid`) con la lógica en `internal/`. El plugin de Claude Code es Markdown y JSON: un hook llama a `cid hook` y las skills invocan al CLI. Las credenciales de cada cuenta se guardan en el llavero del sistema.
+
+<Architecture
+  layers={[
+    {
+      id: 'host',
+      label: 'Claude Code',
+      nodes: [
+        { id: 'plugin', label: 'Plugin', kind: 'client', detail: 'UserPromptExpansion' },
+        { id: 'status', label: 'Status line', kind: 'channel', detail: 'rate_limits' }
+      ]
+    },
+    {
+      id: 'core',
+      label: 'internal/',
+      nodes: [
+        { id: 'cli', label: 'cli', kind: 'service', detail: 'Comandos, --json, exit 0/1/2' },
+        { id: 'swap', label: 'swap', kind: 'worker', detail: 'Intercambio seguro' },
+        { id: 'auto', label: 'auto', kind: 'worker', detail: 'Política y estado' },
+        { id: 'profile', label: 'profile', kind: 'data', detail: 'Perfiles y recuperación' }
+      ]
+    },
+    {
+      id: 'os',
+      label: 'Sistema',
+      nodes: [
+        { id: 'keyring', label: 'Llavero', kind: 'infra', detail: 'go-keyring' },
+        { id: 'files', label: 'Archivos', kind: 'infra', detail: 'Escritura atómica, flock' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'plugin', to: 'cli', label: 'cid hook' },
+    { from: 'status', to: 'auto' },
+    { from: 'cli', to: 'swap' },
+    { from: 'auto', to: 'swap' },
+    { from: 'swap', to: 'profile' },
+    { from: 'swap', to: 'keyring' },
+    { from: 'profile', to: 'files' }
+  ]}
+/>
+
+## Flujo de un cambio de cuenta
+
+<Flow
+  steps={[
+    { actor: 'cid', action: 'Espera los lock files de Claude Code', kind: 'system' },
+    {
+      actor: 'cid',
+      action: 'Rechaza logins vacíos o desconocidos',
+      kind: 'system',
+      detail: 'Un token se trata como vencido 5 minutos antes'
+    },
+    {
+      actor: 'cid',
+      action: 'Escribe las credenciales de la cuenta destino',
+      kind: 'system',
+      detail: 'Escritura atómica'
+    },
+    { actor: 'cid', action: 'Verifica el login', kind: 'system' },
+    {
+      actor: 'cid',
+      action: 'Restaura el login anterior si falla',
+      kind: 'system'
+    }
+  ]}
+/>
+
+## Estructura del repositorio
+
+<FolderTree
+  tree={`cmd/cid/ # punto de entrada
+internal/
+  cli/ # comandos y hook
+  swap/ # intercambio seguro
+  claudecfg/ # llavero y archivos de Claude
+  credentials/
+  profile/ # perfiles y recuperación con .bak
+  auto/ # política de auto-switch y esquemas JSON
+  settings/ # config: env, archivo, defaults
+  login/ # login aislado
+  pathenv/
+  fsutil/ # escrituras atómicas, rename en Windows
+  i18n/ # inglés y español
+plugin/ # hooks y skills
+scripts/ # instaladores install.ps1 e install.sh
+docs/ # RELEASING y spikes`}
+/>
+
+## Stack
+
+<StackGrid
+  items={[
+    { name: 'Go', category: 'backend', version: '1.26' },
+    { name: 'go-keyring', category: 'backend', version: '0.2' },
+    { name: 'GoReleaser', category: 'infra' },
+    { name: 'GitHub Actions', category: 'infra' },
+    { name: 'release-please', category: 'infra' },
+    { name: 'go test', category: 'testing' },
+    { name: 'Claude Code plugin', category: 'tooling' }
+  ]}
+/>
+
+## Decisiones clave
+
+1. **Llavero del sistema como almacén.** `cid` no implementa un OAuth propio: el login lo hace `claude auth login` en un directorio temporal aislado y las credenciales quedan en Windows Credential Manager, macOS Keychain o Linux Secret Service, vía `go-keyring`.
+2. **Un swap que puede deshacerse.** Espera los lock files de Claude Code, verifica el login tras escribir y restaura el anterior si algo falla. Antes de implementarlo hice un experimento (`docs/spikes/r2-hot-swap.md`) que demostró que el cambio en caliente es viable.
+3. **Hook sin modelo ni shell.** `/account` se resuelve con un hook `UserPromptExpansion` que ejecuta `cid hook`, así que responde al instante y no consume un turno.
+4. **Auto-switch con reglas anti-oscilación.** Una cuenta principal y otras de reserva, con un margen de 5 puntos y 5 minutos de separación entre cambios, para que no alterne sin parar cerca del límite.
+5. **Archivos a prueba de fallos.** Escritura atómica, bloqueo con `flock` y recuperación de archivos corruptos con copia `.bak`. Los esquemas JSON validan la configuración.
+6. **Contrato estable.** Salida `--json` y códigos de salida 0/1/2, para que otros scripts dependan del CLI.
+
+## Pruebas, CI y despliegue
+
+41 archivos de prueba. GitHub Actions corre `gofmt`, `go vet` y `go test -race ./...` en Ubuntu, macOS y Windows, más un job de lint, CodeQL y Dependabot. Las acciones están fijadas por SHA de commit. release-please decide las versiones a partir de commits convencionales y GoReleaser publica binarios para Windows, macOS y Linux en amd64 y arm64. Los instaladores (`install.ps1`, `install.sh`) verifican SHA-256 y usan `gh attestation verify` cuando `gh` está presente. Versión actual: v0.9.0.
+
+## Documentación del repositorio
+
+El repositorio [nicoarbelaez/claude-identity](https://github.com/nicoarbelaez/claude-identity) incluye `README.md`, `README.en.md`, `docs/architecture.md` y `docs/RELEASING.md`.

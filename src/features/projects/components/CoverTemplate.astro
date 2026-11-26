@@ -1,0 +1,82 @@
+---
+/**
+ * 1200x630 canvas for one project cover (dev-only, rendered by `/dev/cover/<slug>`).
+ * Left column: mark, title, tagline, stack chips. Right column (slot): one product fragment built
+ * from existing blocks. Static final state, tokens only so light and dark come from the theme.
+ */
+import { DotPattern } from '@/components/ui/dot-pattern';
+import { ProjectMark } from '@/features/projects/clients/shared/components/ClientMark';
+import {
+  COVER_CHIP_CATEGORY_ORDER,
+  COVER_CHIP_MAX,
+  COVER_HEIGHT,
+  COVER_WIDTH
+} from '@/features/projects/constants/covers';
+import type { ProjectStackItem } from '@/features/projects/schemas/content';
+import { resolveAccent } from '@/features/projects/showcase-kit/utils/accent';
+import type { ShowcaseAccent } from '@/features/projects/showcase-kit/types/showcase-kit';
+
+interface Props {
+  slug: string;
+  title: string;
+  tagline: string;
+  stack: readonly ProjectStackItem[];
+  accent: ShowcaseAccent;
+}
+
+const { slug, title, tagline, stack, accent } = Astro.props;
+
+/** First stack item of each category (breadth over five frontend libraries), capped. */
+const chips = COVER_CHIP_CATEGORY_ORDER.flatMap((category) => {
+  const item = stack.find((candidate) => candidate.category === category);
+  return item ? [item.name] : [];
+}).slice(0, COVER_CHIP_MAX);
+const { solid, glow } = resolveAccent(accent);
+---
+
+<div
+  data-cover-canvas
+  class="bg-background text-foreground relative isolate overflow-hidden"
+  style={`width:${COVER_WIDTH}px;height:${COVER_HEIGHT}px`}
+>
+  <DotPattern
+    client:load
+    width={22}
+    height={22}
+    cr={1.2}
+    className="text-muted-foreground/35 [mask-image:radial-gradient(ellipse_at_70%_45%,black,transparent_78%)]"
+  />
+  <div
+    aria-hidden="true"
+    class="absolute inset-0"
+    style={`background:radial-gradient(ellipse 55% 70% at 78% 40%, ${glow}, transparent 70%)`}
+  ></div>
+  <div
+    aria-hidden="true"
+    class="absolute inset-y-0 left-0 w-1.5"
+    style={`background:${solid}`}
+  ></div>
+
+  <div class="relative flex h-full items-center gap-12 pr-14 pl-16">
+    <div class="flex h-full w-[430px] shrink-0 flex-col justify-center gap-7 py-14">
+      <ProjectMark slug={slug} size="lg" />
+      <div class="flex flex-col gap-4">
+        <h1 class="font-heading text-[58px] leading-[1.02] font-semibold tracking-tight text-balance">
+          {title}
+        </h1>
+        <p class="text-muted-foreground text-[21px] leading-snug text-pretty">{tagline}</p>
+      </div>
+      <ul class="flex flex-wrap gap-2">
+        {chips.map((chip) => (
+          <li class="border-border bg-card/80 text-foreground rounded-lg border px-3 py-1.5 font-mono text-[15px]">
+            {chip}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="flex min-w-0 flex-1 items-center justify-center">
+      <slot />
+    </div>
+  </div>
+</div>

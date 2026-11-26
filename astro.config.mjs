@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, envField, fontProviders } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import vercel from '@astrojs/vercel';
 
 import tailwindcss from '@tailwindcss/vite';
@@ -8,6 +8,8 @@ import { LINKS } from './src/constants/link';
 import sitemap from '@astrojs/sitemap';
 
 import react from '@astrojs/react';
+
+import mdx from '@astrojs/mdx';
 
 const fontsource = fontProviders.fontsource();
 /** @param {string} name @param {string} cssVariable @param {string} fallback @param {string} weights */
@@ -35,12 +37,6 @@ export default defineConfig({
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   // Self-hosted, latin-only variable fonts with generated metric-adjusted fallbacks (no FOUT shift).
   fonts: FONTS,
-  env: {
-    schema: {
-      GH_TOKEN: envField.string({ context: 'server', access: 'secret' })
-    },
-    validateSecrets: true
-  },
   i18n: {
     defaultLocale: 'en',
     locales: ['es', 'en'],
@@ -69,6 +65,7 @@ export default defineConfig({
         }
       }
     }),
-    react()
+    react(),
+    mdx()
   ]
 });

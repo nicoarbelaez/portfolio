@@ -1,67 +1,46 @@
 'use client';
 
-import { MecateoHeader } from '@/features/projects/apps/mecateo/MecateoHeader';
+import { getMecateoCopy } from '@/features/projects/apps/mecateo/constants/copy';
 import {
-  getMecateoCopy,
-  MECATEO_LIVE_URL,
+  MECATEO_NFC_URL,
   MECATEO_SLUG
-} from '@/features/projects/apps/mecateo/constants';
+} from '@/features/projects/apps/mecateo/constants/mecateo-config';
+import { MecateoLogo } from '@/features/projects/apps/mecateo/MecateoLogo';
+import { AgentChatTile } from '@/features/projects/apps/mecateo/tiles/AgentChatTile';
 import { HeroTile } from '@/features/projects/apps/mecateo/tiles/HeroTile';
 import { IntegrationsBeamTile } from '@/features/projects/apps/mecateo/tiles/IntegrationsBeamTile';
-import { MenuMarqueeTile } from '@/features/projects/apps/mecateo/tiles/MenuMarqueeTile';
-import { PosListTile } from '@/features/projects/apps/mecateo/tiles/PosListTile';
-import { ThemeProvider } from '@/features/theme/components/ThemeProvider';
+import { PanelTile } from '@/features/projects/apps/mecateo/tiles/PanelTile';
+import { RedirectTile } from '@/features/projects/apps/mecateo/tiles/RedirectTile';
+import { ShowcaseSection } from '@/features/projects/showcase-kit/components/ShowcaseSection';
 import { getLocalizedPath } from '@/i18n/utils';
 import type { LocaleKey } from '@/i18n/ui';
+
+const HEADING_ID = 'mecateo-heading';
 
 interface MecateoShowcaseProps {
   lang: LocaleKey;
 }
 
 /**
- * Featured Apps showcase for Mecateo — 4-tile bento (pitch, menu, POS, integrations).
- * SEO: section heading via parent; product name as h3; tile titles as h4.
+ * Mecateo showcase on the shared kit: NFC stands with dynamic redirects and the
+ * "Mis NFC" panel, plus the AI agent engine and the integrations behind them.
  */
 export function MecateoShowcase({ lang }: MecateoShowcaseProps) {
   const copy = getMecateoCopy(lang);
   const detailsHref = getLocalizedPath(`/projects/${MECATEO_SLUG}`, lang);
 
-  const headingId = 'mecateo-heading';
-
   return (
-    <ThemeProvider>
-      <section aria-labelledby={headingId} className="space-y-6">
-        <MecateoHeader name={copy.name} tagline={copy.tagline} headingId={headingId} />
-
-        <div className="grid grid-cols-1 gap-4 md:auto-rows-[20rem] md:grid-cols-3">
-          <HeroTile
-            title={copy.heroTitle}
-            description={copy.heroDescription}
-            liveHref={MECATEO_LIVE_URL}
-            detailsHref={detailsHref}
-            ctaLive={copy.ctaLive}
-            ctaDetails={copy.ctaDetails}
-            categories={copy.heroCategories}
-            menuItems={copy.menuItems}
-            previewLabel={copy.heroPreviewLabel}
-          />
-          <MenuMarqueeTile
-            title={copy.menuTitle}
-            description={copy.menuDescription}
-            qrHint={copy.menuQrHint}
-            items={copy.menuItems}
-          />
-          <PosListTile
-            title={copy.posTitle}
-            description={copy.posDescription}
-            events={copy.posEvents}
-          />
-          <IntegrationsBeamTile
-            title={copy.integrationsTitle}
-            description={copy.integrationsDescription}
-          />
-        </div>
-      </section>
-    </ThemeProvider>
+    <ShowcaseSection
+      headingId={HEADING_ID}
+      name={copy.name}
+      tagline={copy.tagline}
+      logo={<MecateoLogo />}
+    >
+      <HeroTile lang={lang} copy={copy.hero} liveHref={MECATEO_NFC_URL} detailsHref={detailsHref} />
+      <RedirectTile copy={copy.redirect} />
+      <AgentChatTile copy={copy.agent} />
+      <PanelTile copy={copy.panel} />
+      <IntegrationsBeamTile copy={copy.integrations} />
+    </ShowcaseSection>
   );
 }

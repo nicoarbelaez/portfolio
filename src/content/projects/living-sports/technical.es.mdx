@@ -1,0 +1,137 @@
+---
+title: 'Living Sports: documentación técnica'
+description: 'Arquitectura de Living Sports: Expo 54, Expo Router, Supabase con RLS y triggers de auditoría, funciones Edge, Cloudinary, pruebas SQL y semantic-release.'
+---
+
+## Arquitectura
+
+La app Android usa Expo Router para la navegación y Supabase como backend completo: Auth, PostgreSQL, Realtime, Storage y funciones Edge en Deno. Los medios se almacenan en Cloudinary. La regla del proyecto: operaciones simples desde el cliente, y lógica de varios pasos en una función Edge.
+
+<Architecture
+  layers={[
+    {
+      id: 'client',
+      label: 'Cliente',
+      nodes: [
+        { id: 'router', label: 'Expo Router', kind: 'client', detail: 'Rutas (auth), (tabs)' },
+        { id: 'state', label: 'Estado', kind: 'client', detail: 'Zustand, MMKV' }
+      ]
+    },
+    {
+      id: 'edge',
+      label: 'Funciones Edge',
+      nodes: [
+        { id: 'post', label: 'create-post', kind: 'worker' },
+        { id: 'group', label: 'create-group', kind: 'worker' },
+        { id: 'comp', label: 'create-competition', kind: 'worker' },
+        { id: 'evidence', label: 'submit-evidence', kind: 'worker' }
+      ]
+    },
+    {
+      id: 'data',
+      label: 'Datos',
+      nodes: [
+        { id: 'pg', label: 'PostgreSQL', kind: 'data', detail: 'RLS, auditoría, triggers' },
+        { id: 'cdn', label: 'Cloudinary', kind: 'external', detail: 'Medios' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'router', to: 'pg', label: 'lecturas simples' },
+    { from: 'router', to: 'post' },
+    { from: 'router', to: 'evidence' },
+    { from: 'post', to: 'cdn' },
+    { from: 'evidence', to: 'pg' },
+    { from: 'group', to: 'pg' },
+    { from: 'comp', to: 'pg' }
+  ]}
+/>
+
+## Flujo de una evidencia
+
+<Flow
+  steps={[
+    {
+      actor: 'App',
+      action: 'Envía video, ejercicio y marca',
+      kind: 'user',
+      detail: 'Modal de evidencia'
+    },
+    {
+      actor: 'submit-evidence',
+      action: 'Valida la entrada',
+      kind: 'system',
+      detail: 'competition_id, exercise_id, valor mayor a 0 y archivo de video'
+    },
+    {
+      actor: 'PostgreSQL',
+      action: 'Registra la entrada',
+      kind: 'system',
+      detail: 'competition_entries bajo RLS'
+    },
+    {
+      actor: 'Triggers',
+      action: 'Aprueban o rechazan',
+      kind: 'system',
+      detail: 'Cubiertos por pruebas SQL'
+    },
+    { actor: 'App', action: 'Muestra ranking y podio', kind: 'system' }
+  ]}
+/>
+
+## Estructura del repositorio
+
+<FolderTree
+  tree={`app/ # Expo Router
+  (auth)/ # login
+  (tabs)/ # feed, comunidades, perfil
+  community/ # detalle de comunidad
+  competition/ # crear y detalle
+  routine/ # rutinas
+components/ # UI por dominio
+providers/ # AuthProvider
+stores/ # Zustand
+hooks/
+lib/ # cliente de Supabase
+features/ # develop: dominios (communities, competitions, feed, notifications, profile)
+supabase/
+  migrations/ # esquema, RLS, auditoría
+  functions/ # funciones Edge y _shared
+  tests/ # pruebas SQL 001 a 009`}
+/>
+
+## Stack
+
+<StackGrid
+  items={[
+    { name: 'Expo', category: 'frontend', version: '54' },
+    { name: 'React Native', category: 'frontend', version: '0.81' },
+    { name: 'Expo Router', category: 'frontend', version: '6' },
+    { name: 'NativeWind', category: 'frontend', version: '5' },
+    { name: 'Zustand', category: 'frontend', version: '5' },
+    { name: 'Reanimated', category: 'frontend', version: '4' },
+    { name: 'Deno', category: 'backend' },
+    { name: 'Supabase', category: 'data' },
+    { name: 'PostgreSQL', category: 'data' },
+    { name: 'Cloudinary', category: 'infra' },
+    { name: 'semantic-release', category: 'tooling', version: '24' },
+    { name: 'Husky', category: 'tooling', version: '9' }
+  ]}
+/>
+
+## Decisiones clave
+
+1. **Funciones Edge para lógica de varios pasos.** Publicar con medios o validar una evidencia toca el storage, la base y varias reglas. Una función las ejecuta juntas y el cliente hace una sola llamada. Las lecturas y escrituras simples van directo a Supabase.
+2. **Seguridad en la base.** RLS en las tablas y triggers de auditoría. Las reglas no dependen de que el cliente se comporte.
+3. **Aprobación de evidencias con triggers.** La lógica de aprobar o rechazar vive en SQL y tiene una suite de pruebas (`supabase/tests`, archivos 001 a 009).
+4. **Cloudinary para medios.** Las fotos y los videos de las publicaciones se suben a Cloudinary desde la función Edge `create-post`, con un helper compartido en `_shared/cloudinary.ts`.
+5. **Release automatizado.** Commits convencionales, Husky con lint-staged y semantic-release generan las versiones sin pasos manuales.
+6. **Refactor por dominios.** En `develop` el código pasa de carpetas planas a `features/` por dominio (comunidades, competencias, feed, notificaciones, perfil). La migración está en curso.
+
+## Pruebas, CI y despliegue
+
+No hay framework de pruebas de JavaScript. La base tiene pruebas SQL (`supabase/tests`) y las funciones Edge tienen pruebas en Deno para `cloudinary` y `response`. GitHub Actions corre dos flujos: una revisión en cada PR (lint, dependencias con Expo Doctor y verificación de build Android) y un release de producción al hacer push a `main`. Los perfiles de EAS generan un APK para pruebas y producción. La última versión publicada es la v1.2.0, con un `.aab`.
+
+## Documentación del repositorio
+
+El repositorio [nicoarbelaez/living-sports-app](https://github.com/nicoarbelaez/living-sports-app) incluye `README.md`, `README.en.md` y `docs/architecture.md`.

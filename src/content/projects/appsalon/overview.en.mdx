@@ -1,0 +1,111 @@
+---
+title: 'AppSalon'
+tagline: 'Appointment booking with an admin panel, Excel import and PDF reports.'
+description: 'Booking system for a beauty salon with roles, guest booking, a metrics dashboard and asynchronous PDF reports. Laravel 13 and Inertia.'
+role: 'Full stack developer'
+topics:
+  - 'Laravel'
+  - 'Inertia'
+  - 'React'
+  - 'MySQL'
+  - 'Pest'
+keywords:
+  - 'Laravel 13'
+  - 'PHP 8.4'
+  - 'Inertia.js'
+  - 'React 19'
+  - 'TypeScript'
+  - 'MySQL'
+  - 'Laravel Fortify'
+  - 'Pest'
+  - 'Docker'
+  - 'GitHub Actions'
+  - 'RBAC'
+  - 'PDF reports'
+---
+
+AppSalon started as a university project (USC) and was built with a technical focus: roles, queued PDF reports, Excel import with preview and a test suite.
+
+## The problem
+
+A beauty salon needs clients to book without friction, staff to see their schedule, and management to control hours, services and reports in one system.
+
+## What I built
+
+- **Guest booking.** A visitor books an appointment and gets a token to check its status.
+- **Three roles**: client, staff and admin, each with an area protected by middleware.
+- **Staff schedule** with Excel import and export, with a preview before importing.
+- **Admin panel**: a service catalog with full-text search, users and roles, working hours and filterable metrics with charts.
+- **PDF reports** generated in the background, with history and download.
+- **Account security**: email verification and two-factor authentication with recovery codes.
+
+## How a user interacts
+
+<Flow
+  steps={[
+    {
+      actor: 'Guest',
+      action: 'Picks service, date and time',
+      kind: 'user',
+      detail: 'No account needed'
+    },
+    {
+      actor: 'System',
+      action: 'Checks the slot is free',
+      kind: 'system',
+      detail: 'Looks at occupied slots'
+    },
+    { actor: 'System', action: 'Returns a tracking token', kind: 'system' },
+    {
+      actor: 'Staff',
+      action: 'Manages the schedule',
+      kind: 'human',
+      detail: 'Edits, imports and exports'
+    },
+    { actor: 'Staff member', action: 'Requests a PDF report', kind: 'human' },
+    {
+      actor: 'System',
+      action: 'Generates the PDF in a queue',
+      kind: 'system',
+      detail: 'Download from the history'
+    }
+  ]}
+/>
+
+## Architecture
+
+<Architecture
+  layers={[
+    {
+      id: 'ui',
+      label: 'Interface',
+      nodes: [{ id: 'spa', label: 'React 19', kind: 'client', detail: 'Inertia 3, Vite 8' }]
+    },
+    {
+      id: 'app',
+      label: 'Laravel 13',
+      nodes: [
+        { id: 'http', label: 'Controllers', kind: 'service', detail: 'Roles and Fortify' },
+        { id: 'queue', label: 'Queue', kind: 'worker', detail: 'PDF reports' }
+      ]
+    },
+    {
+      id: 'data',
+      label: 'Data',
+      nodes: [{ id: 'mysql', label: 'MySQL 8', kind: 'data', detail: 'Docker' }]
+    }
+  ]}
+  edges={[
+    { from: 'spa', to: 'http', label: 'Inertia' },
+    { from: 'http', to: 'mysql' },
+    { from: 'http', to: 'queue', label: 'enqueues', async: true },
+    { from: 'queue', to: 'mysql', async: true }
+  ]}
+/>
+
+<MetricGrid
+  metrics={[
+    { value: '12', label: 'Feature test files', context: 'Pest 4' },
+    { value: '3', label: 'User roles', context: 'client, staff and admin' }
+  ]}
+/>

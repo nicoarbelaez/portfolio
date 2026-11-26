@@ -2,7 +2,7 @@
 import ProjectsIntro from '@/features/projects/components/ProjectsIntro.astro';
 import { ProjectShowcaseBlock } from '@/features/projects/components/ProjectShowcaseBlock';
 import { ProjectsTabs } from '@/features/projects/components/ProjectsTabs';
-import { enrichProjects, groupProjectsBySection } from '@/features/projects/services/enrich';
+import { getActiveProjects, groupProjectsBySection } from '@/features/projects/services/projects';
 import { HOME_SECTION_STACK_CLASS } from '@/constants/home-layout';
 import { NAV_SECTION_SCROLL_MARGIN_CLASS } from '@/features/nav/constants/sections';
 import type { LocaleKey } from '@/i18n/ui';
@@ -14,7 +14,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const projects = await enrichProjects(lang);
+const projects = await getActiveProjects(lang);
 const groups = groupProjectsBySection(projects);
 
 const hasProjects = groups.client.length > 0 || groups.side.length > 0;
@@ -24,7 +24,8 @@ const cardLabels = {
   site: t('projects.cta.site'),
   repo: t('projects.cta.repo'),
   details: t('projects.cta.details'),
-  present: t('projects.timeline.present')
+  present: t('projects.timeline.present'),
+  topics: t('projects.topics')
 };
 const sectionClass = ['w-full', HOME_SECTION_STACK_CLASS, NAV_SECTION_SCROLL_MARGIN_CLASS];
 ---
@@ -32,9 +33,20 @@ const sectionClass = ['w-full', HOME_SECTION_STACK_CLASS, NAV_SECTION_SCROLL_MAR
 {/*
   `contents` so projects + apps participate in HomePage flex gap
   (same distance as experience / about).
-  Order: intro → tabs [client showcases | side cards] (#projects), then apps (#apps).
+  Order: apps (#apps) first, then intro → tabs [client showcases | side cards] (#projects).
 */}
 <div class="contents">
+  {hasApps ? (
+    <section id="apps" aria-label={t('projects.section.apps')} class:list={sectionClass}>
+      <ProjectShowcaseBlock
+        client:visible
+        lang={lang}
+        label={t('projects.section.apps')}
+        projects={groups.apps}
+        cardLabels={cardLabels}
+      />
+    </section>
+  ) : null}
   {hasProjects ? (
     <section id="projects" aria-label={t('projects.nav')} class:list={sectionClass}>
       <ProjectsIntro
@@ -51,17 +63,6 @@ const sectionClass = ['w-full', HOME_SECTION_STACK_CLASS, NAV_SECTION_SCROLL_MAR
           side: t('projects.section.side'),
           card: cardLabels
         }}
-      />
-    </section>
-  ) : null}
-  {hasApps ? (
-    <section id="apps" aria-label={t('projects.section.apps')} class:list={sectionClass}>
-      <ProjectShowcaseBlock
-        client:visible
-        lang={lang}
-        label={t('projects.section.apps')}
-        projects={groups.apps}
-        cardLabels={cardLabels}
       />
     </section>
   ) : null}

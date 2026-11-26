@@ -1,0 +1,104 @@
+---
+import { Badge } from '@/components/ui/badge';
+import { PROJECT_STACK_CATEGORIES } from '@/features/projects/constants/content';
+import { formatProjectTimeline } from '@/features/projects/services/timeline';
+import type { ProjectView } from '@/features/projects/types/project';
+import type { LocaleKey } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  project: ProjectView;
+  lang: LocaleKey;
+}
+
+const { project, lang } = Astro.props;
+const t = useTranslations(lang);
+const period = formatProjectTimeline(project.timeline, lang, {
+  present: t('projects.timeline.present')
+});
+const stackGroups = PROJECT_STACK_CATEGORIES.map((category) => ({
+  category,
+  items: project.stack.filter((item) => item.category === category)
+})).filter((group) => group.items.length > 0);
+const termClass = 'text-muted-foreground text-xs font-medium tracking-wide uppercase';
+---
+
+<section class="space-y-6" aria-label={t('projects.detail.role')}>
+  <dl class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+    <div class="space-y-1">
+      <dt class={termClass}>{t('projects.detail.role')}</dt>
+      <dd class="text-sm">{project.role}</dd>
+    </div>
+    <div class="space-y-1">
+      <dt class={termClass}>{t('projects.detail.period')}</dt>
+      <dd class="text-sm">{period}</dd>
+    </div>
+    {project.team.length > 0 ? (
+      <div class="space-y-1">
+        <dt class={termClass}>{t('projects.detail.team')}</dt>
+        <dd class="space-y-0.5 text-sm">
+          {project.team.map((member) => (
+            <p>
+              {member.url ? (
+                <a
+                  href={member.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline-offset-4 hover:underline"
+                >
+                  {member.name}
+                </a>
+              ) : (
+                member.name
+              )}
+              <span class="text-muted-foreground"> · {member.role}</span>
+            </p>
+          ))}
+        </dd>
+      </div>
+    ) : null}
+    {project.visibility === 'private' || project.anonymized ? (
+      <div class="flex flex-wrap items-start gap-1.5">
+        {project.visibility === 'private' ? (
+          <Badge variant="secondary">{t('projects.detail.private')}</Badge>
+        ) : null}
+        {project.anonymized ? (
+          <Badge variant="secondary">{t('projects.detail.anonymized')}</Badge>
+        ) : null}
+      </div>
+    ) : null}
+  </dl>
+
+  {project.metrics.length > 0 ? (
+    <div class="space-y-2">
+      <h2 class={termClass}>{t('projects.detail.metrics')}</h2>
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {project.metrics.map((metric) => (
+          <li class="border-border/70 rounded-lg border p-3">
+            <p class="font-heading text-xl font-semibold">{metric.value}</p>
+            <p class="text-sm">{metric.label}</p>
+            {metric.context ? <p class="text-muted-foreground text-xs">{metric.context}</p> : null}
+          </li>
+        ))}
+      </ul>
+    </div>
+  ) : null}
+
+  <div class="space-y-3">
+    <h2 class={termClass}>{t('projects.detail.stack')}</h2>
+    <dl class="space-y-2">
+      {stackGroups.map((group) => (
+        <div class="grid grid-cols-[7rem_1fr] items-baseline gap-x-3">
+          <dt class="text-muted-foreground text-xs">{t(`projects.stack.${group.category}`)}</dt>
+          <dd class="flex flex-wrap gap-1.5">
+            {group.items.map((item) => (
+              <Badge variant="outline" className="h-6 rounded-md px-2 text-[11px] font-medium">
+                {item.version ? `${item.name} ${item.version}` : item.name}
+              </Badge>
+            ))}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

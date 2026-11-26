@@ -1,0 +1,134 @@
+---
+title: 'ReadIA'
+tagline: 'Diagnóstico de madurez en IA para negocios, con hoja de ruta en grafo y reporte PDF.'
+description: 'Diagnóstico de madurez en IA con hoja de ruta interactiva y reporte PDF. Next.js 15, Supabase con RLS y funciones Edge con Gemini.'
+role: 'Líder full stack'
+topics:
+  - 'Next.js'
+  - 'Supabase'
+  - 'IA generativa'
+  - 'Row Level Security'
+  - 'Edge Functions'
+  - 'React Flow'
+keywords:
+  - 'Next.js 15'
+  - 'React 19'
+  - 'Supabase'
+  - 'Row Level Security'
+  - 'Edge Functions'
+  - 'Deno'
+  - 'Vercel AI SDK'
+  - 'Google Gemini'
+  - 'OpenRouter'
+  - 'structured output'
+  - 'Zod'
+  - 'React Flow'
+  - 'react-pdf'
+---
+
+ReadIA nació como proyecto universitario (USC) y se desarrolló con foco técnico: IA en funciones Edge, seguridad a nivel de fila y un reporte PDF.
+
+## El problema
+
+Una empresa pequeña sabe que debería adoptar IA, pero no sabe por dónde empezar ni qué tan preparada está.
+
+## Qué construí
+
+Una aplicación web que levanta el perfil de la empresa, genera con IA un cuestionario a medida y devuelve tres cosas:
+
+- Un diagnóstico de madurez con puntaje global, radar por pilares (infraestructura, datos, talento y gobernanza), distribución y recomendaciones.
+- Una hoja de ruta en fases y tareas, dibujada como un grafo que el usuario puede recorrer y marcar.
+- Un reporte PDF con portada, resumen ejecutivo, pilares, recomendaciones, hoja de ruta y conclusiones.
+
+Un usuario puede gestionar varios negocios desde la misma cuenta. Cada diagnóstico y cada hoja de ruta quedan guardados y se protegen con políticas de Row Level Security.
+
+## Cómo se usa
+
+<Flow
+  steps={[
+    {
+      actor: 'Usuario',
+      action: 'Inicia sesión',
+      kind: 'user',
+      detail: 'OAuth con Google o GitHub'
+    },
+    {
+      actor: 'Usuario',
+      action: 'Describe su empresa',
+      kind: 'user',
+      detail: 'Formulario por pasos'
+    },
+    {
+      actor: 'IA',
+      action: 'Genera el cuestionario',
+      kind: 'ai',
+      detail: 'Función Edge generate-questions'
+    },
+    {
+      actor: 'IA',
+      action: 'Calcula el diagnóstico',
+      kind: 'ai',
+      detail: 'Salida estructurada validada con Zod'
+    },
+    {
+      actor: 'IA',
+      action: 'Arma la hoja de ruta',
+      kind: 'ai',
+      detail: 'Nodos y aristas en un grafo'
+    },
+    { actor: 'Usuario', action: 'Descarga el reporte PDF', kind: 'user' }
+  ]}
+/>
+
+## Arquitectura
+
+<Architecture
+  layers={[
+    {
+      id: 'client',
+      label: 'Cliente',
+      nodes: [
+        { id: 'web', label: 'Next.js', kind: 'client', detail: 'App Router, React 19' },
+        { id: 'pdf', label: 'Reporte PDF', kind: 'client', detail: '@react-pdf/renderer' }
+      ]
+    },
+    {
+      id: 'backend',
+      label: 'Supabase',
+      nodes: [
+        { id: 'auth', label: 'Auth', kind: 'service', detail: 'Google, GitHub' },
+        { id: 'edge', label: 'Edge Functions', kind: 'worker', detail: 'Deno, 3 funciones' },
+        { id: 'db', label: 'PostgreSQL', kind: 'data', detail: 'RLS, 14 migraciones' }
+      ]
+    },
+    {
+      id: 'ai',
+      label: 'IA',
+      nodes: [
+        { id: 'gemini', label: 'Gemini', kind: 'ai', detail: '2.5 Flash Lite' },
+        { id: 'router', label: 'OpenRouter', kind: 'external', detail: 'Respaldo' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'web', to: 'auth', label: 'sesión' },
+    { from: 'web', to: 'edge', label: 'JWT' },
+    { from: 'edge', to: 'db' },
+    { from: 'edge', to: 'gemini' },
+    { from: 'gemini', to: 'router', label: 'si falla', async: true },
+    { from: 'web', to: 'pdf' }
+  ]}
+/>
+
+<MetricGrid
+  metrics={[
+    { value: '14', label: 'Migraciones SQL', context: 'esquema con RLS' },
+    {
+      value: '3',
+      label: 'Funciones Edge en Deno',
+      context: 'preguntas, diagnóstico y hoja de ruta'
+    }
+  ]}
+/>
+
+Estado: en línea en [readia.arbelaeznicolas.dev](https://readia.arbelaeznicolas.dev). El diagnóstico, la hoja de ruta y el PDF requieren iniciar sesión.
