@@ -17,13 +17,13 @@ import {
 } from '@/features/projects/constants/tabs';
 import { useTabsCarousel } from '@/features/projects/hooks/use-tabs-carousel';
 import { useUrlTab } from '@/features/projects/hooks/use-url-tab';
-import type { EnrichedProject } from '@/features/projects/types/project';
+import type { ProjectView } from '@/features/projects/types/project';
 import type { LocaleKey } from '@/i18n/ui';
 import { cn } from '@/lib/utils';
 
 interface ProjectsTabsProps {
   lang: LocaleKey;
-  groups: Record<ProjectTabId, EnrichedProject[]>;
+  groups: Record<ProjectTabId, ProjectView[]>;
   labels: Record<ProjectTabId, string> & { card: ProjectCardLabels };
 }
 

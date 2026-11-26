@@ -1,9 +1,10 @@
 ---
 import ProjectDetailPage from '@/features/projects/components/ProjectDetailPage.astro';
-import { getCatalogSlugs } from '@/features/projects/services/enrich';
+import { getActiveProjectSlugs } from '@/features/projects/services/projects';
 
-export function getStaticPaths() {
-  return getCatalogSlugs().map((slug) => ({ params: { slug } }));
+export async function getStaticPaths() {
+  const slugs = await getActiveProjectSlugs();
+  return slugs.map((slug) => ({ params: { slug } }));
 }
 
 const slug = Astro.params.slug;

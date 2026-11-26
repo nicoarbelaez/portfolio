@@ -1,43 +1,50 @@
-import type { LocaleKey } from '@/i18n/ui';
-import type { ProjectCatalogEntry } from '@/features/projects/schemas/catalog';
+import type { ProjectVisibility } from '@/features/projects/constants/content';
 import type { ProjectSectionId } from '@/features/projects/constants/sections';
+import type {
+  ProjectMetric,
+  ProjectStackItem,
+  ProjectTeamMember,
+  ProjectTimeline
+} from '@/features/projects/schemas/content';
+import type { LocaleKey } from '@/i18n/ui';
 
-/** Locale-aware markdown document fetched from GitHub. */
-export type ProjectDoc = {
-  path: string;
-  content: string;
-  /** Effective language after fallback (Badge when !== requested). */
-  lang: LocaleKey;
-};
-
-/** Resolved image for UI (MVP: placeholder until asset fetch is wired). */
-export type ResolvedProjectImage = {
-  strategy: 'github-asset' | 'placeholder' | 'local';
-  /** Public URL or null when using placeholder UI. */
-  src: string | null;
-  /** Repo-relative path that would be used once assets ship. */
-  discoveredPath: string | null;
-};
-
+/** Call-to-action links; `repoUrl` is null unless the repository is public. */
 export type ProjectCtas = {
   siteUrl: string | null;
-  /** Null when repo is private or URL unavailable. */
   repoUrl: string | null;
 };
 
-/** Build-time enriched project for home cards and detail pages. */
-export type EnrichedProject = {
-  entry: ProjectCatalogEntry;
-  section: ProjectSectionId;
+/** Cover optimized through `astro:assets`, serializable for React islands. */
+export type ProjectCover = {
+  src: string;
+  width: number;
+  height: number;
+};
+
+/**
+ * Build-time view of one project: `meta.yaml` + the overview frontmatter of the effective
+ * language. Consumed by the landing, cards, showcases and the detail page.
+ */
+export type ProjectView = {
   slug: string;
+  section: ProjectSectionId;
+  order: number;
   title: string;
-  description: string | null;
+  tagline: string;
+  description: string;
+  role: string;
   topics: string[];
-  private: boolean;
+  keywords: string[];
+  metrics: ProjectMetric[];
+  timeline: ProjectTimeline;
+  visibility: ProjectVisibility;
+  anonymized: boolean;
+  team: ProjectTeamMember[];
+  stack: ProjectStackItem[];
   ctas: ProjectCtas;
-  image: ResolvedProjectImage;
-  overview: ProjectDoc | null;
-  technical: ProjectDoc | null;
-  /** True when enrichment failed soft for this repo. */
-  degraded: boolean;
+  cover: ProjectCover | null;
+  /** Language of the overview actually used (after fallback). */
+  docLang: LocaleKey;
+  /** True when the requested language has no overview and the fallback was used. */
+  missingTranslation: boolean;
 };

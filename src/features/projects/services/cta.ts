@@ -1,18 +1,18 @@
+import type { ProjectVisibility } from '@/features/projects/constants/content';
+import type { ProjectMeta } from '@/features/projects/schemas/content';
 import type { ProjectCtas } from '@/features/projects/types/project';
 
 /**
- * Home/detail CTA visibility rules:
- * - Site/demo when homepage is present
- * - Repo only when the GitHub repo is public
- * - Private + no homepage → both null (no CTA buttons)
+ * CTA visibility rules:
+ * - Site/demo whenever `links.site` is set
+ * - Repo only when the project is public (private projects never expose a repo link)
  */
-export function buildProjectCtas(input: {
-  homepage: string | null | undefined;
-  htmlUrl: string;
-  isPrivate: boolean;
-}): ProjectCtas {
-  const siteUrl = input.homepage?.trim() ? input.homepage.trim() : null;
-  const repoUrl = input.isPrivate ? null : input.htmlUrl;
-
-  return { siteUrl, repoUrl };
+export function buildProjectCtas(
+  links: ProjectMeta['links'],
+  visibility: ProjectVisibility
+): ProjectCtas {
+  return {
+    siteUrl: links?.site ?? null,
+    repoUrl: visibility === 'public' ? (links?.repo ?? null) : null
+  };
 }

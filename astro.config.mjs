@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, envField, fontProviders } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import vercel from '@astrojs/vercel';
 
 import tailwindcss from '@tailwindcss/vite';
@@ -37,12 +37,6 @@ export default defineConfig({
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   // Self-hosted, latin-only variable fonts with generated metric-adjusted fallbacks (no FOUT shift).
   fonts: FONTS,
-  env: {
-    schema: {
-      GH_TOKEN: envField.string({ context: 'server', access: 'secret' })
-    },
-    validateSecrets: true
-  },
   i18n: {
     defaultLocale: 'en',
     locales: ['es', 'en'],

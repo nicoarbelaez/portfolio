@@ -1,7 +1,7 @@
 import { ImageResponse } from '@vercel/og';
 import type { APIRoute, GetStaticPaths } from 'astro';
 import { PERSONAL_INFO } from '@/constants/constants';
-import { enrichProjects } from '@/features/projects/services/enrich';
+import { getActiveProjects } from '@/features/projects/services/projects';
 import { locales, type LocaleKey } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import { getAvatarDataUri, getLogoAsset } from '@/lib/og/assets';
@@ -28,15 +28,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const pathsByLang = await Promise.all(
     langs.map(async (lang) => {
       const t = useTranslations(lang);
-      const projects = await enrichProjects(lang);
+      const projects = await getActiveProjects(lang);
 
       const projectPaths = projects.map((project) => ({
         params: { lang, slug: project.slug },
         props: {
           kicker: t(`projects.section.${project.section}`),
           title: project.title,
-          description: truncate(project.description ?? '', DESCRIPTION_MAX_LENGTH),
-          media: project.image.src ? { kind: 'cover' as const, src: project.image.src } : null
+          description: truncate(project.description, DESCRIPTION_MAX_LENGTH),
+          // Satori cannot decode the optimized WebP cover; project cards stay text-only until
+          // OG cover rasterization lands (see src/features/projects/README.md).
+          media: null
         } satisfies OgPathProps
       }));
 

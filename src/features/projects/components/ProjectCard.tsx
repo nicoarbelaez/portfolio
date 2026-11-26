@@ -11,7 +11,7 @@ import {
   formatProjectTimeline,
   projectTimelineDateTime
 } from '@/features/projects/services/timeline';
-import type { EnrichedProject } from '@/features/projects/types/project';
+import type { ProjectView } from '@/features/projects/types/project';
 import { getLocalizedPath } from '@/i18n/utils';
 import type { LocaleKey } from '@/i18n/ui';
 import { cn } from '@/lib/utils';
@@ -21,10 +21,12 @@ export type ProjectCardLabels = {
   repo: string;
   details: string;
   present: string;
+  /** Accessible name of the topic badge list. */
+  topics: string;
 };
 
 interface ProjectCardProps {
-  project: EnrichedProject;
+  project: ProjectView;
   lang: LocaleKey;
   labels: ProjectCardLabels;
   /** Visual accent on media (client section). */
@@ -33,7 +35,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, lang, labels, accent = false }: ProjectCardProps) {
   const detailsHref = getLocalizedPath(`/projects/${project.slug}`, lang);
-  const timelineLabel = formatProjectTimeline(project.entry.timeline, lang, {
+  const timelineLabel = formatProjectTimeline(project.timeline, lang, {
     present: labels.present
   });
   const { imageRef, titleRef, reduceMotion, activateSharedTransition } = useProjectSharedTransition(
@@ -75,10 +77,12 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
           )}
           aria-label={project.title}
         >
-          {project.image.src ? (
+          {project.cover ? (
             <div ref={imageRef} className="size-full">
               <img
-                src={project.image.src}
+                src={project.cover.src}
+                width={project.cover.width}
+                height={project.cover.height}
                 alt=""
                 className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                 loading="lazy"
@@ -138,7 +142,7 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
             </h3>
             <time
               className="text-muted-foreground text-xs"
-              dateTime={projectTimelineDateTime(project.entry.timeline)}
+              dateTime={projectTimelineDateTime(project.timeline)}
             >
               {timelineLabel}
             </time>
@@ -153,15 +157,13 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
           </a>
         </div>
 
-        {project.description ? (
-          <p className="text-muted-foreground flex-1 text-xs leading-relaxed text-pretty">
-            {project.description}
-          </p>
-        ) : null}
+        <p className="text-muted-foreground flex-1 text-xs leading-relaxed text-pretty">
+          {project.description}
+        </p>
 
         {project.topics.length > 0 ? (
-          <ul className="mt-auto flex flex-wrap gap-1" aria-label="Topics">
-            {project.topics.slice(0, 8).map((topic) => (
+          <ul className="mt-auto flex flex-wrap gap-1" aria-label={labels.topics}>
+            {project.topics.map((topic) => (
               <li key={topic}>
                 <Badge
                   variant="outline"

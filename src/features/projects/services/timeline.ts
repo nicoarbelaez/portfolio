@@ -1,4 +1,4 @@
-import type { ProjectPeriod, ProjectTimeline } from '@/features/projects/schemas/catalog';
+import type { ProjectPeriod, ProjectTimeline } from '@/features/projects/schemas/content';
 import type { LocaleKey } from '@/i18n/ui';
 
 const DATE_LOCALES: Record<LocaleKey, string> = {
