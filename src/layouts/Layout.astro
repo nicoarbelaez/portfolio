@@ -149,7 +149,7 @@ const footerYear = new Date().getFullYear();
     >
       {t('nav.skip')}
     </a>
-    <FloatingNav client:load lang={lang} pathname={Astro.url.pathname} labels={navLabels} />
+    <FloatingNav client:idle lang={lang} pathname={Astro.url.pathname} labels={navLabels} />
     <div class="flex flex-1 flex-col">
       <slot />
     </div>

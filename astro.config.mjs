@@ -31,6 +31,8 @@ const FONTS = [
 export default defineConfig({
   adapter: vercel(),
   site: 'https://arbelaeznicolas.dev',
+  // Hover/focus prefetch makes ClientRouter navigations (projects <-> home) near-instant.
+  prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   // Self-hosted, latin-only variable fonts with generated metric-adjusted fallbacks (no FOUT shift).
   fonts: FONTS,
   env: {

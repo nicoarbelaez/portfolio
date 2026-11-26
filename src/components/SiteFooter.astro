@@ -22,6 +22,6 @@ const { year, rights, themeLabel } = Astro.props;
       © {year}
       {PERSONAL_INFO.FULL_NAME}. {rights}
     </p>
-    <ThemeToggler client:load aria-label={themeLabel} className="bg-background shrink-0 border" />
+    <ThemeToggler client:idle aria-label={themeLabel} className="bg-background shrink-0 border" />
   </div>
 </footer>
