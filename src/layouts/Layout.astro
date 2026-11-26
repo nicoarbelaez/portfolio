@@ -1,9 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '@/styles/global.css';
-import '@fontsource-variable/onest';
-import onestWoff2 from '@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url';
-import spaceGroteskWoff2 from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
+import { Font } from 'astro:assets';
 import { defaultLang, locales } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import { PERSONAL_INFO, SEO } from '@/constants/constants';
@@ -61,15 +59,10 @@ const footerYear = new Date().getFullYear();
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content={PERSONAL_INFO.BRAND_NAME} />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- Preload variable fonts used above the fold to cut FOUT reflow (CLS on section headings). -->
-    <link rel="preload" as="font" type="font/woff2" href={onestWoff2} crossorigin="anonymous" />
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      href={spaceGroteskWoff2}
-      crossorigin="anonymous"
-    />
+    <Font cssVariable="--astro-font-body" preload={[{ subset: 'latin' }]} />
+    <Font cssVariable="--astro-font-heading" preload={[{ subset: 'latin' }]} />
+    <Font cssVariable="--astro-font-sans" />
+    <Font cssVariable="--astro-font-mono" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <ClientRouter fallback="animate" />
@@ -169,6 +162,6 @@ const footerYear = new Date().getFullYear();
   body {
     margin: 0;
     width: 100%;
-    font-family: 'Onest Variable', system-ui, sans-serif;
+    font-family: var(--astro-font-body);
   }
 </style>

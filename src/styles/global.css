@@ -1,9 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
-@import '@fontsource-variable/geist';
-@import '@fontsource-variable/ibm-plex-sans';
-@import '@fontsource-variable/space-grotesk';
 @import './typeset.css';
 
 @custom-variant dark (&:is(.dark *));
@@ -41,10 +38,10 @@
   --sidebar-accent-foreground: oklch(0.2178 0.0085 223.8721);
   --sidebar-border: oklch(0.9252 0.0045 214.3292);
   --sidebar-ring: oklch(0.723 0.0143 214.3836);
-  --font-sans: 'IBM Plex Sans Variable', sans-serif;
-  --font-heading: 'Space Grotesk Variable', sans-serif;
-  --font-serif: 'IBM Plex Sans Variable', serif;
-  --font-mono: 'Geist Variable', monospace;
+  --font-sans: var(--astro-font-sans);
+  --font-heading: var(--astro-font-heading);
+  --font-serif: var(--astro-font-sans);
+  --font-mono: var(--astro-font-mono);
   --radius: 0.375rem;
   --shadow-x: 0;
   --shadow-y: 1px;

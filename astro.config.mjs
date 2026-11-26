@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, envField } from 'astro/config';
+import { defineConfig, envField, fontProviders } from 'astro/config';
 import vercel from '@astrojs/vercel';
 
 import tailwindcss from '@tailwindcss/vite';
@@ -9,10 +9,30 @@ import sitemap from '@astrojs/sitemap';
 
 import react from '@astrojs/react';
 
+const fontsource = fontProviders.fontsource();
+/** @param {string} name @param {string} cssVariable @param {string} fallback @param {string} weights */
+const variableFont = (name, cssVariable, fallback, weights) => ({
+  provider: fontsource,
+  name,
+  cssVariable,
+  weights: /** @type {[string]} */ ([weights]),
+  styles: /** @type {['normal']} */ (['normal']),
+  subsets: /** @type {['latin']} */ (['latin']),
+  fallbacks: [fallback]
+});
+const FONTS = [
+  variableFont('IBM Plex Sans', '--astro-font-sans', 'sans-serif', '100 700'),
+  variableFont('Space Grotesk', '--astro-font-heading', 'sans-serif', '300 700'),
+  variableFont('Onest', '--astro-font-body', 'sans-serif', '400 800'),
+  variableFont('Geist', '--astro-font-mono', 'monospace', '100 900')
+];
+
 // https://astro.build/config
 export default defineConfig({
   adapter: vercel(),
   site: 'https://arbelaeznicolas.dev',
+  // Self-hosted, latin-only variable fonts with generated metric-adjusted fallbacks (no FOUT shift).
+  fonts: FONTS,
   env: {
     schema: {
       GH_TOKEN: envField.string({ context: 'server', access: 'secret' })
