@@ -1,100 +1,64 @@
 # Feature: projects
 
-Catálogo curado de proyectos + showcases de la landing + páginas de detalle (`/projects/<slug>`, `/es/projects/<slug>`).
+Project case studies for the landing (`#projects`, `#apps`) and the detail pages
+(`/projects/<slug>`, `/es/projects/<slug>`). Content is local MDX; GitHub is no longer read at build time.
 
-## Estructura
+## Content model
 
 ```
-constants/catalog.ts        Catálogo (fuente de verdad). ACTIVE_PROJECT_CATALOG = sin archivados.
-constants/sections.ts       Secciones: client | apps | side
-schemas/catalog.ts          Zod del catálogo (incluye `archived`)
-services/enrich.ts          Enriquecimiento (GitHub) — solo sobre el catálogo ACTIVO
-components/showcase-registry.ts   slug -> showcase personalizado
-components/ProjectsTabs.tsx         Tabs client | side: click, arrastre (Embla) y deep link (?tab=)
-hooks/use-tabs-carousel.ts          Embla + AutoHeight: arrastre/swipe entre tabs, pill sigue el progreso
-hooks/use-url-tab.ts                Tab sincronizado con ?tab=
-components/ProjectShowcaseBlock.tsx   Render de un bloque (header opcional + showcases / cards)
-components/ProjectsSection.astro      Composición de la landing
-apps/<slug>/                Showcases de apps (Mecateo)
-clients/<slug>/             Showcases de proyectos para clientes
-types/showcase.ts           Contrato de props de un showcase
+src/content/projects/<slug>/
+  meta.yaml              section, order, archived, periods, visibility, links, team, stack, cover
+  overview.<es|en>.mdx   frontmatter (title, tagline, description, role, topics, keywords, metrics?) + body
+  technical.<es|en>.mdx  frontmatter (title, description) + body
 ```
 
-## Landing: orden y diseño
+Schemas live in `schemas/content.ts` and are registered in `src/content.config.ts` (`projects`, `projectDocs`).
+A missing `en` file falls back to `es` and shows the `missingTranslation` badge.
 
-`#projects` = intro → **tabs** [Proyectos para clientes | Proyectos personales]; luego `#apps`.
+Reading API (`services/projects.ts`): `getActiveProjects(lang)`, `getActiveProjectSlugs()`,
+`getProjectBySlug(slug, lang)`, `getProjectDoc(slug, kind, lang)`. Everything the UI consumes is a `ProjectView`.
 
-- Tab **client**: showcases propios por proyecto (mismo mecanismo que Apps), registrados en
-  `showcase-registry.ts`. Sin entrada en el registro cae a `ProjectCard`.
-- Tab **side**: grilla de cards.
-- `apps` (`#apps`) usa el mismo mecanismo de showcases, sin tabs.
-- **Orden**: campo `order` del catálogo dentro de cada sección. Los showcases propios ocupan
-  todo el ancho; proyectos consecutivos sin showcase comparten una grilla de cards.
-- Si solo queda un tab con proyectos (el otro vacío/archivado), la barra de tabs se oculta.
+## Add a project
 
-### Arrastrar para cambiar de tab
+1. Create `src/content/projects/<slug>/` with `meta.yaml` and the four MDX files.
+2. Write the bodies with the documentation blocks (no imports): `<Architecture>`, `<Flow>`,
+   `<FolderTree>`, `<StackGrid>`, `<MetricGrid>`. Reference: `docs/design-system/doc-blocks.md`.
+3. Optional landing showcase: see below. Without one the project renders as a `ProjectCard`.
+4. Put approved metrics in the MDX body (`<MetricGrid>`) **or** in `metrics` frontmatter, not both:
+   frontmatter metrics render in the detail header panel.
 
-Patrón: **Embla Carousel** (`embla-carousel-react` + plugin `embla-carousel-auto-height`), no un
-slider propio. Los paneles viven en un carrusel horizontal controlado por el valor del tab.
+## Archive a project
 
-- Mouse y touch: arrastra el contenido a izquierda/derecha; ves el panel siguiente pegado al actual.
-- Al soltar se completa el cambio si pasaste de la mitad **o** fue un flick rápido; si no, vuelve.
-- La píldora de la barra de tabs sigue el progreso del arrastre (se actualiza sin re-render).
-- La altura se adapta con transición (clientes y personales miden distinto).
-- Gesto vertical = scroll normal de la página (`touch-action: pan-y`); solo lo horizontal mueve tabs.
-- **Interactivos**: las cards son clicables por completo, así que el arrastre SÍ puede empezar sobre
-  links y botones (Embla cancela el clic que sigue a un arrastre; un toque/clic sin arrastre navega
-  normal). Solo `PROJECT_SWIPE_IGNORE_SELECTOR` (`input, select, textarea, [data-no-swipe]`) lo
-  bloquea; agrega `data-no-swipe` a cualquier control propio que lo necesite.
-- Entre paneles hay un espacio (`PROJECT_TAB_PANE_GAP_CLASS`) para que no se vean pegados al arrastrar.
-- Accesibilidad: el panel inactivo es `inert` + `aria-hidden`; los tabs siguen funcionando con clic
-  y el deep link.
+Set `archived: true` in its `meta.yaml`. It disappears from the landing, its detail page and OG image are not
+generated, and the content stays. Remove the flag to bring it back. Currently archived: `invictus`.
 
-### Deep link a un tab
+## Landing
 
-Query param `tab` (`constants/tabs.ts`), combinable con el hash de la sección:
+`#projects` = intro, then tabs [client | side]; `#apps` follows. Order comes from `order` inside each section.
+Showcases take full width; consecutive projects without one share a card grid. If only one tab has projects the
+tab bar is hidden. Dragging between tabs uses Embla (`hooks/use-tabs-carousel.ts`) and the active tab is
+synchronized with `?tab=client|side` (`hooks/use-url-tab.ts`).
 
-- `/?tab=client#projects` · `/?tab=side#projects`
-- `/es/?tab=side#projects`
+## Showcases
 
-Sin param (o valor inválido / tab vacío) se abre el primer tab disponible (por defecto `client`).
-Al cambiar de tab la URL se actualiza con `history.replaceState` (sin nuevas entradas de historial),
-así que la URL visible siempre es compartible. Lógica en `hooks/use-url-tab.ts`.
+A showcase is a React component registered in `components/showcase-registry.ts` by slug. Props:
+`ProjectShowcaseProps = { project: ProjectView, lang, labels }`.
 
-## Archivar un proyecto
+- Shared kit: `showcase-kit/` (section, tile with accent, footer, node, device frames, reveal hooks).
+  Docs: `docs/design-system/showcase-kit.md`.
+- Client helpers that know about `ProjectView`: `clients/shared/`.
+- Per client: `clients/<slug>/{<Name>Showcase.tsx, constants/copy.*.ts, tiles/*.tsx}`.
+- Apps: `apps/<slug>/` (Mecateo).
 
-En `constants/catalog.ts` agrega `archived: true` a la entrada:
+Registered today: `mecateo`, `danystortas`, `defi`, `swc`.
 
-```ts
-{ slug: 'invictus', section: 'client', order: 2, archived: true, ... }
-```
+## Design system
 
-Efecto (un solo punto de filtrado: `ACTIVE_PROJECT_CATALOG`):
+Tokens, motion rules, block catalog and the live samples page (`/design-system`, `/es/design-system`) are
+documented in `docs/design-system/`.
 
-- No aparece en la landing (cliente, app o personal).
-- No se genera su página de detalle (`/projects/<slug>` y `/es/projects/<slug>` → 404).
-- No se genera su imagen OG.
-- El catálogo conserva la entrada; **desarchivar = borrar el flag** (o `false`).
+## Rules worth remembering
 
-Archivados actualmente: `invictus`.
-
-## Showcase personalizado (apps o clientes)
-
-1. Crea `clients/<slug>/<Nombre>Showcase.tsx` (o `apps/<slug>/`). Recibe `ProjectShowcaseProps`
-   (`project`, `lang`, `labels`); puedes declarar solo las props que uses.
-2. Regístralo en `components/showcase-registry.ts`.
-3. Define su posición con `order` en el catálogo.
-
-`clients/ClientShowcaseMeta.tsx` pinta título, periodo, descripción, topics y CTAs a partir de
-los datos del proyecto (sin copy hardcodeado) para reutilizarlo en diseños de cliente.
-
-## Diseños temporales
-
-Marcados `TEMPORARY` en su JSDoc; reemplazar por el diseño final manteniendo registro y props.
-
-| Proyecto     | Archivo                                       | Idea                                                                   |
-| ------------ | --------------------------------------------- | ---------------------------------------------------------------------- |
-| Danys Tortas | `clients/danystortas/DanysTortasShowcase.tsx` | Paleta rosa/ámbar cálida; portada a la izquierda, texto a la derecha.  |
-| DeFi         | `clients/defi/DefiShowcase.tsx`               | Estilo "terminal" oscuro slate/esmeralda; texto arriba, portada abajo. |
-
-Mecateo (`apps/mecateo/`) mantiene su bento propio, ahora registrado igual que los demás.
+- Do not enable Astro `security.csp`: the motion components apply inline styles at runtime.
+- No file over 250 lines, no `any`, no barrels; sample numbers in UI replicas must be labeled as sample data.
+- Approved real metrics and confidentiality decisions are recorded in `odd/tasks/projects-case-studies.md` (S9).
