@@ -42,6 +42,11 @@ export const projectCatalogEntrySchema = z.object({
   section: z.enum(PROJECT_SECTIONS),
   order: z.number().int().nonnegative(),
   image: projectImageSchema.optional(),
+  /**
+   * Archived projects stay in the catalog but are not rendered anywhere:
+   * no landing card/showcase, no detail page, no OG image. Remove the flag to restore.
+   */
+  archived: z.boolean().optional(),
   /** Optional display title override (else README H1 / repo name). */
   title: z.string().min(1).optional(),
   /** Engagement windows shown under the card title. */

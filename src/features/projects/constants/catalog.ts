@@ -21,6 +21,7 @@ const RAW_PROJECT_CATALOG = [
     github: { owner: 'nicoarbelaez', repo: 'invictus' },
     section: 'client',
     order: 2,
+    archived: true,
     title: 'Invictus Joyas',
     image: { strategy: 'github-asset' },
     timeline: { periods: [{ start: '2026-06', end: 'present' }] }
@@ -85,3 +86,8 @@ const RAW_PROJECT_CATALOG = [
 
 /** Validated catalog (throws at import if invalid). */
 export const PROJECT_CATALOG: ProjectCatalog = projectCatalogSchema.parse(RAW_PROJECT_CATALOG);
+
+/** Catalog without archived entries — the only list UI, routes and OG images should consume. */
+export const ACTIVE_PROJECT_CATALOG: ProjectCatalog = PROJECT_CATALOG.filter(
+  (entry) => !entry.archived
+);

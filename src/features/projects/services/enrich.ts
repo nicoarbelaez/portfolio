@@ -2,7 +2,7 @@ import { APIError } from '@/api/handler';
 import { fetchRepoCoverAsset, resolveRepoCoverPath } from '@/api/github/assets';
 import { getRepoDoc } from '@/api/github/docs';
 import { extractMarkdownTitle, getRepository } from '@/api/github/repository';
-import { PROJECT_CATALOG } from '@/features/projects/constants/catalog';
+import { ACTIVE_PROJECT_CATALOG } from '@/features/projects/constants/catalog';
 import { PROJECT_SECTION_ORDER } from '@/features/projects/constants/sections';
 import { buildProjectCtas } from '@/features/projects/services/cta';
 import type { ProjectCatalogEntry } from '@/features/projects/schemas/catalog';
@@ -114,7 +114,7 @@ async function enrichOne(entry: ProjectCatalogEntry, lang: LocaleKey): Promise<E
  * Soft-fails per repo via settled promises + catch in `enrichOne`.
  */
 export async function enrichProjects(lang: LocaleKey): Promise<EnrichedProject[]> {
-  const results = await Promise.all(PROJECT_CATALOG.map((entry) => enrichOne(entry, lang)));
+  const results = await Promise.all(ACTIVE_PROJECT_CATALOG.map((entry) => enrichOne(entry, lang)));
 
   return results.toSorted((a, b) => {
     const sectionDelta =
@@ -141,9 +141,9 @@ export function groupProjectsBySection(
 }
 
 export function getCatalogSlugs(): string[] {
-  return PROJECT_CATALOG.map((entry) => entry.slug);
+  return ACTIVE_PROJECT_CATALOG.map((entry) => entry.slug);
 }
 
 export function findCatalogEntry(slug: string): ProjectCatalogEntry | undefined {
-  return PROJECT_CATALOG.find((entry) => entry.slug === slug);
+  return ACTIVE_PROJECT_CATALOG.find((entry) => entry.slug === slug);
 }
