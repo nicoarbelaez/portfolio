@@ -263,7 +263,10 @@ function TabsContents({
     <motion.div
       ref={containerRef}
       data-slot="tabs-contents"
-      style={{ overflow: 'hidden' }}
+      // `relative` makes this the containing block of absolutely positioned
+      // descendants (sr-only, decorative svgs) in off-screen panes; without
+      // it they escape the overflow clip and widen the page on mobile.
+      style={{ overflow: 'hidden', position: 'relative' }}
       animate={{ height }}
       transition={transition}
       {...props}
