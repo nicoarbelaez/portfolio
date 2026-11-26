@@ -13,12 +13,6 @@ export const NUMBER_LOCALE: Readonly<Record<LocaleKey, string>> = {
   en: 'en-US'
 };
 
-/** Localized label of the "illustrative data" badge shown inside UI replicas. */
-export const SAMPLE_BADGE_LABEL: Readonly<Record<LocaleKey, string>> = {
-  es: 'Datos de ejemplo',
-  en: 'Sample data'
-};
-
 /** Localized label above the credited collaborators in the meta tile. */
 export const TEAM_LABEL: Readonly<Record<LocaleKey, string>> = {
   es: 'Con',
