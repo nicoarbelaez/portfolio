@@ -38,9 +38,5 @@ export const PROJECT_TAGLINE_MAX = 120;
 export const PROJECT_DESCRIPTION_MAX = 200;
 export const PROJECT_TOPICS_MAX = 8;
 
-/** Width (px) and format of the optimized cover shared by cards and the detail page. */
-export const PROJECT_COVER_WIDTH = 1200;
-export const PROJECT_COVER_FORMAT = 'webp';
-
 /** schema.org type used for the detail page JSON-LD. */
 export const PROJECT_JSON_LD_TYPE = 'CreativeWork';

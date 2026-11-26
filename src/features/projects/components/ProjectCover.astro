@@ -1,0 +1,40 @@
+---
+/**
+ * Project cover for the detail page: the light and dark variants are both rendered and swapped
+ * with the site's `.dark` class (the theme is a class, not a media query, so `<picture>` with
+ * `prefers-color-scheme` would ignore the toggle). Intrinsic width/height reserve the space (no CLS).
+ */
+import type { ProjectCover } from '@/features/projects/types/project';
+import { cn } from '@/lib/utils';
+
+interface Props {
+  cover: ProjectCover;
+  /** Dark-theme variant; when absent the light cover is used in both themes. */
+  coverDark?: ProjectCover | null;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+}
+
+const { cover, coverDark = null, class: className, loading = 'eager' } = Astro.props;
+---
+
+<img
+  src={cover.src}
+  width={cover.width}
+  height={cover.height}
+  alt=""
+  class={cn('h-auto w-full', coverDark && 'dark:hidden', className)}
+  loading={loading}
+  decoding="async"
+/>
+{coverDark ? (
+  <img
+    src={coverDark.src}
+    width={coverDark.width}
+    height={coverDark.height}
+    alt=""
+    class={cn('hidden h-auto w-full dark:block', className)}
+    loading={loading}
+    decoding="async"
+  />
+) : null}

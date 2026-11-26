@@ -44,3 +44,5 @@ stack:
   - name: 'TypeScript'
     category: tooling
     version: '5.7'
+cover: ./cover.webp
+coverDark: ./cover.dark.webp

@@ -65,7 +65,10 @@ export function createProjectMetaSchema(image: SchemaContext['image']) {
     /** Collaborators credited on the project; the owner is implicit. */
     team: z.array(projectTeamMemberSchema).optional(),
     stack: z.array(projectStackItemSchema).min(1),
-    cover: image().optional()
+    /** Light cover (1200x630). Generated: docs/design-system/README.md#project-covers. */
+    cover: image().optional(),
+    /** Dark-theme variant of `cover`. */
+    coverDark: image().optional()
   });
 }
 

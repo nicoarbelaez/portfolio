@@ -61,3 +61,5 @@ stack:
   - name: 'pnpm'
     category: tooling
     version: '11'
+cover: ./cover.webp
+coverDark: ./cover.dark.webp

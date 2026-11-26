@@ -23,3 +23,5 @@ stack:
     category: testing
   - name: 'Claude Code plugin'
     category: tooling
+cover: ./cover.webp
+coverDark: ./cover.dark.webp

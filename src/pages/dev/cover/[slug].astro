@@ -1,0 +1,93 @@
+---
+/**
+ * Dev-only cover renderer: `/dev/cover/<slug>` (add `?theme=dark` for the dark variant). Never
+ * built for production: `getStaticPaths` is empty outside `astro dev`. Screenshot the
+ * `[data-cover-canvas]` element at 1200x630 (workflow: docs/design-system/README.md).
+ */
+import type { GetStaticPaths, ImageMetadata } from 'astro';
+import { Font } from 'astro:assets';
+import { ArchitectureView } from '@/components/doc-blocks/views/ArchitectureView';
+import CoverTemplate from '@/features/projects/components/CoverTemplate.astro';
+import {
+  COVER_ACCENTS,
+  COVER_DARK_THEME_VALUE,
+  COVER_DEFAULT_ACCENT,
+  COVER_SITE_FRAME_DEFAULT_WIDTH,
+  COVER_SITE_FRAME_TITLES,
+  COVER_SITE_FRAME_WIDTHS,
+  COVER_THEME_PARAM
+} from '@/features/projects/constants/covers';
+import { AppFrame } from '@/features/projects/showcase-kit/components/AppFrame';
+import { getActiveProjectSlugs, getProjectBySlug } from '@/features/projects/services/projects';
+import { COVER_ARCHITECTURES } from './_fragments';
+import { ChatFragment } from './_ChatFragment';
+import mecateoSite from '@/assets/covers/mecateo-site.webp';
+import readiaSite from '@/assets/covers/readia-site.webp';
+import '@/styles/global.css';
+
+export const getStaticPaths = (async () => {
+  if (!import.meta.env.DEV) return [];
+  const slugs = await getActiveProjectSlugs();
+  return slugs.map((slug) => ({ params: { slug } }));
+}) satisfies GetStaticPaths;
+
+const SITE_SHOTS: Record<string, ImageMetadata> = { mecateo: mecateoSite, readia: readiaSite };
+
+const { slug } = Astro.params;
+const project = await getProjectBySlug(slug ?? '', 'es');
+if (!project) return Astro.redirect('/404');
+const architecture = COVER_ARCHITECTURES[project.slug];
+const siteShot = SITE_SHOTS[project.slug];
+const frameWidth = COVER_SITE_FRAME_WIDTHS[project.slug] ?? COVER_SITE_FRAME_DEFAULT_WIDTH;
+const accent = COVER_ACCENTS[project.slug] ?? COVER_DEFAULT_ACCENT;
+const darkValue = COVER_DARK_THEME_VALUE;
+const themeParam = COVER_THEME_PARAM;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <Font cssVariable="--astro-font-body" />
+    <Font cssVariable="--astro-font-heading" />
+    <Font cssVariable="--astro-font-sans" />
+    <Font cssVariable="--astro-font-mono" />
+    <title>cover · {project.slug}</title>
+    <script is:inline define:vars={{ darkValue, themeParam }}>
+      document.documentElement.classList.toggle(
+        'dark',
+        new URLSearchParams(location.search).get(themeParam) === darkValue
+      );
+    </script>
+  </head>
+  <body class="m-0 w-[1200px]" style="font-family: var(--astro-font-body)">
+    <CoverTemplate
+      slug={project.slug}
+      title={project.title}
+      tagline={project.tagline}
+      stack={project.stack}
+      accent={accent}
+    >
+      {siteShot ? (
+        <div class="shrink-0" style={`width:${frameWidth}px`}>
+          <AppFrame title={COVER_SITE_FRAME_TITLES[project.slug] ?? project.title}>
+            <img
+              src={siteShot.src}
+              alt=""
+              width={siteShot.width}
+              height={siteShot.height}
+              class="block w-full"
+            />
+          </AppFrame>
+        </div>
+      ) : architecture ? (
+        <div class="bg-card border-border/60 w-[640px] rounded-2xl border shadow-lg [&_figcaption]:hidden [&_figure]:m-0">
+          <ArchitectureView client:load {...architecture} />
+        </div>
+      ) : project.slug === 'danystortas' ? (
+        <ChatFragment client:load />
+      ) : null}
+    </CoverTemplate>
+  </body>
+</html>

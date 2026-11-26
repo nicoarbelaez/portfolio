@@ -7,6 +7,7 @@ import { BorderBeam } from '@/components/ui/border-beam';
 import { buttonVariants } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ProjectMark } from '@/features/projects/clients/shared/components/ClientMark';
+import { PROJECT_CARD_FALLBACK_ASPECT } from '@/features/projects/constants/covers';
 import { useProjectSharedTransition } from '@/features/projects/hooks/use-project-shared-transition';
 import {
   formatProjectTimeline,
@@ -16,6 +17,10 @@ import type { ProjectView } from '@/features/projects/types/project';
 import { getLocalizedPath } from '@/i18n/utils';
 import type { LocaleKey } from '@/i18n/ui';
 import { cn } from '@/lib/utils';
+
+/** Shared by the light and dark cover images; the hover zoom is skipped under reduced motion. */
+const COVER_IMAGE_CLASS =
+  'size-full object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100';
 
 export type ProjectCardLabels = {
   site: string;
@@ -72,10 +77,15 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
           href={detailsHref}
           onClick={activateSharedTransition}
           className={cn(
-            'bg-muted relative block aspect-[16/10] overflow-hidden',
+            'bg-muted relative block overflow-hidden',
             accent &&
               'before:bg-primary before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-1'
           )}
+          style={{
+            aspectRatio: project.cover
+              ? `${project.cover.width} / ${project.cover.height}`
+              : PROJECT_CARD_FALLBACK_ASPECT
+          }}
           aria-label={project.title}
         >
           {project.cover ? (
@@ -85,9 +95,21 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
                 width={project.cover.width}
                 height={project.cover.height}
                 alt=""
-                className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                className={cn(COVER_IMAGE_CLASS, project.coverDark && 'dark:hidden')}
                 loading="lazy"
+                decoding="async"
               />
+              {project.coverDark ? (
+                <img
+                  src={project.coverDark.src}
+                  width={project.coverDark.width}
+                  height={project.coverDark.height}
+                  alt=""
+                  className={cn(COVER_IMAGE_CLASS, 'hidden dark:block')}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : null}
             </div>
           ) : (
             <div

@@ -7,7 +7,10 @@ Project case studies for the landing (`#projects`, `#apps`) and the detail pages
 
 ```
 src/content/projects/<slug>/
-  meta.yaml              section, order, archived, periods, visibility, links, team, stack, cover
+  meta.yaml              section, order, archived, periods, visibility, links, team, stack, cover, coverDark
+  cover.webp             light cover 1200x630 (generated, see Covers)
+  cover.dark.webp        dark cover
+  cover.og.jpg           dark cover as JPEG, read only by the OG route
   overview.<es|en>.mdx   frontmatter (title, tagline, description, role, topics, keywords, metrics?) + body
   technical.<es|en>.mdx  frontmatter (title, description) + body
 ```
@@ -51,6 +54,14 @@ A showcase is a React component registered in `components/showcase-registry.ts` 
 - Apps: `apps/<slug>/` (Mecateo).
 
 Registered today: `mecateo`, `danystortas`, `defi`, `swc`.
+
+## Covers
+
+Each project has a cover used by `ProjectCard`, the detail header (`ProjectCover.astro`) and the OG image
+(`/og/<lang>/<slug>.png`, full-bleed `cover.og.jpg`). Covers are rendered by the dev-only page
+`src/pages/dev/cover/[slug].astro` (`/dev/cover/<slug>?theme=dark`) from `components/CoverTemplate.astro`,
+screenshotted at 1200x630 and converted to WebP (max 90 KB). Constants: `constants/covers.ts`.
+Regeneration steps: `docs/design-system/README.md#project-covers`.
 
 ## Design system
 

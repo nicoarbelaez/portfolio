@@ -51,3 +51,5 @@ stack:
   - name: 'Husky'
     category: tooling
     version: '9'
+cover: ./cover.webp
+coverDark: ./cover.dark.webp

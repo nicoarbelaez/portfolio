@@ -5,6 +5,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { DOC_BLOCK_COMPONENTS } from '@/components/doc-blocks/mdx-components';
 import { PERSONAL_INFO } from '@/constants/constants';
 import { ProjectMark } from '@/features/projects/clients/shared/components/ClientMark';
+import ProjectCover from '@/features/projects/components/ProjectCover.astro';
 import ProjectDetailMeta from '@/features/projects/components/ProjectDetailMeta.astro';
 import { ProjectDetailTabs } from '@/features/projects/components/ProjectDetailTabs';
 import { ProjectCtasLinks } from '@/features/projects/components/ProjectCtas';
@@ -114,14 +115,7 @@ const jsonLd = buildProjectJsonLd({
           class="border-border overflow-hidden rounded-xl border"
           transition:name={imageVtName}
         >
-          <img
-            src={project.cover.src}
-            width={project.cover.width}
-            height={project.cover.height}
-            alt=""
-            class="aspect-[16/9] w-full object-cover"
-            loading="eager"
-          />
+          <ProjectCover cover={project.cover} coverDark={project.coverDark} />
         </figure>
       ) : (
         <div

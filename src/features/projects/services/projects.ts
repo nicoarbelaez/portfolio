@@ -1,8 +1,5 @@
-import { getImage } from 'astro:assets';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import {
-  PROJECT_COVER_FORMAT,
-  PROJECT_COVER_WIDTH,
   PROJECT_DOC_FALLBACK_LANG,
   PROJECT_DOCS_COLLECTION,
   PROJECTS_COLLECTION,
@@ -60,18 +57,13 @@ function parseOverview(ref: ProjectDocRef): ProjectOverviewFrontmatter {
   return result.data;
 }
 
-async function resolveCover(cover: ProjectMeta['cover']): Promise<ProjectCover | null> {
+/**
+ * Covers are pre-optimized 1200x630 WebP files (see `constants/covers.ts`), so the hashed asset
+ * is used as is: no `getImage` transform, hence no runtime dependency on `sharp` at build time.
+ */
+function resolveCover(cover: ProjectMeta['cover'] | ProjectMeta['coverDark']): ProjectCover | null {
   if (!cover) return null;
-  const image = await getImage({
-    src: cover,
-    width: PROJECT_COVER_WIDTH,
-    format: PROJECT_COVER_FORMAT
-  });
-  return {
-    src: image.src,
-    width: Number(image.attributes.width ?? PROJECT_COVER_WIDTH),
-    height: Number(image.attributes.height ?? 0)
-  };
+  return { src: cover.src, width: cover.width, height: cover.height };
 }
 
 async function toView(
@@ -105,7 +97,8 @@ async function toView(
     team: meta.team ?? [],
     stack: meta.stack,
     ctas: buildProjectCtas(meta.links, meta.visibility),
-    cover: await resolveCover(meta.cover),
+    cover: resolveCover(meta.cover),
+    coverDark: resolveCover(meta.coverDark),
     docLang: overview.lang,
     missingTranslation: overview.missingTranslation
   };

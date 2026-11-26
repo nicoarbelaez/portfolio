@@ -43,6 +43,8 @@ export type ProjectView = {
   stack: ProjectStackItem[];
   ctas: ProjectCtas;
   cover: ProjectCover | null;
+  /** Dark-theme variant of `cover`; null when the project has only one cover. */
+  coverDark: ProjectCover | null;
   /** Language of the overview actually used (after fallback). */
   docLang: LocaleKey;
   /** True when the requested language has no overview and the fallback was used. */
