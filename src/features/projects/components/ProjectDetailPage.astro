@@ -4,6 +4,7 @@ import Layout from '@/layouts/Layout.astro';
 import { buttonVariants } from '@/components/ui/button';
 import { DOC_BLOCK_COMPONENTS } from '@/components/doc-blocks/mdx-components';
 import { PERSONAL_INFO } from '@/constants/constants';
+import { ProjectMark } from '@/features/projects/clients/shared/components/ClientMark';
 import ProjectDetailMeta from '@/features/projects/components/ProjectDetailMeta.astro';
 import { ProjectDetailTabs } from '@/features/projects/components/ProjectDetailTabs';
 import { ProjectCtasLinks } from '@/features/projects/components/ProjectCtas';
@@ -71,9 +72,12 @@ const jsonLd = buildProjectJsonLd({
 
     <article class="space-y-10">
       <header class="border-border/70 space-y-5 border-b pb-8">
-        <p class="text-muted-foreground text-xs font-medium tracking-[0.18em] uppercase">
-          {t(`projects.section.${project.section}`)}
-        </p>
+        <div class="flex items-center gap-3">
+          <ProjectMark slug={project.slug} size="lg" />
+          <p class="text-muted-foreground text-xs font-medium tracking-[0.18em] uppercase">
+            {t(`projects.section.${project.section}`)}
+          </p>
+        </div>
         <h1
           class="font-heading text-3xl font-semibold tracking-tight text-balance md:text-4xl"
           transition:name={titleVtName}

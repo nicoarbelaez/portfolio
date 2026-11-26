@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { buttonVariants } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { ProjectMark } from '@/features/projects/clients/shared/components/ClientMark';
 import { useProjectSharedTransition } from '@/features/projects/hooks/use-project-shared-transition';
 import {
   formatProjectTimeline,
@@ -133,8 +134,9 @@ export function ProjectCard({ project, lang, labels, accent = false }: ProjectCa
       </div>
 
       <CardContent className="relative z-10 flex flex-1 flex-col gap-3 px-4 pt-4 pb-5 sm:px-6 sm:pt-6">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex min-w-0 flex-col gap-1">
+        <div className="flex items-start justify-between gap-3">
+          <ProjectMark slug={project.slug} size="sm" />
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
             <h3 ref={titleRef} className="font-heading text-base font-semibold tracking-tight">
               <a href={detailsHref} onClick={activateSharedTransition} className="hover:underline">
                 {project.title}
