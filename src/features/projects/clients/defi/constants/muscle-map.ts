@@ -28,6 +28,12 @@ export const BODY_BOX_STYLE = {
   height: BODY_NATIVE_HEIGHT_PX * BODY_SCALE
 } as const;
 
+/**
+ * Fixed width of the text column next to the body. It fits the longest caption and label, so
+ * changing the active muscle never resizes a box or re-centers the row.
+ */
+export const MUSCLE_TEXT_COLUMN_CLASS = 'w-32 shrink-0 whitespace-nowrap';
+
 /** Token-based paints (CSS variables resolve per theme). */
 export const BODY_ACTIVE_FILL = 'var(--chart-2)';
 export const BODY_IDLE_FILL = 'color-mix(in oklab, var(--muted-foreground) 22%, var(--card))';

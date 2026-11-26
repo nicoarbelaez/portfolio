@@ -14,7 +14,8 @@ import {
   BODY_OUTLINE,
   BODY_SCALE,
   BODY_SIDE,
-  MUSCLE_SLUGS
+  MUSCLE_SLUGS,
+  MUSCLE_TEXT_COLUMN_CLASS
 } from '@/features/projects/clients/defi/constants/muscle-map';
 import { ShowcaseTile } from '@/features/projects/showcase-kit/components/ShowcaseTile';
 import { TileFooter } from '@/features/projects/showcase-kit/components/TileFooter';
@@ -69,7 +70,10 @@ export function MuscleMapTile({ copy }: { copy: DefiCopy['muscle'] }) {
             />
           ) : null}
         </div>
-        <div className="flex min-w-0 flex-col gap-1.5 text-xs" aria-hidden="true">
+        <div
+          className={cn('flex flex-col gap-1.5 text-xs', MUSCLE_TEXT_COLUMN_CLASS)}
+          aria-hidden="true"
+        >
           <code className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-[10px]">
             <span className="block">{copy.requestLabel}</span>
             <span className="block">?{activeId}</span>

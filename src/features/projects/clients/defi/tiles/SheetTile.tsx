@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from 'motion/react';
 import { PlayCircle, Table2 } from 'lucide-react';
-import { SampleBadge } from '@/features/projects/clients/shared/components/SampleBadge';
 import {
   SHEET_ROW_COUNT,
   SHEET_STAGES,
@@ -66,7 +65,7 @@ function Dropdown({ options, selected, upward, reduced }: DropdownProps) {
 }
 
 /** Spreadsheet replica: muscle group, exercise and video link fill in through dependent dropdowns. */
-export function SheetTile({ copy, lang }: { copy: DefiCopy['sheet']; lang: LocaleKey }) {
+export function SheetTile({ copy }: { copy: DefiCopy['sheet']; lang?: LocaleKey }) {
   const totalSteps = SHEET_ROW_COUNT * SHEET_STAGES;
   const { ref, value: revealed } = useRevealCount(totalSteps, SHEET_STEP_MS);
   const reduced = useReducedMotion() ?? false;
@@ -75,13 +74,12 @@ export function SheetTile({ copy, lang }: { copy: DefiCopy['sheet']; lang: Local
     <ShowcaseTile span="two" className="min-h-96" accent="chart-2">
       <TileStage stageRef={ref} className="px-4 pt-4 sm:px-8">
         <AppFrame title={copy.frameTitle} className="h-full w-full rounded-b-none">
-          <div className="border-border/60 flex items-center justify-between gap-2 border-b px-2.5 py-1.5 text-[11px]">
+          <div className="border-border/60 flex items-center gap-2 border-b px-2.5 py-1.5 text-[11px]">
             <span className="flex items-center gap-2">
               <Table2 className="text-primary size-3.5" aria-hidden="true" />
               <span className="text-muted-foreground">{copy.clientLabel}</span>
               <span className="bg-muted h-2 w-16 rounded-full" />
             </span>
-            <SampleBadge lang={lang} />
           </div>
           <div
             className={cn(
