@@ -44,3 +44,6 @@ resume/**/resume*.pdf
 
 # Notas privadas (pasos personales, no se versionan)
 .private/
+
+# Registro de skills autogenerado (se regenera con skill-registry)
+.atl/
