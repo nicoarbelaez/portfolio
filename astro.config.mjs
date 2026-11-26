@@ -9,6 +9,8 @@ import sitemap from '@astrojs/sitemap';
 
 import react from '@astrojs/react';
 
+import mdx from '@astrojs/mdx';
+
 const fontsource = fontProviders.fontsource();
 /** @param {string} name @param {string} cssVariable @param {string} fallback @param {string} weights */
 const variableFont = (name, cssVariable, fallback, weights) => ({
@@ -69,6 +71,7 @@ export default defineConfig({
         }
       }
     }),
-    react()
+    react(),
+    mdx()
   ]
 });
