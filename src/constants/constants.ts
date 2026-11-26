@@ -6,5 +6,7 @@ export enum PERSONAL_INFO {
 }
 
 export const SEO = {
-  DEFAULT_OG_IMAGE: '/og-default.webp'
+  DEFAULT_OG_IMAGE: '/og-default.webp',
+  /** Robots directives for pages that must never be indexed or cached by crawlers. */
+  ROBOTS_PRIVATE: 'noindex, nofollow, noarchive'
 } as const;
