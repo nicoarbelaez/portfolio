@@ -41,17 +41,17 @@ Research reports (facts source, read before writing content): `C:\Users\arbel\Ap
 
 ## Tasks
 
-| ID                                                                                       | Specs              | Route                             | Status  | Commit |
-| ---------------------------------------------------------------------------------------- | ------------------ | --------------------------------- | ------- | ------ |
-| T1 Content collections + detail/landing/OG migration + remove GitHub prose pipeline      | S1 S2 S13          | delegated (parallel)              | pending |        |
-| T2 Doc blocks + `/design-system` page + `docs/design-system.md`                          | S3 S4 S13          | delegated (parallel)              | pending |        |
-| T3 Showcase kit + Mecateo on kit + Mecateo copy repositioned                             | S6 S8 S13          | delegated (parallel)              | pending |        |
-| T7a Repo docs: mecateo, danystortas, defi, smurfit-westrock-colombia                     | S9 S10 S11         | delegated (parallel, other repos) | pending |        |
-| T7b Repo docs: readia, living-sports-app, appsalon, claude-identity                      | S9 S10 S11         | delegated (parallel, other repos) | pending |        |
-| T4 Client showcases Danys / DeFi / SWC on kit                                            | S7 S9 S13          | delegated (wave 2, after T3)      | pending |        |
-| T5a Case studies MDX: mecateo, danystortas, defi, swc (es+en)                            | S2 S3 S5 S8 S9 S10 | delegated (wave 2, after T1+T2)   | pending |        |
-| T5b Case studies MDX: readia, living-sports, appsalon, claude-identity, invictus (es+en) | S2 S3 S5 S9 S10    | delegated (wave 2, after T1+T2)   | pending |        |
-| T6 Covers + final seam check + feature README                                            | S12 S13            | inline/delegated (wave 3)         | pending |        |
+| ID                                                                                       | Specs              | Route                             | Status             | Commit |
+| ---------------------------------------------------------------------------------------- | ------------------ | --------------------------------- | ------------------ | ------ |
+| T1 Content collections + detail/landing/OG migration + remove GitHub prose pipeline      | S1 S2 S13          | delegated (parallel)              | done (uncommitted) |        |
+| T2 Doc blocks + `/design-system` page + `docs/design-system.md`                          | S3 S4 S13          | delegated (parallel)              | done (uncommitted) |        |
+| T3 Showcase kit + Mecateo on kit + Mecateo copy repositioned                             | S6 S8 S13          | delegated (parallel)              | done (uncommitted) |        |
+| T7a Repo docs: mecateo, danystortas, defi, smurfit-westrock-colombia                     | S9 S10 S11         | delegated (parallel, other repos) | done (uncommitted) |        |
+| T7b Repo docs: readia, living-sports-app, appsalon, claude-identity                      | S9 S10 S11         | delegated (parallel, other repos) | done (uncommitted) |        |
+| T4 Client showcases Danys / DeFi / SWC on kit                                            | S7 S9 S13          | delegated (wave 2, after T3)      | in progress        |        |
+| T5a Case studies MDX: mecateo, danystortas, defi, swc (es+en)                            | S2 S3 S5 S8 S9 S10 | delegated (wave 2, after T1+T2)   | in progress        |        |
+| T5b Case studies MDX: readia, living-sports, appsalon, claude-identity, invictus (es+en) | S2 S3 S5 S9 S10    | delegated (wave 2, after T1+T2)   | in progress        |        |
+| T6 Covers + final seam check + feature README                                            | S12 S13            | inline/delegated (wave 3)         | pending            |        |
 
 Route evidence: user explicitly requested "con varios subagentes usando Sonnet implementa todo"; units have disjoint edit surfaces (Writer trigger a).
 
@@ -61,3 +61,5 @@ Route evidence: user explicitly requested "con varios subagentes usando Sonnet i
 - **L2** 2026-11-26: interview answers recorded in S8/S9. Research: 6 read-only agents, reports in scratchpad. Danys prod DB queried read-only via `ssh vps-claude` (user-authorized): avg ~229 distinct customer chats/day, peak 490 (90d), 20.485 leads, 69% AI replies.
 - **L3** 2026-11-26: user asked to rethink without rule constraints; architecture changed from "GitHub source of truth" to local MDX case studies + repo dev docs (S1). User: "Crea el plan y ahora con varios subagentes usando Sonnet implementa todo."
 - **L4** `@astrojs/mdx` 8.1.6 added and registered in `astro.config.mjs`; `src/components/doc-blocks/mdx-components.ts` stub created (owned by T2).
+- **L5** 2026-11-26: wave 1 done (T1, T2, T3, T7a, T7b); writers hit the 5h rate limit once and were resumed. Repo docs PRs (not merged, owner merges): mecateo#110 (develop), danystortas#311 (main), defi#1 (develop), jevg2003/smurfit-westrock-colombia#1 (main), readia#7 (develop), living-sports-app#45 (develop), appsalon#2 (main), claude-identity#46 (main). Removed deps: shiki, unified, remark*, rehype*; removed GH_TOKEN from env. Wave 2 running: T4, T5a, T5b.
+- **L6** Findings to hand to the user: readia `scripts/check-supabase.ts` has a hardcoded Supabase service-role key in a public repo (rotate); defi `api/src/app.js` uses `chalk` without import; danystortas `docs/ARCHITECTURE.md` still claims Agents SDK/LangGraph; mecateo `apps/README.md` still lists POS apps as active; living-sports repo description promises rewards that don't exist.
