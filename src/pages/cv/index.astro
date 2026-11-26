@@ -1,0 +1,8 @@
+---
+import CvVaultPage from '@/features/cv-vault/components/CvVaultPage.astro';
+import { cvVariantStore } from '@/features/cv-vault/services/default-cv-variant-store';
+
+export const prerender = false;
+---
+
+<CvVaultPage variants={cvVariantStore.list()} />

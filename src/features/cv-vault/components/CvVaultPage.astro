@@ -1,0 +1,66 @@
+---
+import { ItemGroup } from '@/components/ui/item';
+import { Separator } from '@/components/ui/separator';
+import { RESUME_FILENAME, RESUME_HREF } from '@/constants/resume';
+import Layout from '@/layouts/Layout.astro';
+import { variantPdfFile } from '../constants/cv-manifest-contract';
+import { CV_VAULT_COPY, CV_VAULT_ROUTE } from '../constants/cv-vault';
+import type { CvVariant } from '../types/cv-variant';
+import { formatVariantDate } from '../utils/format-variant-date';
+import { CvFileItem } from './CvFileItem';
+
+interface Props {
+  variants: readonly CvVariant[];
+}
+
+const { variants } = Astro.props;
+
+/** Every share sends the same neutral file name, so a variant's slug (a company) never leaks. */
+const share = {
+  label: CV_VAULT_COPY.SHARE,
+  filename: RESUME_FILENAME,
+  message: { title: CV_VAULT_COPY.SHARE_TITLE, text: CV_VAULT_COPY.SHARE_TEXT }
+};
+---
+
+<Layout
+  lang="es"
+  title={CV_VAULT_COPY.PAGE_TITLE}
+  description={CV_VAULT_COPY.PAGE_DESCRIPTION}
+  noindex
+>
+  <main id="main" class="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 pt-28 pb-16">
+    <CvFileItem
+      client:visible
+      share={share}
+      title={CV_VAULT_COPY.MAIN_TITLE}
+      description={CV_VAULT_COPY.MAIN_DESCRIPTION}
+      href={RESUME_HREF}
+      openLabel={`${CV_VAULT_COPY.OPEN_PDF}: ${CV_VAULT_COPY.MAIN_TITLE}`}
+    />
+    <Separator />
+    {variants.length === 0 ? (
+      <p class="text-muted-foreground text-sm">{CV_VAULT_COPY.EMPTY}</p>
+    ) : (
+      <ItemGroup className="gap-3" aria-label={CV_VAULT_COPY.PAGE_TITLE}>
+        {variants.map((variant) => (
+          <CvFileItem
+            client:visible
+            share={share}
+            title={variant.role}
+            subtitle={variant.company && `${CV_VAULT_COPY.ROLE_AT} ${variant.company}`}
+            description={variant.context}
+            date={{ iso: variant.date, label: formatVariantDate(variant.date) }}
+            href={`${CV_VAULT_ROUTE}/${variantPdfFile(variant.slug)}`}
+            openLabel={`${CV_VAULT_COPY.OPEN_PDF}: ${variant.role}`}
+            offer={
+              variant.offerUrl
+                ? { href: variant.offerUrl, label: `${CV_VAULT_COPY.OFFER}: ${variant.role}` }
+                : undefined
+            }
+          />
+        ))}
+      </ItemGroup>
+    )}
+  </main>
+</Layout>
