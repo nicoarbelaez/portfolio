@@ -21,12 +21,12 @@ export const PIPELINE_COLUMNS = [
   ['queue', 'agent']
 ] as const satisfies readonly (readonly PipelineId[])[];
 
-/** Approved metrics. Gross billing in COP, 28 oct to 27 nov 2026. The two revenue figures are separate. */
+/** Approved metrics. Gross billing in COP over one month. The two revenue figures are separate. */
 export const REVENUE_AI_SOLD_COP = 29_974_400;
 export const REVENUE_AI_ASSISTED_COP = 33_498_500;
-/** Peak of customers served in one day (production DB, last 90 days). */
+/** Peak of customers served in one day (verified maximum). */
 export const PEAK_CUSTOMERS_PER_DAY = 490;
-/** Share of agent replies sent by AI (jul to nov 2026). */
+/** Share of agent replies sent by AI (average). */
 export const AI_REPLY_SHARE_PERCENT = 69;
 
 /** Scale reference for the revenue bars (the larger of the two separate figures). */

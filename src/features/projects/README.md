@@ -34,7 +34,7 @@ generated, and the content stays. Remove the flag to bring it back. Currently ar
 
 ## Landing
 
-`#projects` = intro, then tabs [client | side]; `#apps` follows. Order comes from `order` inside each section.
+`#apps` renders first; `#projects` (intro, then tabs [client | side]) follows. Order comes from `order` inside each section.
 Showcases take full width; consecutive projects without one share a card grid. If only one tab has projects the
 tab bar is hidden. Dragging between tabs uses Embla (`hooks/use-tabs-carousel.ts`) and the active tab is
 synchronized with `?tab=client|side` (`hooks/use-url-tab.ts`).

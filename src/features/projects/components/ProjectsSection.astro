@@ -33,9 +33,20 @@ const sectionClass = ['w-full', HOME_SECTION_STACK_CLASS, NAV_SECTION_SCROLL_MAR
 {/*
   `contents` so projects + apps participate in HomePage flex gap
   (same distance as experience / about).
-  Order: intro → tabs [client showcases | side cards] (#projects), then apps (#apps).
+  Order: apps (#apps) first, then intro → tabs [client showcases | side cards] (#projects).
 */}
 <div class="contents">
+  {hasApps ? (
+    <section id="apps" aria-label={t('projects.section.apps')} class:list={sectionClass}>
+      <ProjectShowcaseBlock
+        client:visible
+        lang={lang}
+        label={t('projects.section.apps')}
+        projects={groups.apps}
+        cardLabels={cardLabels}
+      />
+    </section>
+  ) : null}
   {hasProjects ? (
     <section id="projects" aria-label={t('projects.nav')} class:list={sectionClass}>
       <ProjectsIntro
@@ -52,17 +63,6 @@ const sectionClass = ['w-full', HOME_SECTION_STACK_CLASS, NAV_SECTION_SCROLL_MAR
           side: t('projects.section.side'),
           card: cardLabels
         }}
-      />
-    </section>
-  ) : null}
-  {hasApps ? (
-    <section id="apps" aria-label={t('projects.section.apps')} class:list={sectionClass}>
-      <ProjectShowcaseBlock
-        client:visible
-        lang={lang}
-        label={t('projects.section.apps')}
-        projects={groups.apps}
-        cardLabels={cardLabels}
       />
     </section>
   ) : null}

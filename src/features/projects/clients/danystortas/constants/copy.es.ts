@@ -28,23 +28,23 @@ export const DANYSTORTAS_COPY_ES: DanysTortasCopy = {
   revenue: {
     title: 'Ventas atribuidas a la IA',
     description:
-      'Dos cifras distintas, medidas sobre la facturación bruta del período. No se suman ni una incluye a la otra.',
-    period: '28 oct – 27 nov 2026',
+      'Dos cifras distintas, medidas sobre la facturación bruta de un mes. No se suman ni una incluye a la otra.',
+    period: 'Facturado con IA en un mes',
     grossNote: 'Facturación bruta, COP',
     separateNote: 'Cifras independientes',
-    sold: { label: 'Ganancia IA', note: 'Vendido 100 % por la IA' },
+    sold: { label: 'Ganancia IA', note: '~$30 M COP vendidos 100 % por la IA' },
     assisted: {
       label: 'Ayuda IA — tortas temáticas',
-      note: 'Facturado con autocompletado de IA'
+      note: '~$33,5 M COP con autocompletado de IA'
     }
   },
   volume: {
     title: 'Volumen que absorbe el agente',
     description:
-      'Pico de clientes atendidos en un solo día y proporción de respuestas enviadas por la IA.',
+      'Hasta +490 clientes atendidos en un solo día y proporción de respuestas enviadas por la IA.',
     peakLabel: 'clientes en un día',
-    peakContext: 'Pico, últimos 90 días',
+    peakContext: 'Hasta, en un solo día',
     shareLabel: 'de las respuestas',
-    shareContext: 'Enviadas por la IA, jul–nov 2026'
+    shareContext: 'Enviadas por la IA, en promedio'
   }
 };

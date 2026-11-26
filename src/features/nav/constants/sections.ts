@@ -2,12 +2,12 @@ import type { NavSection } from '@/features/nav/types/nav';
 
 /**
  * In-page section anchors — order matches home layout:
- * about → projects → apps → experience → contact.
+ * about → apps → projects → experience → contact.
  */
 export const NAV_SECTIONS: readonly NavSection[] = [
   { id: 'about', href: '#about', labelKey: 'nav.about' },
-  { id: 'projects', href: '#projects', labelKey: 'nav.projects' },
   { id: 'apps', href: '#apps', labelKey: 'nav.apps' },
+  { id: 'projects', href: '#projects', labelKey: 'nav.projects' },
   { id: 'experience', href: '#experience', labelKey: 'nav.experience' },
   { id: 'contact', href: '#contact', labelKey: 'nav.contact', accent: true }
 ] as const;

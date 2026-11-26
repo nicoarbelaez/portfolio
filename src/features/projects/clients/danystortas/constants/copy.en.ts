@@ -28,22 +28,23 @@ export const DANYSTORTAS_COPY_EN: DanysTortasCopy = {
   revenue: {
     title: 'Sales attributed to AI',
     description:
-      'Two different figures, measured on the period gross billing. They are not summed and neither includes the other.',
-    period: 'Oct 28 – Nov 27, 2026',
+      'Two different figures, measured on one month of gross billing. They are not summed and neither includes the other.',
+    period: 'Billed with AI in one month',
     grossNote: 'Gross billing, COP',
     separateNote: 'Independent figures',
-    sold: { label: 'AI profit', note: 'Sold 100% by the AI' },
+    sold: { label: 'AI profit', note: '~COP 30 M sold 100% by the AI' },
     assisted: {
       label: 'AI assist — themed cakes',
-      note: 'Billed with AI autocomplete'
+      note: '~COP 33.5 M with AI autocomplete'
     }
   },
   volume: {
     title: 'Volume the agent absorbs',
-    description: 'Peak customers served in a single day and the share of replies sent by the AI.',
+    description:
+      'Up to +490 customers served in a single day and the share of replies sent by the AI.',
     peakLabel: 'customers in one day',
-    peakContext: 'Peak, last 90 days',
+    peakContext: 'Up to, in a single day',
     shareLabel: 'of replies',
-    shareContext: 'Sent by the AI, Jul–Nov 2026'
+    shareContext: 'Sent by the AI, on average'
   }
 };

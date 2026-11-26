@@ -1,5 +1,5 @@
 section: client
-order: 4
+order: 2
 periods:
   - start: '2026-10'
     end: 'present'
@@ -7,7 +7,7 @@ visibility: private
 anonymized: true
 team:
   - name: 'Jorge Velásquez'
-    role: 'Autor del prototipo inicial y product owner'
+    role: 'Creó el repositorio inicial'
     url: 'https://github.com/jevg2003'
 stack:
   - name: 'Next.js'
