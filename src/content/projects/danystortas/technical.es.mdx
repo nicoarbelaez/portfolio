@@ -1,0 +1,174 @@
+---
+title: 'Documentación técnica de Danys Tortas'
+description: 'Pipeline del agente de IA, arquitectura del monorepo, stack con versiones y decisiones técnicas de Danys Tortas.'
+---
+
+## Arquitectura
+
+Monorepo con Turborepo y pnpm 10. La API (NestJS 11 sobre Fastify 5) solo recibe y encola; el trabajo pesado corre en un worker NestJS independiente con 34 colas BullMQ. El panel es Next.js 16 y la landing es Astro. PostgreSQL 16 con pgvector guarda el negocio y la búsqueda semántica del catálogo y las preguntas frecuentes.
+
+<Architecture
+  layers={[
+    {
+      id: 'canal',
+      label: 'Canal',
+      nodes: [
+        { id: 'whatsapp', label: 'WhatsApp', kind: 'channel' },
+        { id: 'kommo', label: 'Kommo CRM', kind: 'external', detail: 'Webhooks y Salesbot' },
+        { id: 'web', label: 'Panel', kind: 'client', detail: 'Next.js 16' }
+      ]
+    },
+    {
+      id: 'api',
+      label: 'API y colas',
+      nodes: [
+        { id: 'api', label: 'API', kind: 'service', detail: 'NestJS 11 + Fastify 5' },
+        { id: 'redis', label: 'Redis 7', kind: 'infra', detail: 'BullMQ' }
+      ]
+    },
+    {
+      id: 'worker',
+      label: 'Worker',
+      nodes: [
+        { id: 'media', label: 'Medios', kind: 'worker', detail: 'Audio, imagen, PDF' },
+        { id: 'agent', label: 'Agente', kind: 'ai', detail: 'Bucle ReAct propio' }
+      ]
+    },
+    {
+      id: 'datos',
+      label: 'Datos y modelos',
+      nodes: [
+        { id: 'pg', label: 'PostgreSQL 16', kind: 'data', detail: 'pgvector, Prisma 7.8' },
+        { id: 'openrouter', label: 'OpenRouter', kind: 'external' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'whatsapp', to: 'kommo' },
+    { from: 'kommo', to: 'api', label: 'webhook', async: true },
+    { from: 'web', to: 'api' },
+    { from: 'api', to: 'redis', async: true },
+    { from: 'redis', to: 'media', async: true },
+    { from: 'media', to: 'agent' },
+    { from: 'agent', to: 'openrouter', label: 'modelos' },
+    { from: 'agent', to: 'pg', label: 'herramientas' },
+    { from: 'api', to: 'pg' },
+    { from: 'agent', to: 'kommo', label: 'respuesta', async: true }
+  ]}
+/>
+
+## Flujo de datos
+
+<Flow
+  steps={[
+    {
+      actor: 'Kommo',
+      action: 'Envía el webhook del mensaje',
+      kind: 'system',
+      detail: 'La API valida el token, guarda el registro y responde 200 en menos de 2 s'
+    },
+    {
+      actor: 'Worker de ingesta',
+      action: 'Guarda el mensaje de forma idempotente y lo agrega al buffer',
+      kind: 'system',
+      detail: 'Debounce dinámico por conversación'
+    },
+    {
+      actor: 'Workers de medios',
+      action: 'Transcriben audio y video, describen imágenes y extraen PDFs',
+      kind: 'system',
+      detail: 'En paralelo'
+    },
+    {
+      actor: 'Puerta de reglas',
+      action: 'Revisa traspaso a humano, interruptor de IA, bucles y presupuesto',
+      kind: 'system'
+    },
+    {
+      actor: 'Agente',
+      action: 'Clasifica la intención, elige el nivel de modelo y llama herramientas',
+      kind: 'ai',
+      detail: 'Un lock por conversación'
+    },
+    {
+      actor: 'Guardas',
+      action: 'Validan la respuesta antes de enviarla',
+      kind: 'system',
+      detail: 'Montos solo desde herramientas, sin promesas falsas de traspaso'
+    },
+    {
+      actor: 'Entrega',
+      action: 'Escribe el campo del lead en Kommo y dispara el Salesbot',
+      kind: 'system',
+      detail: 'Con cola de reintentos'
+    }
+  ]}
+/>
+
+## Estructura del repositorio
+
+<FolderTree
+  tree={`apps/
+  api/ # NestJS: webhooks, REST, SSE
+  worker/ # NestJS standalone: colas y agente
+    src/ai/tools/domains/ # una herramienta por dominio
+  web/ # Next.js: panel operativo
+  landing/ # Astro: sitio público
+packages/
+  kommo-shared/ # cliente y tipos de Kommo
+  openrouter-shared/ # modelos y configuración de IA
+  commerce-shared/ # reglas de catálogo, carrito y pedido
+  schemas-shared/ # esquemas compartidos
+  cakes-shared/ # tortas personalizadas
+docs/
+  AGENT-ARCHITECTURE.md # agente y herramientas
+  REQUIREMENTS.md # requisitos
+  incidentes.md # postmortems
+odd/
+  tasks/ # documentos de cada feature`}
+/>
+
+## Stack
+
+<StackGrid
+  items={[
+    { name: 'Next.js', category: 'frontend', version: '16.2' },
+    { name: 'React', category: 'frontend', version: '19.2' },
+    { name: 'Astro', category: 'frontend', version: '6.3' },
+    { name: 'Tailwind CSS', category: 'frontend', version: '4' },
+    { name: 'TanStack Query', category: 'frontend', version: '5' },
+    { name: 'NestJS', category: 'backend', version: '11' },
+    { name: 'Fastify', category: 'backend', version: '5.8' },
+    { name: 'BullMQ', category: 'backend', version: '5.76' },
+    { name: 'Better Auth', category: 'backend', version: '1.7' },
+    { name: 'TypeScript', category: 'backend', version: '5' },
+    { name: 'PostgreSQL', category: 'data', version: '16' },
+    { name: 'pgvector', category: 'data' },
+    { name: 'Prisma', category: 'data', version: '7.8' },
+    { name: 'Redis', category: 'data', version: '7' },
+    { name: 'OpenRouter', category: 'ai' },
+    { name: 'Docker Swarm', category: 'infra' },
+    { name: 'Dokploy', category: 'infra' },
+    { name: 'GitHub Actions', category: 'infra' },
+    { name: 'Vitest', category: 'testing', version: '3' },
+    { name: 'Jest', category: 'testing', version: '30' },
+    { name: 'Turborepo', category: 'tooling', version: '2.9' },
+    { name: 'pnpm', category: 'tooling', version: '10' }
+  ]}
+/>
+
+## Decisiones clave
+
+- **Bucle ReAct propio, sin SDK de agentes.** El agente es un servicio del repositorio sobre OpenRouter, sin OpenAI Agents SDK ni LangGraph. Así las guardas, el conteo de tokens por iteración y el corte por presupuesto viven en el mismo código que el bucle.
+- **Enrutamiento multi-modelo con respaldo.** Un clasificador de intención (Gemini 2.5 Flash Lite) separa los casos simples de los que necesitan razonar; el nivel de agente usa GLM 5.3 Flash y DeepSeek V4 Flash como respaldo. Los modelos se eligen por costo por llamada y latencia, y las salidas estructuradas usan JSON Schema estricto donde el modelo lo permite.
+- **Una herramienta por dominio con un discriminador `action`.** Catálogo, carrito, pedidos, pagos, dirección, domicilio, horarios, activos, tortas, traspaso, memoria y preguntas frecuentes. El modelo ve pocas herramientas con muchas acciones, no decenas de funciones sueltas.
+- **El modelo no inventa cifras.** Las guardas posteriores bloquean montos que no vengan de una herramienta, datos de pago sin respaldo y promesas de traspaso falsas.
+- **Acuse rápido y trabajo asíncrono.** Kommo desactiva los webhooks si más de 100 respuestas en 2 horas tardan más de 2 s. Por eso la API solo valida, registra y encola, y el resto corre en colas con buffer por conversación y lock para no responder dos veces.
+- **Control de costo y de bucles.** Presupuesto de IA por negocio con corte, tope de mensajes por conversación y reconciliación del gasto con OpenRouter. El tope se endureció tras un incidente en el que el agente conversó con un autorrespondedor; el postmortem está en `docs/incidentes.md`.
+
+## Pruebas, CI y despliegue
+
+- Jest 30 en la API y Vitest 3 en el panel, más pruebas e2e y pruebas contra PostgreSQL real para concurrencia de caja y bloqueo de filas.
+- GitHub Actions con runner propio en el VPS: typecheck, lint y pruebas; migraciones desde cero sobre pgvector; diff de drift del esquema; bloqueo de migraciones destructivas y cuatro builds de producción en Docker.
+- El despliegue verifica, migra producción y publica API, worker y panel por la API de Dokploy sobre Docker Swarm con Traefik. Hay unas 140 migraciones de Prisma desde junio de 2026.
+- El repositorio es privado, por eso no hay enlace al código.

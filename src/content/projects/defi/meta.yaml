@@ -1,0 +1,37 @@
+section: client
+order: 3
+periods:
+  - start: '2024-08'
+    end: '2025-08'
+visibility: public
+links:
+  repo: 'https://github.com/nicoarbelaez/defi'
+stack:
+  - name: 'Google Apps Script'
+    category: backend
+  - name: 'TypeScript'
+    category: backend
+    version: '5.6'
+  - name: 'Node.js'
+    category: backend
+  - name: 'Express'
+    category: backend
+    version: '5.1'
+  - name: 'sharp'
+    category: backend
+    version: '0.34'
+  - name: 'cheerio'
+    category: backend
+    version: '1.1'
+  - name: 'Google Sheets'
+    category: data
+  - name: 'AppSheet'
+    category: data
+  - name: 'Vercel'
+    category: infra
+  - name: 'clasp'
+    category: tooling
+    version: '2.4'
+  - name: 'pnpm'
+    category: tooling
+    version: '10'

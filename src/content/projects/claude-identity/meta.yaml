@@ -1,0 +1,25 @@
+section: side
+order: 4
+periods:
+  - start: '2026-10'
+    end: 'present'
+visibility: public
+links:
+  repo: 'https://github.com/nicoarbelaez/claude-identity'
+stack:
+  - name: 'Go'
+    category: backend
+    version: '1.26'
+  - name: 'go-keyring'
+    category: backend
+    version: '0.2'
+  - name: 'GoReleaser'
+    category: infra
+  - name: 'GitHub Actions'
+    category: infra
+  - name: 'release-please'
+    category: infra
+  - name: 'go test'
+    category: testing
+  - name: 'Claude Code plugin'
+    category: tooling

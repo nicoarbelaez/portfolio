@@ -1,0 +1,22 @@
+section: client
+order: 2
+archived: true
+periods:
+  - start: '2026-06'
+    end: 'present'
+visibility: public
+links:
+  site: 'https://invictusjoyas.vercel.app'
+  repo: 'https://github.com/nicoarbelaez/invictus'
+stack:
+  - name: 'Astro'
+    category: frontend
+  - name: 'Strapi'
+    category: backend
+  - name: 'PostgreSQL'
+    category: data
+  - name: 'Turborepo'
+    category: tooling
+  - name: 'pnpm'
+    category: tooling
+    version: '10'

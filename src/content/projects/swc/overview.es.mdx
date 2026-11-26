@@ -1,0 +1,129 @@
+---
+title: 'Smart Work Core'
+tagline: 'Centro de inteligencia de entorno: datos públicos de Colombia convertidos en avisos con una regla legible.'
+description: 'Aplicación Next.js que convierte datos públicos de Colombia en avisos con reglas legibles, más un asistente de IA con herramientas de solo lectura.'
+role: 'Desarrollador principal full stack'
+topics:
+  - 'Next.js'
+  - 'Motor de reglas'
+  - 'Asistente de IA'
+  - 'Datos abiertos'
+  - 'Arquitectura hexagonal'
+  - 'Cloudflare Access'
+keywords:
+  - 'Next.js'
+  - 'TypeScript'
+  - 'Vercel AI SDK'
+  - 'LLM tool calling'
+  - 'rule engine'
+  - 'hexagonal architecture'
+  - 'open data'
+  - 'SECOP II'
+  - 'PESTEL'
+  - 'Cloudflare Access'
+  - 'Playwright'
+  - 'Vitest'
+---
+
+## El problema
+
+El dólar, los contratos públicos, los competidores, las noticias y la regulación viven en fuentes distintas. Rara vez explican qué significa un cambio para una empresa concreta, y revisarlas a mano cada día no escala.
+
+## Qué construí
+
+Smart Work Core nació como un encargo universitario para un cliente que prefiere mantenerse anónimo. Jorge Velásquez escribió el prototipo inicial (un monitor de la TRM) y fue el product owner. Yo construí la aplicación Next.js y asumí el desarrollo principal.
+
+- **Radar de avisos.** Cada señal tiene severidad (informativa, vigilar o alerta), la regla que la generó y un enlace a la fuente original. Se puede marcar como nueva, revisada o descartada.
+- **Motor de reglas.** Funciones puras en TypeScript que revisan el movimiento diario de la TRM, contratos por vencer, contratos nuevos de competidores, el precio de la energía y menciones de palabras clave en noticias y regulación. El usuario ajusta los umbrales.
+- **PESTEL, bitácora de decisiones y briefing semanal** exportable a Markdown y CSV.
+- **Varias empresas** con su propio perfil, competidores y palabras clave. Un onboarding con IA propone el perfil inicial.
+- **Asistente de IA** que responde sobre los datos ya cargados con ocho herramientas de solo lectura.
+
+Los datos vienen de datos.gov.co (TRM, contratos de SECOP II, informes de Supersociedades), el Banco Mundial, XM y feeds RSS de medios colombianos.
+
+## Resultados
+
+- Una aplicación completa con radar, PESTEL, briefing, asistente y gestión de varias empresas.
+- Acceso restringido por Cloudflare Access, con validación del JWT en la propia aplicación.
+- Una arquitectura que se verifica sola: una prueba falla si el núcleo de reglas depende de la infraestructura.
+
+No publico métricas de uso: la herramienta es de acceso restringido y no tengo cifras verificables.
+
+## Cómo se usa
+
+<Flow
+  steps={[
+    {
+      actor: 'Usuario',
+      action: 'Entra con su cuenta autorizada por Cloudflare Access',
+      kind: 'user'
+    },
+    {
+      actor: 'Asistente de onboarding',
+      action: 'Propone el perfil de la empresa a partir de lo que el usuario cuenta',
+      kind: 'ai'
+    },
+    {
+      actor: 'Sistema',
+      action: 'Consulta las fuentes públicas y aplica las reglas',
+      kind: 'system',
+      detail: 'Cada aviso guarda su regla y su fuente'
+    },
+    {
+      actor: 'Usuario',
+      action: 'Revisa avisos, descarta los irrelevantes y registra una decisión',
+      kind: 'user'
+    },
+    {
+      actor: 'Asistente de IA',
+      action: 'Responde preguntas con herramientas de solo lectura',
+      kind: 'ai'
+    },
+    {
+      actor: 'Usuario',
+      action: 'Exporta el briefing semanal',
+      kind: 'user',
+      detail: 'Markdown, CSV o impresión'
+    }
+  ]}
+/>
+
+## Arquitectura
+
+<Architecture
+  layers={[
+    {
+      id: 'fuentes',
+      label: 'Fuentes públicas',
+      nodes: [
+        { id: 'datosgov', label: 'datos.gov.co', kind: 'external', detail: 'TRM, SECOP II' },
+        { id: 'worldbank', label: 'Banco Mundial', kind: 'external' },
+        { id: 'xm', label: 'XM', kind: 'external', detail: 'Precio de energía' },
+        { id: 'rss', label: 'RSS de medios', kind: 'external' }
+      ]
+    },
+    {
+      id: 'app',
+      label: 'Aplicación',
+      nodes: [
+        { id: 'core', label: 'Motor de reglas', kind: 'service', detail: 'src/core' },
+        { id: 'ui', label: 'Interfaz', kind: 'client', detail: 'Next.js' },
+        { id: 'assistant', label: 'Asistente de IA', kind: 'ai', detail: 'Vercel AI SDK' }
+      ]
+    },
+    {
+      id: 'acceso',
+      label: 'Acceso',
+      nodes: [{ id: 'access', label: 'Cloudflare Access', kind: 'infra' }]
+    }
+  ]}
+  edges={[
+    { from: 'datosgov', to: 'core' },
+    { from: 'worldbank', to: 'core' },
+    { from: 'xm', to: 'core' },
+    { from: 'rss', to: 'core' },
+    { from: 'core', to: 'ui', label: 'avisos' },
+    { from: 'assistant', to: 'core', label: 'herramientas' },
+    { from: 'access', to: 'ui', label: 'JWT' }
+  ]}
+/>

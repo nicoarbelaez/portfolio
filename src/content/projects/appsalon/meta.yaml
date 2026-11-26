@@ -1,0 +1,46 @@
+section: side
+order: 3
+periods:
+  - start: '2026-02'
+    end: '2026-06'
+visibility: public
+links:
+  repo: 'https://github.com/nicoarbelaez/appsalon'
+stack:
+  - name: 'Laravel'
+    category: backend
+    version: '13'
+  - name: 'PHP'
+    category: backend
+    version: '8.4'
+  - name: 'Laravel Fortify'
+    category: backend
+    version: '1'
+  - name: 'Inertia'
+    category: frontend
+    version: '3'
+  - name: 'React'
+    category: frontend
+    version: '19.2'
+  - name: 'Vite'
+    category: frontend
+    version: '8'
+  - name: 'Tailwind CSS'
+    category: frontend
+    version: '4'
+  - name: 'Recharts'
+    category: frontend
+    version: '3'
+  - name: 'MySQL'
+    category: data
+    version: '8.0'
+  - name: 'Docker'
+    category: infra
+  - name: 'GitHub Actions'
+    category: infra
+  - name: 'Pest'
+    category: testing
+    version: '4'
+  - name: 'TypeScript'
+    category: tooling
+    version: '5.7'

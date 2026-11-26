@@ -1,0 +1,128 @@
+---
+title: 'AppSalon: technical documentation'
+description: 'AppSalon architecture: Laravel 13 with Inertia 3 and React 19, MySQL 8, roles, Excel import, queued PDF reports, Fortify 2FA and Pest 4 tests.'
+---
+
+## Architecture
+
+A Laravel 13 monolith (PHP 8.4) with Inertia 3: controllers return React pages instead of JSON, so there is no separate API. MySQL 8 runs in Docker. PDF reports go through a database queue.
+
+<Architecture
+  layers={[
+    {
+      id: 'ui',
+      label: 'Interface',
+      nodes: [
+        { id: 'pages', label: 'React pages', kind: 'client', detail: 'TypeScript, Tailwind CSS 4' },
+        { id: 'charts', label: 'Dashboard', kind: 'client', detail: 'Recharts 3' }
+      ]
+    },
+    {
+      id: 'app',
+      label: 'Laravel',
+      nodes: [
+        { id: 'ctrl', label: 'Controllers', kind: 'service', detail: 'Admin and Staff' },
+        { id: 'auth', label: 'Fortify', kind: 'service', detail: '2FA, verification' },
+        { id: 'job', label: 'GenerarReportePdfJob', kind: 'worker', detail: 'dompdf' },
+        { id: 'sched', label: 'Scheduler', kind: 'infra', detail: 'Daily cleanup' }
+      ]
+    },
+    {
+      id: 'data',
+      label: 'Data',
+      nodes: [{ id: 'db', label: 'MySQL 8', kind: 'data', detail: 'FULLTEXT, queues' }]
+    }
+  ]}
+  edges={[
+    { from: 'pages', to: 'ctrl', label: 'Inertia' },
+    { from: 'charts', to: 'ctrl' },
+    { from: 'ctrl', to: 'auth' },
+    { from: 'ctrl', to: 'db' },
+    { from: 'ctrl', to: 'job', label: 'enqueues', async: true },
+    { from: 'job', to: 'db', async: true },
+    { from: 'sched', to: 'db', async: true }
+  ]}
+/>
+
+## PDF report flow
+
+<Flow
+  steps={[
+    { actor: 'Staff', action: 'Requests the report', kind: 'human' },
+    {
+      actor: 'Controller',
+      action: 'Records the request',
+      kind: 'system',
+      detail: 'Row in reportes_pdf and a queued job'
+    },
+    {
+      actor: 'GenerarReportePdfJob',
+      action: 'Generates the PDF',
+      kind: 'system',
+      detail: '2 attempts, 120 s timeout, 10 s backoff'
+    },
+    {
+      actor: 'Interface',
+      action: 'Polls the status',
+      kind: 'system',
+      detail: 'Processing, ready or failed'
+    },
+    { actor: 'Staff', action: 'Downloads the file', kind: 'human' }
+  ]}
+/>
+
+## Repository layout
+
+<FolderTree
+  tree={`app/
+  Http/Controllers/ # Admin, Staff and public booking
+  Actions/Fortify/ # registration and passwords
+  Reportes/ # report Actions and DTOs
+  Imports/ # Excel import
+  Exports/ # Excel export
+  Jobs/ # GenerarReportePdfJob
+database/migrations/ # usuarios, servicios, citas, horarios, reportes_pdf
+resources/js/
+  pages/ # Inertia pages
+  components/
+  hooks/
+routes/ # web.php, console.php
+tests/ # Pest (Auth, Dashboard, Reportes, Settings)`}
+/>
+
+## Stack
+
+<StackGrid
+  items={[
+    { name: 'Laravel', category: 'backend', version: '13' },
+    { name: 'PHP', category: 'backend', version: '8.4' },
+    { name: 'Laravel Fortify', category: 'backend', version: '1' },
+    { name: 'Inertia', category: 'frontend', version: '3' },
+    { name: 'React', category: 'frontend', version: '19.2' },
+    { name: 'Vite', category: 'frontend', version: '8' },
+    { name: 'Tailwind CSS', category: 'frontend', version: '4' },
+    { name: 'Recharts', category: 'frontend', version: '3' },
+    { name: 'MySQL', category: 'data', version: '8.0' },
+    { name: 'Docker', category: 'infra' },
+    { name: 'GitHub Actions', category: 'infra' },
+    { name: 'Pest', category: 'testing', version: '4' },
+    { name: 'TypeScript', category: 'tooling', version: '5.7' }
+  ]}
+/>
+
+## Key decisions
+
+1. **Inertia instead of a separate API and SPA.** Laravel keeps routing, authorization and validation, and React only renders. One deployment, one contract.
+2. **Roles through middleware.** `cliente`, `funcionario` and `admin` are stored in `usuarios.rol`. The `funcionario` and `admin` route groups apply `FuncionarioMiddleware` and `AdminMiddleware`.
+3. **Guest booking with a token.** `ReservaPublicaController` checks occupied slots and issues a `token_seguimiento` that feeds the public status page.
+4. **Asynchronous PDF reports.** A job with retries and a timeout keeps the request from blocking. A layer of Actions and DTOs in `app/Reportes` isolates the logic, and a scheduled command cleans expired reports daily.
+5. **Import with preview.** The Excel flow validates rows, shows them, revalidates them and only then inserts.
+6. **MySQL FULLTEXT search.** The service catalog uses a `MATCH ... AGAINST` index over name and description, with no separate search service.
+
+## Testing, CI and deployment
+
+Pest 4 covers 12 feature test files: authentication (6), dashboard, PDF reports and profile and security settings, including the two-factor challenge. GitHub Actions runs the tests (PHP 8.4, Node 22) and a lint workflow. Style is enforced with Laravel Pint, ESLint and Prettier. There is no deployed instance: local development uses Docker Compose for MySQL.
+
+## Repository docs
+
+The [nicoarbelaez/appsalon](https://github.com/nicoarbelaez/appsalon) repository includes `README.md`, `README.en.md` and `docs/architecture.md` with diagrams.

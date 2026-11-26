@@ -1,0 +1,53 @@
+section: side
+order: 2
+periods:
+  - start: '2026-02'
+    end: '2026-06'
+visibility: public
+links:
+  repo: 'https://github.com/nicoarbelaez/living-sports-app'
+team:
+  - name: 'SebasHDV'
+    role: 'Equipo de desarrollo'
+    url: 'https://github.com/SebasHDV'
+  - name: 'brayan200j-collab'
+    role: 'Equipo de desarrollo'
+    url: 'https://github.com/brayan200j-collab'
+stack:
+  - name: 'Expo'
+    category: frontend
+    version: '54'
+  - name: 'React Native'
+    category: frontend
+    version: '0.81'
+  - name: 'Expo Router'
+    category: frontend
+    version: '6'
+  - name: 'NativeWind'
+    category: frontend
+    version: '5'
+  - name: 'Zustand'
+    category: frontend
+    version: '5'
+  - name: 'Reanimated'
+    category: frontend
+    version: '4'
+  - name: 'Zod'
+    category: backend
+    version: '4'
+  - name: 'TypeScript'
+    category: tooling
+  - name: 'Deno'
+    category: backend
+  - name: 'Supabase'
+    category: data
+  - name: 'PostgreSQL'
+    category: data
+  - name: 'Cloudinary'
+    category: infra
+  - name: 'semantic-release'
+    category: tooling
+    version: '24'
+  - name: 'Husky'
+    category: tooling
+    version: '9'

@@ -1,0 +1,63 @@
+section: client
+order: 4
+periods:
+  - start: '2026-10'
+    end: 'present'
+visibility: private
+anonymized: true
+team:
+  - name: 'Jorge Velásquez'
+    role: 'Autor del prototipo inicial y product owner'
+    url: 'https://github.com/jevg2003'
+stack:
+  - name: 'Next.js'
+    category: frontend
+    version: '16'
+  - name: 'React'
+    category: frontend
+    version: '19'
+  - name: 'Tailwind CSS'
+    category: frontend
+    version: '4'
+  - name: 'Zustand'
+    category: frontend
+    version: '5'
+  - name: 'TanStack Query'
+    category: frontend
+    version: '5'
+  - name: 'Recharts'
+    category: frontend
+    version: '3'
+  - name: 'TypeScript'
+    category: backend
+    version: '6'
+  - name: 'Zod'
+    category: backend
+    version: '4'
+  - name: 'jose'
+    category: backend
+    version: '6'
+  - name: 'Vercel AI SDK'
+    category: ai
+    version: '7'
+  - name: 'OpenAI API'
+    category: ai
+  - name: 'OpenRouter'
+    category: ai
+  - name: 'Vercel'
+    category: infra
+  - name: 'Cloudflare Access'
+    category: infra
+  - name: 'Docker'
+    category: infra
+  - name: 'GitHub Actions'
+    category: infra
+  - name: 'Vitest'
+    category: testing
+    version: '5'
+  - name: 'Playwright'
+    category: testing
+    version: '1.64'
+  - name: 'pnpm'
+    category: tooling
+    version: '11'

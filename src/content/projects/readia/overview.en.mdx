@@ -1,0 +1,130 @@
+---
+title: 'ReadIA'
+tagline: 'AI maturity diagnostic for businesses, with a graph roadmap and PDF report.'
+description: 'AI maturity diagnostic with an interactive roadmap and PDF report. Next.js 15, Supabase with RLS and Edge Functions calling Gemini.'
+role: 'Full stack lead'
+topics:
+  - 'Next.js'
+  - 'Supabase'
+  - 'Generative AI'
+  - 'Row Level Security'
+  - 'Edge Functions'
+  - 'React Flow'
+keywords:
+  - 'Next.js 15'
+  - 'React 19'
+  - 'Supabase'
+  - 'Row Level Security'
+  - 'Edge Functions'
+  - 'Deno'
+  - 'Vercel AI SDK'
+  - 'Google Gemini'
+  - 'OpenRouter'
+  - 'structured output'
+  - 'Zod'
+  - 'React Flow'
+  - 'react-pdf'
+---
+
+ReadIA is a university project (USC). What follows is the technical detail.
+
+## The problem
+
+A small company knows it should adopt AI but not where to start or how ready it is.
+
+## What I built
+
+A web app that collects the company profile, generates a tailored questionnaire with AI, and returns three things:
+
+- A maturity diagnostic with an overall score, a radar by pillar (infrastructure, data, talent and governance), a distribution chart and recommendations.
+- A roadmap of phases and tasks, drawn as a graph the user can browse and mark up.
+- A PDF report with cover, executive summary, pillars, recommendations, roadmap and conclusions.
+
+One account can manage several businesses. Each diagnostic and roadmap is stored and protected by Row Level Security policies.
+
+## How a user interacts
+
+<Flow
+  steps={[
+    {
+      actor: 'User',
+      action: 'Signs in',
+      kind: 'user',
+      detail: 'OAuth with Google or GitHub'
+    },
+    {
+      actor: 'User',
+      action: 'Describes the company',
+      kind: 'user',
+      detail: 'Step-by-step form'
+    },
+    {
+      actor: 'AI',
+      action: 'Generates the questionnaire',
+      kind: 'ai',
+      detail: 'Edge Function generate-questions'
+    },
+    {
+      actor: 'AI',
+      action: 'Computes the diagnostic',
+      kind: 'ai',
+      detail: 'Structured output validated with Zod'
+    },
+    {
+      actor: 'AI',
+      action: 'Builds the roadmap',
+      kind: 'ai',
+      detail: 'Nodes and edges in a graph'
+    },
+    { actor: 'User', action: 'Downloads the PDF report', kind: 'user' }
+  ]}
+/>
+
+## Architecture
+
+<Architecture
+  layers={[
+    {
+      id: 'client',
+      label: 'Client',
+      nodes: [
+        { id: 'web', label: 'Next.js', kind: 'client', detail: 'App Router, React 19' },
+        { id: 'pdf', label: 'PDF report', kind: 'client', detail: '@react-pdf/renderer' }
+      ]
+    },
+    {
+      id: 'backend',
+      label: 'Supabase',
+      nodes: [
+        { id: 'auth', label: 'Auth', kind: 'service', detail: 'Google, GitHub' },
+        { id: 'edge', label: 'Edge Functions', kind: 'worker', detail: 'Deno, 3 functions' },
+        { id: 'db', label: 'PostgreSQL', kind: 'data', detail: 'RLS, 14 migrations' }
+      ]
+    },
+    {
+      id: 'ai',
+      label: 'AI',
+      nodes: [
+        { id: 'gemini', label: 'Gemini', kind: 'ai', detail: '2.5 Flash Lite' },
+        { id: 'router', label: 'OpenRouter', kind: 'external', detail: 'Fallback' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'web', to: 'auth', label: 'session' },
+    { from: 'web', to: 'edge', label: 'JWT' },
+    { from: 'edge', to: 'db' },
+    { from: 'edge', to: 'gemini' },
+    { from: 'gemini', to: 'router', label: 'on failure', async: true },
+    { from: 'web', to: 'pdf' }
+  ]}
+/>
+
+<MetricGrid
+  metrics={[
+    { value: '14', label: 'SQL migrations', context: 'schema with RLS' },
+    { value: '3', label: 'Deno Edge Functions', context: 'questions, diagnostic and roadmap' }
+  ]}
+/>
+
+Status: live at [readia.arbelaeznicolas.dev](https://readia.arbelaeznicolas.dev). The diagnostic, roadmap and PDF require signing in.

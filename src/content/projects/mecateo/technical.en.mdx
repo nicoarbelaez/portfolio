@@ -1,0 +1,168 @@
+---
+title: 'Mecateo technical documentation'
+description: 'Architecture, data flow, monorepo structure, versioned stack and key technical decisions of Mecateo.'
+---
+
+## Architecture
+
+Mecateo is a monorepo (pnpm 10 and Turborepo) with several deployable apps and several shared packages. The hot path, an NFC stand tap, runs in a separate Go service so redirection does not depend on the API. Everything else (administration, orders, payments, audit) lives in NestJS 11 on Fastify 5, with PostgreSQL 16 and Prisma 7.
+
+<Architecture
+  layers={[
+    {
+      id: 'clientes',
+      label: 'Clients',
+      nodes: [
+        { id: 'landing', label: 'Landing and store', kind: 'client', detail: 'Astro 7' },
+        { id: 'appweb', label: 'app-web', kind: 'client', detail: 'Next.js 16, Mis NFC' },
+        { id: 'adminweb', label: 'admin-web', kind: 'client', detail: 'Next.js 16, staff' }
+      ]
+    },
+    {
+      id: 'servicios',
+      label: 'Services',
+      nodes: [
+        { id: 'redirects', label: 'redirects', kind: 'service', detail: 'Go 1.27' },
+        { id: 'adminapi', label: 'admin-api', kind: 'service', detail: 'NestJS + Fastify' },
+        { id: 'worker', label: 'worker', kind: 'worker', detail: 'BullMQ' },
+        { id: 'gateway', label: 'ai-gateway', kind: 'ai', detail: 'NestJS + Fastify' }
+      ]
+    },
+    {
+      id: 'datos',
+      label: 'Data',
+      nodes: [
+        { id: 'pg', label: 'PostgreSQL 16', kind: 'data', detail: 'Prisma 7, multi-schema' },
+        { id: 'redis', label: 'Redis', kind: 'data' }
+      ]
+    },
+    {
+      id: 'externos',
+      label: 'External',
+      nodes: [
+        { id: 'wompi', label: 'Wompi', kind: 'external' },
+        { id: 'openrouter', label: 'OpenRouter', kind: 'external' }
+      ]
+    }
+  ]}
+  edges={[
+    { from: 'landing', to: 'adminapi' },
+    { from: 'appweb', to: 'adminapi' },
+    { from: 'adminweb', to: 'adminapi' },
+    { from: 'adminapi', to: 'pg' },
+    { from: 'adminapi', to: 'wompi', label: 'payments' },
+    { from: 'redirects', to: 'redis', label: 'taps', async: true },
+    { from: 'redis', to: 'worker', async: true },
+    { from: 'worker', to: 'pg' },
+    { from: 'gateway', to: 'pg', label: 'credits' },
+    { from: 'gateway', to: 'openrouter', label: 'proxy' }
+  ]}
+/>
+
+## Data flow
+
+A tap goes through the redirector, which answers first and records after. A stand purchase takes another path: the payment gateway notifies by webhook and a worker reconciles whatever did not arrive.
+
+<Flow
+  steps={[
+    {
+      actor: 'Customer',
+      action: 'Opens go.mecateo.co/code from the stand',
+      kind: 'user'
+    },
+    {
+      actor: 'Redirector',
+      action: 'Looks up the destination and answers 302 with no-store',
+      kind: 'system',
+      detail: 'Preview-bot HEAD requests are not counted'
+    },
+    {
+      actor: 'Redirector',
+      action: 'Queues the event with a daily visitor hash',
+      kind: 'system',
+      detail: 'SHA-256 of daily salt, link, IP and user agent'
+    },
+    {
+      actor: 'Worker',
+      action: 'Consumes the queue and writes the tap to PostgreSQL',
+      kind: 'system'
+    },
+    {
+      actor: 'Owner',
+      action: 'Reads taps per stand in "Mis NFC"',
+      kind: 'user'
+    }
+  ]}
+/>
+
+## Repository structure
+
+<FolderTree
+  tree={`apps/
+  landing/ # Astro 7: site, store, guides
+  auth/ # Next.js: Better Auth
+  app-web/ # Next.js: customer dashboard (Mis NFC)
+  admin-web/ # Next.js: staff dashboard
+  admin-api/ # NestJS + Fastify: domain API
+  ai-gateway/ # NestJS + Fastify: AI gateway
+  worker/ # BullMQ: outbox, reconciliation, analytics
+packages/
+  ui/ # shared components
+  credits/ # credit ledger
+  ai-content/ # encrypted content audit
+  api-platform/ # shared API building blocks
+services/
+  redirects/ # Go redirector
+infra/
+  dokploy/ # inventory and deployment
+docs/
+  decisions/ # ADRs
+  runbooks/ # operations
+  requirements.md # requirements with evidence`}
+/>
+
+## Stack
+
+<StackGrid
+  items={[
+    { name: 'Astro', category: 'frontend', version: '7.2' },
+    { name: 'Next.js', category: 'frontend', version: '16.3' },
+    { name: 'React', category: 'frontend', version: '19.2' },
+    { name: 'Tailwind CSS', category: 'frontend', version: '4.3' },
+    { name: 'TanStack Query', category: 'frontend', version: '5' },
+    { name: 'NestJS', category: 'backend', version: '11' },
+    { name: 'Fastify', category: 'backend', version: '5' },
+    { name: 'BullMQ', category: 'backend', version: '5.77' },
+    { name: 'Better Auth', category: 'backend', version: '1.7' },
+    { name: 'Go', category: 'backend', version: '1.27' },
+    { name: 'TypeScript', category: 'backend', version: '6' },
+    { name: 'Zod', category: 'backend', version: '4' },
+    { name: 'PostgreSQL', category: 'data', version: '16' },
+    { name: 'Prisma', category: 'data', version: '7' },
+    { name: 'Redis', category: 'data' },
+    { name: 'OpenRouter', category: 'ai' },
+    { name: 'Docker', category: 'infra' },
+    { name: 'Dokploy', category: 'infra' },
+    { name: 'GitHub Actions', category: 'infra' },
+    { name: 'Cloudflare Access', category: 'infra' },
+    { name: 'Vitest', category: 'testing', version: '4.1' },
+    { name: 'Turborepo', category: 'tooling', version: '2.9' },
+    { name: 'pnpm', category: 'tooling', version: '10' }
+  ]}
+/>
+
+## Key decisions
+
+- **A Go redirector, separate from the API.** Every tap is a public request that must answer fast even when the API is busy. The service only resolves the code, redirects and queues the event.
+- **Privacy by design in analytics.** The visitor is identified by `SHA256(daily salt, link, IP, user agent)`. Neither the IP nor the user agent is stored, and the salt rotates daily, so a person cannot be followed across days.
+- **Transactional outbox.** Domain events are written in the same transaction as the change (`platform.outbox_event`) and a worker dispatches them. An event is not lost if the process dies between the commit and the queue. The administrative audit trail is also written in the same transaction.
+- **Payments behind a port.** Wompi plugs in through an adapter. Webhooks are deduplicated, a reconciliation worker retries with backoff, and orders follow a state machine. Shipping policies are versioned with copy-on-write, and consent goes into an insert-only table.
+- **A white-box AI gateway.** It forwards to OpenRouter without altering the request. Before each call it reserves credits and settles afterwards, in an insert-only ledger. There is a per-request and a daily spend cap, per-organization blocking and a global kill switch. Content is audited encrypted with AES-256-GCM and 30-day retention, and staff reads are logged.
+- **Multi-tenant by organization and branch.** Better Auth handles organizations, roles (owner, admin, member), API keys with rotation and expiry, and 2FA for staff. Cloudflare Access protects administration.
+
+## Testing, CI and deployment
+
+- Vitest as the runner. The admin API has more than 1,500 tests, and the repository keeps its requirements with the evidence path and the test name.
+- GitHub Actions with self-hosted runners on the VPS. The pipeline checks for destructive migrations, runs a smoke contract and deploys through Dokploy. There is a staging environment.
+- Each app ships as a Docker image behind Traefik. ADRs and runbooks (backups, migrations, gateway deployment) live in `docs/`.
+- The repository is private, so there is no code link.

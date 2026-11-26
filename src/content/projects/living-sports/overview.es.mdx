@@ -1,0 +1,123 @@
+---
+title: 'Living Sports'
+tagline: 'Red social fitness para Android con feed, comunidades y competencias.'
+description: 'App Android hecha en equipo con Expo y Supabase: feed, comunidades y competencias con evidencia en video y podio. Rutinas con IA en desarrollo.'
+role: 'Desarrollador full stack móvil'
+topics:
+  - 'Expo'
+  - 'React Native'
+  - 'Supabase'
+  - 'Android'
+  - 'Edge Functions'
+keywords:
+  - 'React Native'
+  - 'Expo SDK 54'
+  - 'Expo Router'
+  - 'Supabase'
+  - 'PostgreSQL'
+  - 'Row Level Security'
+  - 'Edge Functions'
+  - 'NativeWind'
+  - 'Cloudinary'
+  - 'semantic-release'
+  - 'TypeScript'
+  - 'Android'
+---
+
+Living Sports es una red social fitness móvil para Android. La construimos en equipo: Nicolás Arbeláez con SebasHDV y brayan200j-collab.
+
+## El problema
+
+Quien entrena suele hacerlo solo y sin forma de comparar su progreso. Las apps de seguimiento guardan datos, pero no dan una razón para volver ni una manera creíble de demostrar un resultado.
+
+## Qué construimos
+
+- **Feed** con publicaciones, carrusel de medios, me gusta y comentarios.
+- **Comunidades**: crear grupos, unirse y ver su clasificación.
+- **Competencias** por ejercicio. Cada participante sube un video como evidencia y el sistema valida el registro y arma un ranking con podio.
+- **Notificaciones**, perfil, seguimiento entre usuarios y registro de marcas personales.
+
+Las competencias están en la rama `develop`. Las publicaciones pasan por una función Edge que sube el medio a Cloudinary.
+
+## Cómo se usa
+
+<Flow
+  steps={[
+    { actor: 'Usuario', action: 'Entra con Google', kind: 'user' },
+    {
+      actor: 'Usuario',
+      action: 'Publica en el feed',
+      kind: 'user',
+      detail: 'Foto o video, subido a Cloudinary'
+    },
+    { actor: 'Usuario', action: 'Se une a una comunidad', kind: 'user' },
+    {
+      actor: 'Usuario',
+      action: 'Entra a una competencia y sube su video',
+      kind: 'user',
+      detail: 'Ejercicio y marca personal'
+    },
+    {
+      actor: 'Sistema',
+      action: 'Valida la evidencia',
+      kind: 'system',
+      detail: 'Función Edge y triggers de aprobación'
+    },
+    { actor: 'Sistema', action: 'Actualiza el ranking y el podio', kind: 'system' }
+  ]}
+/>
+
+## Arquitectura
+
+<Architecture
+  layers={[
+    {
+      id: 'app',
+      label: 'App',
+      nodes: [
+        {
+          id: 'mobile',
+          label: 'App Android',
+          kind: 'client',
+          detail: 'Expo 54, React Native 0.81'
+        }
+      ]
+    },
+    {
+      id: 'supabase',
+      label: 'Supabase',
+      nodes: [
+        { id: 'auth', label: 'Auth', kind: 'service', detail: 'Google OAuth' },
+        { id: 'edge', label: 'Edge Functions', kind: 'worker', detail: 'Deno' },
+        { id: 'db', label: 'PostgreSQL', kind: 'data', detail: 'RLS y auditoría' }
+      ]
+    },
+    {
+      id: 'media',
+      label: 'Medios',
+      nodes: [{ id: 'cdn', label: 'Cloudinary', kind: 'external', detail: 'Fotos y videos' }]
+    }
+  ]}
+  edges={[
+    { from: 'mobile', to: 'auth', label: 'sesión' },
+    { from: 'mobile', to: 'edge', label: 'lógica de varios pasos' },
+    { from: 'mobile', to: 'db', label: 'lecturas simples' },
+    { from: 'edge', to: 'db' },
+    { from: 'edge', to: 'cdn', label: 'subida' }
+  ]}
+/>
+
+<MetricGrid
+  metrics={[
+    {
+      value: '9',
+      label: 'Archivos de pruebas SQL',
+      context: 'numerados 001 a 009, sobre el esquema'
+    },
+    { value: 'v1.2.0', label: 'Última versión publicada', context: 'marzo de 2026' }
+  ]}
+/>
+
+## Roadmap (en desarrollo)
+
+Rutinas generadas con IA y recompensas semanales por puntos. Hoy la pantalla de rutina con IA es un marcador de posición y las recompensas no están implementadas.
