@@ -16,6 +16,10 @@ export const SEVERITY_CLASS: Readonly<Record<Severity, string>> = {
   alert: 'bg-destructive/15 text-destructive'
 };
 
+/** Bottom fade of the alert stack: items clip softly at the fixed container edge. */
+export const ALERT_FADE_MASK_CLASS =
+  '[mask-image:linear-gradient(to_bottom,black_80%,transparent)]';
+
 /** Alert kinds the radar replica cycles through, in appearance order. */
 export const ALERT_KINDS = ['trm', 'secop', 'energy', 'regulation'] as const;
 export type AlertKind = (typeof ALERT_KINDS)[number];
@@ -29,7 +33,7 @@ export const ALERT_SEVERITY: Readonly<Record<AlertKind, Severity>> = {
 
 /**
  * Illustrative 30-day series (arbitrary units) for the chart replica. Hand-written, not market
- * data: the tile is labeled as sample data.
+ * data.
  */
 export const TRM_SAMPLE_SERIES = [
   50, 51, 50, 52, 53, 52, 54, 53, 55, 54, 56, 55, 54, 56, 58, 57, 59, 58, 60, 62, 61, 63, 62, 64,

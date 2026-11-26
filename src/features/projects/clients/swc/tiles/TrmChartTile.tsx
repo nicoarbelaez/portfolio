@@ -2,7 +2,6 @@
 
 import { motion } from 'motion/react';
 import { LineChart } from 'lucide-react';
-import { SampleBadge } from '@/features/projects/clients/shared/components/SampleBadge';
 import { useRevealOnView } from '@/features/projects/clients/shared/hooks/useRevealOnView';
 import {
   scaleSeries,
@@ -47,7 +46,7 @@ const THRESHOLD_STROKE_PX = 1;
 const THRESHOLD_DASH = '4 3';
 
 /** 30-day line against a threshold; days above it get an alert marker. Sample series, labeled. */
-export function TrmChartTile({ copy, lang }: { copy: SwcCopy['chart']; lang: LocaleKey }) {
+export function TrmChartTile({ copy }: { copy: SwcCopy['chart']; lang?: LocaleKey }) {
   const { ref, shown, reduced } = useRevealOnView();
 
   return (
@@ -67,7 +66,6 @@ export function TrmChartTile({ copy, lang }: { copy: SwcCopy['chart']; lang: Loc
               {copy.thresholdLabel}
             </span>
           </span>
-          <SampleBadge lang={lang} />
         </div>
         <svg
           viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
