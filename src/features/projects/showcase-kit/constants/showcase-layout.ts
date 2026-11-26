@@ -57,7 +57,7 @@ export const TILE_STAGE_CLASS = 'relative flex flex-1 overflow-hidden';
 
 /** Footer shell; padding comes from the density preset. It never shrinks, so text is not clipped. */
 export const TILE_FOOTER_CLASS =
-  'border-border/60 bg-card/90 relative z-40 shrink-0 space-y-1 border-t backdrop-blur-sm';
+  'border-border/60 bg-card relative z-40 shrink-0 space-y-1 border-t';
 
 export const TILE_SPOTLIGHT_SIZE = 220;
 export const TILE_SPOTLIGHT_OPACITY = 0.7;

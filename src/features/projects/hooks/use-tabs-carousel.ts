@@ -87,14 +87,34 @@ export function useTabsCarousel<T extends string>({
   useEffect(() => {
     if (!emblaApi || typeof ResizeObserver === 'undefined') return;
     let frame = 0;
+    let busy = false;
+    let pending = false;
+    const remeasure = () => {
+      // A reInit while scrolling (drag/settle) rebuilds the engine and makes the swipe stutter: defer it.
+      if (busy) {
+        pending = true;
+        return;
+      }
+      pending = false;
+      emblaApi.reInit();
+    };
+    const onBusy = () => {
+      busy = true;
+    };
+    const onIdle = () => {
+      busy = false;
+      if (pending) remeasure();
+    };
     const observer = new ResizeObserver(() => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => emblaApi.reInit());
+      frame = requestAnimationFrame(remeasure);
     });
     emblaApi.slideNodes().forEach((node) => observer.observe(node));
+    emblaApi.on('scroll', onBusy).on('settle', onIdle);
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
+      emblaApi.off('scroll', onBusy).off('settle', onIdle);
     };
   }, [emblaApi]);
 

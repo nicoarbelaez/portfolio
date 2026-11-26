@@ -66,7 +66,7 @@ export function ShowcaseTile({
           borderWidth={TILE_SHINE_WIDTH_PX}
           duration={TILE_SHINE_DURATION_S}
           shineColor={[colors.beamStart, colors.beamStop, colors.beamStart]}
-          className="rounded-[inherit]"
+          className="rounded-[inherit] max-md:motion-safe:animate-none"
         />
       ) : null}
       <article className="relative z-40 flex min-h-0 flex-1 flex-col">{children}</article>

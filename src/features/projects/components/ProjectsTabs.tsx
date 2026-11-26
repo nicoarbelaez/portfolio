@@ -82,8 +82,7 @@ export function ProjectsTabs({ lang, groups, labels }: ProjectsTabsProps) {
       <div
         className={cn(
           'z-40 flex justify-center py-2',
-          'max-md:bg-background/80 max-md:sticky max-md:backdrop-blur-md',
-          'max-md:supports-[backdrop-filter]:bg-background/70',
+          'max-md:bg-background/95 max-md:sticky',
           'md:static md:bg-transparent md:py-0',
           PROJECT_TABS_STICKY_TOP_CLASS
         )}

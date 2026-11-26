@@ -15,10 +15,10 @@ import { useRevealCount } from '@/features/projects/showcase-kit/hooks/useTileTi
 /** Steps before the tool chips: customer message, agent reply. */
 const MESSAGE_STEPS = 2;
 
-/** Floating "agent on" switch: a blurred pill over the chat, not part of the header. */
+/** Floating "agent on" switch: a pill over the chat, not part of the header. */
 function AgentSwitch({ label }: { label: string }) {
   return (
-    <span className="bg-background/70 border-border/60 flex items-center gap-1 rounded-full border py-0.5 pr-2 pl-1 text-[10px] whitespace-nowrap shadow-sm backdrop-blur-md">
+    <span className="bg-background/90 border-border/60 flex items-center gap-1 rounded-full border py-0.5 pr-2 pl-1 text-[10px] whitespace-nowrap shadow-sm">
       <span className="bg-primary relative h-3 w-5 shrink-0 rounded-full">
         <span className="bg-primary-foreground absolute top-0.5 right-0.5 size-2 rounded-full" />
       </span>

@@ -28,8 +28,9 @@ export function FloatingNav({ lang, pathname, labels }: FloatingNavProps) {
       <div
         className={cn(
           'border-border pointer-events-auto flex w-full max-w-3xl items-center gap-2 rounded-xl border',
-          'bg-background/80 px-3 py-1.5 shadow-sm backdrop-blur-xl',
-          'supports-[backdrop-filter]:bg-background/70 dark:bg-card/90'
+          // Backdrop blur re-rasterizes on every scroll frame: desktop only, opaque on mobile.
+          'bg-background/95 dark:bg-card/95 px-3 py-1.5 shadow-sm',
+          'md:bg-background/80 md:dark:bg-card/90 md:backdrop-blur-xl'
         )}
       >
         <NavBrand homePath={homePath} />

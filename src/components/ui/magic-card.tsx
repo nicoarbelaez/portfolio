@@ -116,6 +116,8 @@ export function MagicCard(props: MagicCardProps) {
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
+      // Touch has no hover: tracking it repaints the card gradient on every swipe frame.
+      if (e.pointerType !== 'mouse') return;
       const rect = e.currentTarget.getBoundingClientRect();
       mouseX.set(e.clientX - rect.left);
       mouseY.set(e.clientY - rect.top);
