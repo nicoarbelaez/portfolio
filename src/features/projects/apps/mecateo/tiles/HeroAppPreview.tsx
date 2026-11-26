@@ -33,6 +33,7 @@ export function HeroAppPreview({ categories, items, label }: HeroAppPreviewProps
       >
         <div className="relative aspect-[2/1] overflow-hidden">
           <img
+            loading="lazy"
             src={bannerImg.src}
             alt=""
             width={bannerImg.width}
@@ -43,6 +44,7 @@ export function HeroAppPreview({ categories, items, label }: HeroAppPreviewProps
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           <img
+            loading="lazy"
             src={logoImg.src}
             alt=""
             width={36}
@@ -68,6 +70,7 @@ export function HeroAppPreview({ categories, items, label }: HeroAppPreviewProps
           {previewItems.map((item) => (
             <li key={item.name} className="flex items-center gap-1.5">
               <img
+                loading="lazy"
                 src={item.imageSrc}
                 alt=""
                 width={28}

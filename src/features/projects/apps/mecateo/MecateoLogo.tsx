@@ -18,6 +18,7 @@ export function MecateoLogo({ className }: MecateoLogoProps) {
       aria-hidden="true"
     >
       <img
+        loading="lazy"
         src={logoUrl}
         alt=""
         width={32}

@@ -62,6 +62,7 @@ export function ExperienceTimeline({ items, skillsLabel }: ExperienceTimelinePro
             <div className="relative flex items-start gap-4 pb-10 last:pb-0 sm:gap-5">
               <div className={experienceAvatarClassName(item.avatarStyle, LOGO_SIZE_CLASS)}>
                 <img
+                  loading="lazy"
                   src={logoSrc}
                   alt=""
                   width={LOGO_PX}
