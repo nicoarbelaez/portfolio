@@ -107,7 +107,10 @@ export default tseslint.config(
     },
     rules: {
       ...react.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
+      // Only the classic hooks rules: v7 `recommended` adds React Compiler rules
+      // that flag vendored shadcn / animate-ui code (not compiler-adopted here).
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off'
     }
