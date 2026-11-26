@@ -77,11 +77,8 @@ export function RevenueTile({ copy, lang }: { copy: DanysTortasCopy['revenue']; 
             reduced={reduced}
             barClassName="bg-primary"
           />
-          <div className="relative flex shrink-0 items-center sm:mx-6">
-            <span className="bg-border/70 hidden h-full w-px sm:block" aria-hidden="true" />
-            <span className="text-muted-foreground bg-card/90 border-border/60 rounded-full border px-2 py-0.5 text-[10px] leading-none sm:absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2">
-              {copy.separateNote}
-            </span>
+          <div className="flex shrink-0 items-stretch sm:mx-6" aria-hidden="true">
+            <span className="bg-border/70 hidden w-px sm:block" />
           </div>
           <Figure
             label={copy.assisted.label}
@@ -93,6 +90,9 @@ export function RevenueTile({ copy, lang }: { copy: DanysTortasCopy['revenue']; 
             barClassName="bg-chart-3"
           />
         </div>
+        <p className="text-muted-foreground border-border/60 mx-auto w-fit rounded-full border px-3 py-1 text-[11px] leading-none">
+          {copy.separateNote}
+        </p>
       </TileStage>
       <TileFooter icon={TrendingUp} title={copy.title} description={copy.description} />
     </ShowcaseTile>
