@@ -251,6 +251,32 @@ Flujo: `resume-tailor` decide **qué**; `cv-builder` valida **cómo** en YAML.
 
 Si una oferta menciona una tecnología, buscar evidencia real ahí antes de incluirla.
 
+## Variantes privadas (`/cv`)
+
+Cada adaptación a una oferta/contexto es una **variante**: un YAML en `resume/variants/<slug>.yaml` (slug en kebab-case). `resume/cv.yaml` sigue siendo el CV principal y público; **no se edita para una oferta puntual**.
+
+```yaml
+meta: # no se renderiza; solo role y date son obligatorios
+  role: Backend Engineer
+  date: '2026-11-26' # YYYY-MM-DD
+  company: Acme # opcional
+  context: Por qué esta versión # opcional
+  offerUrl: https://... # opcional
+cv: # solo lo que cambia; lo demás se hereda de cv.yaml
+  headline: ...
+  sections:
+    perfil: [...] # las secciones listadas van primero y en ese orden
+settings:
+  bold_keywords: [...] # única clave de settings que se puede sobrescribir
+```
+
+- Herencia (única fuente de verdad, sin copiar `design`/`locale`/identidad): `resume/scripts/lib/compose-variant.mjs`. `null` elimina un campo o sección heredada.
+- `pnpm generate:variants` (también dentro de `generate:resume` y `pnpm dev`) renderiza los PDFs a `resume/.generated/` (ignorado por git) junto con `manifest.json`. Nunca van a `public/`.
+- `/cv` lista el principal y las variantes. Está protegido por Cloudflare Access (app «CV Privado», política `owner-only`) **y** el middleware valida el JWT (`cf-access-jwt-assertion`) para que `*.vercel.app` no lo evada. En `astro dev` no se exige.
+- Cada fila de `/cv` tiene un botón «Compartir»: Web Share API con el PDF adjunto (`share-file.ts`; el archivo se precarga porque `share()` exige el gesto del click) y, si el navegador no lo soporta (p. ej. Firefox de escritorio), descarga. Siempre se envía como `Nicolas-Arbelaez-Resume.pdf` para no filtrar el slug.
+- Tests del núcleo: `pnpm test`. Reglas, esquema y contrato build↔runtime: `resume/scripts/lib/variant-schema.mjs` y `resume/constants.mjs`.
+- Mismas reglas de verdad del CV: no inventar experiencia; una variante solo reordena/reescribe lo que ya existe.
+
 ## Adaptación por sección
 
 | Sección                 | Adaptación                                                 |
@@ -286,7 +312,7 @@ En Vercel: `installCommand` crea `.venv` con `uv` e instala `requirements.txt` (
 4. Leer `resume/cv.yaml` (+ experience opcional).
 5. Matchear requisito → evidencia; marcar gaps sin inventar.
 6. Proponer cambios (tabla: sección, cambio, razón).
-7. Editar YAML válido.
+7. Crear la variante en `resume/variants/<slug>.yaml` (ver «Variantes privadas»); solo editar `cv.yaml` si el cambio aplica al CV principal.
 8. Validar render si es posible.
 9. Reportar resumen.
 

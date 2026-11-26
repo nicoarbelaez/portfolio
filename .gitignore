@@ -47,3 +47,6 @@ resume/**/resume*.pdf
 
 # Registro de skills autogenerado (se regenera con skill-registry)
 .atl/
+
+# Private resume variants: generated PDFs + manifest (never committed, never in public/)
+resume/.generated/

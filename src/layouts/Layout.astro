@@ -18,6 +18,8 @@ interface Props {
   /** Absolute path or absolute URL for Open Graph / Twitter image */
   image?: string;
   type?: 'website' | 'article';
+  /** Private pages: adds a robots meta that blocks indexing and caching by crawlers. */
+  noindex?: boolean;
 }
 
 const { lang = defaultLang } = Astro.props;
@@ -37,7 +39,8 @@ const {
   title: originalTitle = t('title'),
   description = t('schema.description'),
   image = SEO.DEFAULT_OG_IMAGE,
-  type = 'website'
+  type = 'website',
+  noindex = false
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
@@ -82,6 +85,7 @@ const footerYear = new Date().getFullYear();
       })();
     </script>
 
+    {noindex && <meta name="robots" content={SEO.ROBOTS_PRIVATE} />}
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 

@@ -4,6 +4,10 @@ import { readFileSync, existsSync } from 'node:fs';
 
 import { join } from 'node:path';
 
+import { HTTP_STATUS } from '@/constants/http';
+import { RESUME_CACHE_CONTROL, RESUME_FILENAME } from '@/constants/resume';
+import { pdfResponse } from '@/utils/pdf-response';
+
 export const prerender = false;
 
 interface ResumeVersion {
@@ -20,7 +24,7 @@ export const GET: APIRoute = async ({ request }) => {
   if (!existsSync(versionFile)) {
     return new Response(
       'Resume version metadata not found. Run `pnpm generate:resume` or `node ./resume/scripts/hash-resume.mjs` after rendering the PDF.',
-      { status: 404 }
+      { status: HTTP_STATUS.NOT_FOUND }
     );
   }
 
@@ -30,38 +34,16 @@ export const GET: APIRoute = async ({ request }) => {
 
   if (!existsSync(pdfPath)) {
     return new Response('Resume PDF not found.', {
-      status: 404
+      status: HTTP_STATUS.NOT_FOUND
     });
   }
 
-  const etag = `"${version.hash}"`;
-
-  const ifNoneMatch = request.headers.get('If-None-Match');
-
-  if (ifNoneMatch === etag) {
-    return new Response(null, {
-      status: 304,
-      headers: {
-        ETag: etag,
-        'Cache-Control': 'public, no-cache, must-revalidate'
-      }
-    });
-  }
-
-  const pdfBuffer = readFileSync(pdfPath);
-
-  return new Response(pdfBuffer, {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/pdf',
-
-      'Content-Disposition': 'inline; filename="Nicolas-Arbelaez-Resume.pdf"',
-
-      'Cache-Control': 'public, no-cache, must-revalidate',
-
-      ETag: etag,
-
-      'Last-Modified': new Date(version.generatedAt).toUTCString()
-    }
+  return pdfResponse({
+    request,
+    hash: version.hash,
+    filename: RESUME_FILENAME,
+    lastModified: new Date(version.generatedAt),
+    cacheControl: RESUME_CACHE_CONTROL,
+    readBody: () => readFileSync(pdfPath)
   });
 };

@@ -3,6 +3,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 
 import {
+  CONTENT_HASH_LENGTH,
   PUBLIC_RESUME_DIR,
   RESUME_PDF,
   RESUME_VERSION_FILE,
@@ -10,7 +11,6 @@ import {
 } from '../constants.mjs';
 
 const rootDir = process.cwd();
-const HASH_LENGTH = 8;
 /** Legacy path when --pdf-path was incorrectly set to ./resume/resume.pdf */
 const LEGACY_NESTED_PDF = path.join('resume', 'resume', 'resume.pdf');
 
@@ -44,7 +44,11 @@ if (originalPdfPath === path.join(rootDir, LEGACY_NESTED_PDF)) {
 fs.mkdirSync(resumePublicDir, { recursive: true });
 
 const fileBuffer = fs.readFileSync(yamlPath);
-const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex').slice(0, HASH_LENGTH);
+const hash = crypto
+  .createHash('sha256')
+  .update(fileBuffer)
+  .digest('hex')
+  .slice(0, CONTENT_HASH_LENGTH);
 const hashedFileName = `resume.${hash}.pdf`;
 const hashedFilePath = path.join(resumePublicDir, hashedFileName);
 
