@@ -21,13 +21,13 @@ cv:
     experiencia_laboral:
       - company: 'Danys Tortas'
         summary: 'Proyecto - Freelancer (hoy soporte y evolución) | [danystortas.com](https://danystortas.com)'
-        position: 'Desarrollador Full Stack – Agentes de IA'
+        position: 'Forward Deployed AI Engineer – Agentes de IA'
         location: 'Colombia'
         start_date: '2026-01'
         end_date: 'present'
         highlights:
-          - 'Diseñé y opero un agente de IA de ventas y soporte por WhatsApp (Kommo CRM) que atiende a más de 300 clientes diarios: catálogo semántico, pedidos, pagos, domicilios y escalamiento a humano.'
-          - 'Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo vía OpenRouter, loop de herramientas con circuit breakers y RAG), tras migrar desde LangGraph.'
+          - 'Embebido en la operación del cliente: levanté requerimientos, especifiqué, construí y opero un agente de IA de ventas y soporte por WhatsApp (Kommo CRM) que atiende a más de 300 clientes diarios: catálogo semántico, pedidos, pagos, domicilios y escalamiento a humano.'
+          - 'Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo vía OpenRouter, loop de herramientas con circuit breakers y RAG).'
           - 'Implementé guardrails deterministas que bloquean montos o datos de pago no provenientes de herramientas, con telemetría de costo.'
           - 'Integré el agente con un ERP multi-sucursal (inventario, caja, despachos, RBAC de seis roles) y un módulo de procesamiento de documentos con OCR y confianza por campo.'
           - 'Desarrollado con flujo AI-first (Claude Code, Cursor) y revisión propia de cada cambio: más de 1.400 archivos de pruebas y CI/CD en GitHub Actions con despliegue automatizado en Dokploy.'

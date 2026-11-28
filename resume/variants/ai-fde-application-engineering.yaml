@@ -17,7 +17,7 @@ cv:
         end_date: present
         highlights:
           - Diseñé y opero un agente de IA de ventas y soporte end-to-end por WhatsApp (Kommo CRM) que atiende a más de 300 clientes diarios, con búsqueda semántica de catálogo (pgvector), RAG, pedidos, pagos, domicilios y escalamiento a humano.
-          - Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo vía OpenRouter, loop de herramientas con circuit breakers y RAG), tras migrar desde LangGraph.
+          - Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo vía OpenRouter, loop de herramientas con circuit breakers y RAG).
           - Implementé guardrails deterministas que bloquean montos o datos de pago no provenientes de herramientas, con trazas, costo por ejecución y presupuestos de IA por organización.
           - Integré el agente con un ERP multi-sucursal (inventario, caja, despachos, RBAC de seis roles) y un módulo de procesamiento de documentos con OCR y confianza por campo.
           - Desarrollado con flujo AI-first (Claude Code, Cursor) y revisión propia de cada cambio; más de 1.400 archivos de pruebas y CI/CD en GitHub Actions con despliegue automatizado en Dokploy.

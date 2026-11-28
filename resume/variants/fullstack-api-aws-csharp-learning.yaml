@@ -7,7 +7,7 @@ cv:
   sections:
     perfil:
       - |
-        Desarrollador Full Stack desde 2022 con foco en APIs REST (autenticación, versionado y manejo de errores), AWS y desarrollo asistido por IA, con revisión de cada cambio y pruebas automatizadas. Migré un pipeline LLM desde LangGraph a una implementación propia y reemplacé hojas de cálculo dispersas por una app propia. Experiencia en producción con TypeScript/NestJS, Next.js, PostgreSQL y Java (Spring Boot). Estoy aprendiendo C#/.NET activamente y no tengo experiencia profesional previa en ese stack.
+        Desarrollador Full Stack desde 2022 con foco en APIs REST (autenticación, versionado y manejo de errores), AWS y desarrollo asistido por IA, con revisión de cada cambio y pruebas automatizadas. Construí un pipeline LLM propio y reemplacé hojas de cálculo dispersas por una app propia. Experiencia en producción con TypeScript/NestJS, Next.js, PostgreSQL y Java (Spring Boot). Estoy aprendiendo C#/.NET activamente y no tengo experiencia profesional previa en ese stack.
     experiencia_laboral:
       - company: Danys Tortas
         summary: Proyecto - Freelancer (hoy soporte y evolución) | [danystortas.com](https://danystortas.com)
@@ -16,7 +16,7 @@ cv:
         start_date: 2026-01
         end_date: present
         highlights:
-          - Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo, loop de herramientas con circuit breakers y RAG), tras migrar desde LangGraph.
+          - Construí un pipeline LLM propio de ocho etapas (clasificación de intents, ruteo de modelos por costo, loop de herramientas con circuit breakers y RAG).
           - Diseñé y opero un agente de IA de ventas y soporte por WhatsApp (Kommo CRM) que atiende a más de 300 clientes diarios, con integración a un ERP multi-sucursal (inventario, caja, despachos, RBAC de seis roles).
           - Desarrollado con flujo AI-first (Claude Code, Cursor) y revisión propia de cada cambio; más de 1.400 archivos de pruebas y CI/CD en GitHub Actions con despliegue automatizado en Dokploy.
       - company: Trainer Elitez
