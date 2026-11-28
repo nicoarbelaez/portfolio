@@ -17,7 +17,7 @@ cv:
         end_date: present
         highlights:
           - Diseñé y opero un backend NestJS que sostiene un agente de IA de ventas y soporte por WhatsApp (Kommo CRM) para más de 300 clientes diarios, con PostgreSQL (Prisma, pgvector) y Redis/BullMQ.
-          - Construí un pipeline LLM propio de ocho etapas con loop de herramientas, circuit breakers, ruteo de modelos por costo y RAG, tras migrar desde LangGraph.
+          - Construí un pipeline LLM propio de ocho etapas con loop de herramientas, circuit breakers, ruteo de modelos por costo y RAG.
           - Integré el sistema con un ERP multi-sucursal (inventario, caja, despachos, RBAC de seis roles) e implementé guardrails deterministas con telemetría de costo.
           - Instrumenté trazas y presupuestos por organización; más de 1.400 archivos de pruebas y CI/CD en GitHub Actions con despliegue automatizado en Dokploy.
           - "Stack: NestJS, TypeScript, PostgreSQL (Prisma, pgvector), Redis/BullMQ, Docker, Dokploy."
