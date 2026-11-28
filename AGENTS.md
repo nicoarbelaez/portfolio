@@ -322,6 +322,10 @@ En Vercel: `installCommand` crea `.venv` con `uv` e instala `requirements.txt` (
 - Un commit por adaptación de CV; no mezclar con UI/API no relacionada.
 - No commitear PDFs generados si el pipeline los regenera (`public/resume`, `resume/*.pdf` según `.gitignore`).
 
+## Búsqueda y postulación de empleo
+
+Para buscar vacantes, configurar portales o postular, seguir `.agents/skills/buscar-y-postular-empleo/SKILL.md`. Los datos personales y el estado están en `.private/postulaciones/` (no versionar).
+
 ## Perfil del usuario
 
 - **Nicolas Arbelaez Tapias** — Full Stack con foco Backend, AI-First y automatización. Cali, Colombia.
